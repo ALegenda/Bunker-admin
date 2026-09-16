@@ -1,3 +1,4 @@
+import { Header } from './components/Header.js';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { Me, Workspace } from '../../shared/contracts.js';
@@ -58,63 +59,52 @@ function App() {
         : false);
   return (
     <>
-      <header className="topbar">
-        <a className="brand" href="/">
-          Б<span>•</span> <b>БУНКЕР</b>
-        </a>
-        <nav>
-          <a href="/" aria-current={path === '/' ? 'page' : undefined}>
-            Каталог
-          </a>
-          {me.user?.role === 'admin' && (
-            <>
-              <a href="/admin" aria-current={admin && !publish ? 'page' : undefined}>
-                Редактор
-              </a>
-              <a href="/admin?view=publish" aria-current={publish ? 'page' : undefined}>
-                Публикация
-              </a>
-              <a href="/users">Доступ</a>
-            </>
-          )}
-          {['admin', 'trusted'].includes(me.user?.role || '') && (
-            <a href="/proposals">Предложения</a>
-          )}
-        </nav>
-        <div>
-          {me.user ? (
-            <>
-              <span className="user-name">{me.user.name}</span>
-              {me.authMode === 'telegram' && (
-                <button
-                  onClick={async () => {
-                    await send('/auth/logout', {});
-                    location.href = '/';
-                  }}
-                >
-                  Выйти
-                </button>
-              )}
-            </>
-          ) : (
-            <a className="telegram" href="/auth/telegram">
-              Войти через Telegram
-            </a>
-          )}
-        </div>
-      </header>
+      <Header
+        user={me.user}
+        path={path}
+        publish={publish}
+        onLogout={async () => {
+          try {
+            await send('/auth/logout', {});
+            location.href = '/';
+          } catch (e) {
+            setError((e as Error).message);
+          }
+        }}
+      />
       <main>
         {error && <p role="alert">{error}</p>}
         {!allowed ? (
           <section className="panel">
             <h1>Доступ ограничен</h1>
-            <p>
-              Войдите через Telegram. Для вычитки и редактирования нужны права, выданные
-              администратором.
-            </p>
-            <a className="telegram" href="/auth/telegram">
-              Войти через Telegram
-            </a>
+            {me.authMode === 'local' ? (
+              <>
+                <p>Локальный редактор доступен только в режиме разработки на этом компьютере.</p>
+                <button
+                  onClick={async () => {
+                    try {
+                      await send('/auth/local', {});
+                      location.reload();
+                    } catch (e) {
+                      setError((e as Error).message);
+                    }
+                  }}
+                >
+                  Открыть локальный редактор
+                </button>
+              </>
+            ) : (
+              <>
+                <p>
+                  Для вычитки и редактирования войдите через Telegram. Права выдаёт администратор.
+                </p>
+                {!me.user && (
+                  <a className="telegram" href="/auth/telegram">
+                    Войти через Telegram
+                  </a>
+                )}
+              </>
+            )}
           </section>
         ) : path === '/' ? (
           <Catalog user={me.user} />

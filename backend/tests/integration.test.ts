@@ -26,6 +26,13 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
   const { runOne } = await import('../worker.js');
   const { renderRules } = await import('../services/print-template.js');
   const app = await createApp();
+  const { issueLocalSession } = await import('../services/local-session.js');
+  const local = issueLocalSession();
+  const localHeaders = {
+    host: 'localhost',
+    cookie: 'bunker_local=' + local.token,
+    'x-csrf-token': local.csrf,
+  };
   try {
     await migrate();
     await migrate();
@@ -106,25 +113,65 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       assert.equal(results.filter((r) => r.status === 'rejected').length, 1);
       assert.equal((await readWorkspace()).revision, state.revision + 1);
     });
+    await t.test('local visitors remain anonymous until explicit development login', async () => {
+      const guest = await app.inject({ url: '/api/me', headers: { host: 'localhost' } });
+      assert.equal(guest.json().user, null);
+      assert.equal(
+        (await app.inject({ url: '/api/workspace', headers: { host: 'localhost' } })).statusCode,
+        401,
+      );
+      assert.equal(
+        (await app.inject({ url: '/api/proposals', headers: { host: 'localhost' } })).statusCode,
+        401,
+      );
+      const login = await app.inject({
+        method: 'POST',
+        url: '/auth/local',
+        headers: { host: 'localhost', origin: 'http://localhost' },
+        payload: {},
+      });
+      assert.equal(login.statusCode, 200);
+      const sessionCookie = String(login.headers['set-cookie']).split(';')[0];
+      const me = (
+        await app.inject({ url: '/api/me', headers: { host: 'localhost', cookie: sessionCookie } })
+      ).json();
+      assert.equal(me.user.role, 'admin');
+      const logout = await app.inject({
+        method: 'POST',
+        url: '/auth/logout',
+        headers: { host: 'localhost', cookie: sessionCookie, 'x-csrf-token': me.csrf },
+        payload: {},
+      });
+      assert.equal(logout.statusCode, 200);
+      assert.equal(
+        (
+          await app.inject({
+            url: '/api/me',
+            headers: { host: 'localhost', cookie: sessionCookie },
+          })
+        ).json().user,
+        null,
+      );
+    });
     await t.test('API validates revisions and rejects cross-origin writes', async () => {
       const invalid = await app.inject({
         method: 'POST',
         url: '/api/pdf/build',
-        headers: { host: 'localhost' },
+        headers: localHeaders,
         payload: { revision: 'wrong' },
       });
       assert.equal(invalid.statusCode, 400);
       const cross = await app.inject({
         method: 'POST',
         url: '/api/pdf/build',
-        headers: { host: 'localhost', origin: 'https://untrusted.example' },
+        headers: { ...localHeaders, origin: 'https://untrusted.example' },
         payload: { revision: 2 },
       });
       assert.equal(cross.statusCode, 403);
       const missing = await app.inject({
         method: 'GET',
         url: '/api/assets/not-a-uuid',
-        headers: { host: 'localhost' },
+        headers: localHeaders,
       });
       assert.equal(missing.statusCode, 400);
     });
@@ -179,7 +226,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         const page = await app.inject({
           method: 'GET',
           url: `/releases/${release.id}`,
-          headers: { host: 'localhost' },
+          headers: localHeaders,
         });
         assert.equal(page.statusCode, 200);
         assert.ok(page.body.includes('Проверка длинного описания'));

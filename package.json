@@ -10,7 +10,7 @@
     "db:migrate": "tsx backend/db/migrate.ts",
     "db:seed": "tsx backend/db/seed.ts",
     "infra:up": "docker compose up -d postgres minio",
-    "test": "tsx --test shared/model.test.js read-json.test.mjs backend/tests/*.test.ts",
+    "test": "tsx --test shared/model.test.js read-json.test.mjs backend/tests/*.test.ts frontend/tests/*.test.tsx",
     "start:api": "tsx backend/http/server.ts",
     "start:worker": "tsx backend/worker.ts",
     "backup": "tsx backend/backup.ts",

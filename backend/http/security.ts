@@ -1,3 +1,4 @@
+import { localActor } from '../services/local-session.js';
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import cookie from '@fastify/cookie';
 import rateLimit from '@fastify/rate-limit';
@@ -43,7 +44,7 @@ export async function security(app: FastifyInstance) {
     if (config.AUTH_MODE === 'local') {
       if (!/^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(host))
         throw new AppError(403, 'Недопустимый адрес сервера');
-      req.actor = { id: null, role: 'admin', display_name: 'Локальный администратор', csrf: '' };
+      req.actor = localActor(req.cookies.bunker_local);
     } else {
       if (host !== new URL(config.PUBLIC_ORIGIN).host)
         throw new AppError(403, 'Недопустимый адрес сервера');
@@ -57,10 +58,7 @@ export async function security(app: FastifyInstance) {
         !(config.AUTH_MODE === 'local' && [`http://${host}`, `https://${host}`].includes(origin))
       )
         throw new AppError(403, 'Недопустимый источник запроса');
-      if (
-        config.AUTH_MODE !== 'local' &&
-        (!req.actor || req.headers['x-csrf-token'] !== req.actor.csrf)
-      )
+      if (path !== '/auth/local' && (!req.actor || req.headers['x-csrf-token'] !== req.actor.csrf))
         throw new AppError(403, 'Обновите страницу и повторите действие');
     }
     const publicRoute = new Set([

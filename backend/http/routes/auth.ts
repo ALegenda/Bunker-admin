@@ -1,3 +1,4 @@
+import { issueLocalSession, revokeLocalSession } from '../../services/local-session.js';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { config } from '../../config.js';
@@ -12,6 +13,19 @@ export async function authRoutes(app: FastifyInstance) {
     secure: config.PUBLIC_ORIGIN.startsWith('https:'),
     sameSite: 'lax' as const,
   };
+  app.post(
+    '/auth/local',
+    { config: { rateLimit: { max: 10, timeWindow: '1 minute' } } },
+    async (req, reply) => {
+      if (config.AUTH_MODE !== 'local' || config.NODE_ENV === 'production')
+        throw new AppError(404, 'Страница не найдена');
+      if (!req.headers.origin) throw new AppError(403, 'Откройте страницу локального редактора');
+      const { token } = issueLocalSession();
+      revokeLocalSession(req.cookies.bunker_local);
+      reply.setCookie('bunker_local', token, { ...cookieOptions, maxAge: 8 * 3600 });
+      return { ok: true };
+    },
+  );
   app.get('/api/me', async (req) => ({
     user: req.actor && { id: req.actor.id, role: req.actor.role, name: req.actor.display_name },
     csrf: req.actor?.csrf || '',
@@ -89,6 +103,8 @@ export async function authRoutes(app: FastifyInstance) {
     },
   );
   app.post('/auth/logout', async (req, reply) => {
+    revokeLocalSession(req.cookies.bunker_local);
+    reply.clearCookie('bunker_local', cookieOptions);
     await pool.query('DELETE FROM sessions WHERE token_hash=$1', [
       hash(req.cookies.bunker_session || ''),
     ]);
