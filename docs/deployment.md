@@ -10,7 +10,7 @@
 
 ## Деплой
 
-Workflow `.github/workflows/check.yml` проверяет типы, сборку и тесты PostgreSQL/S3/PDF. При push в master и repository variable `DEPLOY_ENABLED=true` следующий job собирает Linux-образ, передаёт его с файлами deploy по SSH и запускает `deploy/release.sh` для точного SHA коммита. GitHub environment production содержит DEPLOY_HOST, DEPLOY_USER, DEPLOY_KEY, DEPLOY_KNOWN_HOSTS. Закрытый ключ и пароли не входят в Git.
+Workflow `.github/workflows/check.yml` проверяет типы, сборку и тесты PostgreSQL/S3/PDF. При push в master и repository variable `DEPLOY_ENABLED=true` следующий job собирает Linux-образ, публикует его в приватный `ghcr.io/alegenda/bunker-admin`; сервер скачивает слои из реестра, файлы deploy передаются по SSH и запускает `deploy/release.sh` для точного SHA коммита. GitHub environment production содержит DEPLOY_HOST, DEPLOY_USER, DEPLOY_KEY, DEPLOY_KNOWN_HOSTS. Закрытый ключ и пароли не входят в Git. Для скачивания контейнера используется краткоживущий GITHUB_TOKEN текущего Actions job; временный Docker login на сервере удаляется после загрузки. Тег master в реестре служит кешем сборки, деплой использует тег точного SHA.
 
 Релизы находятся в `/opt/bunker/releases/<SHA>`, текущий слот/SHA — в `/opt/bunker/active`. Скрипт блокирует параллельные деплои, делает дамп PostgreSQL перед повторным обновлением, применяет миграции и идемпотентный seed. Новая API-версия запускается в свободном слоте blue/green и проходит healthcheck. После этого старый воркер завершает задание, запускается новый, Nginx переключается через graceful reload. При неуспехе проверки HTTPS возвращается предыдущая конфигурация и запускается старый воркер. Через 60 секунд старая API-версия останавливается.
 

@@ -35,12 +35,25 @@ jobs:
       group: production
       cancel-in-progress: false
     environment: production
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE_NAME: ghcr.io/alegenda/bunker-admin
     steps:
       - uses: actions/checkout@v4
       - name: Build production image
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          docker build -t "bunker-admin:$GITHUB_SHA" .
-          docker save "bunker-admin:$GITHUB_SHA" | gzip -1 > /tmp/image.tar.gz
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker pull "$IMAGE_NAME:master" || true
+          docker build --cache-from "$IMAGE_NAME:master" --build-arg BUILDKIT_INLINE_CACHE=1 \
+            --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" \
+            -t "$IMAGE_NAME:$GITHUB_SHA" .
+          docker push "$IMAGE_NAME:$GITHUB_SHA"
+          docker tag "$IMAGE_NAME:$GITHUB_SHA" "$IMAGE_NAME:master"
+          docker push "$IMAGE_NAME:master"
       - name: Configure SSH
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
@@ -54,6 +67,7 @@ jobs:
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           target="$DEPLOY_USER@$DEPLOY_HOST"
@@ -63,8 +77,9 @@ jobs:
           ssh -o BatchMode=yes "$target" 'chmod 644 /opt/bunker/telegram-keys/deploy.json && mv /opt/bunker/telegram-keys/deploy.json /opt/bunker/telegram-keys/jwks.json'
           git archive --format=tar.gz HEAD deploy > /tmp/release.tar.gz
           ssh -o BatchMode=yes "$target" "mkdir -p /opt/bunker/releases/$GITHUB_SHA"
-          scp -o BatchMode=yes /tmp/image.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/image.tar.gz"
           scp -o BatchMode=yes /tmp/release.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/source.tar.gz"
+          # Short-lived Actions token is removed from the server after pulling the private image.
+          printf '%s' "$GH_TOKEN" | ssh -o BatchMode=yes "$target" "set -eu; export DOCKER_CONFIG=/run/bunker-registry-$GITHUB_RUN_ID; umask 077; mkdir -p \"\$DOCKER_CONFIG\"; trap 'rm -rf \"\$DOCKER_CONFIG\"' EXIT; docker login ghcr.io -u '$GITHUB_ACTOR' --password-stdin >/dev/null; docker pull '$IMAGE_NAME:$GITHUB_SHA'; docker tag '$IMAGE_NAME:$GITHUB_SHA' 'bunker-admin:$GITHUB_SHA'"
           ssh -o BatchMode=yes "$target" "cd /opt/bunker/releases/$GITHUB_SHA && tar -xzf source.tar.gz && rm source.tar.gz && bash deploy/release.sh $GITHUB_SHA"
       - if: always()
         run: rm -f ~/.ssh/id_ed25519
