@@ -1,3 +1,4 @@
+import { migrateSourceRules } from '../services/source-migration.js';
 import { refreshCatalog } from '../services/catalog.js';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -10,7 +11,8 @@ export async function seed() {
   await migrate();
   await ensureBucket();
   if ((await pool.query('SELECT id FROM workspace WHERE id=1')).rowCount) {
-    console.log('Database already initialized; draft preserved');
+    await migrateSourceRules();
+    console.log('Database initialized; source migrations checked');
     return;
   }
   const originals = JSON.parse(await readFile('docs/cards.json', 'utf8'));
@@ -42,6 +44,7 @@ export async function seed() {
     await c.query('INSERT INTO workspace(id,baseline) VALUES(1,$1)', [JSON.stringify(cards)]);
     await refreshCatalog(c, cards);
   });
+  await migrateSourceRules();
   console.log(`Imported ${cards.length} cards and rules into PostgreSQL; images stored in S3`);
 }
 if (process.argv[1]?.endsWith('seed.ts') || process.argv[1]?.endsWith('seed.js')) {

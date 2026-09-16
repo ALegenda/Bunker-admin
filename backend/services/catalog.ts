@@ -19,7 +19,18 @@ export async function catalog() {
   const releases = (
     await pool.query('SELECT id,title,created_at FROM releases ORDER BY created_at DESC')
   ).rows;
-  return { cards, releases, title: releases[0]?.title || 'Исходная редакция' };
+  const source = (
+    await pool.query(
+      'SELECT report,applied_at FROM source_migrations ORDER BY applied_at DESC LIMIT 1',
+    )
+  ).rows[0];
+  const sourceIsLatest =
+    source && (!releases[0] || new Date(source.applied_at) > new Date(releases[0].created_at));
+  return {
+    cards,
+    releases,
+    title: sourceIsLatest ? source.report.title : releases[0]?.title || 'Исходная редакция',
+  };
 }
 export async function publicAsset(id: string) {
   return Boolean(
