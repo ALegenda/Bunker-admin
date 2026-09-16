@@ -9,6 +9,7 @@ const env = z
     }, 'PUBLIC_ORIGIN must contain only scheme and host').transform(value=>new URL(value).origin),
     TELEGRAM_CLIENT_ID: z.string().default(''),
     TELEGRAM_CLIENT_SECRET: z.string().default(''),
+    TELEGRAM_JWKS_FILE: z.string().default(''),
     TELEGRAM_ADMIN_IDS: z.string().regex(/^(?:\d+(?:\s*,\s*\d+)*)?$/).default(''),
     DATABASE_URL: z.string().url(),
     S3_ENDPOINT: z.string().url(),

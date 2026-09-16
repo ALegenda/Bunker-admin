@@ -1,5 +1,6 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from 'jose';
+import { createLocalJWKSet, createRemoteJWKSet, jwtVerify, type JWTVerifyGetKey } from 'jose';
+import { readFile } from 'node:fs/promises';
 import { pool, transaction } from '../db/index.js';
 import { config } from '../config.js';
 import { AppError } from '../domain/schema.js';
@@ -8,8 +9,18 @@ export type Actor = { id: string | null; role: Role; display_name: string; csrf:
 export const hash = (s: string) => createHash('sha256').update(s).digest('hex');
 export const randomToken = () => randomBytes(32).toString('base64url');
 const keys = createRemoteJWKSet(new URL('https://oauth.telegram.org/.well-known/jwks.json'));
-export async function verifyTelegramToken(token: string, signingKeys: JWTVerifyGetKey = keys) {
-  const { payload } = await jwtVerify(token, signingKeys, {
+export async function verifyTelegramToken(token: string, signingKeys?: JWTVerifyGetKey) {
+  if (!signingKeys && config.TELEGRAM_JWKS_FILE) {
+    try {
+      const cached = JSON.parse(await readFile(config.TELEGRAM_JWKS_FILE, 'utf8'));
+      const age = Date.now() - Date.parse(cached.fetchedAt);
+      if (!Number.isFinite(age) || age < -300000 || age > 7 * 86400000) throw Error('Stale keys');
+      signingKeys = createLocalJWKSet({ keys: cached.keys });
+    } catch {
+      throw new AppError(503, 'Ключи Telegram временно недоступны. Попробуйте позже.');
+    }
+  }
+  const { payload } = await jwtVerify(token, signingKeys || keys, {
     issuer: 'https://oauth.telegram.org',
     audience: config.TELEGRAM_CLIENT_ID,
     algorithms: ['RS256'],
@@ -22,6 +33,7 @@ export async function verifyTelegramToken(token: string, signingKeys: JWTVerifyG
     telegramId: String(payload.id),
     name: payload.name.slice(0, 200),
     username: String(payload.preferred_username || '').slice(0, 100),
+    nonce: typeof payload.nonce === 'string' ? payload.nonce : '',
   };
 }
 export async function issueSession(identity: {

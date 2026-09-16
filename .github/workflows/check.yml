@@ -57,6 +57,10 @@ jobs:
         run: |
           set -euo pipefail
           target="$DEPLOY_USER@$DEPLOY_HOST"
+          python3 deploy/fetch-telegram-keys.py > /tmp/telegram-jwks.json
+          ssh -o BatchMode=yes "$target" 'install -d -m 755 /opt/bunker/telegram-keys'
+          scp -o BatchMode=yes /tmp/telegram-jwks.json "$target:/opt/bunker/telegram-keys/deploy.json"
+          ssh -o BatchMode=yes "$target" 'chmod 644 /opt/bunker/telegram-keys/deploy.json && mv /opt/bunker/telegram-keys/deploy.json /opt/bunker/telegram-keys/jwks.json'
           git archive --format=tar.gz HEAD deploy > /tmp/release.tar.gz
           ssh -o BatchMode=yes "$target" "mkdir -p /opt/bunker/releases/$GITHUB_SHA"
           scp -o BatchMode=yes /tmp/image.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/image.tar.gz"

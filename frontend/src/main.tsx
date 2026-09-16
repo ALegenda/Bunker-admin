@@ -1,4 +1,5 @@
 import { Header } from './components/Header.js';
+import { TelegramLogin } from './components/TelegramLogin.js';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { Me, Workspace } from '../../shared/contracts.js';
@@ -99,9 +100,7 @@ function App() {
                   Для вычитки и редактирования войдите через Telegram. Права выдаёт администратор.
                 </p>
                 {!me.user && (
-                  <a className="telegram" href="/auth/telegram">
-                    Войти через Telegram
-                  </a>
+                  <TelegramLogin />
                 )}
               </>
             )}

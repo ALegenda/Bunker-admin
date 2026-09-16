@@ -34,7 +34,7 @@ export async function security(app: FastifyInstance) {
       .header('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
       .header(
         'Content-Security-Policy',
-        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+        "default-src 'self'; script-src 'self' https://oauth.telegram.org; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://oauth.telegram.org; frame-src https://oauth.telegram.org; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
       );
     if (config.NODE_ENV === 'production')
       reply.header('Strict-Transport-Security', 'max-age=31536000');
@@ -58,7 +58,12 @@ export async function security(app: FastifyInstance) {
         !(config.AUTH_MODE === 'local' && [`http://${host}`, `https://${host}`].includes(origin))
       )
         throw new AppError(403, 'Недопустимый источник запроса');
-      if (path !== '/auth/local' && (!req.actor || req.headers['x-csrf-token'] !== req.actor.csrf))
+      if (path === '/auth/telegram/complete' && origin !== config.PUBLIC_ORIGIN)
+        throw new AppError(403, 'Недопустимый источник запроса');
+      if (
+        !['/auth/local', '/auth/telegram/complete'].includes(path) &&
+        (!req.actor || req.headers['x-csrf-token'] !== req.actor.csrf)
+      )
         throw new AppError(403, 'Обновите страницу и повторите действие');
     }
     const publicRoute = new Set([

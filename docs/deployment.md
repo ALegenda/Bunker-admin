@@ -20,6 +20,10 @@ Workflow `.github/workflows/check.yml` проверяет типы, сборку
 
 ## Telegram
 
+На этом сервере исходящее соединение с `oauth.telegram.org:443` завершается таймаутом. Экран входа использует официальный Telegram Login JS SDK: браузер получает подписанный ID token, сервер проверяет RS256, issuer, audience, срок, одноразовый nonce и привязку к HttpOnly cookie. Секрет бота не передаётся браузеру. Прямой OIDC callback оставлен для совместимости, но при блокировке сети использовать нужно кнопку на `/admin`.
+
+Публичные ключи берутся только с официального HTTPS endpoint Telegram на GitHub runner: при каждом деплое и каждые шесть часов (`telegram-keys.yml`). Они атомарно устанавливаются в `/opt/bunker/telegram-keys/jwks.json`, каталог монтируется в API только для чтения. Ключи старше семи дней отвергаются. Ошибки refresh workflow нужно устранять; это необходимо для ротации ключей Telegram. `TELEGRAM_JWKS_FILE` включает этот режим, без него используется прямой JWKS endpoint.
+
 `PUBLIC_ORIGIN=https://bunker-176-113-82-38.sslip.io`, первый администратор `TELEGRAM_ADMIN_IDS=231142381` (@TomKuper). Client ID/Secret находятся только в серверном .env. В BotFather Web Login нужны Allowed URLs:
 
 - https://bunker-176-113-82-38.sslip.io

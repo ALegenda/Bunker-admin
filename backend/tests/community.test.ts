@@ -3,6 +3,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 import { randomUUID } from 'node:crypto';
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { generateKeyPair, exportJWK, SignJWT } from 'jose';
 await test('Production access, sessions, catalogue and proposal workflow', async (t) => {
   const control = new pg.Pool({ connectionString: process.env.DATABASE_URL });
   const schema = 'bunker_test_' + randomUUID().replaceAll('-', '');
@@ -49,6 +53,100 @@ await test('Production access, sessions, catalogue and proposal workflow', async
   });
   const app = await createApp();
   try {
+    await t.test(
+      'browser Telegram login verifies signature, nonce, origin, browser binding and replay protection',
+      async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), 'bunker-telegram-test-'));
+        const previousKeys = config.TELEGRAM_JWKS_FILE;
+        const previousClient = config.TELEGRAM_CLIENT_ID;
+        config.TELEGRAM_CLIENT_ID = '12345';
+        config.TELEGRAM_JWKS_FILE = path.join(directory, 'jwks.json');
+        const { privateKey, publicKey } = await generateKeyPair('RS256');
+        const jwk = { ...(await exportJWK(publicKey)), kid: 'sdk-test', alg: 'RS256' };
+        const writeKeys = (date: Date) =>
+          writeFile(
+            config.TELEGRAM_JWKS_FILE,
+            JSON.stringify({ fetchedAt: date.toISOString(), keys: [jwk] }),
+          );
+        await writeKeys(new Date());
+        const begin = async () => {
+          const r = await app.inject({
+            url: '/auth/telegram/init',
+            headers: { host: 'localhost:4173' },
+          });
+          assert.equal(r.statusCode, 200);
+          return {
+            nonce: r.json().nonce,
+            cookie: 'bunker_login=' + r.cookies.find((c) => c.name === 'bunker_login')!.value,
+          };
+        };
+        const sign = (nonce: string, audience = '12345', expires = '5m') =>
+          new SignJWT({ id: 100, name: 'Admin', nonce })
+            .setProtectedHeader({ alg: 'RS256', kid: 'sdk-test' })
+            .setIssuer('https://oauth.telegram.org')
+            .setAudience(audience)
+            .setSubject('100')
+            .setIssuedAt()
+            .setExpirationTime(expires)
+            .sign(privateKey);
+        const complete = (
+          token: string,
+          cookie: string,
+          origin: string | undefined = config.PUBLIC_ORIGIN,
+        ) =>
+          app.inject({
+            method: 'POST',
+            url: '/auth/telegram/complete',
+            payload: { id_token: token },
+            headers: { host: 'localhost:4173', cookie, ...(origin ? { origin } : {}) },
+          });
+        try {
+          const first = await begin();
+          const token = await sign(first.nonce);
+          assert.equal((await complete(token, first.cookie, '')).statusCode, 403);
+          assert.equal(
+            (await complete(token, first.cookie, 'https://evil.invalid')).statusCode,
+            403,
+          );
+          assert.equal((await complete(token, '')).statusCode, 401);
+          assert.equal((await complete(await sign('wrong-nonce'), first.cookie)).statusCode, 401);
+          assert.equal(
+            (await complete(await sign(first.nonce, 'wrong-audience'), first.cookie)).statusCode,
+            401,
+          );
+          assert.equal(
+            (await complete(await sign(first.nonce, '12345', '-1s'), first.cookie)).statusCode,
+            401,
+          );
+          assert.equal(
+            (await complete(token.slice(0, -10) + 'tamperedXX', first.cookie)).statusCode,
+            401,
+          );
+          const second = await begin();
+          assert.equal((await complete(token, second.cookie)).statusCode, 401);
+          const accepted = await complete(token, first.cookie);
+          assert.equal(accepted.statusCode, 200);
+          const session = accepted.cookies.find((c) => c.name === 'bunker_session')!;
+          assert.equal(session.httpOnly, true);
+          assert.equal((await sessionActor(session.value))?.role, 'admin');
+          assert.equal((await complete(token, first.cookie)).statusCode, 401);
+          await pool.query(
+            "UPDATE login_attempts SET expires_at=now()-interval '1 second' WHERE state_hash=$1",
+            [hash(second.nonce)],
+          );
+          assert.equal((await complete(await sign(second.nonce), second.cookie)).statusCode, 401);
+          const third = await begin();
+          await writeKeys(new Date(Date.now() - 8 * 86400000));
+          assert.equal((await complete(await sign(third.nonce), third.cookie)).statusCode, 503);
+          await writeKeys(new Date());
+          assert.equal((await complete(await sign(third.nonce), third.cookie)).statusCode, 200);
+        } finally {
+          config.TELEGRAM_JWKS_FILE = previousKeys;
+          config.TELEGRAM_CLIENT_ID = previousClient;
+          await rm(directory, { recursive: true, force: true });
+        }
+      },
+    );
     await t.test(
       'anonymous visitors see released data but cannot read drafts or private jobs',
       async () => {

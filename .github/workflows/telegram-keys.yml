@@ -1,0 +1,37 @@
+name: Refresh Telegram public keys
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: telegram-public-keys
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 deploy/fetch-telegram-keys.py > /tmp/telegram-jwks.json
+      - name: Install refreshed public keys
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+          target="$DEPLOY_USER@$DEPLOY_HOST"
+          ssh -o BatchMode=yes "$target" 'install -d -m 755 /opt/bunker/telegram-keys'
+          scp -o BatchMode=yes /tmp/telegram-jwks.json "$target:/opt/bunker/telegram-keys/scheduled.json"
+          ssh -o BatchMode=yes "$target" 'chmod 644 /opt/bunker/telegram-keys/scheduled.json && mv /opt/bunker/telegram-keys/scheduled.json /opt/bunker/telegram-keys/jwks.json'
+      - if: always()
+        run: rm -f ~/.ssh/id_ed25519

@@ -32,6 +32,51 @@ export async function authRoutes(app: FastifyInstance) {
     authMode: config.AUTH_MODE,
   }));
   app.get(
+    '/auth/telegram/init',
+    { config: { rateLimit: { max: 20, timeWindow: '1 minute' } } },
+    async (_req, reply) => {
+      if (config.AUTH_MODE !== 'telegram') throw new AppError(404, 'Страница не найдена');
+      const nonce = randomToken(),
+        browser = randomToken();
+      await pool.query('DELETE FROM login_attempts WHERE expires_at < now()');
+      await pool.query(
+        "INSERT INTO login_attempts(state_hash,browser_hash,verifier,expires_at) VALUES($1,$2,'sdk',now()+interval '10 minutes')",
+        [hash(nonce), hash(browser)],
+      );
+      reply.setCookie('bunker_login', browser, { ...cookieOptions, maxAge: 600 });
+      return { client_id: Number(config.TELEGRAM_CLIENT_ID), nonce };
+    },
+  );
+  app.post(
+    '/auth/telegram/complete',
+    { config: { rateLimit: { max: 20, timeWindow: '1 minute' } } },
+    async (req, reply) => {
+      if (config.AUTH_MODE !== 'telegram') throw new AppError(404, 'Страница не найдена');
+      const { id_token } = z.object({ id_token: z.string().min(20).max(16384) }).parse(req.body);
+      let identity;
+      try {
+        identity = await verifyTelegramToken(id_token);
+      } catch (error) {
+        if (error instanceof AppError && error.statusCode === 503) throw error;
+        throw new AppError(401, 'Telegram не подтвердил вход. Попробуйте снова.');
+      }
+      if (!identity.nonce) throw new AppError(401, 'Вход устарел. Попробуйте снова.');
+      const attempt = await pool.query(
+        "DELETE FROM login_attempts WHERE state_hash=$1 AND browser_hash=$2 AND verifier='sdk' AND expires_at>now() RETURNING state_hash",
+        [hash(identity.nonce), hash(req.cookies.bunker_login || '')],
+      );
+      if (!attempt.rowCount) throw new AppError(401, 'Вход устарел. Попробуйте снова.');
+      const token = await issueSession(identity);
+      if (req.cookies.bunker_session)
+        await pool.query('DELETE FROM sessions WHERE token_hash=$1', [
+          hash(req.cookies.bunker_session),
+        ]);
+      reply.clearCookie('bunker_login', cookieOptions);
+      reply.setCookie('bunker_session', token, { ...cookieOptions, maxAge: 7 * 24 * 3600 });
+      return { ok: true };
+    },
+  );
+  app.get(
     '/auth/telegram',
     { config: { rateLimit: { max: 10, timeWindow: '1 minute' } } },
     async (_req, reply) => {

@@ -19,6 +19,8 @@ services:
       PORT: '4173'
       NODE_ENV: production
       AUTH_MODE: telegram
+      TELEGRAM_JWKS_FILE: /run/telegram-keys/jwks.json
+    volumes: ['/opt/bunker/telegram-keys:/run/telegram-keys:ro']
     ports: ['127.0.0.1:${APP_PORT:?Set slot port}:4173']
     tmpfs: ['/tmp:size=64m,mode=1777']
     mem_limit: 256m
