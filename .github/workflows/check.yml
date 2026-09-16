@@ -37,6 +37,10 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+      - name: Build production image
+        run: |
+          docker build -t "bunker-admin:$GITHUB_SHA" .
+          docker save "bunker-admin:$GITHUB_SHA" | gzip -1 > /tmp/image.tar.gz
       - name: Configure SSH
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
@@ -53,8 +57,9 @@ jobs:
         run: |
           set -euo pipefail
           target="$DEPLOY_USER@$DEPLOY_HOST"
-          git archive --format=tar.gz HEAD > /tmp/release.tar.gz
+          git archive --format=tar.gz HEAD deploy > /tmp/release.tar.gz
           ssh -o BatchMode=yes "$target" "mkdir -p /opt/bunker/releases/$GITHUB_SHA"
+          scp -o BatchMode=yes /tmp/image.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/image.tar.gz"
           scp -o BatchMode=yes /tmp/release.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/source.tar.gz"
           ssh -o BatchMode=yes "$target" "cd /opt/bunker/releases/$GITHUB_SHA && tar -xzf source.tar.gz && rm source.tar.gz && bash deploy/release.sh $GITHUB_SHA"
       - if: always()

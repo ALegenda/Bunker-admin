@@ -32,7 +32,7 @@ npm start
 
 Бот: `@bunker_vdk_bot`. Домен покупать необязательно — можно использовать постоянный HTTPS-адрес хостинга. Реальный вход требует Client ID/Client Secret из Web Login в BotFather, Allowed URLs и числового Telegram ID первого администратора.
 
-Подробно: [docs/production.md](docs/production.md). Автоматический деплой из `master`: [docs/deployment.md](docs/deployment.md). Файлы ручного запуска: `compose.production.yaml`, примеры HTTPS-прокси и ежедневных backup в `deploy/`. Они подготовлены, но внешний сервер и расписание на этом компьютере не развёрнуты.
+Подробно: [docs/production.md](docs/production.md). Автоматический деплой из `master`: [docs/deployment.md](docs/deployment.md). Файлы ручного запуска: `compose.production.yaml`, примеры HTTPS-прокси и ежедневных backup в `deploy/`. Рабочий сервер и CI/CD описаны в инструкции деплоя.
 
 ## Роли
 

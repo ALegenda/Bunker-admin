@@ -1,39 +1,40 @@
-# Деплой из master
+# Production и CI/CD
 
-Подготовлен workflow `.github/workflows/check.yml`: проверка типов, сборка, 31 тест с PostgreSQL/S3/PDF, затем SSH-деплой только push в `master`. Секреты и активация на сервере ещё не настроены. На 16 сентября 2026 SSH 176.113.82.38:22 закрывает соединение до авторизации; проект опубликован в приватном GitHub-репозитории ALegenda/Bunker-admin. Пользователь отложил подключение к серверу.
+Адрес: https://bunker-176-113-82-38.sslip.io. Бесплатное DNS-имя sslip.io указывает на 176.113.82.38. Репозиторий: https://github.com/ALegenda/Bunker-admin, ветка master.
 
-## Первичная настройка сервера
+## Сервер
 
-Выбран бесплатный адрес `https://bunker-176-113-82-38.sslip.io`. DNS проверен: `176.113.82.38`. Это поддомен сервиса [sslip.io](https://sslip.io/), привязанный к текущему IP, без регистрации и покупки домена. HTTPS пока не активирован: Caddy выпустит сертификат после установки на доступный сервер с открытыми портами 80/443. Имя сохранено в `deploy/domain`, первоначальный ответ до запуска приложения — в `deploy/Caddyfile.bootstrap`.
+На сервере уже работают Nginx и другой сайт; Bunker использует отдельный virtual host `/etc/nginx/sites-available/bunker`. HTTPS выдан Let’s Encrypt; `certbot.timer` продлевает сертификат, deploy-hook перезагружает Nginx. Порты PostgreSQL не опубликованы, MinIO доступен только на loopback 59000. API слушает loopback 4173 или 4174. Секреты находятся в `/opt/bunker/.env` с правами 600. Приложение использует отдельную S3-учётную запись с доступом только к bucket bunker. Конфигурация инфраструктуры: `/opt/bunker/compose.infra.yaml`.
 
-В серверном `.env` задать `PUBLIC_ORIGIN=https://bunker-176-113-82-38.sslip.io` и `TELEGRAM_ADMIN_IDS=231142381`. В BotFather Web Login для бота добавить в Allowed URLs:
+Сервер имеет около 900 МБ RAM и 2 ГБ swap. Сборка образа выполняется на GitHub runner. API ограничен 256 МБ, PDF-воркер — 512 МБ; одновременно работает один воркер. PDF может работать медленнее при использовании swap.
 
-- `https://bunker-176-113-82-38.sslip.io`
-- `https://bunker-176-113-82-38.sslip.io/auth/callback`
+## Деплой
 
-Telegram Client Secret хранить только в серверном `.env`. При смене IP потребуется новое DNS-имя и обновление Allowed URLs.
+Workflow `.github/workflows/check.yml` проверяет типы, сборку и тесты PostgreSQL/S3/PDF. При push в master и repository variable `DEPLOY_ENABLED=true` следующий job собирает Linux-образ, передаёт его с файлами deploy по SSH и запускает `deploy/release.sh` для точного SHA коммита. GitHub environment production содержит DEPLOY_HOST, DEPLOY_USER, DEPLOY_KEY, DEPLOY_KNOWN_HOSTS. Закрытый ключ и пароли не входят в Git.
 
-Требуются Linux, Docker с Compose v2, Caddy как systemd service, curl, flock, tar; свободные порты 80/443 и loopback 4173/4174. DNS выбранного домена должен указывать на сервер. Учтите память для двух API, двух PDF-воркеров и сборки образа во время обновления.
+Релизы находятся в `/opt/bunker/releases/<SHA>`, текущий слот/SHA — в `/opt/bunker/active`. Скрипт блокирует параллельные деплои, делает дамп PostgreSQL перед повторным обновлением, применяет миграции и идемпотентный seed. Новая API-версия запускается в свободном слоте blue/green и проходит healthcheck. После этого старый воркер завершает задание, запускается новый, Nginx переключается через graceful reload. При неуспехе проверки HTTPS возвращается предыдущая конфигурация и запускается старый воркер. Через 60 секунд старая API-версия останавливается.
 
-1. Создать `/opt/bunker/releases` и `/opt/bunker/backups`.
-2. Создать `/opt/bunker/.env` с правами 600. Использовать production-параметры из `docs/production.md`, индивидуальные пароли БД и S3, Telegram OIDC и ID администратора. Для контейнеров задать `DATABASE_URL=postgres://bunker:ПАРОЛЬ@postgres:5432/bunker`, `S3_ENDPOINT=http://minio:9000`. Значения `NODE_ENV=production`, `AUTH_MODE=telegram`, `PUBLIC_ORIGIN=https://ДОМЕН` обязательны. Не копировать локальный режим администратора в интернет.
-3. Скопировать `deploy/domain` в `/opt/bunker/domain`.
-4. Из распакованного проекта запустить инфраструктуру: `docker compose --env-file /opt/bunker/.env up -d --wait postgres minio`. Она использует постоянные тома `bunker-admin` и сеть `bunker-admin_default`. Сначала проверить, что на сервере нет конфликтующих сервисов/томов. Не запускать старый сервис api на том же порту.
-5. Добавить `import /etc/caddy/bunker.caddy` в Caddyfile, сохранив остальные сайты. Скопировать `deploy/Caddyfile.bootstrap` в `/etc/caddy/bunker.caddy`, проверить конфигурацию и запустить Caddy.
-6. Настроить отдельный SSH-ключ для CI. У пользователя деплоя должны быть права на `/opt/bunker`, Docker, файл `/etc/caddy/bunker.caddy` и reload Caddy. Эти права эквивалентны административному доступу; ключ хранить только в GitHub Secrets. Проверить ключ хоста через доверенную консоль провайдера.
-7. В GitHub environment `production` задать `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_KEY` (закрытый ключ), `DEPLOY_KNOWN_HOSTS` (проверенная запись known_hosts). Workflow использует порт 22.
-8. После готовности сервера задать repository variable `DEPLOY_ENABLED=true`. Пока она не задана, CI выполняет проверки, а job deploy пропускается. Отправить коммит в `master`; проверить успешный Actions run, HTTPS `/api/health`, каталог и Telegram-вход.
+База, сессии и файлы общие для обоих слотов. Хешированные JS/CSS старых версий сохраняются в `/opt/bunker/static/assets`, чтобы открытые вкладки продолжали загружать ресурсы.
 
-## Как обновляется приложение
+Миграции должны оставаться совместимыми с предыдущей версией. Возврат приложения не откатывает схему БД. Старые образы и релизы автоматически не удаляются: отслеживайте свободное место, удаляйте только версии, которые больше не нужны для отката.
 
-CI передаёт архив проверенного коммита в `/opt/bunker/releases/<SHA>`. `deploy/release.sh` блокирует параллельный деплой, собирает новый образ, сохраняет дамп PostgreSQL перед повторным обновлением и выполняет миграции/идемпотентный seed. Затем запускает свободный слот blue/green, ожидает healthcheck PostgreSQL/S3 и проверяет запуск воркера. Caddy переключается через graceful reload. При неуспешной HTTPS-проверке возвращается предыдущая конфигурация. После успеха старая версия получает время завершить HTTP-запросы, затем останавливается; воркер получает до 120 секунд на завершение задания.
+## Telegram
 
-Сессии, карточки и очередь хранятся в общей БД; S3 и тома не пересоздаются. Хешированные JS/CSS обоих релизов остаются доступны через Caddy. Старые образы, исходники, ассеты и дампы автоматически не удаляются: следите за диском и настройте срок хранения после определения политики резервного копирования.
+`PUBLIC_ORIGIN=https://bunker-176-113-82-38.sslip.io`, первый администратор `TELEGRAM_ADMIN_IDS=231142381` (@TomKuper). Client ID/Secret находятся только в серверном .env. В BotFather Web Login нужны Allowed URLs:
 
-Миграции должны быть совместимы с предыдущей версией приложения (добавление полей/таблиц перед их использованием; удаление отдельным последующим релизом). Возврат прокси не откатывает схему БД. Дамп перед деплоем не заменяет регулярную внешнюю копию PostgreSQL и S3. При первом деплое старой рабочей версии для отката ещё нет.
+- https://bunker-176-113-82-38.sslip.io
+- https://bunker-176-113-82-38.sslip.io/auth/callback
 
-## Ручной повтор и откат
+Чужие Telegram-аккаунты получают роль player. При смене IP потребуется новое DNS-имя, сертификат, origin и Allowed URLs.
 
-После проверки совместимости схемы можно повторно развернуть сохранённый коммит: `bash /opt/bunker/releases/<SHA>/deploy/release.sh <SHA>`. Источник истины для активного слота — `/opt/bunker/active`. Не редактируйте эту запись вручную. После перезагрузки Docker поднимает контейнеры с `restart: unless-stopped`, Caddy читает последнюю сохранённую конфигурацию.
+## Резервные копии
 
-Полный сценарий переключения и отката необходимо проверить на доступном сервере; локально проверены приложение (31 тест), Docker-сборка, HTTP production-контейнера, синтаксис shell и конфигурация Compose.
+`bunker-production-backup.timer` ежедневно запускает `/opt/bunker/backup.sh`: дамп PostgreSQL, копия bucket и SHA256SUMS. Каталог `/opt/bunker/backups/daily` доступен только root; завершённые ежедневные копии хранятся 14 дней. Дампы перед деплоями находятся отдельно в `/opt/bunker/backups`. Локальная копия не защищает от потери сервера — внешнее хранилище пока не настроено.
+
+Для восстановления сначала проверить SHA256SUMS, восстановить database.dump через pg_restore в отдельную БД, загрузить objects в отдельный приватный bucket, отозвать старые сессии и проверить данные перед переключением. Реквизиты .env хранить отдельно от данных.
+
+## Повторный запуск и проверка
+
+Повторить деплой или откатить приложение при совместимой схеме: `bash /opt/bunker/releases/<SHA>/deploy/release.sh <SHA>` (образ должен оставаться на сервере). Проверка: `curl -f https://bunker-176-113-82-38.sslip.io/api/health`. Логи: `docker compose -p bunker-blue -f /opt/bunker/releases/<SHA>/deploy/compose.release.yaml logs --tail 100` с соответствующими RELEASE и APP_PORT; для green использовать другой слот.
+
+Первичная установка на новом сервере: Docker Compose v2; `deploy/compose.infra.yaml` и .env в `/opt/bunker`; поднять инфраструктуру; создать приватный bucket и scoped S3-пользователя; подготовить DNS, Nginx и сертификат; установить backup service/timer; настроить GitHub secrets; включить DEPLOY_ENABLED и отправить коммит в master. `deploy/nginx.conf.template` — рабочий шаблон; старые Caddy-примеры для этого сервера не используются.

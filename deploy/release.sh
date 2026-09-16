@@ -19,7 +19,11 @@ port=4173
 if [[ "$old_slot" == blue ]]; then slot=green; port=4174; fi
 export RELEASE=$release APP_PORT=$port
 compose=(docker compose -p "bunker-$slot" -f deploy/compose.release.yaml)
-docker build -t "bunker-admin:$release" .
+if [[ -f image.tar.gz ]]; then
+  gzip -dc image.tar.gz | docker load
+  rm image.tar.gz
+fi
+docker image inspect "bunker-admin:$release" >/dev/null
 # Preserve hashed frontend assets so tabs opened before deployment keep working.
 mkdir -p "$root/static/assets"
 asset_container=$(docker create "bunker-admin:$release")
@@ -34,19 +38,20 @@ find "$root/static/assets" -type f -exec chmod 644 {} +
 docker network inspect bunker-admin_default >/dev/null
 mkdir -p "$root/backups"
 if [[ -n "$old_slot" ]]; then
-  docker compose --env-file "$root/.env" -f compose.yaml exec -T postgres \
+  docker compose --env-file "$root/.env" -f deploy/compose.infra.yaml exec -T postgres \
     pg_dump -U bunker -d bunker -Fc > "$root/backups/before-$release.dump"
 fi
 # Seed preserves existing drafts; migrations must remain compatible with the old API.
 "${compose[@]}" run --rm --no-deps api node dist/backend/db/seed.js
 switched=false
+old_worker_stopped=false
 rollback() {
   status=$?
   trap - EXIT
   if [[ $status -ne 0 ]]; then
     if [[ -f "$root/proxy.previous" ]]; then
-      cp "$root/proxy.previous" /etc/caddy/bunker.caddy
-      if ! systemctl reload caddy; then
+      cp "$root/proxy.previous" /etc/nginx/sites-available/bunker
+      if ! (nginx -t && systemctl reload nginx); then
         echo 'Proxy rollback failed; leaving both slots running for recovery' >&2
         exit "$status"
       fi
@@ -55,30 +60,47 @@ rollback() {
       exit "$status"
     fi
     "${compose[@]}" down || true
+    if [[ "$old_worker_stopped" == true ]]; then old_compose start worker || true; fi
   fi
   exit "$status"
 }
+old_compose() {
+  RELEASE=$old_release APP_PORT=$([[ "$old_slot" == blue ]] && echo 4173 || echo 4174) \
+    docker compose -p "bunker-$old_slot" -f "$root/releases/$old_release/deploy/compose.release.yaml" "$@"
+}
 rm -f "$root/proxy.previous"
-if [[ -f /etc/caddy/bunker.caddy ]]; then cp /etc/caddy/bunker.caddy "$root/proxy.previous"; fi
+if [[ -f /etc/nginx/sites-available/bunker ]]; then cp /etc/nginx/sites-available/bunker "$root/proxy.previous"; fi
 trap rollback EXIT
 "${compose[@]}" up -d --wait --wait-timeout 150 api
+if [[ -n "$old_slot" ]]; then
+  old_compose stop worker
+  old_worker_stopped=true
+fi
 "${compose[@]}" up -d worker
 sleep 5
 worker_id=$("${compose[@]}" ps -q worker)
 [[ -n "$worker_id" && "$(docker inspect -f '{{.State.Running}}' "$worker_id")" == true ]]
 [[ "$(docker inspect -f '{{.RestartCount}}' "$worker_id")" == 0 ]]
-printf '%s {\n  encode zstd gzip\n  handle /assets/* {\n    root * /opt/bunker/static\n    file_server\n  }\n  handle {\n    reverse_proxy 127.0.0.1:%s\n  }\n}\n' "$domain" "$port" > /etc/caddy/bunker.caddy
-chmod 644 /etc/caddy/bunker.caddy
-caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
-systemctl reload caddy
+sed -e "s/__DOMAIN__/$domain/g" -e "s/__PORT__/$port/g" deploy/nginx.conf.template > /etc/nginx/sites-available/bunker
+chmod 644 /etc/nginx/sites-available/bunker
+nginx -t
+systemctl reload nginx
 switched=true
-curl --fail --silent --show-error --retry 10 --retry-delay 3 --retry-all-errors \
-  --connect-timeout 5 --max-time 10 --resolve "$domain:443:127.0.0.1" "https://$domain/api/health"
+healthy=false
+for attempt in {1..10}; do
+  if curl --fail --silent --show-error --connect-timeout 5 --max-time 10 \
+    --resolve "$domain:443:127.0.0.1" "https://$domain/api/health"; then
+    healthy=true
+    break
+  fi
+  sleep 3
+done
+[[ "$healthy" == true ]]
 printf '%s %s\n' "$slot" "$release" > "$root/active.next"
 mv "$root/active.next" "$root/active"
 trap - EXIT
 if [[ -n "$old_slot" ]]; then
-  # Caddy drains existing HTTP requests before the previous containers stop.
+  # Nginx drains existing HTTP requests before the previous containers stop.
   sleep 60
   RELEASE=$old_release APP_PORT=$([[ "$old_slot" == blue ]] && echo 4173 || echo 4174) \
     docker compose -p "bunker-$old_slot" -f "$root/releases/$old_release/deploy/compose.release.yaml" down

@@ -21,7 +21,8 @@ services:
       AUTH_MODE: telegram
     ports: ['127.0.0.1:${APP_PORT:?Set slot port}:4173']
     tmpfs: ['/tmp:size=64m,mode=1777']
-    mem_limit: 512m
+    mem_limit: 256m
+    memswap_limit: 512m
     pids_limit: 100
     stop_grace_period: 60s
     healthcheck:
@@ -37,10 +38,11 @@ services:
       AUTH_MODE: telegram
       CHROME_PATH: /usr/bin/chromium
       CHROMIUM_NO_SANDBOX: 'true'
-    tmpfs: ['/tmp:size=1g,mode=1777']
-    mem_limit: 1536m
+    tmpfs: ['/tmp:size=256m,mode=1777']
+    mem_limit: 512m
+    memswap_limit: 1g
     pids_limit: 512
-    cpus: 2
+    cpus: 1
     stop_grace_period: 120s
 networks:
   infra:
