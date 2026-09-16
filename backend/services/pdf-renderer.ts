@@ -34,7 +34,14 @@ export async function renderPdf(html: string) {
           `--print-to-pdf=${output}`,
           `file://${input}`,
         ],
-        { stdio: 'ignore' },
+        {
+          stdio: 'ignore',
+          env: {
+            ...process.env,
+            XDG_CONFIG_HOME: path.join(dir, 'config'),
+            XDG_CACHE_HOME: path.join(dir, 'cache'),
+          },
+        },
       );
       const finish = (error?: Error) => {
         if (done) return;
