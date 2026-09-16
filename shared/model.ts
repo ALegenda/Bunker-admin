@@ -1,3 +1,4 @@
+import { descriptionText } from './rich-text.js';
 import type { Card } from './schema.js';
 export type Change = { card: Card; before: Card | undefined };
 // JSONB does not preserve object-key order. Compare semantic values consistently.
@@ -77,11 +78,23 @@ export function summary(items: Change[]) {
           .map(({ card, before }) => {
             const heading = `### ${before ? 'Изменено' : 'Добавлено'}: ${card.name}`;
             if (card.note?.trim()) return `${heading}\n\n${card.note.trim()}`;
-            if (!before) return `${heading}\n\n${card.description || 'Добавлен новый элемент.'}`;
+            if (!before)
+              return `${heading}\n\n${descriptionText(card.description) || 'Добавлен новый элемент.'}`;
             const details = fieldChanges(card, before)
               .map((change) => {
                 if (change.field === 'image') return 'Обновлено изображение.';
-                const format = change.field === 'attributes' ? attributesText : valueText;
+                if (
+                  change.field === 'description' &&
+                  descriptionText(String(change.before ?? '')) ===
+                    descriptionText(String(change.after ?? ''))
+                )
+                  return 'Обновлено форматирование описания.';
+                const format =
+                  change.field === 'attributes'
+                    ? attributesText
+                    : change.field === 'description'
+                      ? (v: unknown) => descriptionText(String(v ?? ''))
+                      : valueText;
                 return `Обновлено: ${change.label.toLowerCase()}.\nБыло: ${format(change.before)}\nСтало: ${format(change.after)}`;
               })
               .join('\n\n');

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { normalizeDescription } from './rich-text.js';
 export const attributes = z
   .object({
     activationTime: z.array(z.string().max(80)).max(10).default([]),
@@ -11,7 +12,7 @@ export const cardSchema = z.object({
   id: z.string().min(1).max(100),
   name: z.string().min(1).max(250),
   cardType: z.enum(['правило', 'роль', 'умение', 'припас', 'мёртвый бонус', 'наёмник']),
-  description: z.string().max(100000),
+  description: z.string().max(100000).transform(normalizeDescription),
   attributes,
   image: z.string().max(3000000).default(''),
   kind: z.string().max(80).default('Уточнение'),

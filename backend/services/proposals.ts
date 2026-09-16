@@ -1,3 +1,4 @@
+import { descriptionText } from '../../shared/rich-text.js';
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
 import { isDeepStrictEqual as equal } from 'node:util';
@@ -12,7 +13,10 @@ export const proposalSchema = z
     cardId: z.string().min(1).max(100).nullable(),
     name: z.string().trim().min(1).max(250),
     cardType: cardSchema.shape.cardType,
-    description: z.string().trim().min(1).max(100000),
+    description: cardSchema.shape.description.refine(
+      (value) => descriptionText(value).trim().length > 0,
+      'Введите описание',
+    ),
     reason: z.string().trim().min(1).max(3000),
   })
   .strict();

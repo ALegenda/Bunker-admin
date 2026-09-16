@@ -197,6 +197,27 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       await saveWorkspace(state, state.revision);
     });
     let jobId = '';
+    await t.test(
+      'formatted descriptions round-trip through PostgreSQL and frozen PDF snapshot',
+      async () => {
+        const { encodeRichText } = await import('../../shared/rich-text.js');
+        const state = await readWorkspace();
+        const description = encodeRichText(
+          '<p><strong>Форматированный текст</strong> <span style="color: #b42318">красный</span></p>',
+        );
+        const draft = {
+          ...state,
+          cards: state.cards.map((card, index) => (index === 0 ? { ...card, description } : card)),
+        };
+        draft.changelogStamp = changeStamp(changes(draft.base, draft.cards));
+        const saved = await saveWorkspace(draft, state.revision);
+        assert.equal((await readWorkspace()).cards[0].description, description);
+        assert.match(
+          await renderRules({ ...state, ...saved }),
+          /<strong>Форматированный текст<\/strong>/,
+        );
+      },
+    );
     await t.test('worker renders immutable database snapshot and stores PDF in S3', async () => {
       const state = await readWorkspace();
       const job = await createJob(state.revision);

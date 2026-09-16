@@ -1,3 +1,4 @@
+import { RichDescription } from './RichDescription.js';
 import { useEffect, useState } from 'react';
 import type { Proposal, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
@@ -72,12 +73,12 @@ export function Proposals({ user }: { user: User }) {
               {p.base && (
                 <section>
                   <h3>Опубликовано</h3>
-                  <p className="description">{p.base.description}</p>
+                  <RichDescription value={p.base.description} />
                 </section>
               )}
               <section>
                 <h3>Предложено</h3>
-                <p className="description">{p.proposed.description}</p>
+                <RichDescription value={p.proposed.description} />
               </section>
             </div>
             {p.review_note && <p>Ответ администратора: {p.review_note}</p>}

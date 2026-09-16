@@ -1,3 +1,6 @@
+import { descriptionText } from '../../../shared/rich-text.js';
+import { DescriptionEditor } from './DescriptionEditor.js';
+import { RichDescription } from './RichDescription.js';
 import { useEffect, useMemo, useState } from 'react';
 import type { Catalog as CatalogData, PublicCard, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
@@ -38,7 +41,7 @@ export function Catalog({ user }: { user: User | null }) {
     (c) =>
       (!type || c.cardType === type) &&
       (!query ||
-        (c.name + ' ' + c.description)
+        (c.name + ' ' + descriptionText(c.description))
           .toLocaleLowerCase('ru')
           .includes(query.toLocaleLowerCase('ru'))) &&
       tags.every((t) => c.attributes.tags.includes(t)) &&
@@ -141,8 +144,8 @@ export function Catalog({ user }: { user: User | null }) {
                   <small>{c.cardType}</small>
                   <h2>{c.name}</h2>
                   <p>
-                    {c.description.slice(0, 140)}
-                    {c.description.length > 140 ? '…' : ''}
+                    {descriptionText(c.description).slice(0, 140)}
+                    {descriptionText(c.description).length > 140 ? '…' : ''}
                   </p>
                   <div className="tags">
                     {c.attributes.tags.map((t) => (
@@ -191,7 +194,7 @@ function CardDialog({
     <Modal title={card.name} close={close}>
       <div className="art-text">
         {card.image && <img className="card-art" src={card.image} alt={card.name} />}
-        <p className="description">{card.description}</p>
+        <RichDescription value={card.description} />
       </div>
       <div className="tags">
         {[
@@ -306,16 +309,7 @@ function ProposalForm({ card, close }: { card: PublicCard | null; close: () => v
               </select>
             </label>
           )}
-          <label>
-            Предлагаемое описание
-            <textarea
-              required
-              rows={12}
-              maxLength={100000}
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </label>
+          <DescriptionEditor label="Предлагаемое описание" value={text} onChange={setText} />
           <label>
             Почему стоит изменить
             <textarea

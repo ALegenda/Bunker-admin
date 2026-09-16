@@ -1,3 +1,4 @@
+import { RichDescription } from './RichDescription.js';
 import { useState, useEffect } from 'react';
 import type { Workspace, Card } from '../../../shared/contracts.js';
 import { useEditor } from '../useEditor.js';
@@ -149,12 +150,22 @@ export function Editor({ initial }: { initial: Workspace }) {
                 <article className="difference" key={d.field}>
                   <h3>{d.label}</h3>
                   <del>
-                    {typeof d.before === 'object'
-                      ? JSON.stringify(d.before)
-                      : String(d.before ?? '—')}
+                    {d.field === 'description' ? (
+                      <RichDescription value={String(d.before ?? '')} />
+                    ) : typeof d.before === 'object' ? (
+                      JSON.stringify(d.before)
+                    ) : (
+                      String(d.before ?? '—')
+                    )}
                   </del>
                   <ins>
-                    {typeof d.after === 'object' ? JSON.stringify(d.after) : String(d.after ?? '—')}
+                    {d.field === 'description' ? (
+                      <RichDescription value={String(d.after ?? '')} />
+                    ) : typeof d.after === 'object' ? (
+                      JSON.stringify(d.after)
+                    ) : (
+                      String(d.after ?? '—')
+                    )}
                   </ins>
                 </article>
               ))}
@@ -171,7 +182,7 @@ export function Editor({ initial }: { initial: Workspace }) {
                       {new Date(h.created_at).toLocaleString('ru')} ·{' '}
                       {h.display_name || 'Администратор'}
                     </summary>
-                    <p className="description">{h.after_data?.description || h.error}</p>
+                    <RichDescription value={h.after_data?.description || h.error || ''} />
                   </details>
                 ))
               ) : (

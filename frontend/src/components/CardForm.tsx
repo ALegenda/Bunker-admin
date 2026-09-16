@@ -1,3 +1,4 @@
+import { DescriptionEditor } from './DescriptionEditor.js';
 import type { Card } from '../../../shared/contracts.js';
 import { api } from '../api.js';
 import { useState } from 'react';
@@ -38,15 +39,10 @@ export function CardForm({
             <img className="card-art" src={card.image} alt={card.name} />
           </a>
         )}
-        <label className="grow">
-          Описание
-          <textarea
-            rows={13}
-            maxLength={100000}
-            value={card.description}
-            onChange={(e) => patch({ description: e.target.value })}
-          />
-        </label>
+        <DescriptionEditor
+          value={card.description}
+          onChange={(description) => patch({ description })}
+        />
       </div>
       <label>
         Готовое изображение · PNG, JPG, WebP до 2 МБ

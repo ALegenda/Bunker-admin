@@ -1,3 +1,4 @@
+import { descriptionHtml } from '../../shared/rich-text.js';
 import { readFileSync } from 'node:fs';
 const changelogCss = readFileSync('resources/print/changelog.css', 'utf8');
 import { readFile } from 'node:fs/promises';
@@ -30,7 +31,7 @@ export function cardMarkup(c: Card, image: string) {
     /^\s+[–—-]\s+/.test(description.slice(c.name.length))
   )
     description = description.slice(c.name.length).replace(/^\s*[–—-]\s*/, '');
-  return `<article class="card" data-card-id="${escapeHtml(c.id)}">${image ? `<img class="card-picture" src="${image}" alt="">` : ''}<div class="card-description"><strong>${escapeHtml(c.name)}</strong>${description ? ' — ' : ''}${paragraphs(description)}</div>${details ? `<p class="attributes">(${escapeHtml(details)})</p>` : ''}</article>`;
+  return `<article class="card" data-card-id="${escapeHtml(c.id)}">${image ? `<img class="card-picture" src="${image}" alt="">` : ''}<div class="card-description"><strong>${escapeHtml(c.name)}</strong>${description ? ' — ' : ''}${descriptionHtml(description)}</div>${details ? `<p class="attributes">(${escapeHtml(details)})</p>` : ''}</article>`;
 }
 export async function renderRules(state: Draft) {
   const rulesCss = await readFile('resources/print/rules.css', 'utf8');
@@ -55,7 +56,7 @@ export async function renderRules(state: Draft) {
     .map(([type, title]) => {
       const cards = state.cards.filter((c) => c.cardType === type);
       if (!cards.length) return '';
-      return `<section><h1>${escapeHtml(title)}</h1>${cards.map((c) => (type === 'правило' ? `<article class="rule"><h2>${escapeHtml(c.name)}</h2>${paragraphs(c.description)}</article>` : cardMarkup(c, images.get(c.image) || ''))).join('')}</section>`;
+      return `<section><h1>${escapeHtml(title)}</h1>${cards.map((c) => (type === 'правило' ? `<article class="rule"><h2>${escapeHtml(c.name)}</h2>${descriptionHtml(c.description)}</article>` : cardMarkup(c, images.get(c.image) || ''))).join('')}</section>`;
     })
     .join('');
   return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'"><title>${escapeHtml(state.release)}</title><style>

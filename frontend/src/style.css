@@ -534,3 +534,25 @@ select,
 textarea {
   font-weight: 400;
 }
+
+.description-field { min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+.description-field > small { color: #737967; font-size: 12px; }
+.rich-editor { border: 1px solid #d9ddce; border-radius: 12px; background: #fff; overflow: hidden; }
+.rich-editor:focus-within { border-color: #7d8b36; box-shadow: 0 0 0 2px #eaf0c5; }
+.format-toolbar { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; padding: 9px; background: #f5f6ef; border-bottom: 1px solid #d9ddce; }
+.format-toolbar button { min-height: 34px; padding: 5px 9px; font-size: 13px; border-radius: 6px; }
+.format-toolbar button[aria-pressed=true] { background: #e8efb0; border-color: #829139; color: #283019; }
+.format-toolbar select { width: auto; min-height: 34px; padding: 5px; font-size: 13px; }
+.format-toolbar .color-control { display: flex; flex-direction: row; align-items: center; gap: 4px; margin: 0; font-size: 12px; }
+.format-toolbar input[type=color] { width: 29px; height: 29px; padding: 2px; cursor: pointer; }
+.rich-editor .tiptap { min-height: 290px; max-height: 650px; overflow-y: auto; padding: 18px; outline: none; }
+.rich-description { overflow-wrap: anywhere; line-height: 1.7; }
+.rich-description p { margin: 0 0 .8em; white-space: pre-wrap; }
+.rich-description p:last-child { margin-bottom: 0; }
+.rich-description ul, .rich-description ol { padding-left: 1.6em; margin: .7em 0; }
+.rich-description li p { margin: .2em 0; }
+.rich-description h2 { font-size: 1.4em; margin: 1em 0 .4em; }
+.rich-description h3 { font-size: 1.15em; margin: 1em 0 .4em; }
+.rich-description blockquote { border-left: 3px solid #a6b568; margin: 1em 0; padding-left: 1em; color: #59604d; }
+.rich-description mark { border-radius: 3px; padding: 0 2px; color: inherit; }
+@media (max-width: 650px) { .rich-editor .tiptap { padding: 12px; } .format-toolbar { gap: 4px; } }
