@@ -9,7 +9,7 @@ services:
       TELEGRAM_CLIENT_SECRET: ${TELEGRAM_CLIENT_SECRET:?Set Telegram Client Secret}
       TELEGRAM_ADMIN_IDS: ${TELEGRAM_ADMIN_IDS:?Set initial admin Telegram user ID}
     healthcheck:
-      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:4173/api/health',{headers:{host:new URL(process.env.PUBLIC_ORIGIN).host}}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      test: ['CMD', 'node', '-e', "require('node:http').get('http://127.0.0.1:4173/api/health',{headers:{host:new URL(process.env.PUBLIC_ORIGIN).host}},r=>{r.resume();process.exitCode=r.statusCode===200?0:1}).on('error',()=>process.exit(1)).setTimeout(3500,function(){this.destroy();process.exit(1)})"]
       interval: 30s
       timeout: 10s
       retries: 3

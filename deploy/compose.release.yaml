@@ -25,7 +25,7 @@ services:
     pids_limit: 100
     stop_grace_period: 60s
     healthcheck:
-      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:4173/api/health',{headers:{host:new URL(process.env.PUBLIC_ORIGIN).host}}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      test: ['CMD', 'node', '-e', "require('node:http').get('http://127.0.0.1:4173/api/health',{headers:{host:new URL(process.env.PUBLIC_ORIGIN).host}},r=>{r.resume();process.exitCode=r.statusCode===200?0:1}).on('error',()=>process.exit(1)).setTimeout(3500,function(){this.destroy();process.exit(1)})"]
       interval: 5s
       timeout: 4s
       retries: 24
