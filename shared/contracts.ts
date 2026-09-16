@@ -16,6 +16,14 @@ export type Workspace = {
   changelogStamp: string;
 };
 export type Release = { id: string; title: string; created_at: string };
+export type CardHistoryEntry = {
+  id: string | number;
+  action: string;
+  before_data: Partial<Card> | null;
+  after_data: Partial<Card> | null;
+  created_at: string;
+  display_name: string | null;
+};
 export type Catalog = { cards: PublicCard[]; releases: Release[]; title: string };
 export type Proposal = {
   id: string;

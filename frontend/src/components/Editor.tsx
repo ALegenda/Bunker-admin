@@ -1,6 +1,7 @@
 import { RichDescription } from './RichDescription.js';
 import { useState, useEffect } from 'react';
-import type { Workspace, Card } from '../../../shared/contracts.js';
+import type { Workspace, Card, CardHistoryEntry } from '../../../shared/contracts.js';
+import { CardHistory } from './CardHistory.js';
 import { useEditor } from '../useEditor.js';
 import { CardForm, cardTypes } from './CardForm.js';
 import { downloadDraft, api } from '../api.js';
@@ -11,23 +12,26 @@ export function Editor({ initial }: { initial: Workspace }) {
     [query, setQuery] = useState(''),
     [type, setType] = useState(''),
     [tab, setTab] = useState('text'),
-    [history, setHistory] = useState<unknown[] | null>(null);
+    [history, setHistory] = useState<CardHistoryEntry[] | null>(null),
+    [historyError, setHistoryError] = useState(''),
+    [historyRetry, setHistoryRetry] = useState(0);
   const card = editor.cards.find((c) => c.id === selected)!;
   useEffect(() => {
     if (tab !== 'history') return;
     let active = true;
     setHistory(null);
-    api<{ history: unknown[] }>('/api/cards/' + encodeURIComponent(selected) + '/history')
+    setHistoryError('');
+    api<{ history: CardHistoryEntry[] }>('/api/cards/' + encodeURIComponent(selected) + '/history')
       .then((r) => {
         if (active) setHistory(r.history);
       })
       .catch((e) => {
-        if (active) setHistory([{ error: e.message }]);
+        if (active) setHistoryError(e.message);
       });
     return () => {
       active = false;
     };
-  }, [selected, tab, editor.dirty]);
+  }, [selected, tab, editor.dirty, historyRetry]);
   const filtered = editor.cards.filter(
     (c) =>
       (!type || c.cardType === type) &&
@@ -105,7 +109,10 @@ export function Editor({ initial }: { initial: Workspace }) {
                 className={c.id === selected ? 'selected' : ''}
                 onClick={() => {
                   setSelected(c.id);
-                  setHistory(null);
+                  if (c.id !== selected) {
+                    setHistory(null);
+                    setHistoryError('');
+                  }
                 }}
               >
                 {c.image ? (
@@ -127,10 +134,10 @@ export function Editor({ initial }: { initial: Workspace }) {
               Текст и изображение
             </button>
             <button aria-pressed={tab === 'diff'} onClick={() => setTab('diff')}>
-              Изменения
+              Изменения к выпуску
             </button>
             <button aria-pressed={tab === 'history'} onClick={() => setTab('history')}>
-              История
+              История правок
             </button>
           </div>
           {tab === 'text' ? (
@@ -171,24 +178,11 @@ export function Editor({ initial }: { initial: Workspace }) {
               ))}
             </>
           ) : (
-            <>
-              <h2>История сохранений</h2>
-              {history === null ? (
-                <p>Загружаем…</p>
-              ) : history.length ? (
-                history.map((h: any) => (
-                  <details key={h.id}>
-                    <summary>
-                      {new Date(h.created_at).toLocaleString('ru')} ·{' '}
-                      {h.display_name || 'Администратор'}
-                    </summary>
-                    <RichDescription value={h.after_data?.description || h.error || ''} />
-                  </details>
-                ))
-              ) : (
-                <p>Новых сохранений пока нет.</p>
-              )}
-            </>
+            <CardHistory
+              entries={history}
+              error={historyError}
+              onRetry={() => setHistoryRetry((value) => value + 1)}
+            />
           )}
         </section>
       </div>
