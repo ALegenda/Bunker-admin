@@ -1,6 +1,6 @@
-# Replace with a hostname you control, including a free DNS hostname.
+# Free DNS hostname resolving to 176.113.82.38; no registration required.
 # This example is for Caddy running on the same host as Docker.
-bunker.example.org {
+bunker-176-113-82-38.sslip.io {
     encode zstd gzip
     reverse_proxy 127.0.0.1:4173
 }

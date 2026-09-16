@@ -4,13 +4,22 @@
 
 ## Первичная настройка сервера
 
+Выбран бесплатный адрес `https://bunker-176-113-82-38.sslip.io`. DNS проверен: `176.113.82.38`. Это поддомен сервиса [sslip.io](https://sslip.io/), привязанный к текущему IP, без регистрации и покупки домена. HTTPS пока не активирован: Caddy выпустит сертификат после установки на доступный сервер с открытыми портами 80/443. Имя сохранено в `deploy/domain`, первоначальный ответ до запуска приложения — в `deploy/Caddyfile.bootstrap`.
+
+В серверном `.env` задать `PUBLIC_ORIGIN=https://bunker-176-113-82-38.sslip.io` и `TELEGRAM_ADMIN_IDS=231142381`. В BotFather Web Login для бота добавить в Allowed URLs:
+
+- `https://bunker-176-113-82-38.sslip.io`
+- `https://bunker-176-113-82-38.sslip.io/auth/callback`
+
+Telegram Client Secret хранить только в серверном `.env`. При смене IP потребуется новое DNS-имя и обновление Allowed URLs.
+
 Требуются Linux, Docker с Compose v2, Caddy как systemd service, curl, flock, tar; свободные порты 80/443 и loopback 4173/4174. DNS выбранного домена должен указывать на сервер. Учтите память для двух API, двух PDF-воркеров и сборки образа во время обновления.
 
 1. Создать `/opt/bunker/releases` и `/opt/bunker/backups`.
 2. Создать `/opt/bunker/.env` с правами 600. Использовать production-параметры из `docs/production.md`, индивидуальные пароли БД и S3, Telegram OIDC и ID администратора. Для контейнеров задать `DATABASE_URL=postgres://bunker:ПАРОЛЬ@postgres:5432/bunker`, `S3_ENDPOINT=http://minio:9000`. Значения `NODE_ENV=production`, `AUTH_MODE=telegram`, `PUBLIC_ORIGIN=https://ДОМЕН` обязательны. Не копировать локальный режим администратора в интернет.
-3. Записать только имя домена в `/opt/bunker/domain`.
+3. Скопировать `deploy/domain` в `/opt/bunker/domain`.
 4. Из распакованного проекта запустить инфраструктуру: `docker compose --env-file /opt/bunker/.env up -d --wait postgres minio`. Она использует постоянные тома `bunker-admin` и сеть `bunker-admin_default`. Сначала проверить, что на сервере нет конфликтующих сервисов/томов. Не запускать старый сервис api на том же порту.
-5. Добавить `import /etc/caddy/bunker.caddy` в Caddyfile, сохранив остальные сайты. Создать этот файл с блоком своего домена и временным ответом 503, проверить конфигурацию и запустить Caddy.
+5. Добавить `import /etc/caddy/bunker.caddy` в Caddyfile, сохранив остальные сайты. Скопировать `deploy/Caddyfile.bootstrap` в `/etc/caddy/bunker.caddy`, проверить конфигурацию и запустить Caddy.
 6. Настроить отдельный SSH-ключ для CI. У пользователя деплоя должны быть права на `/opt/bunker`, Docker, файл `/etc/caddy/bunker.caddy` и reload Caddy. Эти права эквивалентны административному доступу; ключ хранить только в GitHub Secrets. Проверить ключ хоста через доверенную консоль провайдера.
 7. В GitHub environment `production` задать `DEPLOY_HOST`, `DEPLOY_USER`, `DEPLOY_KEY` (закрытый ключ), `DEPLOY_KNOWN_HOSTS` (проверенная запись known_hosts). Workflow использует порт 22.
 8. После готовности сервера задать repository variable `DEPLOY_ENABLED=true`. Пока она не задана, CI выполняет проверки, а job deploy пропускается. Отправить коммит в `master`; проверить успешный Actions run, HTTPS `/api/health`, каталог и Telegram-вход.
