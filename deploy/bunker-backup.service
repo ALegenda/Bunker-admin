@@ -1,0 +1,9 @@
+[Unit]
+Description=Bunker database and object backup
+After=docker.service
+[Service]
+Type=oneshot
+# Set the installation path and a user with Docker access before enabling.
+WorkingDirectory=/opt/bunker
+ExecStart=/usr/bin/npm run backup
+UMask=0077

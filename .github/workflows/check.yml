@@ -1,0 +1,61 @@
+name: checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://bunker:ci-local-password@127.0.0.1:55432/bunker
+      POSTGRES_PASSWORD: ci-local-password
+      S3_ENDPOINT: http://127.0.0.1:59000
+      S3_ACCESS_KEY: bunker-ci
+      S3_SECRET_KEY: ci-local-storage-password
+      S3_BUCKET: bunker
+      AUTH_MODE: local
+      NODE_ENV: test
+      CHROME_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24', cache: npm}
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - run: docker compose up -d --wait postgres minio
+      - run: npm test
+      - if: always()
+        run: docker compose logs --tail 50
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+      - name: Upload and deploy verified commit
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          set -euo pipefail
+          target="$DEPLOY_USER@$DEPLOY_HOST"
+          git archive --format=tar.gz HEAD > /tmp/release.tar.gz
+          ssh -o BatchMode=yes "$target" "mkdir -p /opt/bunker/releases/$GITHUB_SHA"
+          scp -o BatchMode=yes /tmp/release.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/source.tar.gz"
+          ssh -o BatchMode=yes "$target" "cd /opt/bunker/releases/$GITHUB_SHA && tar -xzf source.tar.gz && rm source.tar.gz && bash deploy/release.sh $GITHUB_SHA"
+      - if: always()
+        run: rm -f ~/.ssh/id_ed25519

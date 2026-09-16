@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {Readable} from 'node:stream';import {readJson} from './read-json.mjs';
+test('Russian text survives HTTP chunk boundaries inside UTF-8 characters',async()=>{const value={name:'Работяга',description:'Ночной ход — проверка Ёжика'};const data=Buffer.from(JSON.stringify(value));assert.deepEqual(await readJson(Readable.from([...data].map(byte=>Buffer.from([byte])))),value);});
+test('oversize JSON and invalid UTF-8 are rejected',async()=>{await assert.rejects(readJson(Readable.from([Buffer.alloc(5)]),4));await assert.rejects(readJson(Readable.from([Buffer.from([255])])));});

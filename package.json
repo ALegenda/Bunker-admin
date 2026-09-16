@@ -1,0 +1,49 @@
+{
+  "name": "bunker-studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/dev.mjs",
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "typecheck": "tsc --noEmit && tsc -p frontend/tsconfig.json",
+    "db:migrate": "tsx backend/db/migrate.ts",
+    "db:seed": "tsx backend/db/seed.ts",
+    "infra:up": "docker compose up -d postgres minio",
+    "test": "tsx --test shared/model.test.js read-json.test.mjs backend/tests/*.test.ts",
+    "start:api": "tsx backend/http/server.ts",
+    "start:worker": "tsx backend/worker.ts",
+    "backup": "tsx backend/backup.ts",
+    "format": "prettier --write \"backend/**/*.ts\" \"shared/*.{ts,js}\" \"frontend/src/**/*.{ts,tsx,css}\"",
+    "dev:web": "vite"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1133.0",
+    "@fastify/cookie": "^11.1.2",
+    "@fastify/multipart": "^10.1.1",
+    "@fastify/rate-limit": "^11.2.0",
+    "@fastify/static": "^10.1.3",
+    "dotenv": "^17.4.2",
+    "fastify": "^5.12.4",
+    "jose": "^6.2.12",
+    "pdf-lib": "^1.17.1",
+    "pg": "^8.23.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sharp": "^0.35.4",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

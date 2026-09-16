@@ -1,0 +1,28 @@
+# Use after configuring .env: docker compose -f compose.yaml -f compose.production.yaml --profile app up -d --build
+services:
+  api:
+    environment:
+      NODE_ENV: production
+      AUTH_MODE: telegram
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:?Set HTTPS origin}
+      TELEGRAM_CLIENT_ID: ${TELEGRAM_CLIENT_ID:?Set Telegram Client ID}
+      TELEGRAM_CLIENT_SECRET: ${TELEGRAM_CLIENT_SECRET:?Set Telegram Client Secret}
+      TELEGRAM_ADMIN_IDS: ${TELEGRAM_ADMIN_IDS:?Set initial admin Telegram user ID}
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:4173/api/health',{headers:{host:new URL(process.env.PUBLIC_ORIGIN).host}}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options: {max-size: '10m', max-file: '3'}
+  worker:
+    environment:
+      NODE_ENV: production
+      AUTH_MODE: telegram
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:?Set HTTPS origin}
+      TELEGRAM_CLIENT_ID: ${TELEGRAM_CLIENT_ID:?Set Telegram Client ID}
+      TELEGRAM_CLIENT_SECRET: ${TELEGRAM_CLIENT_SECRET:?Set Telegram Client Secret}
+    logging:
+      driver: json-file
+      options: {max-size: '10m', max-file: '3'}

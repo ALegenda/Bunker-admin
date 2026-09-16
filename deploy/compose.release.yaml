@@ -1,0 +1,48 @@
+x-app: &app
+  image: bunker-admin:${RELEASE:?Set release SHA}
+  env_file: /opt/bunker/.env
+  init: true
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ['no-new-privileges:true']
+  restart: unless-stopped
+  networks: [infra]
+  logging:
+    driver: json-file
+    options: {max-size: '10m', max-file: '3'}
+services:
+  api:
+    <<: *app
+    command: node dist/backend/http/server.js
+    environment:
+      HOST: 0.0.0.0
+      PORT: '4173'
+      NODE_ENV: production
+      AUTH_MODE: telegram
+    ports: ['127.0.0.1:${APP_PORT:?Set slot port}:4173']
+    tmpfs: ['/tmp:size=64m,mode=1777']
+    mem_limit: 512m
+    pids_limit: 100
+    stop_grace_period: 60s
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:4173/api/health',{headers:{host:new URL(process.env.PUBLIC_ORIGIN).host}}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 4s
+      retries: 24
+  worker:
+    <<: *app
+    command: node dist/backend/worker.js
+    environment:
+      NODE_ENV: production
+      AUTH_MODE: telegram
+      CHROME_PATH: /usr/bin/chromium
+      CHROMIUM_NO_SANDBOX: 'true'
+    tmpfs: ['/tmp:size=1g,mode=1777']
+    mem_limit: 1536m
+    pids_limit: 512
+    cpus: 2
+    stop_grace_period: 120s
+networks:
+  infra:
+    external: true
+    name: bunker-admin_default

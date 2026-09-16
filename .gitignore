@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.*.local
+tmp/
+.DS_Store
+web-dist/
+.env.production
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+*.pem
+*.key

@@ -1,0 +1,72 @@
+name: bunker-admin
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: bunker
+      POSTGRES_DB: bunker
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set .env}
+    ports: ['127.0.0.1:55432:5432']
+    volumes: ['postgres-data:/var/lib/postgresql/data']
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U bunker -d bunker']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-${S3_ACCESS_KEY:?Set .env}}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-${S3_SECRET_KEY:?Set .env}}
+    ports: ['127.0.0.1:59000:9000', '127.0.0.1:59001:9001']
+    volumes: ['minio-data:/data']
+    restart: unless-stopped
+  api:
+    profiles: ['app']
+    build: .
+    init: true
+    read_only: true
+    tmpfs: ['/tmp:size=64m,mode=1777']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    mem_limit: 512m
+    pids_limit: 100
+    command: node dist/backend/http/server.js
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://bunker:${POSTGRES_PASSWORD}@postgres:5432/bunker
+      S3_ENDPOINT: http://minio:9000
+      HOST: 0.0.0.0
+      TRUST_LOCAL_PROXY: 'true'
+    ports: ['127.0.0.1:4173:4173']
+    depends_on:
+      postgres: { condition: service_healthy }
+      minio: { condition: service_started }
+    restart: unless-stopped
+  worker:
+    profiles: ['app']
+    build: .
+    init: true
+    read_only: true
+    tmpfs: ['/tmp:size=1g,mode=1777']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    mem_limit: 1536m
+    pids_limit: 512
+    cpus: 2
+    command: node dist/backend/worker.js
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://bunker:${POSTGRES_PASSWORD}@postgres:5432/bunker
+      S3_ENDPOINT: http://minio:9000
+      CHROME_PATH: /usr/bin/chromium
+      CHROMIUM_NO_SANDBOX: 'true'
+    depends_on:
+      postgres: { condition: service_healthy }
+      minio: { condition: service_started }
+    restart: unless-stopped
+volumes:
+  postgres-data:
+  minio-data:

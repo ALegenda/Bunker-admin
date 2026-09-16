@@ -1,0 +1,40 @@
+import { z } from 'zod';
+export const attributes = z
+  .object({
+    activationTime: z.array(z.string().max(80)).max(10).default([]),
+    usageFrequency: z.string().max(80).default(''),
+    usageLocation: z.array(z.string().max(120)).max(10).default([]),
+    tags: z.array(z.string().max(120)).max(50).default([]),
+  })
+  .default({ activationTime: [], usageFrequency: '', usageLocation: [], tags: [] });
+export const cardSchema = z.object({
+  id: z.string().min(1).max(100),
+  name: z.string().min(1).max(250),
+  cardType: z.enum(['правило', 'роль', 'умение', 'припас', 'мёртвый бонус', 'наёмник']),
+  description: z.string().max(100000),
+  attributes,
+  image: z.string().max(3000000).default(''),
+  kind: z.string().max(80).default('Уточнение'),
+  note: z.string().max(10000).default(''),
+  source: z.unknown().optional(),
+});
+export const draftSchema = z
+  .object({
+    cards: z.array(cardSchema).min(1).max(1500),
+    release: z.string().min(1).max(200).default('Следующая редакция'),
+    changelog: z.string().max(200000).default(''),
+    changelogStamp: z.string().max(100).default(''),
+  })
+  .refine((s) => new Set(s.cards.map((c) => c.id)).size === s.cards.length, {
+    message: 'Повторяющиеся идентификаторы карточек',
+  });
+export type Card = z.infer<typeof cardSchema>;
+export type Draft = z.infer<typeof draftSchema>;
+export class AppError extends Error {
+  constructor(
+    public statusCode: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}

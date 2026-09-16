@@ -1,0 +1,6 @@
+node_modules
+dist
+tmp
+resources
+public/assets
+docs/cards.json

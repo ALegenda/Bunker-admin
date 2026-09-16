@@ -1,0 +1,2315 @@
+{
+  "0": {
+    "image": "/assets/cards/0-03498a1c2d7d.webp",
+    "name": "Лидер",
+    "cardType": "умение",
+    "sourceParagraph": 31,
+    "textParagraph": 31,
+    "sourceMedia": "media/image7.png",
+    "sha256": "03498a1c2d7dbff84b56b7d2ca995353c7c7e2c2e8cb7fa959b05b0d0f9ab558"
+  },
+  "1": {
+    "image": "/assets/cards/1-2f08dbc25bef.webp",
+    "name": "Август Фарш",
+    "cardType": "умение",
+    "sourceParagraph": 32,
+    "textParagraph": 32,
+    "sourceMedia": "media/image8.png",
+    "sha256": "2f08dbc25beff64d5a517b60bfc7c5004b9040b7e4c18c64774acec3943d6215"
+  },
+  "2": {
+    "image": "/assets/cards/2-94220538fa8a.webp",
+    "name": "Адвокат",
+    "cardType": "умение",
+    "sourceParagraph": 36,
+    "textParagraph": 36,
+    "sourceMedia": "media/image9.png",
+    "sha256": "94220538fa8ad486cf3e23466b612711f4efd46efa2ec12b92aff44b69a86ae5"
+  },
+  "3": {
+    "image": "/assets/cards/3-db98bc5cff95.webp",
+    "name": "Алиби",
+    "cardType": "умение",
+    "sourceParagraph": 39,
+    "textParagraph": 40,
+    "sourceMedia": "media/image10.png",
+    "sha256": "db98bc5cff9514d4ab652011bc0f0bf2d33d0689265e4bf9ab254d779cd75d4d"
+  },
+  "4": {
+    "image": "/assets/cards/4-d8d38b77e5a7.webp",
+    "name": "Алла, я в бар",
+    "cardType": "умение",
+    "sourceParagraph": 45,
+    "textParagraph": 45,
+    "sourceMedia": "media/image11.jpeg",
+    "sha256": "d8d38b77e5a77a2c29e4b1ba5c52eb755bfa2c6ae7ce69360b3ce65b9e2ded5b"
+  },
+  "5": {
+    "image": "/assets/cards/5-9c1bfd2be44c.webp",
+    "name": "Анти-Линкольн",
+    "cardType": "умение",
+    "sourceParagraph": 68,
+    "textParagraph": 69,
+    "sourceMedia": "media/image13.png",
+    "sha256": "9c1bfd2be44c511adfec5dfe75b06f029698eeef9d6aee60a4eea9a3a1b0026e"
+  },
+  "6": {
+    "image": "/assets/cards/6-aac6cd59abb7.webp",
+    "name": "Банкир",
+    "cardType": "умение",
+    "sourceParagraph": 80,
+    "textParagraph": 80,
+    "sourceMedia": "media/image14.jpeg",
+    "sha256": "aac6cd59abb7444dcb2109089df699f8a45d91a46de6227dd0d035c8d8f3dd68"
+  },
+  "7": {
+    "image": "/assets/cards/7-cf8992a2f137.webp",
+    "name": "Безумный Макс",
+    "cardType": "умение",
+    "sourceParagraph": 96,
+    "textParagraph": 97,
+    "sourceMedia": "media/image15.png",
+    "sha256": "cf8992a2f137b8870a0f8acf377dcfe8309e63c0ba027da42d40793427859294"
+  },
+  "8": {
+    "image": "/assets/cards/8-16081571cba0.webp",
+    "name": "Бессмертный",
+    "cardType": "умение",
+    "sourceParagraph": 107,
+    "textParagraph": 107,
+    "sourceMedia": "media/image16.png",
+    "sha256": "16081571cba0ae6e1143751dd3dae21e36ac2bb26f663cbfb0c30dd6eea915d2"
+  },
+  "9": {
+    "image": "/assets/cards/9-5203d1b0f0fc.webp",
+    "name": "Благая весть",
+    "cardType": "умение",
+    "sourceParagraph": 115,
+    "textParagraph": 115,
+    "sourceMedia": "media/image17.png",
+    "sha256": "5203d1b0f0fceccb31a0156bf3ffda8583c298a4d7cd4350413181596994e265"
+  },
+  "10": {
+    "image": "/assets/cards/10-fa7e0f299626.webp",
+    "name": "Большой куш",
+    "cardType": "умение",
+    "sourceParagraph": 126,
+    "textParagraph": 126,
+    "sourceMedia": "media/image18.png",
+    "sha256": "fa7e0f2996269cff46a079cff52d63109068de4013fd70960b3e505d5ff8d74a"
+  },
+  "11": {
+    "image": "/assets/cards/11-22116a5f804a.webp",
+    "name": "Бомбамен",
+    "cardType": "умение",
+    "sourceParagraph": 132,
+    "textParagraph": 132,
+    "sourceMedia": "media/image19.jpeg",
+    "sha256": "22116a5f804ab7e24dc532cf1a621101913f55b96457a166cf1b5f426e119798"
+  },
+  "12": {
+    "image": "/assets/cards/12-7180c1a8bc2e.webp",
+    "name": "Бунтарь",
+    "cardType": "умение",
+    "sourceParagraph": 136,
+    "textParagraph": 136,
+    "sourceMedia": "media/image20.jpeg",
+    "sha256": "7180c1a8bc2e77577a996fca42e9690df0e905dabb33a574f7be22695497dc6f"
+  },
+  "13": {
+    "image": "/assets/cards/13-a53565c9f861.webp",
+    "name": "В танке",
+    "cardType": "умение",
+    "sourceParagraph": 141,
+    "textParagraph": 141,
+    "sourceMedia": "media/image21.png",
+    "sha256": "a53565c9f86180e2558fa445afd9402a6467ea82050cdf51270ca0006dc50f20"
+  },
+  "14": {
+    "image": "/assets/cards/14-fd9bbaad527e.webp",
+    "name": "Весомый аргумент",
+    "cardType": "умение",
+    "sourceParagraph": 146,
+    "textParagraph": 146,
+    "sourceMedia": "media/image22.png",
+    "sha256": "fd9bbaad527e71dce28b82456b21200b8e8f839bf60b2526f179676dc340062d"
+  },
+  "15": {
+    "image": "/assets/cards/15-23e2cb6d1474.webp",
+    "name": "Взятка",
+    "cardType": "умение",
+    "sourceParagraph": 150,
+    "textParagraph": 150,
+    "sourceMedia": "media/image23.png",
+    "sha256": "23e2cb6d14747c4719630b14c5d521c9b1131e6566aefb63ad923d94a6d58b00"
+  },
+  "16": {
+    "image": "/assets/cards/16-4de478163c42.webp",
+    "name": "Властелин костей",
+    "cardType": "умение",
+    "sourceParagraph": 161,
+    "textParagraph": 161,
+    "sourceMedia": "media/image25.png",
+    "sha256": "4de478163c4243af1b1dc2620f1707673dbad5d66960229e3a9402cf8a2a430d"
+  },
+  "17": {
+    "image": "/assets/cards/17-7b2e717ae771.webp",
+    "name": "Возврату подлежит",
+    "cardType": "умение",
+    "sourceParagraph": 166,
+    "textParagraph": 166,
+    "sourceMedia": "media/image26.png",
+    "sha256": "7b2e717ae771d3b08a2a2a31679a479728bb40b7da517f5370fcb02c090414a5"
+  },
+  "18": {
+    "image": "/assets/cards/18-a2c8211e3853.webp",
+    "name": "Воришка",
+    "cardType": "умение",
+    "sourceParagraph": 174,
+    "textParagraph": 174,
+    "sourceMedia": "media/image27.png",
+    "sha256": "a2c8211e3853c49f87a162dd4469e1689aa6d78753fde8a89691f6020d8f7cad"
+  },
+  "19": {
+    "image": "/assets/cards/19-1f3176b2c987.webp",
+    "name": "Вот упырь!",
+    "cardType": "умение",
+    "sourceParagraph": 179,
+    "textParagraph": 179,
+    "sourceMedia": "media/image28.jpeg",
+    "sha256": "1f3176b2c987bd193c96a85fe3bdef203b86af3ea98b3d5bd152e892d74c0faa"
+  },
+  "20": {
+    "image": "/assets/cards/20-f5c069a4217e.webp",
+    "name": "Второй шанс",
+    "cardType": "умение",
+    "sourceParagraph": 186,
+    "textParagraph": 186,
+    "sourceMedia": "media/image29.png",
+    "sha256": "f5c069a4217e06a795a64aea2539fe8093c5b86b0de88ed49319e6d07f0dac33"
+  },
+  "21": {
+    "image": "/assets/cards/21-494c590c60a0.webp",
+    "name": "Вышибала",
+    "cardType": "умение",
+    "sourceParagraph": 190,
+    "textParagraph": 190,
+    "sourceMedia": "media/image30.jpeg",
+    "sha256": "494c590c60a073b1e72bf035194ecf83fd4c5cf8e9a6bb1eea17db35d1c2349b"
+  },
+  "22": {
+    "image": "/assets/cards/22-24bc731d7b1e.webp",
+    "name": "Гений",
+    "cardType": "умение",
+    "sourceParagraph": 193,
+    "textParagraph": 193,
+    "sourceMedia": "media/image31.png",
+    "sha256": "24bc731d7b1e344dd26ac48c7f0164c665069f638c96677fbb10a9b77601213c"
+  },
+  "23": {
+    "image": "/assets/cards/23-a010d346e496.webp",
+    "name": "Голодный",
+    "cardType": "умение",
+    "sourceParagraph": 197,
+    "textParagraph": 197,
+    "sourceMedia": "media/image32.png",
+    "sha256": "a010d346e49614c47244b079f368cf881251fa1a995172ad6e2edc83b8f88f77"
+  },
+  "24": {
+    "image": "/assets/cards/24-ca59d876f1bb.webp",
+    "name": "Горе-генерал",
+    "cardType": "умение",
+    "sourceParagraph": 201,
+    "textParagraph": 202,
+    "sourceMedia": "media/image33.png",
+    "sha256": "ca59d876f1bb0895a1a6fe86735e4539290ce9ce1208692b5155a4d99b84c454"
+  },
+  "25": {
+    "image": "/assets/cards/25-1e93657d2a32.webp",
+    "name": "Граната",
+    "cardType": "умение",
+    "sourceParagraph": 208,
+    "textParagraph": 208,
+    "sourceMedia": "media/image34.png",
+    "sha256": "1e93657d2a32a03be00c6679d50b903525e4a5a726040663e41944623023137b"
+  },
+  "26": {
+    "image": "/assets/cards/26-3458c2fdfa7c.webp",
+    "name": "Грибоед",
+    "cardType": "умение",
+    "sourceParagraph": 211,
+    "textParagraph": 211,
+    "sourceMedia": "media/image35.png",
+    "sha256": "3458c2fdfa7cdd25be11fb20040d7058308fe92676610d9dc66cf3aa202e79f3"
+  },
+  "27": {
+    "image": "/assets/cards/27-db02327887c5.webp",
+    "name": "Делай раз, делай два",
+    "cardType": "умение",
+    "sourceParagraph": 217,
+    "textParagraph": 217,
+    "sourceMedia": "media/image36.png",
+    "sha256": "db02327887c5bcea692296f26cd494b187024cbb2e5d49dcbcd81b48a95f7536"
+  },
+  "28": {
+    "image": "/assets/cards/28-d05742ef75eb.webp",
+    "name": "Диктатор",
+    "cardType": "умение",
+    "sourceParagraph": 222,
+    "textParagraph": 222,
+    "sourceMedia": "media/image37.png",
+    "sha256": "d05742ef75eb3d03281f1688c1c3de1701efeb82737c563c2d2d0b87cec70527"
+  },
+  "29": {
+    "image": "/assets/cards/29-5bcc5241085b.webp",
+    "name": "Дик и пёс",
+    "cardType": "умение",
+    "sourceParagraph": 233,
+    "textParagraph": 233,
+    "sourceMedia": "media/image38.png",
+    "sha256": "5bcc5241085bdc545152d9f21045a01cf5193baac6f6a98f511f91e236d2036a"
+  },
+  "30": {
+    "image": "/assets/cards/30-e2ecb37d47f7.webp",
+    "name": "Догонялки",
+    "cardType": "умение",
+    "sourceParagraph": 246,
+    "textParagraph": 246,
+    "sourceMedia": "media/image39.png",
+    "sha256": "e2ecb37d47f7ec7feb5b86d0de11ec163c4d99b5ae504a1d20a904f5938157e8"
+  },
+  "31": {
+    "image": "/assets/cards/31-dd1b78713ee5.webp",
+    "name": "Доцент под процент",
+    "cardType": "умение",
+    "sourceParagraph": 252,
+    "textParagraph": 252,
+    "sourceMedia": "media/image40.png",
+    "sha256": "dd1b78713ee53db01c80a6d91c9d0de3eb17430726dca379c6011695f735bef3"
+  },
+  "32": {
+    "image": "/assets/cards/32-4d81d18d5f84.webp",
+    "name": "Дробовик",
+    "cardType": "умение",
+    "sourceParagraph": 256,
+    "textParagraph": 256,
+    "sourceMedia": "media/image41.png",
+    "sha256": "4d81d18d5f84f7bb0ab6db742baa73085280ce2e635f235d4785c09e5d9b13fe"
+  },
+  "33": {
+    "image": "/assets/cards/33-cfd2668fac4a.webp",
+    "name": "Дэйви Джонс",
+    "cardType": "умение",
+    "sourceParagraph": 262,
+    "textParagraph": 262,
+    "sourceMedia": "media/image42.png",
+    "sha256": "cfd2668fac4a3ca65c77cd90f3a9f92f6abc6b64b8acfdf79bb488036b9ac408"
+  },
+  "34": {
+    "image": "/assets/cards/34-04b2d122c64d.webp",
+    "name": "Жадина",
+    "cardType": "умение",
+    "sourceParagraph": 270,
+    "textParagraph": 270,
+    "sourceMedia": "media/image43.png",
+    "sha256": "04b2d122c64d64d5bd06d3445473e2aa7d4bfa729c8fcff644615dc6d666db0e"
+  },
+  "35": {
+    "image": "/assets/cards/35-2ea4d39c37df.webp",
+    "name": "Жижа",
+    "cardType": "умение",
+    "sourceParagraph": 274,
+    "textParagraph": 274,
+    "sourceMedia": "media/image44.png",
+    "sha256": "2ea4d39c37df335890a9f46ddc3c07626b63b0c50ae2fdd561a5e37d23ac97f5"
+  },
+  "36": {
+    "image": "/assets/cards/36-bf13b976f228.webp",
+    "name": "Звездная болезнь",
+    "cardType": "умение",
+    "sourceParagraph": 278,
+    "textParagraph": 278,
+    "sourceMedia": "media/image45.png",
+    "sha256": "bf13b976f2284d3ae283b425ef52240419072733c3ccf36066a1e4c455e4b083"
+  },
+  "37": {
+    "image": "/assets/cards/37-2a7e6c1bc21f.webp",
+    "name": "Изгой",
+    "cardType": "умение",
+    "sourceParagraph": 289,
+    "textParagraph": 289,
+    "sourceMedia": "media/image46.png",
+    "sha256": "2a7e6c1bc21fe80611d6bab0ac2939b0e491da3377e970219d73e32782b3f2fc"
+  },
+  "38": {
+    "image": "/assets/cards/38-c024e322f9ef.webp",
+    "name": "Инвестор",
+    "cardType": "умение",
+    "sourceParagraph": 292,
+    "textParagraph": 292,
+    "sourceMedia": "media/image47.png",
+    "sha256": "c024e322f9ef65afd8376c1b11e5911f11c99977870b0fa05d10afa35394a566"
+  },
+  "39": {
+    "image": "/assets/cards/39-03ca27ccbbf9.webp",
+    "name": "Кан-кан на капкане",
+    "cardType": "умение",
+    "sourceParagraph": 295,
+    "textParagraph": 296,
+    "sourceMedia": "media/image48.png",
+    "sha256": "03ca27ccbbf9b6aef07e59bca74d35a067b56b52c93103530becd06d6fc6a14f"
+  },
+  "40": {
+    "image": "/assets/cards/40-aa7bf1fe98b7.webp",
+    "name": "Капельница",
+    "cardType": "умение",
+    "sourceParagraph": 307,
+    "textParagraph": 308,
+    "sourceMedia": "media/image49.png",
+    "sha256": "aa7bf1fe98b7a23cafa78e4d72f5989f266acf9cf6de4837a73c2500c7eb3593"
+  },
+  "41": {
+    "image": "/assets/cards/41-a0a1013e53d8.webp",
+    "name": "Капитан бесполезность",
+    "cardType": "умение",
+    "sourceParagraph": 313,
+    "textParagraph": 313,
+    "sourceMedia": "media/image50.jpeg",
+    "sha256": "a0a1013e53d80114c4c957d7fe9119b9cd8672caf09c4595524fb527436c6686"
+  },
+  "42": {
+    "image": "/assets/cards/42-6a5932265df3.webp",
+    "name": "Классика",
+    "cardType": "умение",
+    "sourceParagraph": 317,
+    "textParagraph": 318,
+    "sourceMedia": "media/image51.png",
+    "sha256": "6a5932265df3ca82d4cb486ba1e41cde4eb79b1040bfe9bc9b1f589a5b3f6f12"
+  },
+  "43": {
+    "image": "/assets/cards/43-b54930759066.webp",
+    "name": "Коварные планы",
+    "cardType": "умение",
+    "sourceParagraph": 346,
+    "textParagraph": 346,
+    "sourceMedia": "media/image52.png",
+    "sha256": "b54930759066058e778d8c28b8adb0ff03a0af2f619bcfc9ab652984f40b4247"
+  },
+  "44": {
+    "image": "/assets/cards/44-6c65594bafcf.webp",
+    "name": "Коллекционер",
+    "cardType": "умение",
+    "sourceParagraph": 369,
+    "textParagraph": 369,
+    "sourceMedia": "media/image54.png",
+    "sha256": "6c65594bafcf7edf799b21e8d3ab6d22b1162ec1f5f3aaa4817b5b1636ba55c2"
+  },
+  "45": {
+    "image": "/assets/cards/45-140af5d77947.webp",
+    "name": "Корешок",
+    "cardType": "умение",
+    "sourceParagraph": 378,
+    "textParagraph": 378,
+    "sourceMedia": "media/image55.png",
+    "sha256": "140af5d779474e8031dad81097fa43bd88f5c4b5f5f8ac70348af5f106baa979"
+  },
+  "46": {
+    "image": "/assets/cards/46-4d436e527690.webp",
+    "name": "Король ринга",
+    "cardType": "умение",
+    "sourceParagraph": 381,
+    "textParagraph": 381,
+    "sourceMedia": "media/image56.png",
+    "sha256": "4d436e527690ca45fd8dd0b13c5b996a135cf6eaf7bbe5936f7df6371f7f1dc3"
+  },
+  "47": {
+    "image": "/assets/cards/47-fbd95b2d4579.webp",
+    "name": "Коммандор",
+    "cardType": "умение",
+    "sourceParagraph": 390,
+    "textParagraph": 391,
+    "sourceMedia": "media/image57.png",
+    "sha256": "fbd95b2d4579a259a46dabe400bbdd4e3c90a2037bb2665773506ae4cea9a92a"
+  },
+  "48": {
+    "image": "/assets/cards/48-d0e189f8d0e9.webp",
+    "name": "Костюм РХБЗ",
+    "cardType": "умение",
+    "sourceParagraph": 413,
+    "textParagraph": 414,
+    "sourceMedia": "media/image59.png",
+    "sha256": "d0e189f8d0e93803fc0ea232ca6eaa4045cc44740556e590c1d3f40bbdb0ddfd"
+  },
+  "49": {
+    "image": "/assets/cards/49-894716eddfdd.webp",
+    "name": "Крутите барабан",
+    "cardType": "умение",
+    "sourceParagraph": 422,
+    "textParagraph": 422,
+    "sourceMedia": "media/image60.png",
+    "sha256": "894716eddfdd4bba26af730a5a855078c676dcae763cdfe088784dba2b69fa82"
+  },
+  "50": {
+    "image": "/assets/cards/50-ca0639fe70f8.webp",
+    "name": "Кто здесь?",
+    "cardType": "умение",
+    "sourceParagraph": 428,
+    "textParagraph": 428,
+    "sourceMedia": "media/image61.png",
+    "sha256": "ca0639fe70f84e0c9f8a3b91ab34ed869f0b0fbf2d2b4467b5258c72943054cc"
+  },
+  "51": {
+    "image": "/assets/cards/51-e3689e983abd.webp",
+    "name": "Культиватор",
+    "cardType": "умение",
+    "sourceParagraph": 432,
+    "textParagraph": 432,
+    "sourceMedia": "media/image62.jpeg",
+    "sha256": "e3689e983abd3bf489ba7d9a77ea94c7fadfe92cec7a4b6e58ca41edc898079e"
+  },
+  "52": {
+    "image": "/assets/cards/52-4ce110e91f46.webp",
+    "name": "Кумир",
+    "cardType": "умение",
+    "sourceParagraph": 438,
+    "textParagraph": 438,
+    "sourceMedia": "media/image63.jpeg",
+    "sha256": "4ce110e91f46042d0121c2f735ed0b7cc16017da3a53a0e57bf340874befaf3f"
+  },
+  "53": {
+    "image": "/assets/cards/53-2d61b1aeaa1b.webp",
+    "name": "Левый",
+    "cardType": "умение",
+    "sourceParagraph": 447,
+    "textParagraph": 447,
+    "sourceMedia": "media/image65.png",
+    "sha256": "2d61b1aeaa1b0b33beab8051f7835b52cc1b76e838990da89da5df2ce0acdd15"
+  },
+  "54": {
+    "image": "/assets/cards/54-e5d4d0baae0d.webp",
+    "name": "Личные счёты",
+    "cardType": "умение",
+    "sourceParagraph": 454,
+    "textParagraph": 454,
+    "sourceMedia": "media/image66.png",
+    "sha256": "e5d4d0baae0d1bde257ed59468b67d9c275d7464b3753810808d9b0bf26386d9"
+  },
+  "55": {
+    "image": "/assets/cards/55-377c0d06181d.webp",
+    "name": "Любопытный",
+    "cardType": "умение",
+    "sourceParagraph": 460,
+    "textParagraph": 460,
+    "sourceMedia": "media/image67.png",
+    "sha256": "377c0d06181da2d20b2baf308f7596feb3d94b03f1c0a231db750f6d39980a1f"
+  },
+  "56": {
+    "image": "/assets/cards/56-b75eaf24101a.webp",
+    "name": "Между двух огней",
+    "cardType": "умение",
+    "sourceParagraph": 465,
+    "textParagraph": 465,
+    "sourceMedia": "media/image68.png",
+    "sha256": "b75eaf24101a77657196136823080d9408a1022782a26a9deb434086c6532061"
+  },
+  "57": {
+    "image": "/assets/cards/57-de2f4d48a597.webp",
+    "name": "Мелочь, а приятно",
+    "cardType": "умение",
+    "sourceParagraph": 470,
+    "textParagraph": 470,
+    "sourceMedia": "media/image69.png",
+    "sha256": "de2f4d48a597a19ee60c9fad8fbfae6854339205237b3a62f393221a91603ead"
+  },
+  "58": {
+    "image": "/assets/cards/58-2aef88b61a55.webp",
+    "name": "Меню",
+    "cardType": "умение",
+    "sourceParagraph": 476,
+    "textParagraph": 476,
+    "sourceMedia": "media/image70.png",
+    "sha256": "2aef88b61a55ab234908ad47ed4eef78fd5146438e02b9c98340fc75e4f04777"
+  },
+  "59": {
+    "image": "/assets/cards/59-9f53c099321d.webp",
+    "name": "Металлоискатель",
+    "cardType": "умение",
+    "sourceParagraph": 480,
+    "textParagraph": 480,
+    "sourceMedia": "media/image71.png",
+    "sha256": "9f53c099321d2f0f819f0a69214b1080eaa975055c21e93c7ab01c7d509aaf41"
+  },
+  "60": {
+    "image": "/assets/cards/60-4d6187073b85.webp",
+    "name": "Мистер Z",
+    "cardType": "умение",
+    "sourceParagraph": 498,
+    "textParagraph": 498,
+    "sourceMedia": "media/image73.jpeg",
+    "sha256": "4d6187073b85f11da61514e6b789a8a2a9999cc2b30dfd177225dc62fcafbb1e"
+  },
+  "61": {
+    "image": "/assets/cards/61-111afc54ca9c.webp",
+    "name": "Молчание-Золото",
+    "cardType": "умение",
+    "sourceParagraph": 502,
+    "textParagraph": 502,
+    "sourceMedia": "media/image74.png",
+    "sha256": "111afc54ca9cff605ad88b32081c1f8648cee519f275d8279f05f48ad2bc25e8"
+  },
+  "62": {
+    "image": "/assets/cards/62-337b11b577a9.webp",
+    "name": "На живца",
+    "cardType": "умение",
+    "sourceParagraph": 506,
+    "textParagraph": 507,
+    "sourceMedia": "media/image75.png",
+    "sha256": "337b11b577a9933238a296878c1071ab6052f9afc75f0f22ba4a0591440b7b20"
+  },
+  "63": {
+    "image": "/assets/cards/63-76df01d0aefd.webp",
+    "name": "Насквозь",
+    "cardType": "умение",
+    "sourceParagraph": 512,
+    "textParagraph": 512,
+    "sourceMedia": "media/image76.png",
+    "sha256": "76df01d0aefd9d20c23ba4dc775f10bfd316da8c700a9ba928abf5620904cdf7"
+  },
+  "64": {
+    "image": "/assets/cards/64-e3e9c11a0fe0.webp",
+    "name": "Настоящий Детектив",
+    "cardType": "умение",
+    "sourceParagraph": 517,
+    "textParagraph": 517,
+    "sourceMedia": "media/image77.jpeg",
+    "sha256": "e3e9c11a0fe02c69db306a3228d796b6aa34a36451d97965b8e1d80adfac2304"
+  },
+  "65": {
+    "image": "/assets/cards/65-37a8baec4942.webp",
+    "name": "Наследник",
+    "cardType": "умение",
+    "sourceParagraph": 524,
+    "textParagraph": 524,
+    "sourceMedia": "media/image78.png",
+    "sha256": "37a8baec494292669d7bb937f2be4c16a3fac34691f96c724646ddecca220d63"
+  },
+  "66": {
+    "image": "/assets/cards/66-b6f5613ce332.webp",
+    "name": "Невезучий",
+    "cardType": "умение",
+    "sourceParagraph": 531,
+    "textParagraph": 531,
+    "sourceMedia": "media/image79.png",
+    "sha256": "b6f5613ce33227b14f8e6cc2c60785da652a78889ebc07a00b5af49dff0d4bc9"
+  },
+  "67": {
+    "image": "/assets/cards/67-652ebf65ff50.webp",
+    "name": "Необдуманный поступок",
+    "cardType": "умение",
+    "sourceParagraph": 538,
+    "textParagraph": 538,
+    "sourceMedia": "media/image80.jpeg",
+    "sha256": "652ebf65ff50ae900bfef836579901e0fda62b7ade33e75ad85176cc6c25dec7"
+  },
+  "68": {
+    "image": "/assets/cards/68-8af8a8399f97.webp",
+    "name": "Нечего скрывать",
+    "cardType": "умение",
+    "sourceParagraph": 543,
+    "textParagraph": 543,
+    "sourceMedia": "media/image81.png",
+    "sha256": "8af8a8399f97de24f3256fe6d3453c6690fbd8d9a09a0d95cf0613816785bc1c"
+  },
+  "69": {
+    "image": "/assets/cards/69-80703061d828.webp",
+    "name": "Ниган",
+    "cardType": "умение",
+    "sourceParagraph": 546,
+    "textParagraph": 546,
+    "sourceMedia": "media/image82.png",
+    "sha256": "80703061d828f36924054435404340521e22823dbd0a3a44fc1c8e17a9b144f3"
+  },
+  "70": {
+    "image": "/assets/cards/70-6f0480f02b86.webp",
+    "name": "Ниндзя",
+    "cardType": "умение",
+    "sourceParagraph": 552,
+    "textParagraph": 552,
+    "sourceMedia": "media/image83.jpeg",
+    "sha256": "6f0480f02b868ad970af31d67f2fabcc436fc829c2cd8e96b2ea77830d87eb27"
+  },
+  "71": {
+    "image": "/assets/cards/71-2e928a03a4da.webp",
+    "name": "Ночной снайпер",
+    "cardType": "умение",
+    "sourceParagraph": 556,
+    "textParagraph": 556,
+    "sourceMedia": "media/image84.png",
+    "sha256": "2e928a03a4da01be547265b9304195b1194fec390da197bbb2e7865d5f694551"
+  },
+  "72": {
+    "image": "/assets/cards/72-efa290015bc1.webp",
+    "name": "Обуза",
+    "cardType": "умение",
+    "sourceParagraph": 562,
+    "textParagraph": 562,
+    "sourceMedia": "media/image85.jpeg",
+    "sha256": "efa290015bc131f4614c9bb1dbc2043f1967f850c062d3a6c96dc7e5e091d4f1"
+  },
+  "73": {
+    "image": "/assets/cards/73-dc7eb231d083.webp",
+    "name": "Один микрофон",
+    "cardType": "умение",
+    "sourceParagraph": 565,
+    "textParagraph": 565,
+    "sourceMedia": "media/image86.png",
+    "sha256": "dc7eb231d083f2c3a6015b60d52c9deccc1738fff018bd4aa19df712c2aae444"
+  },
+  "74": {
+    "image": "/assets/cards/74-86392f4b136c.webp",
+    "name": "Одной ногой",
+    "cardType": "умение",
+    "sourceParagraph": 568,
+    "textParagraph": 568,
+    "sourceMedia": "media/image87.png",
+    "sha256": "86392f4b136c1d59eb4d1de4ed72a2ef77a3dbb69449103bce7c9620ce898e05"
+  },
+  "75": {
+    "image": "/assets/cards/75-d8276f1769c2.webp",
+    "name": "Оскар",
+    "cardType": "умение",
+    "sourceParagraph": 579,
+    "textParagraph": 579,
+    "sourceMedia": "media/image88.png",
+    "sha256": "d8276f1769c24fc51b62d6078a36f209e55b6413f20ed5e95b6f5bf6ac467725"
+  },
+  "76": {
+    "image": "/assets/cards/76-9ffe25347405.webp",
+    "name": "Отросток",
+    "cardType": "умение",
+    "sourceParagraph": 591,
+    "textParagraph": 591,
+    "sourceMedia": "media/image89.png",
+    "sha256": "9ffe2534740506dec79facb108834594146a5133f7a5bde78c720bc036b5e8f3"
+  },
+  "77": {
+    "image": "/assets/cards/77-95ce579813d9.webp",
+    "name": "Отягчающие обстоятельства",
+    "cardType": "умение",
+    "sourceParagraph": 598,
+    "textParagraph": 598,
+    "sourceMedia": "media/image90.png",
+    "sha256": "95ce579813d949faa53e1480a8037c1db5b145b211e6707cae2f3b823b3dae50"
+  },
+  "78": {
+    "image": "/assets/cards/78-27bd02cffb81.webp",
+    "name": "Охотник за привидениями",
+    "cardType": "умение",
+    "sourceParagraph": 606,
+    "textParagraph": 606,
+    "sourceMedia": "media/image91.jpeg",
+    "sha256": "27bd02cffb819d8b9ddf82b5810b248f78d8a42fae21951d96ea34dd385c6c18"
+  },
+  "79": {
+    "image": "/assets/cards/79-966e7756787f.webp",
+    "name": "Плечом к плечу",
+    "cardType": "умение",
+    "sourceParagraph": 611,
+    "textParagraph": 611,
+    "sourceMedia": "media/image92.png",
+    "sha256": "966e7756787f3192bf7c3a43622fd3a25463bef4b0877e81d10197a78e4db777"
+  },
+  "80": {
+    "image": "/assets/cards/80-4bc0fcd0200f.webp",
+    "name": "Пока не сдох",
+    "cardType": "умение",
+    "sourceParagraph": 617,
+    "textParagraph": 617,
+    "sourceMedia": "media/image93.png",
+    "sha256": "4bc0fcd0200f4a55b88a480a6cd80376825c405812dec582cb4406f785d130e0"
+  },
+  "81": {
+    "image": "/assets/cards/81-f05fc2187758.webp",
+    "name": "По старой дружбе",
+    "cardType": "умение",
+    "sourceParagraph": 620,
+    "textParagraph": 620,
+    "sourceMedia": "media/image94.jpeg",
+    "sha256": "f05fc218775844849a9b1a430ee8dd214ce66abc4f3c084c790bcc1178b60deb"
+  },
+  "82": {
+    "image": "/assets/cards/82-172e6bb54964.webp",
+    "name": "Поворот не туда",
+    "cardType": "умение",
+    "sourceParagraph": 627,
+    "textParagraph": 627,
+    "sourceMedia": "media/image95.png",
+    "sha256": "172e6bb54964c38eac3154028e027dd82a80375127cc2e83071d638ce1a7ea47"
+  },
+  "83": {
+    "image": "/assets/cards/83-1cd1745bd3f8.webp",
+    "name": "Под препаратом",
+    "cardType": "умение",
+    "sourceParagraph": 630,
+    "textParagraph": 630,
+    "sourceMedia": "media/image96.png",
+    "sha256": "1cd1745bd3f881303e9c3703da8f7766fcffedd6e2520faa4e9fc83fb3761b7f"
+  },
+  "84": {
+    "image": "/assets/cards/84-023f3929f862.webp",
+    "name": "Под прицелом",
+    "cardType": "умение",
+    "sourceParagraph": 633,
+    "textParagraph": 633,
+    "sourceMedia": "media/image97.jpeg",
+    "sha256": "023f3929f8629aaa6a6a8dc1d4598d230938089baa8286c50447e8233db6706b"
+  },
+  "85": {
+    "image": "/assets/cards/85-5fff26cd7589.webp",
+    "name": "Под рентгеном",
+    "cardType": "умение",
+    "sourceParagraph": 638,
+    "textParagraph": 638,
+    "sourceMedia": "media/image98.png",
+    "sha256": "5fff26cd7589d7daee884b356e4a01cb0f35098f1e47f3c40f6068d288393077"
+  },
+  "86": {
+    "image": "/assets/cards/86-4c04a919522d.webp",
+    "name": "Под шумок!",
+    "cardType": "умение",
+    "sourceParagraph": 643,
+    "textParagraph": 643,
+    "sourceMedia": "media/image99.png",
+    "sha256": "4c04a919522d827259c521eb85ead06144c0409ba21544bba86716bcaf06e6de"
+  },
+  "87": {
+    "image": "/assets/cards/87-32fa64932934.webp",
+    "name": "Подсолнух",
+    "cardType": "умение",
+    "sourceParagraph": 647,
+    "textParagraph": 647,
+    "sourceMedia": "media/image100.png",
+    "sha256": "32fa64932934546b507d14d3932dda0467831314b55d970d329df14828e0915f"
+  },
+  "88": {
+    "image": "/assets/cards/88-3c1554e4634a.webp",
+    "name": "Пойман, не пойман – вор!",
+    "cardType": "умение",
+    "sourceParagraph": 651,
+    "textParagraph": 651,
+    "sourceMedia": "media/image101.png",
+    "sha256": "3c1554e4634ae1bc6e8250f9ac1d9aa597bce1f350f922e2c75c2581dd371904"
+  },
+  "89": {
+    "image": "/assets/cards/89-7669d6b5bb0f.webp",
+    "name": "Предвзятое мнение",
+    "cardType": "умение",
+    "sourceParagraph": 654,
+    "textParagraph": 654,
+    "sourceMedia": "media/image102.jpeg",
+    "sha256": "7669d6b5bb0f6ba44dc064b9aa6044eb02d2002821f0b106ee4eada1184d81c0"
+  },
+  "90": {
+    "image": "/assets/cards/90-a7ce88e5f944.webp",
+    "name": "Прятки",
+    "cardType": "умение",
+    "sourceParagraph": 670,
+    "textParagraph": 670,
+    "sourceMedia": "media/image104.png",
+    "sha256": "a7ce88e5f9446676c7b682552c9b8b0e5ea75acb7a84af3920dc54e70e2d77a0"
+  },
+  "91": {
+    "image": "/assets/cards/91-deb25ca8bf41.webp",
+    "name": "Психопат",
+    "cardType": "умение",
+    "sourceParagraph": 673,
+    "textParagraph": 673,
+    "sourceMedia": "media/image105.png",
+    "sha256": "deb25ca8bf4163f717a3ab0c35fb17e38651f3fd92c305adf6eb0bfa6e02e974"
+  },
+  "92": {
+    "image": "/assets/cards/92-c312e1aa5518.webp",
+    "name": "Разжигатель",
+    "cardType": "умение",
+    "sourceParagraph": 679,
+    "textParagraph": 679,
+    "sourceMedia": "media/image106.png",
+    "sha256": "c312e1aa5518f222b1f760a9e44f6d70fc23f3c1200cc9172b21d30e5ce77abf"
+  },
+  "93": {
+    "image": "/assets/cards/93-c9247b554f5c.webp",
+    "name": "Работяга",
+    "cardType": "умение",
+    "sourceParagraph": 683,
+    "textParagraph": 683,
+    "sourceMedia": "media/image107.png",
+    "sha256": "c9247b554f5c5db1572feca280d92958e80b4817e8c2a7002f26e56a4cf8260e"
+  },
+  "94": {
+    "image": "/assets/cards/94-8b8071b2fe1e.webp",
+    "name": "Реверс",
+    "cardType": "умение",
+    "sourceParagraph": 694,
+    "textParagraph": 694,
+    "sourceMedia": "media/image108.jpeg",
+    "sha256": "8b8071b2fe1e13b2489feb2b7720f69e406cdf6d18a96aa83443ed471ad68ce1"
+  },
+  "95": {
+    "image": "/assets/cards/95-ad4bba2ad8d1.webp",
+    "name": "Робот де Ниро",
+    "cardType": "умение",
+    "sourceParagraph": 700,
+    "textParagraph": 700,
+    "sourceMedia": "media/image109.jpeg",
+    "sha256": "ad4bba2ad8d1e775a4eef8185bb98e3d5e7a711706723e7c1e5895358831adc8"
+  },
+  "96": {
+    "image": "/assets/cards/96-5ea9f0b76eaa.webp",
+    "name": "Ромео и Джульетта",
+    "cardType": "умение",
+    "sourceParagraph": 704,
+    "textParagraph": 704,
+    "sourceMedia": "media/image110.png",
+    "sha256": "5ea9f0b76eaaf2a81b3527473e21121931431c3ec615471f096075000e5e8425"
+  },
+  "97": {
+    "image": "/assets/cards/97-8d4d5835c9f6.webp",
+    "name": "С того света",
+    "cardType": "умение",
+    "sourceParagraph": 707,
+    "textParagraph": 707,
+    "sourceMedia": "media/image111.png",
+    "sha256": "8d4d5835c9f6fabd72704a970eab59d1c5b5d350998a90557bbb30af39e0440c"
+  },
+  "98": {
+    "image": "/assets/cards/98-f25574db09ff.webp",
+    "name": "Сапер",
+    "cardType": "умение",
+    "sourceParagraph": 711,
+    "textParagraph": 711,
+    "sourceMedia": "media/image112.jpeg",
+    "sha256": "f25574db09ff1a1ffc88de84e25f9b74764d0c5d77236d551499ad3b446a3772"
+  },
+  "99": {
+    "image": "/assets/cards/99-e776a20ed3d3.webp",
+    "name": "Свежие новости",
+    "cardType": "умение",
+    "sourceParagraph": 714,
+    "textParagraph": 714,
+    "sourceMedia": "media/image113.jpeg",
+    "sha256": "e776a20ed3d3c42ecef5abca484dfae70aecd3dd428e9506f8a84fe26f88700a"
+  },
+  "100": {
+    "image": "/assets/cards/100-a437ef66da18.webp",
+    "name": "Свой среди акул",
+    "cardType": "умение",
+    "sourceParagraph": 717,
+    "textParagraph": 717,
+    "sourceMedia": "media/image114.png",
+    "sha256": "a437ef66da1803fcb67cf97293e9264c33460dbe9fce16a511eb5280846a87ba"
+  },
+  "101": {
+    "image": "/assets/cards/101-2258d06fbad9.webp",
+    "name": "Связи в суде",
+    "cardType": "умение",
+    "sourceParagraph": 720,
+    "textParagraph": 720,
+    "sourceMedia": "media/image115.png",
+    "sha256": "2258d06fbad9376275c3d5b047cfa98f608ce1f6a9a08120460735ed2d0a6907"
+  },
+  "102": {
+    "image": "/assets/cards/102-6be6b1f8b663.webp",
+    "name": "Святой",
+    "cardType": "умение",
+    "sourceParagraph": 725,
+    "textParagraph": 725,
+    "sourceMedia": "media/image116.png",
+    "sha256": "6be6b1f8b6634815422971e511c8558ae18a171db6326f2394eda9f49866bc96"
+  },
+  "103": {
+    "image": "/assets/cards/103-566da06b1018.webp",
+    "name": "Сирота",
+    "cardType": "умение",
+    "sourceParagraph": 731,
+    "textParagraph": 731,
+    "sourceMedia": "media/image117.png",
+    "sha256": "566da06b101810b5ee4c4c3362c3bab860c1e558db4b48cad39f86525ac47e61"
+  },
+  "104": {
+    "image": "/assets/cards/104-a39d895ad25e.webp",
+    "name": "Следопыт",
+    "cardType": "умение",
+    "sourceParagraph": 738,
+    "textParagraph": 738,
+    "sourceMedia": "media/image118.png",
+    "sha256": "a39d895ad25eef5bcab03cbba2f045d415f08ad4004bc30d31684fb5e9fefc56"
+  },
+  "105": {
+    "image": "/assets/cards/105-ae267d9bbe64.webp",
+    "name": "Сова",
+    "cardType": "умение",
+    "sourceParagraph": 742,
+    "textParagraph": 742,
+    "sourceMedia": "media/image119.png",
+    "sha256": "ae267d9bbe64c76fb1d8f8c7a3399cf60aa47ddbe1c3151ad209e295a8465198"
+  },
+  "106": {
+    "image": "/assets/cards/106-0e6d48fe3356.webp",
+    "name": "Сомния",
+    "cardType": "умение",
+    "sourceParagraph": 747,
+    "textParagraph": 747,
+    "sourceMedia": "media/image120.png",
+    "sha256": "0e6d48fe33565fb259767cb6be9e391b7030b298d3651512c98283f55387aa89"
+  },
+  "107": {
+    "image": "/assets/cards/107-9b34e7255cd2.webp",
+    "name": "Сорвиголова",
+    "cardType": "умение",
+    "sourceParagraph": 764,
+    "textParagraph": 764,
+    "sourceMedia": "media/image121.png",
+    "sha256": "9b34e7255cd2a5918418d826705961bd01414b099fcfaede1c2710c8efb066a3"
+  },
+  "108": {
+    "image": "/assets/cards/108-62cf43552f6f.webp",
+    "name": "Судья",
+    "cardType": "умение",
+    "sourceParagraph": 768,
+    "textParagraph": 768,
+    "sourceMedia": "media/image122.jpeg",
+    "sha256": "62cf43552f6fd36deded88b0ab116b4bc44295a7b8bba202527b6371ab97875c"
+  },
+  "109": {
+    "image": "/assets/cards/109-19e6f5bfeb5d.webp",
+    "name": "Счетчик Гейгера",
+    "cardType": "умение",
+    "sourceParagraph": 773,
+    "textParagraph": 773,
+    "sourceMedia": "media/image123.jpeg",
+    "sha256": "19e6f5bfeb5d1f4dcfc43fece8c44d1f550d03cd6f68b64670e5eb01f1a5de07"
+  },
+  "110": {
+    "image": "/assets/cards/110-d55255fb062f.webp",
+    "name": "Сюрприз",
+    "cardType": "умение",
+    "sourceParagraph": 780,
+    "textParagraph": 780,
+    "sourceMedia": "media/image124.png",
+    "sha256": "d55255fb062f0c11ca60c10a3d8978429d715c597b55e16a506d399dd477d76c"
+  },
+  "111": {
+    "image": "/assets/cards/111-a9c5734fc5e7.webp",
+    "name": "Тренер",
+    "cardType": "умение",
+    "sourceParagraph": 785,
+    "textParagraph": 785,
+    "sourceMedia": "media/image125.png",
+    "sha256": "a9c5734fc5e7e91a867f9de4ffc99b10072ceab05bb5d6c61dd1ff68b9847770"
+  },
+  "112": {
+    "image": "/assets/cards/112-eeb64677e067.webp",
+    "name": "Телохранитель",
+    "cardType": "умение",
+    "sourceParagraph": 798,
+    "textParagraph": 798,
+    "sourceMedia": "media/image126.png",
+    "sha256": "eeb64677e06751566fb58bfa36b458c4d5c405d5712b84dde22870ab25297f82"
+  },
+  "113": {
+    "image": "/assets/cards/113-e71c09e8acb5.webp",
+    "name": "Темная лошадка",
+    "cardType": "умение",
+    "sourceParagraph": 807,
+    "textParagraph": 807,
+    "sourceMedia": "media/image127.jpeg",
+    "sha256": "e71c09e8acb56050862076ec839a7a63d9b0ea1966169ec6745a7b43e6e3fa30"
+  },
+  "114": {
+    "image": "/assets/cards/114-bd40e9460e07.webp",
+    "name": "Тут, как тут",
+    "cardType": "умение",
+    "sourceParagraph": 817,
+    "textParagraph": 817,
+    "sourceMedia": "media/image129.png",
+    "sha256": "bd40e9460e07eb8158c91e670e6c135ba4b76478e7034e2dcf0c07d838bb9b63"
+  },
+  "115": {
+    "image": "/assets/cards/115-019e8f08d592.webp",
+    "name": "Уйти в закат",
+    "cardType": "умение",
+    "sourceParagraph": 834,
+    "textParagraph": 834,
+    "sourceMedia": "media/image132.png",
+    "sha256": "019e8f08d5921e44af733a19ec53a21a25fc00c4179d75cc3dabfea75b80362f"
+  },
+  "116": {
+    "image": "/assets/cards/116-d3bfc4e4fa22.webp",
+    "name": "Умелые ручки",
+    "cardType": "умение",
+    "sourceParagraph": 839,
+    "textParagraph": 839,
+    "sourceMedia": "media/image133.png",
+    "sha256": "d3bfc4e4fa22bc94e85660ae00ce370dc8006fb6dc13dcc41abe776af0611e6c"
+  },
+  "117": {
+    "image": "/assets/cards/117-71e94fe68d87.webp",
+    "name": "Ух, ловкач",
+    "cardType": "умение",
+    "sourceParagraph": 849,
+    "textParagraph": 849,
+    "sourceMedia": "media/image134.png",
+    "sha256": "71e94fe68d873dd85269581f7ab989e095d38d85cf756bad8cf6ceeb339cbdce"
+  },
+  "118": {
+    "image": "/assets/cards/118-430d5fe7606f.webp",
+    "name": "Ухо-жор",
+    "cardType": "умение",
+    "sourceParagraph": 856,
+    "textParagraph": 856,
+    "sourceMedia": "media/image135.png",
+    "sha256": "430d5fe7606fe7336e4a53a970644c1cc7c644e2b685bf97d5d1343d5484a6c3"
+  },
+  "119": {
+    "image": "/assets/cards/119-7b878f83d582.webp",
+    "name": "Хакер",
+    "cardType": "умение",
+    "sourceParagraph": 868,
+    "textParagraph": 868,
+    "sourceMedia": "media/image137.png",
+    "sha256": "7b878f83d582d5df25c88eb41e0e8bcc9a7e23ff6489e43bdb4ffc593cdb3778"
+  },
+  "120": {
+    "image": "/assets/cards/120-1f61791f1cf8.webp",
+    "name": "Химик",
+    "cardType": "умение",
+    "sourceParagraph": 873,
+    "textParagraph": 873,
+    "sourceMedia": "media/image138.png",
+    "sha256": "1f61791f1cf8fed5108a139415623e0b2ec332dee07d18147d789fdf0723c057"
+  },
+  "121": {
+    "image": "/assets/cards/121-0d9a666a6a85.webp",
+    "name": "Чеканутый",
+    "cardType": "умение",
+    "sourceParagraph": 875,
+    "textParagraph": 875,
+    "sourceMedia": "media/image139.png",
+    "sha256": "0d9a666a6a8510f29d45145496bcfdbec7ce453af1f9dffa9d658b2e54f76cb8"
+  },
+  "122": {
+    "image": "/assets/cards/122-39fbf59bf59d.webp",
+    "name": "Чемодан",
+    "cardType": "умение",
+    "sourceParagraph": 892,
+    "textParagraph": 892,
+    "sourceMedia": "media/image140.png",
+    "sha256": "39fbf59bf59d1ebca417351dc788a131329dc83fd16e1efd3e9e494a051f427a"
+  },
+  "123": {
+    "image": "/assets/cards/123-f579ba5c694e.webp",
+    "name": "Шеф",
+    "cardType": "умение",
+    "sourceParagraph": 902,
+    "textParagraph": 902,
+    "sourceMedia": "media/image141.png",
+    "sha256": "f579ba5c694e7acf12f376b39c0673bb2d8f0df6ad22473c0d6bba62010f1ceb"
+  },
+  "124": {
+    "image": "/assets/cards/124-2547acbacdfa.webp",
+    "name": "Шулер",
+    "cardType": "умение",
+    "sourceParagraph": 913,
+    "textParagraph": 913,
+    "sourceMedia": "media/image142.png",
+    "sha256": "2547acbacdfaa1001d2356e59de96841f5e7db99601f85284f35755b5347cd9b"
+  },
+  "125": {
+    "image": "/assets/cards/125-c7a2520e3715.webp",
+    "name": "Я не подведу",
+    "cardType": "умение",
+    "sourceParagraph": 917,
+    "textParagraph": 917,
+    "sourceMedia": "media/image143.png",
+    "sha256": "c7a2520e3715e4c78927f62120e4d96f6da695f0586f4cfa3de98bd529ae90ec"
+  },
+  "126": {
+    "image": "/assets/cards/126-74d75b7d664c.webp",
+    "name": "Ядермен",
+    "cardType": "умение",
+    "sourceParagraph": 921,
+    "textParagraph": 921,
+    "sourceMedia": "media/image144.png",
+    "sha256": "74d75b7d664cda6318af07adc2c16ae8db32787004a6e925b8c61f1232de6209"
+  },
+  "211": {
+    "image": "/assets/cards/211-90c2c6d3c423.webp",
+    "name": "Алло-это НЛО!",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 946,
+    "textParagraph": 946,
+    "sourceMedia": "media/image146.png",
+    "sha256": "90c2c6d3c423e94b3630689a060659a5a9d352ad4e94b84b87ff26f99da92a3f"
+  },
+  "212": {
+    "image": "/assets/cards/212-858d6c5ec4f9.webp",
+    "name": "Аукцион",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 951,
+    "textParagraph": 951,
+    "sourceMedia": "media/image147.png",
+    "sha256": "858d6c5ec4f917e4516b1ee46c3a8bb0ec52254e5ce1be2c167b8d8f9f762c06"
+  },
+  "213": {
+    "image": "/assets/cards/213-18c0b0f68535.webp",
+    "name": "Бессмертный",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 961,
+    "textParagraph": 961,
+    "sourceMedia": "media/image148.png",
+    "sha256": "18c0b0f6853509f0d7cd492e436e2e603afc71a5ff0d9632f5b9c5e1356159ef"
+  },
+  "214": {
+    "image": "/assets/cards/214-127bfb0b7d2a.webp",
+    "name": "Биг Бэнг",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 969,
+    "textParagraph": 969,
+    "sourceMedia": "media/image149.png",
+    "sha256": "127bfb0b7d2a86354dd5b8cc834e1698856c824baf692fd757b6c0ef2457572d"
+  },
+  "215": {
+    "image": "/assets/cards/215-837fb04da49f.webp",
+    "name": "Большое путешествие",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 974,
+    "textParagraph": 974,
+    "sourceMedia": "media/image150.png",
+    "sha256": "837fb04da49f56ae5b05c9abc3cb25689b88f1454567253d2db5f747d29e24ee"
+  },
+  "216": {
+    "image": "/assets/cards/216-1c1c7edd2962.webp",
+    "name": "В горле пересохло",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 984,
+    "textParagraph": 984,
+    "sourceMedia": "media/image151.png",
+    "sha256": "1c1c7edd2962ae16e6df32819a68d7c435968a256fba5401e1a50030eebb5e06"
+  },
+  "218": {
+    "image": "/assets/cards/218-a888b9775651.webp",
+    "name": "Вот так сюрприз",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 989,
+    "textParagraph": 989,
+    "sourceMedia": "media/image152.png",
+    "sha256": "a888b9775651595d7d6ddcdd2da88051df4a67f9fbbbbe3d75dae6869c69c36c"
+  },
+  "219": {
+    "image": "/assets/cards/219-f5c069a4217e.webp",
+    "name": "Второй шанс",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1000,
+    "textParagraph": 1000,
+    "sourceMedia": "media/image29.png",
+    "sha256": "f5c069a4217e06a795a64aea2539fe8093c5b86b0de88ed49319e6d07f0dac33"
+  },
+  "220": {
+    "image": "/assets/cards/220-72e08ecad62a.webp",
+    "name": "Двери закрываются",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1004,
+    "textParagraph": 1004,
+    "sourceMedia": "media/image154.png",
+    "sha256": "72e08ecad62a3dbe30903f4d3c88a15e74eb91db6966fe52bb3ec4739ae0b972"
+  },
+  "221": {
+    "image": "/assets/cards/221-ab927695712a.webp",
+    "name": "Дедуктивный подход",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1014,
+    "textParagraph": 1014,
+    "sourceMedia": "media/image155.png",
+    "sha256": "ab927695712a425adee9141a3ceb30fed452b5092f17554e527ab30fca779f50"
+  },
+  "222": {
+    "image": "/assets/cards/222-d998cbd735ba.webp",
+    "name": "День благодарения",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1019,
+    "textParagraph": 1019,
+    "sourceMedia": "media/image156.png",
+    "sha256": "d998cbd735ba375dd65934f2215865de6c547ae842469c19f9572a0eb4bc7fad"
+  },
+  "223": {
+    "image": "/assets/cards/223-5946e32c42c3.webp",
+    "name": "Доброе утро",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1025,
+    "textParagraph": 1025,
+    "sourceMedia": "media/image157.png",
+    "sha256": "5946e32c42c3f801cb18ac5c9bba697c98f8f7c071fe0d9da05bbdf546c38481"
+  },
+  "224": {
+    "image": "/assets/cards/224-de71373cc548.webp",
+    "name": "Забей",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1032,
+    "textParagraph": 1032,
+    "sourceMedia": "media/image158.png",
+    "sha256": "de71373cc548ca96f756ca2073b7437870bdc6dfc99e4228414933a642a9152f"
+  },
+  "225": {
+    "image": "/assets/cards/225-d639d293748a.webp",
+    "name": "Задохлик",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1038,
+    "textParagraph": 1038,
+    "sourceMedia": "media/image159.png",
+    "sha256": "d639d293748aab95b755d5161ef5eb47687360578e264d5f2de49742a92503a6"
+  },
+  "226": {
+    "image": "/assets/cards/226-e4087828da04.webp",
+    "name": "Золотая лихорадка",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1044,
+    "textParagraph": 1044,
+    "sourceMedia": "media/image160.png",
+    "sha256": "e4087828da040cf24635e4f466de3aadba9349960e32303ed84c44c9da65b04b"
+  },
+  "227": {
+    "image": "/assets/cards/227-f6e98589d04a.webp",
+    "name": "Избранный",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1053,
+    "textParagraph": 1053,
+    "sourceMedia": "media/image161.png",
+    "sha256": "f6e98589d04a1153c6b1d7ef338ba2a3dd84f3218e4c6244c034e068cf447752"
+  },
+  "228": {
+    "image": "/assets/cards/228-1545342d7675.webp",
+    "name": "Иоанна 15:13",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1060,
+    "textParagraph": 1060,
+    "sourceMedia": "media/image162.png",
+    "sha256": "1545342d76759e1e166db75caec3903e07f2905161994797624ff934c40a692c"
+  },
+  "229": {
+    "image": "/assets/cards/229-0ef4957cf7b0.webp",
+    "name": "Истории у костра",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1065,
+    "textParagraph": 1065,
+    "sourceMedia": "media/image163.jpeg",
+    "sha256": "0ef4957cf7b04640e979735194a996c57d9243725c44cd84bbadd01a93f2412b"
+  },
+  "230": {
+    "image": "/assets/cards/230-98ed809122e6.webp",
+    "name": "Как без рук",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1069,
+    "textParagraph": 1069,
+    "sourceMedia": "media/image164.png",
+    "sha256": "98ed809122e6720655901015c5d2f7e60f76253386828fdf8326ac0c6cf0b653"
+  },
+  "231": {
+    "image": "/assets/cards/231-67c2a6a0c05f.webp",
+    "name": "Козел отмщения",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1075,
+    "textParagraph": 1075,
+    "sourceMedia": "media/image165.jpeg",
+    "sha256": "67c2a6a0c05f921367ae7528982c49f971181d4eba4efc4a9b21ed701a5bad10"
+  },
+  "232": {
+    "image": "/assets/cards/232-323e85d53191.webp",
+    "name": "Корень зла",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1080,
+    "textParagraph": 1080,
+    "sourceMedia": "media/image166.png",
+    "sha256": "323e85d53191871263110403a95a783f22ae2c412d0be66d10a28da0e634e49c"
+  },
+  "233": {
+    "image": "/assets/cards/233-3730346c7ec2.webp",
+    "name": "Криокамера",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1085,
+    "textParagraph": 1085,
+    "sourceMedia": "media/image167.jpeg",
+    "sha256": "3730346c7ec2a227c8b741773a9f69edfee16942ffded007c77e8cf7bd7a32c0"
+  },
+  "234": {
+    "image": "/assets/cards/234-76319edbf676.webp",
+    "name": "Ловкость рук",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1089,
+    "textParagraph": 1089,
+    "sourceMedia": "media/image168.png",
+    "sha256": "76319edbf67605fa39124b407f9af73a0b430027856e88872fcc72a6b5ac7731"
+  },
+  "235": {
+    "image": "/assets/cards/235-86c5eb4f495d.webp",
+    "name": "Лотерея",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1094,
+    "textParagraph": 1094,
+    "sourceMedia": "media/image169.png",
+    "sha256": "86c5eb4f495da7cc820df82300778d51013a6e8e5b46f296daf1facdad0339dc"
+  },
+  "236": {
+    "image": "/assets/cards/236-554a76434acf.webp",
+    "name": "Мертвая монополия",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1103,
+    "textParagraph": 1103,
+    "sourceMedia": "media/image171.png",
+    "sha256": "554a76434acfc53bf57277abf27f662dc3a2338102175d65641d59533d0b3aa6"
+  },
+  "237": {
+    "image": "/assets/cards/237-111afc54ca9c.webp",
+    "name": "Молчание-золото",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1108,
+    "textParagraph": 1108,
+    "sourceMedia": "media/image74.png",
+    "sha256": "111afc54ca9cff605ad88b32081c1f8648cee519f275d8279f05f48ad2bc25e8"
+  },
+  "238": {
+    "image": "/assets/cards/238-7644adac34b9.webp",
+    "name": "Некуда класть",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1113,
+    "textParagraph": 1113,
+    "sourceMedia": "media/image172.png",
+    "sha256": "7644adac34b93b5b5b1fd949ed082e140ee2817e8f138d428499dd66884603e6"
+  },
+  "240": {
+    "image": "/assets/cards/240-0b1fd985864a.webp",
+    "name": "Одним махом",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1127,
+    "textParagraph": 1127,
+    "sourceMedia": "media/image174.jpeg",
+    "sha256": "0b1fd985864a345b431b9f6bb9890b5db95a7140acefdb76b222cb4b5376e327"
+  },
+  "241": {
+    "image": "/assets/cards/241-0cc620d5c2ea.webp",
+    "name": "Особо опасен",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1131,
+    "textParagraph": 1131,
+    "sourceMedia": "media/image175.png",
+    "sha256": "0cc620d5c2ea7150d16b60bbbbf064cb1dfa6233ad974687c32a37b1b244f574"
+  },
+  "242": {
+    "image": "/assets/cards/242-1fe9267180a7.webp",
+    "name": "От всего сердца",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1136,
+    "textParagraph": 1136,
+    "sourceMedia": "media/image176.png",
+    "sha256": "1fe9267180a758756e79f71cfc2a18a12e6ab76557b3ac4e468a0ac5e751134a"
+  },
+  "243": {
+    "image": "/assets/cards/243-4a873ad32dd7.webp",
+    "name": "Отравление",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1141,
+    "textParagraph": 1141,
+    "sourceMedia": "media/image177.png",
+    "sha256": "4a873ad32dd79b5c9088b7fc0fd2259d0142d05313fe5cadd9c081740372d207"
+  },
+  "244": {
+    "image": "/assets/cards/244-95ce579813d9.webp",
+    "name": "Отягчающие обстоятельства",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1146,
+    "textParagraph": 1146,
+    "sourceMedia": "media/image90.png",
+    "sha256": "95ce579813d949faa53e1480a8037c1db5b145b211e6707cae2f3b823b3dae50"
+  },
+  "245": {
+    "image": "/assets/cards/245-603ea458371f.webp",
+    "name": "Первооткрыватель",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1159,
+    "textParagraph": 1159,
+    "sourceMedia": "media/image179.jpeg",
+    "sha256": "603ea458371f42f293d96e2a8640920d3142fbed579afdc78282a9824291a241"
+  },
+  "246": {
+    "image": "/assets/cards/246-08e8ca5c32a1.webp",
+    "name": "Плохой Санта",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1172,
+    "textParagraph": 1172,
+    "sourceMedia": "media/image181.png",
+    "sha256": "08e8ca5c32a15851914b5e0143c22e61afd01e44339606d997cc252de022bf66"
+  },
+  "247": {
+    "image": "/assets/cards/247-5fff26cd7589.webp",
+    "name": "Под рентгеном",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1176,
+    "textParagraph": 1176,
+    "sourceMedia": "media/image98.png",
+    "sha256": "5fff26cd7589d7daee884b356e4a01cb0f35098f1e47f3c40f6068d288393077"
+  },
+  "248": {
+    "image": "/assets/cards/248-f768f2eb6e16.webp",
+    "name": "Полевой врач",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1182,
+    "textParagraph": 1182,
+    "sourceMedia": "media/image182.png",
+    "sha256": "f768f2eb6e16f46e05da04149398f4e1d1f8c01ebcec87c7131bed9b5712ae4f"
+  },
+  "249": {
+    "image": "/assets/cards/249-03c62d5b8081.webp",
+    "name": "Радиация",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1185,
+    "textParagraph": 1185,
+    "sourceMedia": "media/image183.png",
+    "sha256": "03c62d5b808169b14a7a9614198b3498387e5a1ba419ec980c2877fb7e659a3f"
+  },
+  "250": {
+    "image": "/assets/cards/250-0fa8b8cc0cf1.webp",
+    "name": "С днем Рождения",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1190,
+    "textParagraph": 1190,
+    "sourceMedia": "media/image184.png",
+    "sha256": "0fa8b8cc0cf195a0a6e5c740a170279ed9a0b7fc3562dd21635598a7add3c61e"
+  },
+  "252": {
+    "image": "/assets/cards/252-a024d703a66d.webp",
+    "name": "Святой",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1192,
+    "textParagraph": 1192,
+    "sourceMedia": "media/image185.png",
+    "sha256": "a024d703a66d63668fcae63c6c12a08fc554d798bf620b82c5d4f6a22e5072f7"
+  },
+  "253": {
+    "image": "/assets/cards/253-56483e119d1c.webp",
+    "name": "Счастливчик",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1211,
+    "textParagraph": 1211,
+    "sourceMedia": "media/image188.png",
+    "sha256": "56483e119d1ca2db7ae75e9082ba42fb6df3dc71550abcf80eee337f8941a920"
+  },
+  "254": {
+    "image": "/assets/cards/254-60fe5d641852.webp",
+    "name": "Туши свет",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1220,
+    "textParagraph": 1220,
+    "sourceMedia": "media/image190.png",
+    "sha256": "60fe5d64185222d6dc8cb8231f79f3338ea2c10565d1b4b72a1bdb78da23755e"
+  },
+  "255": {
+    "image": "/assets/cards/255-7ef415f50979.webp",
+    "name": "Чарли Рэд",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1225,
+    "textParagraph": 1225,
+    "sourceMedia": "media/image191.png",
+    "sha256": "7ef415f509792b1bcea2e506ebcbe21a69a65b9486eea0cee6583645c4238a04"
+  },
+  "256": {
+    "image": "/assets/cards/256-bd1cb89c98fe.webp",
+    "name": "Чем-то зарядил",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1229,
+    "textParagraph": 1229,
+    "sourceMedia": "media/image192.jpeg",
+    "sha256": "bd1cb89c98fe5edd2320717a2c5515078d82429229147053b508955f7c57fbf4"
+  },
+  "257": {
+    "image": "/assets/cards/257-86eed5317974.webp",
+    "name": "Чем-то насолил",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1233,
+    "textParagraph": 1233,
+    "sourceMedia": "media/image193.png",
+    "sha256": "86eed5317974271b55aa61c2b220075ecf7ebb3cc289e627168a95f8cbb8eb9a"
+  },
+  "258": {
+    "image": "/assets/cards/258-2547acbacdfa.webp",
+    "name": "Шулер",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1238,
+    "textParagraph": 1238,
+    "sourceMedia": "media/image142.png",
+    "sha256": "2547acbacdfaa1001d2356e59de96841f5e7db99601f85284f35755b5347cd9b"
+  },
+  "259": {
+    "image": "/assets/cards/259-e84f64929c49.webp",
+    "name": "Ярость",
+    "cardType": "мёртвый бонус",
+    "sourceParagraph": 1243,
+    "textParagraph": 1243,
+    "sourceMedia": "media/image194.png",
+    "sha256": "e84f64929c4981fd3b0dff30f002a206b147c15cbccdeaad92e027e972018004"
+  },
+  "127": {
+    "image": "/assets/cards/127-a9dce60f4464.webp",
+    "name": "Адреналин",
+    "cardType": "припас",
+    "sourceParagraph": 1248,
+    "textParagraph": 1248,
+    "sourceMedia": "media/image196.png",
+    "sha256": "a9dce60f4464cb2f8f8d6f8e51759388f618124065876fa479d14d6ce59843cd"
+  },
+  "128": {
+    "image": "/assets/cards/128-5283e530d32b.webp",
+    "name": "Аптечка",
+    "cardType": "припас",
+    "sourceParagraph": 1251,
+    "textParagraph": 1251,
+    "sourceMedia": "media/image197.jpeg",
+    "sha256": "5283e530d32bb30c5f6ec3590a071414c2705e7d06115d4425c868c8c319b0a2"
+  },
+  "129": {
+    "image": "/assets/cards/129-7d838a7f3c42.webp",
+    "name": "Аудиокассета",
+    "cardType": "припас",
+    "sourceParagraph": 1264,
+    "textParagraph": 1264,
+    "sourceMedia": "media/image199.jpeg",
+    "sha256": "7d838a7f3c4213564645d3eeb6bddd2a077138cfbafb70acda8e601b106ef0d3"
+  },
+  "130": {
+    "image": "/assets/cards/130-49893ecb5ed8.webp",
+    "name": "Банка с краской",
+    "cardType": "припас",
+    "sourceParagraph": 1273,
+    "textParagraph": 1273,
+    "sourceMedia": "media/image201.jpeg",
+    "sha256": "49893ecb5ed87e56a95c325ce44253533c93597f30a046a410f75f12d0810b72"
+  },
+  "131": {
+    "image": "/assets/cards/131-13605f763be8.webp",
+    "name": "Бензопила",
+    "cardType": "припас",
+    "sourceParagraph": 1276,
+    "textParagraph": 1277,
+    "sourceMedia": "media/image202.png",
+    "sha256": "13605f763be817c9450f6c5f8bf1f6f37b46c407b54818b67c3846db6c9f1670"
+  },
+  "132": {
+    "image": "/assets/cards/132-ce0d27174e3a.webp",
+    "name": "Библия",
+    "cardType": "припас",
+    "sourceParagraph": 1289,
+    "textParagraph": 1289,
+    "sourceMedia": "media/image203.png",
+    "sha256": "ce0d27174e3a6d8cbf33ae4e8c397703605b29131dd2dadb5ab051adf3e8f55f"
+  },
+  "133": {
+    "image": "/assets/cards/133-eb1c91911c41.webp",
+    "name": "Бинокль",
+    "cardType": "припас",
+    "sourceParagraph": 1298,
+    "textParagraph": 1298,
+    "sourceMedia": "media/image205.png",
+    "sha256": "eb1c91911c4118ffa75ccf0808cee7b7f1feae5ad76b78edbcacc3d729a85f22"
+  },
+  "134": {
+    "image": "/assets/cards/134-0727c72eb761.webp",
+    "name": "Бронежилет",
+    "cardType": "припас",
+    "sourceParagraph": 1310,
+    "textParagraph": 1310,
+    "sourceMedia": "media/image206.jpeg",
+    "sha256": "0727c72eb761514f444d0054fd236edfe4436d2c41863281bfbea26b6902581a"
+  },
+  "135": {
+    "image": "/assets/cards/135-70f6b54c417c.webp",
+    "name": "Будильник",
+    "cardType": "припас",
+    "sourceParagraph": 1313,
+    "textParagraph": 1313,
+    "sourceMedia": "media/image207.jpeg",
+    "sha256": "70f6b54c417c492751d6924f787836d513fdefa7a77776fd1e188aec5b99e817"
+  },
+  "136": {
+    "image": "/assets/cards/136-fc58df774608.webp",
+    "name": "Бумеранг",
+    "cardType": "припас",
+    "sourceParagraph": 1318,
+    "textParagraph": 1318,
+    "sourceMedia": "media/image208.png",
+    "sha256": "fc58df774608289d53e5b1d4c5735f80b3cea4f9a6a2d45b3e1120198a30c36d"
+  },
+  "137": {
+    "image": "/assets/cards/137-d47a33f28299.webp",
+    "name": "Веревка",
+    "cardType": "припас",
+    "sourceParagraph": 1321,
+    "textParagraph": 1321,
+    "sourceMedia": "media/image209.png",
+    "sha256": "d47a33f28299616f9f1ef44e00b07120a7e06f673c122a1b907dcb3f36cc17b7"
+  },
+  "138": {
+    "image": "/assets/cards/138-bb35ddd00c09.webp",
+    "name": "Взрывчатка",
+    "cardType": "припас",
+    "sourceParagraph": 1324,
+    "textParagraph": 1324,
+    "sourceMedia": "media/image210.jpeg",
+    "sha256": "bb35ddd00c09d90a274b06c53973b8243464937af914475754f82b2d9fe9f3f7"
+  },
+  "140": {
+    "image": "/assets/cards/140-0a127be81137.webp",
+    "name": "Голова манекена",
+    "cardType": "припас",
+    "sourceParagraph": 1330,
+    "textParagraph": 1330,
+    "sourceMedia": "media/image211.png",
+    "sha256": "0a127be811372960299257db99b83b49c7205252bfe42cad42b0e235e3365ee6"
+  },
+  "141": {
+    "image": "/assets/cards/141-c936ea79b782.webp",
+    "name": "Граната",
+    "cardType": "припас",
+    "sourceParagraph": 1335,
+    "textParagraph": 1335,
+    "sourceMedia": "media/image212.png",
+    "sha256": "c936ea79b78218cb5108dad5dec14bdc74a106a35b6fb185f5672f944633032f"
+  },
+  "142": {
+    "image": "/assets/cards/142-693212e2a3a8.webp",
+    "name": "Градусник",
+    "cardType": "припас",
+    "sourceParagraph": 1341,
+    "textParagraph": 1341,
+    "sourceMedia": "media/image213.jpeg",
+    "sha256": "693212e2a3a8c41eec186756826088cf5be43b5d7ab520e4d9155cc4f52a84bc"
+  },
+  "143": {
+    "image": "/assets/cards/143-fac9c7e1380c.webp",
+    "name": "Деньги",
+    "cardType": "припас",
+    "sourceParagraph": 1345,
+    "textParagraph": 1345,
+    "sourceMedia": "media/image214.png",
+    "sha256": "fac9c7e1380cfa76e78fc64fc6542a074528b068a92e226cc904ad49887ee5a6"
+  },
+  "144": {
+    "image": "/assets/cards/144-15f06ba70c65.webp",
+    "name": "Детонатор",
+    "cardType": "припас",
+    "sourceParagraph": 1348,
+    "textParagraph": 1348,
+    "sourceMedia": "media/image215.jpeg",
+    "sha256": "15f06ba70c65249353c35811fba718a2fc76ed3ffa693f40342ed5b8ae23a6e5"
+  },
+  "145": {
+    "image": "/assets/cards/145-d1cde3aefccc.webp",
+    "name": "Дефибриллятор",
+    "cardType": "припас",
+    "sourceParagraph": 1352,
+    "textParagraph": 1352,
+    "sourceMedia": "media/image216.png",
+    "sha256": "d1cde3aefcccbb006084183ad056b58f38a51af7d45b3648c4f3cf7ee9f551c1"
+  },
+  "146": {
+    "image": "/assets/cards/146-002f857ebc3c.webp",
+    "name": "Диктофон",
+    "cardType": "припас",
+    "sourceParagraph": 1355,
+    "textParagraph": 1355,
+    "sourceMedia": "media/image217.png",
+    "sha256": "002f857ebc3cb13243cc3286f983554ef102d452c2dc19eb513ed195684c2427"
+  },
+  "147": {
+    "image": "/assets/cards/147-63689761cca4.webp",
+    "name": "Дробовик",
+    "cardType": "припас",
+    "sourceParagraph": 1366,
+    "textParagraph": 1366,
+    "sourceMedia": "media/image218.jpeg",
+    "sha256": "63689761cca4752a1a61fc73d2894fbf8f32d4c3abe216399bc42635567a4908"
+  },
+  "148": {
+    "image": "/assets/cards/148-27e0e439eb78.webp",
+    "name": "Духи",
+    "cardType": "припас",
+    "sourceParagraph": 1373,
+    "textParagraph": 1373,
+    "sourceMedia": "media/image219.jpeg",
+    "sha256": "27e0e439eb78a1f583ce53bd26889639e4a8c49f3a661e00541e0206f70aabc4"
+  },
+  "149": {
+    "image": "/assets/cards/149-1ae7414c0e19.webp",
+    "name": "Дымовые гранаты",
+    "cardType": "припас",
+    "sourceParagraph": 1379,
+    "textParagraph": 1379,
+    "sourceMedia": "media/image220.png",
+    "sha256": "1ae7414c0e19c748f7bfc45c13dae2d3c9996bed0644e1f03b0be7414e4ad923"
+  },
+  "150": {
+    "image": "/assets/cards/150-fc43ab12c7ef.webp",
+    "name": "Зажигалка",
+    "cardType": "припас",
+    "sourceParagraph": 1387,
+    "textParagraph": 1387,
+    "sourceMedia": "media/image221.png",
+    "sha256": "fc43ab12c7efe1a16cecbd6172b1aac4b658c63682842e478312f2f62036865f"
+  },
+  "151": {
+    "image": "/assets/cards/151-0c27ed66eea2.webp",
+    "name": "Замок",
+    "cardType": "припас",
+    "sourceParagraph": 1389,
+    "textParagraph": 1389,
+    "sourceMedia": "media/image222.png",
+    "sha256": "0c27ed66eea257a8b532efb38ffa005f344bd76e0048f4c4c1668fc9cb9a1e1e"
+  },
+  "152": {
+    "image": "/assets/cards/152-a9fb9aa74911.webp",
+    "name": "Карабин",
+    "cardType": "припас",
+    "sourceParagraph": 1391,
+    "textParagraph": 1392,
+    "sourceMedia": "media/image223.png",
+    "sha256": "a9fb9aa749111e8e574ce783a6bddb25652030bb558c2b017e62b33e88bda1af"
+  },
+  "153": {
+    "image": "/assets/cards/153-fcccb08ad465.webp",
+    "name": "Камера",
+    "cardType": "припас",
+    "sourceParagraph": 1396,
+    "textParagraph": 1396,
+    "sourceMedia": "media/image224.png",
+    "sha256": "fcccb08ad4655a39d300b1cc47fa51d15734fd47d50280a21478ddcfea2e80f8"
+  },
+  "154": {
+    "image": "/assets/cards/154-997dfd95239a.webp",
+    "name": "Канистра",
+    "cardType": "припас",
+    "sourceParagraph": 1412,
+    "textParagraph": 1412,
+    "sourceMedia": "media/image225.png",
+    "sha256": "997dfd95239aca58c0258fa5fda370bb271e1c643aff803f6ad47ef61a251fac"
+  },
+  "155": {
+    "image": "/assets/cards/155-8da340d71d1a.webp",
+    "name": "Капкан",
+    "cardType": "припас",
+    "sourceParagraph": 1421,
+    "textParagraph": 1421,
+    "sourceMedia": "media/image226.png",
+    "sha256": "8da340d71d1ac93fdf3fc8f9cf0f8eff626a1cc032d756039d2329ca17eaf551"
+  },
+  "156": {
+    "image": "/assets/cards/156-fea52b18390d.webp",
+    "name": "Карта сокровищ",
+    "cardType": "припас",
+    "sourceParagraph": 1429,
+    "textParagraph": 1429,
+    "sourceMedia": "media/image227.png",
+    "sha256": "fea52b18390d7bae24f368131090b12728148d9f64c30404a3d9f04f49c70e0a"
+  },
+  "157": {
+    "image": "/assets/cards/157-a90eb85ed33f.webp",
+    "name": "Кастет",
+    "cardType": "припас",
+    "sourceParagraph": 1436,
+    "textParagraph": 1436,
+    "sourceMedia": "media/image228.jpeg",
+    "sha256": "a90eb85ed33f5461439e2c95a980372a279a40c421a145df3f0230eda4ed7996"
+  },
+  "158": {
+    "image": "/assets/cards/158-0c6183061428.webp",
+    "name": "Ключи от пикапа",
+    "cardType": "припас",
+    "sourceParagraph": 1439,
+    "textParagraph": 1439,
+    "sourceMedia": "media/image229.jpeg",
+    "sha256": "0c61830614282a207ea8ff9a019b049371e17b1b8fd1334e9668dfea2944d686"
+  },
+  "159": {
+    "image": "/assets/cards/159-4179489c49b8.webp",
+    "name": "Код от сейфа",
+    "cardType": "припас",
+    "sourceParagraph": 1441,
+    "textParagraph": 1441,
+    "sourceMedia": "media/image230.jpeg",
+    "sha256": "4179489c49b8d7c54e004f89cab5cf6f8b55f6ebf9869207061425dcad85a041"
+  },
+  "160": {
+    "image": "/assets/cards/160-54fe4d1bcd8d.webp",
+    "name": "Кока-кола",
+    "cardType": "припас",
+    "sourceParagraph": 1445,
+    "textParagraph": 1445,
+    "sourceMedia": "media/image231.png",
+    "sha256": "54fe4d1bcd8d0d70b555ae74d4f1f5710c05ea8fae04c860ffa60be6e5165b87"
+  },
+  "161": {
+    "image": "/assets/cards/161-c5937288c52b.webp",
+    "name": "Коктейль Молотова",
+    "cardType": "припас",
+    "sourceParagraph": 1454,
+    "textParagraph": 1455,
+    "sourceMedia": "media/image232.png",
+    "sha256": "c5937288c52bd534aa1fb608491d62c25c932d35a56ebcbd09f9554a8b0b44c8"
+  },
+  "162": {
+    "image": "/assets/cards/162-ed5363bc35b3.webp",
+    "name": "Компас",
+    "cardType": "припас",
+    "sourceParagraph": 1460,
+    "textParagraph": 1460,
+    "sourceMedia": "media/image233.png",
+    "sha256": "ed5363bc35b30be8506e3f75020c46d72d2865eb3ac3c98bf2d62e78d20d53d1"
+  },
+  "163": {
+    "image": "/assets/cards/163-8c9e95ee2522.webp",
+    "name": "Конверт",
+    "cardType": "припас",
+    "sourceParagraph": 1463,
+    "textParagraph": 1463,
+    "sourceMedia": "media/image234.png",
+    "sha256": "8c9e95ee2522367c7b68fb17f7f9f719c59e083de7a0396903127e61ab756764"
+  },
+  "164": {
+    "image": "/assets/cards/164-5e543a0cc08d.webp",
+    "name": "Консерва",
+    "cardType": "припас",
+    "sourceParagraph": 1472,
+    "textParagraph": 1472,
+    "sourceMedia": "media/image235.png",
+    "sha256": "5e543a0cc08dbbd2accb3856d91379bd2c3a268ddefd9b6de6da48279784b970"
+  },
+  "165": {
+    "image": "/assets/cards/165-be3d5568616b.webp",
+    "name": "Кофе",
+    "cardType": "припас",
+    "sourceParagraph": 1480,
+    "textParagraph": 1480,
+    "sourceMedia": "media/image236.jpeg",
+    "sha256": "be3d5568616b34fdb89b49bb4bf770ea050e7b8ba9274cd7579e59ab316c9c84"
+  },
+  "166": {
+    "image": "/assets/cards/166-70d8c8becfeb.webp",
+    "name": "Кукла с проводами",
+    "cardType": "припас",
+    "sourceParagraph": 1502,
+    "textParagraph": 1502,
+    "sourceMedia": "media/image239.png",
+    "sha256": "70d8c8becfeb20177486791f0ac9c1ebf98511f61bf8ba2524188a9f2b633585"
+  },
+  "167": {
+    "image": "/assets/cards/167-31beef4e1b57.webp",
+    "name": "Куртка",
+    "cardType": "припас",
+    "sourceParagraph": 1511,
+    "textParagraph": 1511,
+    "sourceMedia": "media/image240.png",
+    "sha256": "31beef4e1b573499077362c2c4e010cf5c7f0b0b8a3a7d15c8322b5aaae61c6d"
+  },
+  "168": {
+    "image": "/assets/cards/168-67d791cf901d.webp",
+    "name": "Лопата",
+    "cardType": "припас",
+    "sourceParagraph": 1521,
+    "textParagraph": 1521,
+    "sourceMedia": "media/image242.png",
+    "sha256": "67d791cf901d87e2d04b302e427a9fcd58e885f3974ff3fafc0f1d73dc2f8fde"
+  },
+  "169": {
+    "image": "/assets/cards/169-3658e42fc4a3.webp",
+    "name": "Лупа",
+    "cardType": "припас",
+    "sourceParagraph": 1524,
+    "textParagraph": 1524,
+    "sourceMedia": "media/image243.png",
+    "sha256": "3658e42fc4a3e8ed2308236cbd979b857bb5f2cf732fb80d46dd82099f4e4740"
+  },
+  "170": {
+    "image": "/assets/cards/170-aa2692fa4637.webp",
+    "name": "Марка",
+    "cardType": "припас",
+    "sourceParagraph": 1527,
+    "textParagraph": 1527,
+    "sourceMedia": "media/image244.png",
+    "sha256": "aa2692fa463763d40bb8da0c31ca1af8086961641df44f95f450ab212d2d1cb0"
+  },
+  "171": {
+    "image": "/assets/cards/171-485656297bc6.webp",
+    "name": "Маска",
+    "cardType": "припас",
+    "sourceParagraph": 1536,
+    "textParagraph": 1536,
+    "sourceMedia": "media/image245.png",
+    "sha256": "485656297bc6ec042ed14eef619a15447a609153a77c0c07689487a225942190"
+  },
+  "172": {
+    "image": "/assets/cards/172-7e7cdc2e111a.webp",
+    "name": "Мачете",
+    "cardType": "припас",
+    "sourceParagraph": 1539,
+    "textParagraph": 1539,
+    "sourceMedia": "media/image246.png",
+    "sha256": "7e7cdc2e111a9e6f045d0945b1d41ac756d86fed46d6d7401bf8b6c8f526065c"
+  },
+  "173": {
+    "image": "/assets/cards/173-548694811006.webp",
+    "name": "Мегафон",
+    "cardType": "припас",
+    "sourceParagraph": 1542,
+    "textParagraph": 1542,
+    "sourceMedia": "media/image247.jpeg",
+    "sha256": "548694811006b96eff123becafb04df6598a186bca3dbf0085a50c355f962853"
+  },
+  "174": {
+    "image": "/assets/cards/174-a533dddf67f1.webp",
+    "name": "Мина",
+    "cardType": "припас",
+    "sourceParagraph": 1547,
+    "textParagraph": 1547,
+    "sourceMedia": "media/image248.jpeg",
+    "sha256": "a533dddf67f1f2f1b1006e8517b5c856bf9b03cb193e0772be3b64302c1e58d6"
+  },
+  "175": {
+    "image": "/assets/cards/175-a7478730d197.webp",
+    "name": "Монета",
+    "cardType": "припас",
+    "sourceParagraph": 1550,
+    "textParagraph": 1550,
+    "sourceMedia": "media/image249.jpeg",
+    "sha256": "a7478730d197291bc685bcb7942c3b2ee4074a836b1eb82a26a5aa16b5287811"
+  },
+  "176": {
+    "image": "/assets/cards/176-c7b3dcc70e17.webp",
+    "name": "Мыло",
+    "cardType": "припас",
+    "sourceParagraph": 1553,
+    "textParagraph": 1554,
+    "sourceMedia": "media/image250.png",
+    "sha256": "c7b3dcc70e17f1b7d6b292f185816bbde85adb5a608b7694d979607300b2fde3"
+  },
+  "177": {
+    "image": "/assets/cards/177-7c45d77ac0e8.webp",
+    "name": "Мышеловка",
+    "cardType": "припас",
+    "sourceParagraph": 1557,
+    "textParagraph": 1557,
+    "sourceMedia": "media/image251.png",
+    "sha256": "7c45d77ac0e82503ff61da2b92322302c870640cd4ab586b583b3afa4a39752b"
+  },
+  "178": {
+    "image": "/assets/cards/178-ce3fd4b1736e.webp",
+    "name": "Мясо",
+    "cardType": "припас",
+    "sourceParagraph": 1561,
+    "textParagraph": 1561,
+    "sourceMedia": "media/image252.png",
+    "sha256": "ce3fd4b1736ef1f59bb7e5360b3c6904392989899b8cd61193f9b2bddc225f70"
+  },
+  "179": {
+    "image": "/assets/cards/179-9eb9065be446.webp",
+    "name": "Набор хирурга",
+    "cardType": "припас",
+    "sourceParagraph": 1571,
+    "textParagraph": 1571,
+    "sourceMedia": "media/image253.png",
+    "sha256": "9eb9065be4460a0f41e21e1b3b83843aa117cdc7c6f885d8d73bb06d2c1edb63"
+  },
+  "180": {
+    "image": "/assets/cards/180-ed9e6d623017.webp",
+    "name": "Наручники",
+    "cardType": "припас",
+    "sourceParagraph": 1577,
+    "textParagraph": 1577,
+    "sourceMedia": "media/image254.png",
+    "sha256": "ed9e6d623017b1a7344b313010b3c059370ea574ea3664ef7fb86c04933146ba"
+  },
+  "181": {
+    "image": "/assets/cards/181-51d6f8496cba.webp",
+    "name": "Огнетушитель",
+    "cardType": "припас",
+    "sourceParagraph": 1585,
+    "textParagraph": 1585,
+    "sourceMedia": "media/image256.png",
+    "sha256": "51d6f8496cba4e265f9b34977c4553a6775513624e506dbcaa67f240db454b81"
+  },
+  "182": {
+    "image": "/assets/cards/182-b6c0948ae25b.webp",
+    "name": "Очки",
+    "cardType": "припас",
+    "sourceParagraph": 1588,
+    "textParagraph": 1589,
+    "sourceMedia": "media/image257.png",
+    "sha256": "b6c0948ae25b5c2a1d2a5645111d8a5cc6cefb7af7ae1e8e29385fabd391b9bf"
+  },
+  "183": {
+    "image": "/assets/cards/183-48f4158f1be8.webp",
+    "name": "Патроны",
+    "cardType": "припас",
+    "sourceParagraph": 1592,
+    "textParagraph": 1592,
+    "sourceMedia": "media/image258.png",
+    "sha256": "48f4158f1be8a5c94ba6d95cdbc957ad6ffa15799cb099a338fb041df04c222e"
+  },
+  "184": {
+    "image": "/assets/cards/184-a769c6430e0e.webp",
+    "name": "Перчатки",
+    "cardType": "припас",
+    "sourceParagraph": 1595,
+    "textParagraph": 1595,
+    "sourceMedia": "media/image259.png",
+    "sha256": "a769c6430e0eb0df64036e7a8718278678b9cb461dec39118ea23455ea45881d"
+  },
+  "185": {
+    "image": "/assets/cards/185-f33872c2c0d3.webp",
+    "name": "Пистолет",
+    "cardType": "припас",
+    "sourceParagraph": 1613,
+    "textParagraph": 1614,
+    "sourceMedia": "media/image261.png",
+    "sha256": "f33872c2c0d384fc2e9fd0340e9a34f39da5e8ad8edf8d6c9b06d738a1004e4d"
+  },
+  "186": {
+    "image": "/assets/cards/186-d698691392e5.webp",
+    "name": "Подарок",
+    "cardType": "припас",
+    "sourceParagraph": 1619,
+    "textParagraph": 1619,
+    "sourceMedia": "media/image262.jpeg",
+    "sha256": "d698691392e5bb7c04905550e4a1de883678d97a6dbaad28497cb8f1e52814a7"
+  },
+  "187": {
+    "image": "/assets/cards/187-4c18ac25d91e.webp",
+    "name": "Противогаз",
+    "cardType": "припас",
+    "sourceParagraph": 1623,
+    "textParagraph": 1623,
+    "sourceMedia": "media/image263.png",
+    "sha256": "4c18ac25d91ec6c170f620246940a40b08b7a134dfdee5237b1c685664144a11"
+  },
+  "139": {
+    "image": "/assets/cards/139-58d8cc158397.webp",
+    "name": "Разводной ключ",
+    "cardType": "припас",
+    "sourceParagraph": 1628,
+    "textParagraph": 1629,
+    "sourceMedia": "media/image264.png",
+    "sha256": "58d8cc158397fcb5d4559ca48b0d89f66113571446554898fe2e2b5e1e7671aa"
+  },
+  "188": {
+    "image": "/assets/cards/188-da0e930b985e.webp",
+    "name": "Рация",
+    "cardType": "припас",
+    "sourceParagraph": 1634,
+    "textParagraph": 1634,
+    "sourceMedia": "media/image265.png",
+    "sha256": "da0e930b985ef5c36d1fcde8da5944ebd638517413aab9da2d97026c7e67e7f3"
+  },
+  "189": {
+    "image": "/assets/cards/189-743518f8619b.webp",
+    "name": "Револьвер с одним патроном",
+    "cardType": "припас",
+    "sourceParagraph": 1637,
+    "textParagraph": 1637,
+    "sourceMedia": "media/image266.png",
+    "sha256": "743518f8619b944f00dc57dfc42d25efe804803474e583f89f084bec6742f314"
+  },
+  "190": {
+    "image": "/assets/cards/190-9e4c2fc0028b.webp",
+    "name": "Регби мяч",
+    "cardType": "припас",
+    "sourceParagraph": 1649,
+    "textParagraph": 1649,
+    "sourceMedia": "media/image267.png",
+    "sha256": "9e4c2fc0028b2f4028f9ebe4306c34d2d637a5a8c224bdc2f2d658097dbafc30"
+  },
+  "191": {
+    "image": "/assets/cards/191-9f9b97b7724f.webp",
+    "name": "Рюкзак",
+    "cardType": "припас",
+    "sourceParagraph": 1653,
+    "textParagraph": 1653,
+    "sourceMedia": "media/image268.png",
+    "sha256": "9f9b97b7724f90e316b33f8cae457e63b9c14399cd06dd5b8bbdba6fcb4d1763"
+  },
+  "192": {
+    "image": "/assets/cards/192-0659e25cb6a4.webp",
+    "name": "Скотч",
+    "cardType": "припас",
+    "sourceParagraph": 1687,
+    "textParagraph": 1687,
+    "sourceMedia": "media/image271.png",
+    "sha256": "0659e25cb6a462199c3890a656990a47c7b40fce7efd3b142e02c5077224f381"
+  },
+  "193": {
+    "image": "/assets/cards/193-f06e10061d83.webp",
+    "name": "Степлер",
+    "cardType": "припас",
+    "sourceParagraph": 1691,
+    "textParagraph": 1691,
+    "sourceMedia": "media/image272.png",
+    "sha256": "f06e10061d838cfcf06ce0243adcdceb5f6250dc8ca23541a07ef72eb739f52a"
+  },
+  "194": {
+    "image": "/assets/cards/194-2f7007f30f80.webp",
+    "name": "Сухпаёк",
+    "cardType": "припас",
+    "sourceParagraph": 1702,
+    "textParagraph": 1702,
+    "sourceMedia": "media/image274.png",
+    "sha256": "2f7007f30f8063588d46ef522c10300072591eb1ba4e296edfc6848bddccbd30"
+  },
+  "195": {
+    "image": "/assets/cards/195-9d6764a7207c.webp",
+    "name": "Таблетки",
+    "cardType": "припас",
+    "sourceParagraph": 1727,
+    "textParagraph": 1727,
+    "sourceMedia": "media/image276.png",
+    "sha256": "9d6764a7207c57f09b3a52f7469d96d8f7075ffe0496a4ae810dd9a602424ba0"
+  },
+  "196": {
+    "image": "/assets/cards/196-622f660b4298.webp",
+    "name": "Тату машинка",
+    "cardType": "припас",
+    "sourceParagraph": 1740,
+    "textParagraph": 1741,
+    "sourceMedia": "media/image277.png",
+    "sha256": "622f660b429890d990788df963eb4bc50882619375f961fcbdcb42008a0afbb2"
+  },
+  "197": {
+    "image": "/assets/cards/197-b04679058e92.webp",
+    "name": "Термос",
+    "cardType": "припас",
+    "sourceParagraph": 1747,
+    "textParagraph": 1747,
+    "sourceMedia": "media/image278.png",
+    "sha256": "b04679058e92f311b1ebcbfb315a4d0927779dbdbc881953e94a0b6e92fd1298"
+  },
+  "198": {
+    "image": "/assets/cards/198-a2bb5a541e02.webp",
+    "name": "Топор",
+    "cardType": "припас",
+    "sourceParagraph": 1750,
+    "textParagraph": 1750,
+    "sourceMedia": "media/image279.jpeg",
+    "sha256": "a2bb5a541e02b370df40ced29163ef24c28f94f144f12fdbef2f779f73009482"
+  },
+  "199": {
+    "image": "/assets/cards/199-e2196f4d0d3d.webp",
+    "name": "Три туза",
+    "cardType": "припас",
+    "sourceParagraph": 1760,
+    "textParagraph": 1760,
+    "sourceMedia": "media/image280.png",
+    "sha256": "e2196f4d0d3d44a5a2d0f8db235bbdbaa2d1be52aebd15422ba215bc081a686a"
+  },
+  "200": {
+    "image": "/assets/cards/200-e071c80cfbd3.webp",
+    "name": "Уточка",
+    "cardType": "припас",
+    "sourceParagraph": 1768,
+    "textParagraph": 1768,
+    "sourceMedia": "media/image281.png",
+    "sha256": "e071c80cfbd35c539b2e88e847d1730d2d18ce02c1d232f8bbe7fec42e2eb5e9"
+  },
+  "201": {
+    "image": "/assets/cards/201-189e124c8865.webp",
+    "name": "Фонарь",
+    "cardType": "припас",
+    "sourceParagraph": 1771,
+    "textParagraph": 1771,
+    "sourceMedia": "media/image282.png",
+    "sha256": "189e124c88656366ca4903cb1334db1e4fd7b954230274a83c61bbc67d7cc16a"
+  },
+  "202": {
+    "image": "/assets/cards/202-8e0477e7f851.webp",
+    "name": "Фальшвеер",
+    "cardType": "припас",
+    "sourceParagraph": 1774,
+    "textParagraph": 1774,
+    "sourceMedia": "media/image283.png",
+    "sha256": "8e0477e7f85133a8b1c75b209b52c395db45744a10931a8d01ea94a543a231a4"
+  },
+  "203": {
+    "image": "/assets/cards/203-bc137827d3ca.webp",
+    "name": "Фотоаппарат",
+    "cardType": "припас",
+    "sourceParagraph": 1787,
+    "textParagraph": 1787,
+    "sourceMedia": "media/image284.jpeg",
+    "sha256": "bc137827d3cab3e571b8b9f89c391e9a81e4a77c0523717f68801d661af76a81"
+  },
+  "204": {
+    "image": "/assets/cards/204-13f3c470b9fa.webp",
+    "name": "Футбольный шлем",
+    "cardType": "припас",
+    "sourceParagraph": 1788,
+    "textParagraph": 1789,
+    "sourceMedia": "media/image285.png",
+    "sha256": "13f3c470b9fa6bbd8d73c2377e329600f26038a648d7b337b75184c22c63c7c4"
+  },
+  "205": {
+    "image": "/assets/cards/205-aa436d28faf6.webp",
+    "name": "Часы",
+    "cardType": "припас",
+    "sourceParagraph": 1795,
+    "textParagraph": 1795,
+    "sourceMedia": "media/image286.png",
+    "sha256": "aa436d28faf62915fd0259239a67ca127ec51d501014a55ecbfd8f5b98a83031"
+  },
+  "206": {
+    "image": "/assets/cards/206-93c80b74a34f.webp",
+    "name": "Шокер",
+    "cardType": "припас",
+    "sourceParagraph": 1797,
+    "textParagraph": 1797,
+    "sourceMedia": "media/image287.png",
+    "sha256": "93c80b74a34ff6defe35b38f6981e8a558822a63b57e0f132da8c9fc9e928089"
+  },
+  "207": {
+    "image": "/assets/cards/207-555fae6a61ec.webp",
+    "name": "Шприц",
+    "cardType": "припас",
+    "sourceParagraph": 1807,
+    "textParagraph": 1807,
+    "sourceMedia": "media/image288.png",
+    "sha256": "555fae6a61ecfffefe9f3b21d2d0e6f5aadd7b306d2901ec4180ea2e01b7fb76"
+  },
+  "208": {
+    "image": "/assets/cards/208-300c19931364.webp",
+    "name": "Энергетический батончик",
+    "cardType": "припас",
+    "sourceParagraph": 1815,
+    "textParagraph": 1815,
+    "sourceMedia": "media/image289.png",
+    "sha256": "300c199313648d8e4c12674ff5785fed639efcbde87f615ca1bc2235a56659c1"
+  },
+  "209": {
+    "image": "/assets/cards/209-ddd232f9e2df.webp",
+    "name": "Яд",
+    "cardType": "припас",
+    "sourceParagraph": 1818,
+    "textParagraph": 1818,
+    "sourceMedia": "media/image290.png",
+    "sha256": "ddd232f9e2dfc5839e60dbcfbec2ef881afa62a1cb5e7f6ed729563354112673"
+  },
+  "210": {
+    "image": "/assets/cards/210-db48adac2479.webp",
+    "name": "Ящик с инструментами",
+    "cardType": "припас",
+    "sourceParagraph": 1820,
+    "textParagraph": 1820,
+    "sourceMedia": "media/image291.png",
+    "sha256": "db48adac24797221eafd75fe1aec3221fce90375f96e21ed075ba63cdd0edf93"
+  }
+}

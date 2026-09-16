@@ -1,0 +1,10 @@
+node_modules
+tmp
+.git
+.env
+*.pdf
+
+.env.*
+!.env.example
+dist
+web-dist
