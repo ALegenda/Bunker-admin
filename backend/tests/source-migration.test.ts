@@ -108,6 +108,26 @@ test('authoritative PDF migration preserves IDs, archives old cards and is repla
       assert.doesNotMatch(descriptionHtml(entry.description), /<script|onerror|<iframe/);
     }
     assert.equal(previous, raw.sourceLines);
+    const { correctSourceAttributes } = await import('../services/source-migration.js');
+    const preCorrection = await readWorkspace();
+    assert.equal((await correctSourceAttributes()).applied, true);
+    const correctedState = await readWorkspace();
+    assert.deepEqual(
+      correctedState.cards.map((c) => [c.id, c.description]),
+      preCorrection.cards.map((c) => [c.id, c.description]),
+    );
+    assert.ok(
+      correctedState.cards.every(
+        (c) => !c.attributes.usageLocation.some((v) => v.includes('опасная личность')),
+      ),
+    );
+    assert.ok(
+      correctedState.cards.every((c) =>
+        c.attributes.activationTime.every((v) => v === v.toLowerCase()),
+      ),
+    );
+    assert.equal((await correctSourceAttributes()).applied, false);
+    assert.equal((await pool.query('SELECT count(*)::int AS n FROM import_backups')).rows[0].n, 2);
   } finally {
     await pool.end();
     await admin.query(`DROP SCHEMA ${schema} CASCADE`);

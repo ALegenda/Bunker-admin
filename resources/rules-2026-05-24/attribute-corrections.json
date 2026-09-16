@@ -1,0 +1,294 @@
+{
+  "id": "rules-2026-05-24-attributes-v2",
+  "sourceSha256": "1f2b906309f3cb755ba77247c0025c15b6f78d9a8ad4c0800cfc2d6df5e4c94e",
+  "entries": [
+    {
+      "id": "13",
+      "name": "В танке",
+      "before": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера-на вылазке"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера",
+          "на вылазке"
+        ],
+        "tags": []
+      }
+    },
+    {
+      "id": "16",
+      "name": "Властелин костей",
+      "before": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "многоразовое",
+        "usageLocation": [
+          "внутри бункера-на вылазке"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "многоразовое",
+        "usageLocation": [
+          "внутри бункера",
+          "на вылазке"
+        ],
+        "tags": []
+      }
+    },
+    {
+      "id": "24",
+      "name": "Горе-генерал",
+      "before": {
+        "activationTime": [
+          "Ночное"
+        ],
+        "usageFrequency": "трехразовое",
+        "usageLocation": [
+          "внутри бункера",
+          "опасная личность*"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "ночное"
+        ],
+        "usageFrequency": "трехразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "опасная личность"
+        ]
+      }
+    },
+    {
+      "id": "26",
+      "name": "Грибоед",
+      "before": {
+        "activationTime": [
+          "ночное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера",
+          "опасная личность*"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "ночное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "опасная личность"
+        ]
+      }
+    },
+    {
+      "id": "79",
+      "name": "Плечом к плечу",
+      "before": {
+        "activationTime": [
+          "ночное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "Опасная личность"
+        ]
+      },
+      "after": {
+        "activationTime": [
+          "ночное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "опасная личность"
+        ]
+      }
+    },
+    {
+      "id": "96",
+      "name": "Ромео и Джульетта",
+      "before": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера",
+          "опасная личность"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "опасная личность"
+        ]
+      }
+    },
+    {
+      "id": "105",
+      "name": "Сова",
+      "before": {
+        "activationTime": [
+          "Ночное"
+        ],
+        "usageFrequency": "многоразовое",
+        "usageLocation": [
+          "внутри бункера",
+          "опасная личность"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "ночное"
+        ],
+        "usageFrequency": "многоразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "опасная личность"
+        ]
+      }
+    },
+    {
+      "id": "108",
+      "name": "Судья",
+      "before": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "многоразовое"
+        ]
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое, многоразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": []
+      }
+    },
+    {
+      "id": "149",
+      "name": "Дымовые гранаты",
+      "before": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "двухразовое"
+        ]
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое, двухразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": []
+      }
+    },
+    {
+      "id": "161",
+      "name": "Коктейль Молотова",
+      "before": {
+        "activationTime": [
+          "Дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": []
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": []
+      }
+    },
+    {
+      "id": "179",
+      "name": "Набор хирурга",
+      "before": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": [
+          "многоразовое"
+        ]
+      },
+      "after": {
+        "activationTime": [
+          "дневное"
+        ],
+        "usageFrequency": "одноразовое, многоразовое",
+        "usageLocation": [
+          "внутри бункера"
+        ],
+        "tags": []
+      }
+    }
+  ]
+}

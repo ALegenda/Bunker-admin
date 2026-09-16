@@ -152,3 +152,84 @@ export async function migrateSourceRules() {
   console.log(JSON.stringify(result));
   return result;
 }
+
+export async function correctSourceAttributes() {
+  const bytes = await readFile(path.join(sourceDirectory, 'attribute-corrections.json'));
+  const plan = z
+    .object({
+      id: z.string(),
+      sourceSha256: z.string().length(64),
+      entries: z.array(
+        z.object({
+          id: z.string(),
+          before: cardSchema.shape.attributes,
+          after: cardSchema.shape.attributes,
+        }),
+      ),
+    })
+    .parse(JSON.parse(bytes.toString()));
+  const sha = createHash('sha256').update(bytes).digest('hex');
+  return transaction(async (c) => {
+    await c.query('SELECT pg_advisory_xact_lock(473911)');
+    const workspace = (await c.query('SELECT * FROM workspace WHERE id=1 FOR UPDATE')).rows[0];
+    const prior = (
+      await c.query('SELECT manifest_sha256 FROM source_migrations WHERE id=$1', [plan.id])
+    ).rows[0];
+    if (prior) {
+      if (prior.manifest_sha256 !== sha)
+        throw Error('Applied attribute correction checksum mismatch');
+      return { applied: false };
+    }
+    if (!workspace) throw Error('Initialize source rules before attribute corrections');
+    const rows = (await c.query('SELECT * FROM cards ORDER BY position FOR UPDATE')).rows;
+    const published = (await c.query('SELECT * FROM public_cards ORDER BY position')).rows;
+    const backupId = randomUUID();
+    await c.query('INSERT INTO import_backups(id,payload) VALUES($1,$2)', [
+      backupId,
+      JSON.stringify({ migration: plan.id, workspace, cards: rows, publicCards: published }),
+    ]);
+    const corrected: string[] = [],
+      skipped: string[] = [];
+    for (const entry of plan.entries) {
+      const row = rows.find((r) => r.id === entry.id);
+      if (!row) continue;
+      const before = rowCard(row);
+      if (!isDeepStrictEqual(before.attributes, entry.before)) {
+        skipped.push(entry.id);
+        continue;
+      }
+      const a = entry.after;
+      await c.query(
+        'UPDATE cards SET activation_time=$2,usage_frequency=$3,usage_location=$4,tags=$5,version=version+1,updated_at=now() WHERE id=$1',
+        [entry.id, a.activationTime, a.usageFrequency, a.usageLocation, a.tags],
+      );
+      await audit(c, null, 'source.attributes', entry.id, before, { ...before, attributes: a });
+      corrected.push(entry.id);
+    }
+    const fix = (card: Card): Card => {
+      const entry = plan.entries.find((e) => e.id === card.id);
+      return entry && isDeepStrictEqual(card.attributes, entry.before)
+        ? { ...card, attributes: entry.after }
+        : card;
+    };
+    await c.query(
+      "UPDATE workspace SET baseline=$1,revision=revision+1,changelog_stamp='',updated_at=now() WHERE id=1",
+      [JSON.stringify(workspace.baseline.map(fix))],
+    );
+    for (const row of published) {
+      const after = fix(row.data);
+      if (after !== row.data)
+        await c.query('UPDATE public_cards SET data=$2 WHERE id=$1', [
+          row.id,
+          JSON.stringify(after),
+        ]);
+    }
+    const report = { title: 'Правила от 24.05.2026', corrected, skipped, backupId };
+    await c.query(
+      'INSERT INTO source_migrations(id,source_sha256,manifest_sha256,backup_id,report) VALUES($1,$2,$3,$4,$5)',
+      [plan.id, plan.sourceSha256, sha, backupId, JSON.stringify(report)],
+    );
+    console.log(JSON.stringify({ applied: true, migration: plan.id, report }));
+    return { applied: true, report };
+  });
+}

@@ -1,4 +1,4 @@
-import { migrateSourceRules } from '../services/source-migration.js';
+import { migrateSourceRules, correctSourceAttributes } from '../services/source-migration.js';
 import { refreshCatalog } from '../services/catalog.js';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -12,6 +12,7 @@ export async function seed() {
   await ensureBucket();
   if ((await pool.query('SELECT id FROM workspace WHERE id=1')).rowCount) {
     await migrateSourceRules();
+    await correctSourceAttributes();
     console.log('Database initialized; source migrations checked');
     return;
   }
@@ -45,6 +46,7 @@ export async function seed() {
     await refreshCatalog(c, cards);
   });
   await migrateSourceRules();
+  await correctSourceAttributes();
   console.log(`Imported ${cards.length} cards and rules into PostgreSQL; images stored in S3`);
 }
 if (process.argv[1]?.endsWith('seed.ts') || process.argv[1]?.endsWith('seed.js')) {
