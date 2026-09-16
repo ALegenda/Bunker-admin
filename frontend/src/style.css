@@ -3,6 +3,7 @@
 }
 body {
   margin: 0;
+  overflow-wrap: anywhere;
   background: #f3f3ee;
   color: #292e26;
   font:
@@ -261,10 +262,11 @@ a:focus-visible {
 }
 .grow {
   flex: 1;
+  min-width: 0;
 }
 .fields {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 18px;
 }
 .description {
@@ -274,7 +276,7 @@ a:focus-visible {
 .publication,
 .proposal-diff {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 .changelog {
@@ -310,7 +312,7 @@ a:focus-visible {
 }
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   gap: 16px;
 }
 .catalog-card {
@@ -344,6 +346,15 @@ a:focus-visible {
 .catalog-card p {
   font-size: 13px;
   color: #67715e;
+}
+.catalog-card > div,
+.card-list > button > span,
+.editor-layout > *,
+.catalog-layout > *,
+.fields > *,
+.member > div,
+.modal-title h2 {
+  min-width: 0;
 }
 .tags {
   display: flex;
@@ -410,6 +421,7 @@ dialog {
   padding: 28px;
   color: #292e26;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow: auto;
 }
 dialog::backdrop {
@@ -424,6 +436,7 @@ dialog::backdrop {
 .modal-title button {
   font-size: 24px;
   padding: 0 10px;
+  flex-shrink: 0;
 }
 .modal-title h2 {
   margin: 0;
@@ -634,4 +647,42 @@ textarea {
 .history-text-diff ins { background: #e0efcb; color: #355419; }
 @media (max-width: 950px) {
   .history-comparison { grid-template-columns: 1fr; }
+}
+
+/* Keep touch controls usable on phones and tablets, including landscape. */
+@media (max-width: 950px), (pointer: coarse) {
+  input:not([type='checkbox']),
+  select,
+  textarea,
+  .rich-editor .tiptap,
+  .format-toolbar select {
+    font-size: 16px;
+  }
+  button,
+  .telegram,
+  input:not([type='checkbox']),
+  select,
+  .topbar nav a,
+  .list-title button,
+  .format-toolbar button,
+  .format-toolbar select,
+  .format-toolbar input[type='color'],
+  .check {
+    min-height: 44px;
+  }
+  .format-toolbar button,
+  .format-toolbar input[type='color'],
+  .modal-title button {
+    min-width: 44px;
+  }
+  .topbar nav a {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 650px) {
+  dialog {
+    padding: 18px;
+  }
 }
