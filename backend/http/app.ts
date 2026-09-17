@@ -186,7 +186,7 @@ export async function createApp() {
     const url = new URL(req.url, 'http://localhost');
     const legacyCatalog = legacyCatalogUrl(url.pathname, url.search);
     if (legacyCatalog) return reply.redirect(legacyCatalog, 301);
-    return reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('index.html');
+    return reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('landing.html');
   });
   await app.register(staticFiles, {
     root: path.resolve('web-dist'),
@@ -194,7 +194,7 @@ export async function createApp() {
     maxAge: '1y',
     immutable: true,
     setHeaders: (response, file) => {
-      if (file.endsWith('index.html')) response.header('Cache-Control', 'no-cache');
+      if (file.endsWith('.html')) response.header('Cache-Control', 'no-cache');
     },
   });
   app.setNotFoundHandler(async (req, reply) => {

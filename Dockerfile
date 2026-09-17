@@ -5,6 +5,7 @@ RUN npm ci
 COPY backend ./backend
 COPY shared ./shared
 COPY frontend ./frontend
+COPY scripts/prerender-landing.mjs ./scripts/prerender-landing.mjs
 RUN npm run build
 FROM node:24-bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends chromium ca-certificates && rm -rf /var/lib/apt/lists/*

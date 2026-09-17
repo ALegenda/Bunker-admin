@@ -1,7 +1,7 @@
 import { Header } from './components/Header.js';
 import { TelegramLogin } from './components/TelegramLogin.js';
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import type { Me, Workspace } from '../../shared/contracts.js';
 import { api, setCsrf, send } from './api.js';
 import { Landing } from './components/Landing.js';
@@ -170,7 +170,8 @@ function WorkspaceApp({ path }: { path: string }) {
 }
 const legacyCatalog = legacyCatalogUrl(location.pathname, location.search, location.hash);
 if (legacyCatalog) history.replaceState(null, '', legacyCatalog);
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!;
+const app = (
   <ErrorBoundary>
     {location.pathname === '/' ? (
       <Landing />
@@ -185,5 +186,10 @@ createRoot(document.getElementById('root')!).render(
         <WorkspaceApp path={location.pathname} />
       </Suspense>
     )}
-  </ErrorBoundary>,
+  </ErrorBoundary>
 );
+if (location.pathname === '/' && root.dataset.prerendered === 'landing') {
+  hydrateRoot(root, app);
+} else {
+  createRoot(root).render(app);
+}

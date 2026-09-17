@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node scripts/dev.mjs",
     "dev": "node scripts/dev.mjs",
-    "build": "tsc -p tsconfig.build.json && vite build",
+    "build": "tsc -p tsconfig.build.json && vite build && vite build --ssr src/prerender.tsx --outDir ../tmp/landing-prerender && node scripts/prerender-landing.mjs",
     "typecheck": "tsc --noEmit && tsc -p frontend/tsconfig.json",
     "db:migrate": "tsx backend/db/migrate.ts",
     "db:seed": "tsx backend/db/seed.ts",

@@ -85,26 +85,34 @@ export function Landing() {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     setMotionPaused(media.matches);
     const update = () => setMotionPaused(media.matches);
-    media.addEventListener('change', update);
+    if (media.addEventListener) media.addEventListener('change', update);
+    else media.addListener(update);
     const elements = root.current?.querySelectorAll<HTMLElement>('[data-reveal]');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.12 },
-    );
-    elements?.forEach((element) => {
-      element.classList.add('reveal-ready');
-      observer.observe(element);
-    });
+    const observer =
+      typeof IntersectionObserver === 'undefined'
+        ? null
+        : new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  observer?.unobserve(entry.target);
+                }
+              }
+            },
+            { threshold: 0.12 },
+          );
+    if (observer)
+      elements?.forEach((element) => {
+        // Content already visible from server HTML must never disappear on hydration.
+        if (element.getBoundingClientRect().top < window.innerHeight) return;
+        element.classList.add('reveal-ready');
+        observer.observe(element);
+      });
     return () => {
-      observer.disconnect();
-      media.removeEventListener('change', update);
+      observer?.disconnect();
+      if (media.removeEventListener) media.removeEventListener('change', update);
+      else media.removeListener(update);
     };
   }, []);
 

@@ -37,6 +37,20 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
     await migrate();
     await migrate();
     await ensureBucket();
+    await t.test('homepage has styled content before JavaScript loads', async () => {
+      const page = await app.inject({ url: '/', headers: { host: 'localhost' } });
+      assert.equal(page.statusCode, 200);
+      assert.match(page.headers['cache-control'] || '', /no-cache/);
+      assert.match(page.body, /data-prerendered="landing"/);
+      assert.match(page.body, /<h1[^>]*>КОНЕЦ СВЕТА\./);
+      assert.match(page.body, /<style>[\s\S]*\.landing/);
+      assert.doesNotMatch(page.body, /<link[^>]+rel="stylesheet"/);
+      assert.match(page.body, /href="\/catalog"/);
+      for (const path of ['/catalog', '/profile', '/admin']) {
+        const internal = await app.inject({ url: path, headers: { host: 'localhost' } });
+        assert.doesNotMatch(internal.body, /data-prerendered="landing"/);
+      }
+    });
     await t.test('landing and catalog routes preserve old public card links', async () => {
       for (const path of ['/', '/catalog', '/catalog?type=роль', '/profile', '/admin']) {
         const response = await app.inject({ url: encodeURI(path), headers: { host: 'localhost' } });
