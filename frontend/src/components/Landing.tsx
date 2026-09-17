@@ -1,20 +1,49 @@
 import React, { useEffect, useRef, useState } from 'react';
-import hero from '../assets/bunker-hero.webp';
+import hero from '../assets/bunker-cartoon.webp';
 import survivor from '../assets/survivor.webp';
 import marauder from '../assets/marauder.webp';
 import medic from '../assets/medic.webp';
+import leader from '../assets/leader.webp';
+import lawyer from '../assets/lawyer.webp';
+import firstAid from '../assets/first-aid.webp';
+import soap from '../assets/soap.webp';
+import itSpecialist from '../assets/it-specialist.webp';
+import secondChance from '../assets/second-chance.webp';
 import '../landing.css';
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>;
 }
+function CardArt({ image, name }: { image: string; name: string }) {
+  if (image === firstAid || image === soap) {
+    return (
+      <div className="game-card-art supply-face" role="img" aria-label={`Карточка «${name}»`}>
+        <span>ПОЛЕЗНЫЙ ПРИПАС</span>
+        <b>{name}</b>
+        <img src={image} width="400" height="262" loading="lazy" alt="" />
+        <strong>{image === soap ? '3 применения' : 'Санитару в помощь'}</strong>
+        <span aria-hidden="true">✦ ✦ ✦</span>
+      </div>
+    );
+  }
+  return (
+    <img
+      className="game-card-art"
+      src={image}
+      width="237"
+      height="360"
+      loading="lazy"
+      alt={`Карточка «${name}»`}
+    />
+  );
+}
 function VaultMark() {
   return (
     <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <path d="m20 2 15.6 9v18L20 38 4.4 29V11Z" stroke="currentColor" strokeWidth="2" />
-      <circle cx="20" cy="20" r="10" stroke="currentColor" strokeWidth="2" />
-      <circle cx="20" cy="20" r="3" fill="currentColor" />
-      <path d="M20 10v7m0 6v7M10 20h7m6 0h7" stroke="currentColor" strokeWidth="2" />
+      <path d="m20 2 15.6 9v18L20 38 4.4 29V11Z" fill="currentColor" />
+      <circle cx="20" cy="20" r="10" stroke="var(--paper)" strokeWidth="2" />
+      <circle cx="20" cy="20" r="3" fill="var(--paper)" />
+      <path d="M20 10v7m0 6v7M10 20h7m6 0h7" stroke="var(--paper)" strokeWidth="2" />
     </svg>
   );
 }
@@ -22,32 +51,142 @@ const roles = [
   {
     id: 'role-survivor',
     name: 'Выживший',
-    label: 'Найди своих. Раскрой чужих.',
-    number: '01',
     image: survivor,
-    color: '#d5f568',
-    text: 'Ты пережил катастрофу. Теперь нужно вычислить мародёров, найти союзников и сохранить бункер. Твоё главное оружие — наблюдательность. И карта умения, о которой никто не знает.',
-    trait: 'ДОВЕРИЕ — ТВОЙ РЕСУРС',
+    color: 'yellow',
+    label: 'Найди своих. Вычисли чужих.',
+    text: 'Днём обсуждай, голосуй и отправляйся за припасами. По ночам у обычного выжившего нет своего действия — зато карта умения может открыть новые возможности. Наблюдай: чей рассказ сегодня не сходится?',
+    quote: '«Ребята, мне-то можно доверять!»',
   },
   {
     id: 'role-marauder',
     name: 'Мародёр',
-    label: 'Будь своим. До наступления ночи.',
-    number: '02',
     image: marauder,
-    color: '#ff9277',
-    text: 'Днём ты обсуждаешь, голосуешь и добываешь припасы вместе со всеми. Ночью действуешь со своими сообщниками. Убеди остальных, что тебе можно доверять, и не выдай свою сторону.',
-    trait: 'ТВОЯ ТАЙНА — ТВОЁ ОРУЖИЕ',
+    color: 'pink',
+    label: 'Улыбайся. Тебя пока не раскрыли.',
+    text: 'Днём играй вместе со всеми: обсуждай, голосуй и добывай припасы. Ночью просыпайся с сообщниками и выбирай жертву. Твоя задача — не выдать свою сторону и убедить соседей, что ты здесь самый мирный.',
+    quote: '«Какие мародёры? Впервые слышу».',
   },
   {
     id: 'role-medic',
     name: 'Санитар',
-    label: 'Один выбор. Чья-то жизнь.',
-    number: '03',
     image: medic,
-    color: '#83dbcb',
-    text: 'Пока бункер спит, ты можешь спасти одного из игроков. Себя или союзника? Интуиция и внимание к деталям решают всё. Одного и того же человека нельзя лечить два хода подряд.',
-    trait: 'ТВОЙ ХОД МОЖЕТ ВСЁ ИЗМЕНИТЬ',
+    color: 'mint',
+    label: 'Спасай жизни. Не забывай о себе.',
+    text: 'Ночью выбери одного игрока для лечения: себя или кого-то из соседей. Одного и того же человека нельзя лечить два хода подряд. Придётся решить, кому помощь нужнее именно сейчас.',
+    quote: '«Не волнуйтесь, я почти доктор».',
+  },
+];
+const examples = [
+  {
+    id: '0',
+    name: 'Лидер',
+    type: 'Умение',
+    image: leader,
+    color: 'yellow',
+    fact: 'Два голоса вместо одного',
+    text: 'Назначай участников вылазки и распределяй добытые припасы. С большой властью приходит много споров.',
+  },
+  {
+    id: '2',
+    name: 'Адвокат',
+    type: 'Умение',
+    image: lawyer,
+    color: 'mint',
+    fact: 'Возражаю! Голосовать нельзя.',
+    text: 'Ночью защити себя или другого игрока от дневного голосования. Протекция доступна через раз.',
+  },
+  {
+    id: '128',
+    name: 'Аптечка',
+    type: 'Припас',
+    image: firstAid,
+    color: 'pink',
+    fact: 'Один санитар. Два спасения.',
+    text: 'Проснись вместе с санитаром и стань его ассистентом: он сможет вылечить двух других игроков.',
+  },
+  {
+    id: '176',
+    name: 'Мыло',
+    type: 'Припас',
+    image: soap,
+    color: 'blue',
+    fact: 'Смой неприятности. Буквально.',
+    text: 'Убирай известные тебе эффекты с себя или других. Всего три применения — расходуй с умом.',
+  },
+  {
+    id: 'merc-dc943632cc4f',
+    name: 'Айтишник',
+    type: 'Наёмник',
+    image: itSpecialist,
+    color: 'mint',
+    fact: 'Пробовали взломать бункер?',
+    text: 'Взломай одну из систем: камеры, вентиляцию, двери или подсчёт голосов. Тут есть где развернуться.',
+  },
+  {
+    id: '219',
+    name: 'Второй шанс',
+    type: 'Мёртвый бонус',
+    image: secondChance,
+    color: 'yellow',
+    fact: 'Кубики, давайте ещё раз!',
+    text: 'Передай игроку повторный бросок. Засчитывается новый результат — даже если он хуже первого.',
+  },
+];
+const situations = [
+  {
+    name: 'Спасти двоих',
+    stamp: 'НОЧЬ В БУНКЕРЕ',
+    number: '01',
+    title: 'У санитара появился ассистент.',
+    setup: 'У тебя есть аптечка. Ты активируешь её и просыпаешься вместе с санитаром.',
+    action:
+      'Теперь санитар может выбрать двух игроков для лечения. Ты помогаешь, а решение принимает он.',
+    result: 'Два игрока получают лечение вместо одного.',
+    detail: 'При таком совместном лечении нельзя выбрать ни санитара, ни его ассистента.',
+    images: [
+      { src: medic, name: 'Санитар' },
+      { src: firstAid, name: 'Аптечка' },
+    ],
+    link: '128',
+    color: 'mint',
+    symbol: '+',
+  },
+  {
+    name: 'Переиграть бросок',
+    stamp: 'РИСК НА ВЫЛАЗКЕ',
+    number: '02',
+    title: 'Кубики подвели? Есть второй шанс.',
+    setup: 'На вылазке выпал неудачный результат. Но выбывшие передали тебе «Второй шанс».',
+    action: 'Используй карту и брось кубики ещё раз. Засчитывается именно последний бросок.',
+    result: 'Новый результат выше первого? Получи ещё и карту умения!',
+    detail:
+      'Риск остаётся: второй результат может оказаться хуже. Карта работает и в дуэлях, и в других ситуациях с кубиками.',
+    images: [
+      { src: survivor, name: 'Выживший' },
+      { src: secondChance, name: 'Второй шанс' },
+    ],
+    link: '219',
+    color: 'yellow',
+    symbol: '↻',
+  },
+  {
+    name: 'Пережить голосование',
+    stamp: 'СЮРПРИЗ НА ОБСУЖДЕНИИ',
+    number: '03',
+    title: 'Все против тебя. А голосовать нельзя.',
+    setup:
+      'У тебя умение «Адвокат». Ночью ты назначаешь протекцию себе, предчувствуя жаркое обсуждение.',
+    action:
+      'На дневном голосовании никто не может проголосовать против тебя. У соседей меняются планы.',
+    result: 'Ты защищён от голосов на этот день.',
+    detail: 'Протекция действует через раз и не защищает от всех остальных опасностей бункера.',
+    images: [
+      { src: survivor, name: 'Выживший' },
+      { src: lawyer, name: 'Адвокат' },
+    ],
+    link: '2',
+    color: 'pink',
+    symbol: '+',
   },
 ];
 const questions = [
@@ -56,32 +195,38 @@ const questions = [
     'Это живая социальная игра в мире после ядерной катастрофы. Выжившие и мародёры скрывают свои роли, ищут союзников и пытаются вычислить друг друга. Умения, припасы и вылазки делают каждую партию новой историей.',
   ],
   [
-    'Я никогда не играл. Мне подойдёт?',
-    'Да. Начни с основных ролей и общего хода игры — дневного обсуждения, голосования и ночных действий. Остальные возможности можно изучать постепенно. В каталоге есть описания карточек и правил, к которым удобно обращаться во время подготовки.',
+    'Я новичок. Разберусь?',
+    'Да. Начни со своей роли и общего хода игры: днём обсуждение и голосование, ночью — тайные действия. Особенности умений и припасов можно изучать постепенно. Полные описания карточек и правил есть в каталоге.',
   ],
   [
-    'Чем игра отличается от «Мафии»?',
-    'Помимо тайной роли, у тебя есть карта умения, способная изменить ход партии. Добавь к этому добычу припасов на вылазках, дуэли и «мёртвые бонусы»: даже выбывшие участники могут влиять на происходящее.',
+    'Это как «Мафия», только в бункере?',
+    'Скрытые стороны и блеф знакомы, но здесь у каждого ещё и карта умения. Есть вылазки за припасами, дуэли и неожиданные комбинации. А «мёртвые бонусы» позволяют влиять на партию даже после выбывания.',
+  ],
+  [
+    'Что происходит на вылазке?',
+    'Игроки уходят из бункера на день и ночь за припасами. Там нет обычного дневного голосования и ночного нападения мародёров из бункера, но есть свои опасности и броски кубиков. Выжившие возвращаются с добычей, которую распределяет лидер. Подробности — в правилах каталога.',
   ],
   [
     'Здесь можно играть онлайн?',
-    'Сейчас сайт помогает подготовиться к живой игре: разобраться в карточках, почитать правила и следить за своим профилем. Автоматического проведения онлайн-партий на сайте пока нет.',
+    'Сейчас сайт помогает подготовиться к живой игре: изучить карточки, почитать правила и открыть свой профиль. Автоматического проведения онлайн-партий здесь пока нет.',
   ],
   [
-    'Для чего нужен профиль?',
-    'В профиле хранятся игровое имя, уровень, баланс и достижения. Войти можно через Telegram. Игровые показатели и прогресс достижений обновляет администратор. Каталог открыт и без входа.',
+    'Зачем мне профиль?',
+    'В профиле хранятся игровое имя, уровень, баланс и достижения. Вход — через Telegram. Показатели и прогресс достижений обновляет администратор. Каталог доступен без регистрации.',
   ],
 ];
 
 export function Landing() {
   const root = useRef<HTMLDivElement>(null);
   const [activeRole, setActiveRole] = useState(0);
+  const [activeSituation, setActiveSituation] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [motionPaused, setMotionPaused] = useState(false);
   const role = roles[activeRole];
+  const situation = situations[activeSituation];
 
   useEffect(() => {
-    document.title = 'Бункер — конец света. Начало игры.';
+    document.title = 'Бункер — выживать веселее в компании';
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     setMotionPaused(media.matches);
     const update = () => setMotionPaused(media.matches);
@@ -100,11 +245,11 @@ export function Landing() {
                 }
               }
             },
-            { threshold: 0.12 },
+            { threshold: 0.08 },
           );
     if (observer)
       elements?.forEach((element) => {
-        // Content already visible from server HTML must never disappear on hydration.
+        // Keep prerendered content visible during hydration, including on slow mobile networks.
         if (element.getBoundingClientRect().top < window.innerHeight) return;
         element.classList.add('reveal-ready');
         observer.observe(element);
@@ -140,16 +285,14 @@ export function Landing() {
             }
           }}
         >
-          <a href="#about">Об игре</a>
-          <a href="#how">Как играть</a>
-          <a href="#roles">Твоя роль</a>
+          <a href="#about">Что за игра?</a>
+          <a href="#roles">Кто ты?</a>
+          <a href="#cards">Карточки</a>
+          <a href="#situations">Примеры ходов</a>
           <a href="#faq">Вопросы</a>
-          <a className="landing-player-link" href="/catalog">
-            Игрокам <Arrow diagonal />
-          </a>
         </nav>
-        <a className="landing-header-cta" href="#join">
-          В бункер <Arrow diagonal />
+        <a className="landing-header-cta" href="/profile">
+          Я уже игрок <Arrow diagonal />
         </a>
         <button
           className="landing-menu"
@@ -162,70 +305,69 @@ export function Landing() {
           {menuOpen ? '✕' : '☰'}
         </button>
       </header>
-
       <main className="landing-main" id="main-content">
         <section className="landing-hero" aria-labelledby="hero-title">
-          <img
-            className="hero-art"
-            src={hero}
-            alt=""
-            fetchPriority="high"
-            width="1536"
-            height="1024"
-          />
-          <div className="hero-shade" />
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-dust" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
-          </div>
-          <div className="hero-content">
-            <div className="landing-eyebrow hero-enter">
-              <span className="signal-dot" /> ЖИВАЯ ИГРА. НАСТОЯЩИЕ ЭМОЦИИ.
-            </div>
-            <h1 id="hero-title" className="hero-enter">
-              КОНЕЦ СВЕТА.
+          <div className="hero-copy">
+            <span className="landing-eyebrow">
+              <span className="tiny-star" aria-hidden="true">
+                ✳
+              </span>{' '}
+              ЖИВАЯ ИГРА • ВЛАДИВОСТОК
+            </span>
+            <h1 id="hero-title">
+              КОНЕЦ СВЕТА?
               <br />
-              <span>НАЧАЛО ИГРЫ.</span>
+              <span>
+                НАЧАЛО
+                <br />
+                ВЕЧЕРИНКИ!
+              </span>
             </h1>
-            <p className="hero-description hero-enter">
-              За дверью — новый мир. За столом — свои и чужие.
-              <br className="desktop-break" /> Убеждай, рискуй, заключай союзы.
-              <br className="desktop-break" /> Здесь доверие — самый опасный ресурс.
+            <p className="hero-description">
+              Снаружи — апокалипсис. Внутри — друзья, блеф и подозрительно хороший план выживания.
             </p>
-            <div className="hero-actions hero-enter">
-              <a className="landing-button" href="#join">
-                Хочу в бункер <Arrow diagonal />
+            <div className="hero-actions">
+              <a className="landing-button" href="#roles">
+                Найти свою роль <Arrow />
               </a>
-              <a className="landing-text-link" href="#how">
-                <span className="play-icon" aria-hidden="true">
-                  ▷
-                </span>{' '}
-                Как проходит игра
+              <a className="landing-text-link" href="#about">
+                А как играть? <span aria-hidden="true">↓</span>
               </a>
             </div>
-            <div className="hero-note hero-enter">
-              <span>СКРЫТЫЕ РОЛИ</span>
-              <i /> <span>НЕОЖИДАННЫЕ СОЮЗЫ</span>
-              <i />
-              <span>ТВОИ РЕШЕНИЯ</span>
+            <p className="hero-footnote">Скрытые роли. Коварные карты. Настоящие эмоции.</p>
+          </div>
+          <div className="hero-visual">
+            <div className="hero-speech">
+              Все свои.
+              <br />
+              <strong>Ну… почти.</strong>
             </div>
-          </div>
-          <div className="hero-coordinates" aria-hidden="true">
-            43°07′ N &nbsp; 131°54′ E<br />
-            <span>УБЕЖИЩЕ · ВЛАДИВОСТОК</span>
-          </div>
-          <div className="hero-door-label" aria-hidden="true">
-            <span /> ПО ТУ СТОРОНУ — НЕИЗВЕСТНОСТЬ
+            <div className="hero-art-card">
+              <div className="art-card-label">
+                <span>ПАМЯТКА ЖИТЕЛЯ БУНКЕРА</span>
+                <span>№ 001</span>
+              </div>
+              <img
+                className="hero-art"
+                src={hero}
+                alt="Мультяшные жители бункера хитро улыбаются, играя в карты за общим столом"
+                fetchPriority="high"
+                width="1200"
+                height="800"
+              />
+              <div className="art-card-caption">
+                Сохраняйте спокойствие. <b>И свою роль в секрете.</b>
+              </div>
+            </div>
+            <span className="hero-sticker" aria-hidden="true">
+              БЛЕФ
+              <br />
+              <b>ВКЛЮЧЁН!</b>
+              <span>✦ ✦ ✦</span>
+            </span>
           </div>
           <div className="hero-bottom">
-            <a href="#about">
-              <span>↓</span> СПУСКАЙСЯ ГЛУБЖЕ
-            </a>
+            <span>ОСТОРОЖНО: ДРУЖБА ПРОЙДЁТ ПРОВЕРКУ НА ПРОЧНОСТЬ</span>
             <button
               className="motion-toggle"
               aria-pressed={motionPaused}
@@ -235,226 +377,281 @@ export function Landing() {
             </button>
           </div>
         </section>
-
-        <div className="landing-ticker" aria-hidden="true">
-          <div>
-            {[0, 1].map((copy) => (
-              <span key={copy}>
-                ДОВЕРЯЙ ИНТУИЦИИ <b>✳</b> СОМНЕВАЙСЯ В КАЖДОМ <b>✳</b> МЕНЯЙ ХОД ИГРЫ <b>✳</b>{' '}
-              </span>
-            ))}
-          </div>
+        <div className="landing-ribbon" aria-hidden="true">
+          <span>ДОВЕРЯЙ ИНТУИЦИИ</span>
+          <b>✳</b>
+          <span>ПОДОЗРЕВАЙ СОСЕДА</span>
+          <b>✳</b>
+          <span>ИГРАЙ СВОЮ РОЛЬ</span>
+          <b>✳</b>
         </div>
 
         <section className="landing-section landing-about" id="about">
-          <div className="section-heading" data-reveal>
-            <span className="landing-eyebrow">01 / ПОСЛЕ КАТАСТРОФЫ</span>
-            <span className="section-code" aria-hidden="true">
-              [ НОВАЯ РЕАЛЬНОСТЬ ]
-            </span>
-          </div>
-          <div className="about-intro" data-reveal>
-            <h2>
-              Опасность снаружи.
-              <br />
-              <span>Интрига — внутри.</span>
-            </h2>
+          <div className="section-intro" data-reveal>
             <div>
-              <p>
-                Мир пережил ядерную катастрофу. Вы укрылись в бункере. Но среди выживших скрываются
-                те, у кого совсем другие планы.
-              </p>
-              <p>
-                «Бункер» — игра о людях, решениях и умении читать между строк. Здесь обычный
-                разговор становится поединком, а одна карта переворачивает всё.
-              </p>
+              <span className="landing-eyebrow">01 / КРАТКИЙ КУРС ВЫЖИВАНИЯ</span>
+              <h2>
+                Хорошая компания.
+                <br />
+                <em>Плохие подозрения.</em>
+              </h2>
             </div>
+            <p>
+              Вы пережили катастрофу и укрылись в бункере. Но среди выживших прячутся мародёры. Кто
+              друг, а кто просто очень убедительно кивает? Пора выяснить.
+            </p>
           </div>
-          <div className="feature-grid">
-            <article data-reveal>
-              <span className="feature-number">
-                01 <span aria-hidden="true">◉</span>
-              </span>
-              <h3>У каждого — секрет</h3>
-              <p>
-                Твоя роль известна только тебе. Доверие придётся заслужить, а чужой блеф —
-                распознать.
-              </p>
-              <span className="feature-tag">ПСИХОЛОГИЯ И БЛЕФ</span>
-            </article>
-            <article data-reveal>
-              <span className="feature-number">
-                02 <span aria-hidden="true">ϟ</span>
-              </span>
-              <h3>Один ход меняет всё</h3>
-              <p>
-                Умения, припасы и неожиданные комбинации. Даже самый надёжный план может не пережить
-                эту ночь.
-              </p>
-              <span className="feature-tag">ТАКТИКА И РИСК</span>
-            </article>
-            <article data-reveal>
-              <span className="feature-number">
-                03 <span aria-hidden="true">↻</span>
-              </span>
-              <h3>Выбыл? Ещё не конец.</h3>
-              <p>
-                «Мёртвые бонусы» позволяют влиять на игру после выбывания. Твоя история ещё
-                продолжается.
-              </p>
-              <span className="feature-tag">В ИГРЕ ДО ПОСЛЕДНЕГО</span>
-            </article>
+          <div className="steps-grid">
+            {[
+              [
+                '01',
+                'Получи свой секрет',
+                'Твоя роль определяет сторону. Карта умения даёт особые возможности. Раскрывать всё соседям совсем не обязательно.',
+                'РОЛЬ + УМЕНИЕ',
+                'yellow',
+                '✦',
+              ],
+              [
+                '02',
+                'Убеди весь бункер',
+                'Днём обсуждай, заключай союзы и голосуй. Хочешь припасов? На вылазке ждёт добыча. И немного неприятностей.',
+                'ОБСУЖДЕНИЕ + РИСК',
+                'mint',
+                '☀',
+              ],
+              [
+                '03',
+                'Устрой сюрприз',
+                'Ночью мародёры и санитар делают тайные ходы. Утром вы узнаете, чьи планы сработали. И начнёте подозревать заново.',
+                'ТАЙНЫЕ ДЕЙСТВИЯ',
+                'pink',
+                '☾',
+              ],
+            ].map(([number, title, text, tag, color, symbol]) => (
+              <article className={`step-card tone-${color}`} key={number} data-reveal>
+                <div className="step-card-top">
+                  <span>ШАГ {number}</span>
+                  <b aria-hidden="true">{symbol}</b>
+                </div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+                <span className="step-tag">{tag}</span>
+              </article>
+            ))}
           </div>
-        </section>
-
-        <section className="landing-how" id="how">
-          <div className="landing-section">
-            <div className="section-heading" data-reveal>
-              <span className="landing-eyebrow">02 / ПРАВИЛА ВЫЖИВАНИЯ</span>
-              <span className="section-code" aria-hidden="true">
-                [ ДЕНЬ → НОЧЬ → НОВЫЙ ДЕНЬ ]
-              </span>
-            </div>
-            <h2 data-reveal>
-              Каждый раунд —<br />
-              <span>новый повод не доверять.</span>
-            </h2>
-            <div className="steps-grid">
-              {[
-                [
-                  '01',
-                  'Получи свою роль',
-                  'Узнай, на чьей ты стороне. Изучи своё умение. И сохрани главное в секрете.',
-                  'СЕКРЕТНЫЙ ДОПУСК',
-                ],
-                [
-                  '02',
-                  'Убеди остальных',
-                  'Обсуждай, строй союзы и голосуй. Отправляйся на вылазки за припасами — на свой страх и риск.',
-                  'ДНЕВНАЯ ФАЗА',
-                ],
-                [
-                  '03',
-                  'Сделай свой ход',
-                  'Бункер засыпает. Мародёры и санитар действуют втайне. Утром станет ясно, кому удалось пережить ночь.',
-                  'НОЧНАЯ ФАЗА',
-                ],
-              ].map(([number, title, text, tag]) => (
-                <article key={number} data-reveal>
-                  <span className="step-number">{number}</span>
-                  <span className="landing-eyebrow">{tag}</span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </article>
-              ))}
-            </div>
-            <a href="/catalog?type=правило" className="landing-text-link rules-link">
-              Разобраться в правилах <Arrow />
-            </a>
-          </div>
+          <a href="/catalog?type=правило" className="landing-text-link section-link">
+            Все правила — в открытом каталоге <Arrow diagonal />
+          </a>
         </section>
 
         <section className="landing-section landing-roles" id="roles">
-          <div className="section-heading" data-reveal>
-            <span className="landing-eyebrow">03 / НИКТО НЕ ТОТ, КЕМ КАЖЕТСЯ</span>
-            <span className="section-code" aria-hidden="true">
-              [ ЛИЧНЫЕ ДЕЛА ]
-            </span>
-          </div>
-          <div className="roles-layout" data-reveal>
-            <div className="roles-copy">
+          <div className="section-intro" data-reveal>
+            <div>
+              <span className="landing-eyebrow">02 / ЗНАКОМЬТЕСЬ, ВАШИ СОСЕДИ</span>
               <h2>
-                Кем ты станешь
+                Улыбка одна.
                 <br />
-                <span>за этой дверью?</span>
+                <em>Намерения разные.</em>
               </h2>
-              <p className="roles-lead">
-                Одна из этих тайн может стать твоей.
-                <br />
-                Выбери роль, чтобы заглянуть в её историю.
-              </p>
-              <div className="role-selector" aria-label="Выбор роли">
-                {roles.map((item, index) => (
-                  <button
-                    key={item.id}
-                    aria-pressed={index === activeRole}
-                    aria-controls="role-dossier"
-                    onClick={() => setActiveRole(index)}
-                  >
-                    <span className="role-index">{item.number}</span>
-                    <span>
-                      <strong>{item.name}</strong>
-                      <small>{item.label}</small>
-                    </span>
-                    <Arrow />
-                  </button>
-                ))}
-              </div>
             </div>
-            <div
-              className="role-dossier"
-              id="role-dossier"
-              style={{ '--role-accent': role.color } as React.CSSProperties}
-            >
-              <div className="dossier-top">
-                <span>СЕКРЕТНО / РОЛЬ {role.number}</span>
-                <span aria-hidden="true">⌖</span>
-              </div>
-              <div className="role-art-stage">
-                <div className="role-orbit" aria-hidden="true" />
+            <p>
+              Выживший, мародёр или санитар?
+              <br />
+              Нажми на карточку и узнай, какие планы у её владельца на эту ночь.
+            </p>
+          </div>
+          <div className="role-selector" aria-label="Выбор роли">
+            {roles.map((item, index) => (
+              <button
+                key={item.id}
+                className={`role-pick tone-${item.color}`}
+                aria-pressed={index === activeRole}
+                aria-controls="role-dossier"
+                onClick={() => setActiveRole(index)}
+              >
+                <span className="role-pick-top">
+                  <span>СЕКРЕТНАЯ РОЛЬ</span>
+                  <span aria-hidden="true">{index === activeRole ? '✓' : '↗'}</span>
+                </span>
                 <img
-                  key={role.image}
-                  src={role.image}
+                  src={item.image}
                   width="237"
                   height="360"
                   loading="lazy"
-                  alt={`Игровая карточка «${role.name}»`}
+                  alt={`Игровая карточка «${item.name}»`}
                 />
-              </div>
-              <div className="role-details" aria-live="polite" aria-atomic="true">
-                <span className="landing-eyebrow">{role.trait}</span>
-                <p>{role.text}</p>
-                <a href={'/catalog?card=' + role.id}>
-                  Досье в каталоге <Arrow diagonal />
-                </a>
-              </div>
+                <strong>{item.name}</strong>
+                <span className="role-pick-label">{item.label}</span>
+              </button>
+            ))}
+          </div>
+          <div
+            className={`role-dossier tone-${role.color}`}
+            id="role-dossier"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <div>
+              <span className="landing-eyebrow">ТВОЯ РОЛЬ: {role.name.toUpperCase()}</span>
+              <h3>{role.quote}</h3>
+            </div>
+            <div>
+              <p>{role.text}</p>
+              <a href={'/catalog?card=' + role.id} className="landing-text-link">
+                Полное описание роли <Arrow diagonal />
+              </a>
             </div>
           </div>
         </section>
 
-        <section className="landing-quote" aria-label="Девиз игры">
-          <p data-reveal>
-            «Я точно мирный».
-            <br />
-            <span>
-              Звучит убедительно.
-              <br className="mobile-break" /> До первой ночи.
-            </span>
-          </p>
-          <span className="landing-eyebrow" data-reveal>
-            В БУНКЕРЕ КАЖДОЕ СЛОВО ИМЕЕТ ВЕС
-          </span>
+        <section className="landing-cards-wrap" id="cards">
+          <div className="landing-section">
+            <div className="section-intro" data-reveal>
+              <div>
+                <span className="landing-eyebrow">03 / НЕ ТОЛЬКО КРАСИВЫЕ КАРТИНКИ</span>
+                <h2>
+                  Маленькая карточка.
+                  <br />
+                  <em>Большой поворот.</em>
+                </h2>
+              </div>
+              <p>
+                Умения, припасы, наёмники и бонусы.
+                <br />
+                Вот шесть примеров из колоды. Каждый — повод придумать новый план.
+              </p>
+            </div>
+            <div className="example-grid">
+              {examples.map((card) => (
+                <a
+                  className={`example-card tone-${card.color}`}
+                  key={card.id}
+                  href={'/catalog?card=' + card.id}
+                  data-reveal
+                >
+                  <div className="example-art">
+                    <span className="card-type">{card.type}</span>
+                    <CardArt image={card.image} name={card.name} />
+                    <span className="card-open" aria-hidden="true">
+                      ↗
+                    </span>
+                  </div>
+                  <div className="example-copy">
+                    <h3>{card.name}</h3>
+                    <strong>{card.fact}</strong>
+                    <p>{card.text}</p>
+                    <span className="example-link">
+                      Читать правила карты <Arrow />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <div className="catalog-invite">
+              <p>
+                <b>Это только начало колоды.</b>
+                <br />
+                Ещё больше способов удивить соседей — в каталоге.
+              </p>
+              <a className="landing-button" href="/catalog">
+                Все карточки <Arrow diagonal />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="landing-section landing-situations" id="situations">
+          <div className="section-intro" data-reveal>
+            <div>
+              <span className="landing-eyebrow">04 / А ТЕПЕРЬ ПРЕДСТАВЬ…</span>
+              <h2>
+                Твой ход.
+                <br />
+                <em>И вот что из этого вышло.</em>
+              </h2>
+            </div>
+            <p>
+              Три ситуации из мира Бункера.
+              <br />
+              Переключай примеры — увидишь, как карточки меняют игру.
+            </p>
+          </div>
+          <div className="situation-selector" aria-label="Игровые ситуации">
+            {situations.map((item, index) => (
+              <button
+                key={item.number}
+                aria-pressed={index === activeSituation}
+                aria-controls="situation-panel"
+                onClick={() => setActiveSituation(index)}
+              >
+                <span>{item.number}</span>
+                {item.name}
+              </button>
+            ))}
+          </div>
+          <div
+            className={`situation-panel tone-${situation.color}`}
+            id="situation-panel"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <div className="situation-art">
+              <span className="landing-eyebrow">{situation.stamp}</span>
+              <div className="situation-card-pair">
+                {situation.images.map((item, index) => (
+                  <React.Fragment key={item.src}>
+                    {index === 1 && (
+                      <b className="pair-symbol" aria-hidden="true">
+                        {situation.symbol}
+                      </b>
+                    )}
+                    <CardArt image={item.src} name={item.name} />
+                  </React.Fragment>
+                ))}
+              </div>
+              <span className="situation-art-note">ДВЕ КАРТЫ. ОДНА НОВАЯ ИСТОРИЯ.</span>
+            </div>
+            <div className="situation-copy">
+              <h3>{situation.title}</h3>
+              <p>
+                <b>Ситуация.</b> {situation.setup}
+              </p>
+              <p>
+                <b>Твой ход.</b> {situation.action}
+              </p>
+              <div className="situation-result">
+                <span>ЧТО ПОЛУЧИЛОСЬ</span>
+                <strong>{situation.result}</strong>
+              </div>
+              <p className="situation-detail">{situation.detail}</p>
+              <a className="landing-text-link" href={'/catalog?card=' + situation.link}>
+                Проверить правило в каталоге <Arrow diagonal />
+              </a>
+            </div>
+          </div>
         </section>
 
         <section className="landing-section landing-faq" id="faq">
           <div data-reveal>
-            <span className="landing-eyebrow">04 / ПЕРЕД ВХОДОМ</span>
+            <span className="landing-eyebrow">05 / БЕЗ ПАНИКИ</span>
             <h2>
-              Остались
+              Есть вопросы?
               <br />
-              <span>вопросы?</span>
+              <em>Есть ответы.</em>
             </h2>
-            <p>
-              Всё, что нужно знать
-              <br />
-              до знакомства с бункером.
-            </p>
+            <div className="faq-note">
+              <span aria-hidden="true">✳</span>
+              <p>
+                Первое правило бункера:
+                <br />
+                <b>спрашивать — можно.</b>
+              </p>
+            </div>
           </div>
           <div className="faq-list" data-reveal>
-            {questions.map(([question, answer], index) => (
+            {questions.map(([question, answer]) => (
               <details key={question}>
                 <summary>
-                  <span className="faq-index">0{index + 1}</span>
                   {question}
                   <span className="faq-plus" aria-hidden="true">
                     +
@@ -467,30 +664,34 @@ export function Landing() {
         </section>
 
         <section className="landing-join" id="join">
-          <div className="join-ring" aria-hidden="true" />
+          <div className="join-decoration" aria-hidden="true">
+            ✳
+          </div>
           <div className="join-content" data-reveal>
-            <span className="landing-eyebrow">
-              <span className="signal-dot" /> ТВОЯ СЛЕДУЮЩАЯ ИСТОРИЯ
-            </span>
+            <span className="landing-eyebrow">УБЕЖИЩЕ НАЙДЕНО. ОСТАЛОСЬ ЗНАКОМСТВО.</span>
             <h2>
-              Ну что,
-              <br />
-              ты с нами<span>?</span>
+              Заходи.
+              <br />У нас тут <em>интересно.</em>
             </h2>
             <p>
-              Познакомься с миром Бункера.
-              <br />
-              Изучи карточки. Открой профиль. Найди свою роль.
+              Изучи карточки, познакомься с правилами
+              <br className="desktop-break" /> и открой свой профиль игрока.
             </p>
             <div className="join-actions">
               <a className="landing-button" href="/profile">
-                Присоединиться <Arrow diagonal />
+                Открыть профиль <Arrow diagonal />
               </a>
-              <a className="landing-text-link" href="/catalog">
-                Сначала изучить карточки <Arrow />
+              <a className="landing-button secondary" href="/catalog">
+                Посмотреть карточки <Arrow />
               </a>
             </div>
-            <span className="join-note">Профиль через Telegram · Каталог без регистрации</span>
+            <span className="join-note">Вход через Telegram · Каталог без регистрации</span>
+          </div>
+          <div className="join-stamp" aria-hidden="true">
+            ПРОВЕРЕНО
+            <br />
+            <b>ВЫЖИВШИМИ</b>
+            <span>★ ★ ★</span>
           </div>
         </section>
       </main>
@@ -502,24 +703,24 @@ export function Landing() {
           </span>
         </a>
         <p>
-          Снаружи — конец света.
+          Апокалипсис подождёт.
           <br />
-          Здесь — начало твоей истории.
+          <b>Сначала ещё одну партию.</b>
         </p>
         <nav aria-label="Разделы для игроков">
           <a href="/catalog">
-            Каталог карточек <Arrow diagonal />
+            Каталог <Arrow diagonal />
           </a>
           <a href="/profile">
-            Личный кабинет <Arrow diagonal />
+            Профиль <Arrow diagonal />
+          </a>
+          <a href="#hero-title" aria-label="Вернуться наверх">
+            Наверх ↑
           </a>
         </nav>
-        <a className="back-top" href="#hero-title" aria-label="Вернуться наверх">
-          ↑
-        </a>
         <div className="footer-bottom">
           <span>БУНКЕР · ЖИВАЯ ИГРА НА ВЫЖИВАНИЕ</span>
-          <span>СДЕЛАЙ СВОЙ ХОД.</span>
+          <span>СОХРАНЯЙ ЧУВСТВО ЮМОРА.</span>
         </div>
       </footer>
     </div>

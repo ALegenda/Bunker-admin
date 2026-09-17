@@ -1,5 +1,15 @@
 # Графика лендинга
 
+`bunker-cartoon.webp` — текущая светлая иллюстрация главного экрана (1200 × 800). Создана встроенным imagegen, затем оптимизирована в WebP. Три существующие карточки использованы только как стилистические референсы. Исходник: `/Users/antonalekseev/.codex/generated_images/01a0ae89-1b8d-7403-868d-ab3906d9ecc4/exec-24fe6cab-01bb-4d05-a899-01a14cd48071.png`.
+
+Финальный промпт (built-in mode, generate):
+
+> Use case: illustration-story. Asset type: landing page hero illustration for the Russian social deduction tabletop game Bunker. Generate a new illustration, using the three supplied card images only as STYLE REFERENCES, not edit targets. Primary request: cheerful cartoon retrofuturism in the Fallout Vault Boy spirit, matching the bold black ink and cream paper style of the game cards. Scene: four expressive adult survivors around a round table playing secret-role cards in a cozy underground bunker, a big teal circular vault door behind them, simple pipes and a wall radio. One smiling blond blue-and-yellow jumpsuit character gives a thumbs up, a red-haired woman mischievously holds secret cards, an older mustached man in a cowboy hat looks suspicious, a friendly medic with first-aid bag peeks in. A few colorful cards, dice, and a tin can on the table. Friendly humor, animated expressions, welcoming game-night energy. Composition: landscape 3:2, complete balanced vignette inside canvas, characters large and clearly readable; no space needed for typography. Bright warm cream backdrop, dusty teal, mustard yellow, warm orange, navy blue ink, small coral accents, flat screenprinted colors and subtle paper texture, midcentury cartoon advertisement aesthetic, confidently drawn thick hand-inked outlines. No text, letters, numbers, brand logos, watermarks, border, photorealism, gloomy dark lighting, gore, or realistic weapons.
+
+`leader.webp`, `lawyer.webp`, `first-aid.webp`, `soap.webp`, `it-specialist.webp`, `second-chance.webp` — копии опубликованных игровых карточек из публичного API каталога, уменьшенные до ширины 400 px и оптимизированные в WebP. Описания и примеры основаны на правилах соответствующих карточек; ссылки ведут на их полные версии в каталоге.
+
+Предыдущая версия:
+
 `bunker-hero.webp` — иллюстрация для главного экрана, созданная встроенным инструментом imagegen. Оптимизирована в WebP (около 194 КБ); исходник сохранён в каталоге generated_images Codex. Используется только как атмосферное оформление, а не фотография реальной площадки.
 
 Финальный промпт:

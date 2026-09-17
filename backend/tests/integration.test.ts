@@ -42,7 +42,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       assert.equal(page.statusCode, 200);
       assert.match(page.headers['cache-control'] || '', /no-cache/);
       assert.match(page.body, /data-prerendered="landing"/);
-      assert.match(page.body, /<h1[^>]*>КОНЕЦ СВЕТА\./);
+      assert.match(page.body, /<h1[^>]*>КОНЕЦ СВЕТА\?/);
       assert.match(page.body, /<style>[\s\S]*\.landing/);
       assert.doesNotMatch(page.body, /<link[^>]+rel="stylesheet"/);
       assert.match(page.body, /href="\/catalog"/);
