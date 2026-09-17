@@ -1810,8 +1810,32 @@ html:has(.landing) {
   clip-path: inset(50%);
   white-space: nowrap;
 }
-.landing .role-selection-mark::before {
-  content: '↗';
+.landing .landing-arrow svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+.landing .role-selection-mark {
+  flex-shrink: 0;
+}
+.landing .role-selection-mark svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+.landing .role-selection-check {
+  display: none;
+}
+.landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) .role-selection-arrow,
+.landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) .role-selection-arrow,
+.landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) .role-selection-arrow {
+  display: none;
+}
+.landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) .role-selection-check,
+.landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) .role-selection-check,
+.landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) .role-selection-check {
+  display: block;
 }
 .landing .role-panels > article,
 .landing .situation-panels > article {
@@ -1825,9 +1849,6 @@ html:has(.landing) {
 
 .landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) {
   background: var(--tone);
-}
-.landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) .role-selection-mark::before {
-  content: '✓';
 }
 .landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) img {
   transform: none;
@@ -1850,9 +1871,6 @@ html:has(.landing) {
 .landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) {
   background: var(--tone);
 }
-.landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) .role-selection-mark::before {
-  content: '✓';
-}
 .landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) img {
   transform: none;
 }
@@ -1873,9 +1891,6 @@ html:has(.landing) {
 
 .landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) {
   background: var(--tone);
-}
-.landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) .role-selection-mark::before {
-  content: '✓';
 }
 .landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) img {
   transform: none;

@@ -17,7 +17,21 @@ import secondChance from '../assets/second-chance.webp';
 import '../landing.css';
 
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
-  return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>;
+  return (
+    <span className="landing-arrow" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        focusable="false"
+      >
+        <path d={diagonal ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'} />
+      </svg>
+    </span>
+  );
 }
 function CardArt({ image, name }: { image: string; name: string }) {
   if (image === firstAid || image === soap) {
@@ -438,7 +452,20 @@ export function Landing() {
                 >
                   <span className="role-pick-top">
                     <span>СЕКРЕТНАЯ РОЛЬ</span>
-                    <span className="role-selection-mark" aria-hidden="true" />
+                    <span className="role-selection-mark" aria-hidden="true">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        focusable="false"
+                      >
+                        <path className="role-selection-arrow" d="M6 18 18 6M6 6h12v12" />
+                        <path className="role-selection-check" d="m5 12 4 4L19 6" />
+                      </svg>
+                    </span>
                   </span>
                   <img
                     src={item.image}
