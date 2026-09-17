@@ -17,6 +17,7 @@ import { storeImage, getObject, storageHealthy } from '../services/storage.js';
 import { currentJob, jobResponse, createJob, getJob, publish } from '../services/jobs.js';
 import { renderChangelog } from '../services/print-template.js';
 import { AppError } from '../domain/schema.js';
+import { legacyCatalogUrl } from '../../shared/navigation.js';
 const revisionBody = z.object({ revision: z.number().int().nonnegative() });
 const idOf = (params: unknown) => z.object({ id: z.string().uuid() }).parse(params).id;
 export async function createApp() {
@@ -181,6 +182,12 @@ export async function createApp() {
     if (!r.rowCount) throw new AppError(404, 'Выпуск не найден');
     return reply.type('application/pdf').send((await getObject(r.rows[0].object_key)).data);
   });
+  app.get('/', async (req, reply) => {
+    const url = new URL(req.url, 'http://localhost');
+    const legacyCatalog = legacyCatalogUrl(url.pathname, url.search);
+    if (legacyCatalog) return reply.redirect(legacyCatalog, 301);
+    return reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('index.html');
+  });
   await app.register(staticFiles, {
     root: path.resolve('web-dist'),
     cacheControl: true,
@@ -193,9 +200,16 @@ export async function createApp() {
   app.setNotFoundHandler(async (req, reply) => {
     if (
       req.method === 'GET' &&
-      ['/', '/admin', '/proposals', '/users', '/profile', '/tips', '/achievements'].includes(
-        req.url.split('?')[0],
-      )
+      [
+        '/',
+        '/catalog',
+        '/admin',
+        '/proposals',
+        '/users',
+        '/profile',
+        '/tips',
+        '/achievements',
+      ].includes(req.url.split('?')[0])
     )
       return reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('index.html');
     return reply.code(404).send({ error: 'Страница не найдена' });

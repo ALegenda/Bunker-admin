@@ -37,6 +37,19 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
     await migrate();
     await migrate();
     await ensureBucket();
+    await t.test('landing and catalog routes preserve old public card links', async () => {
+      for (const path of ['/', '/catalog', '/catalog?type=роль', '/profile', '/admin']) {
+        const response = await app.inject({ url: encodeURI(path), headers: { host: 'localhost' } });
+        assert.equal(response.statusCode, 200, path);
+        assert.match(response.headers['content-type'] || '', /text\/html/);
+      }
+      const legacy = await app.inject({
+        url: '/?card=role-medic&tag=one&tag=two',
+        headers: { host: 'localhost' },
+      });
+      assert.equal(legacy.statusCode, 301);
+      assert.equal(legacy.headers.location, '/catalog?card=role-medic&tag=one&tag=two');
+    });
     const original = cardSchema.parse({
       id: 'test-card',
       name: 'Проверка',

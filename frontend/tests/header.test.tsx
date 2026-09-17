@@ -8,11 +8,12 @@ test('guest header offers login without private navigation', () => {
     <Header user={null} path="/" publish={false} onLogout={() => {}} />,
   );
   assert.ok(html.includes('БУНКЕР'));
-  assert.ok(!html.includes('<nav'));
+  assert.ok(html.includes('Каталог'));
+  assert.ok(!html.includes('href="/admin'));
   assert.ok(!html.includes('<button'));
   assert.deepEqual(
     [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]),
-    ['/', '/profile'],
+    ['/', '/catalog', '/profile'],
   );
 });
 test('trusted header offers proposals without administrative navigation', () => {

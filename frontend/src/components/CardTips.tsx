@@ -37,7 +37,7 @@ export function TipItem({
     <article className="tip-item">
       {link && (
         <h2>
-          <a href={'/?card=' + encodeURIComponent(tip.card_id)}>{tip.card_name}</a>
+          <a href={'/catalog?card=' + encodeURIComponent(tip.card_id)}>{tip.card_name}</a>
         </h2>
       )}
       <div className="tip-meta">

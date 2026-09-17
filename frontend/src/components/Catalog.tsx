@@ -41,7 +41,7 @@ export function Catalog({ user }: { user: User | null }) {
     if (place) p.set('place', place);
     if (frequency) p.set('frequency', frequency);
     if (selected) p.set('card', selected);
-    history.replaceState(null, '', '/?' + p);
+    history.replaceState(null, '', '/catalog' + (p.size ? '?' + p : ''));
   }, [query, type, tags, time, place, frequency, color, effects, selected]);
   if (error) return <p role="alert">{error}</p>;
   if (!data) return <p role="status">Загружаем карточки…</p>;

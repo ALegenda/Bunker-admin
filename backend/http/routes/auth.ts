@@ -144,7 +144,7 @@ export async function authRoutes(app: FastifyInstance) {
           hash(req.cookies.bunker_session),
         ]);
       reply.setCookie('bunker_session', token, { ...cookieOptions, maxAge: 7 * 24 * 3600 });
-      return reply.redirect('/');
+      return reply.redirect('/profile');
     },
   );
   app.post('/auth/logout', async (req, reply) => {

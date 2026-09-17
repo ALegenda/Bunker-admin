@@ -1,18 +1,37 @@
 import { Header } from './components/Header.js';
 import { TelegramLogin } from './components/TelegramLogin.js';
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { Me, Workspace } from '../../shared/contracts.js';
 import { api, setCsrf, send } from './api.js';
-import { Editor } from './components/Editor.js';
-import { Publication } from './components/Publication.js';
-import { Catalog } from './components/Catalog.js';
-import { Proposals } from './components/Proposals.js';
-import { Users } from './components/Users.js';
-import { Profile } from './components/Profile.js';
-import { TipsModeration } from './components/CardTips.js';
-import { Achievements } from './components/Achievements.js';
+import { Landing } from './components/Landing.js';
+import { legacyCatalogUrl } from '../../shared/navigation.js';
 import './style.css';
+
+const Editor = lazy(() =>
+  import('./components/Editor.js').then((module) => ({ default: module.Editor })),
+);
+const Publication = lazy(() =>
+  import('./components/Publication.js').then((module) => ({ default: module.Publication })),
+);
+const Catalog = lazy(() =>
+  import('./components/Catalog.js').then((module) => ({ default: module.Catalog })),
+);
+const Proposals = lazy(() =>
+  import('./components/Proposals.js').then((module) => ({ default: module.Proposals })),
+);
+const Users = lazy(() =>
+  import('./components/Users.js').then((module) => ({ default: module.Users })),
+);
+const Profile = lazy(() =>
+  import('./components/Profile.js').then((module) => ({ default: module.Profile })),
+);
+const TipsModeration = lazy(() =>
+  import('./components/CardTips.js').then((module) => ({ default: module.TipsModeration })),
+);
+const Achievements = lazy(() =>
+  import('./components/Achievements.js').then((module) => ({ default: module.Achievements })),
+);
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { error: boolean }> {
   state = { error: false };
   static getDerivedStateFromError() {
@@ -30,14 +49,19 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { err
     );
   }
 }
-function App() {
+function WorkspaceApp({ path }: { path: string }) {
   const [me, setMe] = useState<Me | null>(null),
     [workspace, setWorkspace] = useState<Workspace | null>(null),
     [error, setError] = useState('');
-  const path = location.pathname,
-    admin = path === '/admin',
+  const admin = path === '/admin',
     publish = new URLSearchParams(location.search).get('view') === 'publish';
   useEffect(() => {
+    document.title =
+      path === '/catalog'
+        ? 'Карточки и правила — Бункер'
+        : path === '/profile'
+          ? 'Личный профиль — Бункер'
+          : 'Мастерская — Бункер';
     api<Me>('/api/me')
       .then(async (m) => {
         setCsrf(m.csrf);
@@ -55,7 +79,7 @@ function App() {
       </main>
     );
   const allowed =
-    path === '/' ||
+    path === '/catalog' ||
     (path === '/profile'
       ? Boolean(me.user)
       : admin || path === '/users' || path === '/tips' || path === '/achievements'
@@ -109,7 +133,7 @@ function App() {
               </>
             )}
           </section>
-        ) : path === '/' ? (
+        ) : path === '/catalog' ? (
           <Catalog user={me.user} />
         ) : admin ? (
           workspace ? (
@@ -144,8 +168,22 @@ function App() {
     </>
   );
 }
+const legacyCatalog = legacyCatalogUrl(location.pathname, location.search, location.hash);
+if (legacyCatalog) history.replaceState(null, '', legacyCatalog);
 createRoot(document.getElementById('root')!).render(
   <ErrorBoundary>
-    <App />
+    {location.pathname === '/' ? (
+      <Landing />
+    ) : (
+      <Suspense
+        fallback={
+          <main>
+            <p role="status">Загружаем раздел…</p>
+          </main>
+        }
+      >
+        <WorkspaceApp path={location.pathname} />
+      </Suspense>
+    )}
   </ErrorBoundary>,
 );

@@ -17,14 +17,19 @@ export function Header({
         Б<span>•</span> <b>БУНКЕР</b>
       </a>
       {!user && (
-        <a className="telegram" href="/profile">
-          Войти
-        </a>
+        <nav aria-label="Разделы сайта">
+          <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
+            Каталог
+          </a>
+          <a className="telegram" href="/profile">
+            Войти
+          </a>
+        </nav>
       )}
       {user && (
         <>
           <nav>
-            <a href="/" aria-current={path === '/' ? 'page' : undefined}>
+            <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
               Каталог
             </a>
             {user.role === 'admin' && (
