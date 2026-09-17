@@ -3,7 +3,7 @@ import type { CardTip, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
 
 export const tipLabels = {
-  pending: 'Для доверенных · ждёт проверки',
+  pending: 'Для опытных игроков · ждёт проверки',
   published: 'Опубликован для всех',
   rejected: 'Отклонён',
 };
@@ -115,7 +115,7 @@ export function CardTips({ cardId, user }: { cardId: string; user: User | null }
       </p>
       {trusted && (
         <p className="notice">
-          Новые советы видят доверенные игроки. После одобрения администратора они станут доступны
+          Новые советы видят опытные игроки. После одобрения администратора они станут доступны
           всем.
         </p>
       )}
@@ -192,12 +192,12 @@ export function CardTips({ cardId, user }: { cardId: string; user: User | null }
           </button>
           {sent && (
             <p role="status">
-              Совет доступен доверенным игрокам и отправлен на проверку администратору.
+              Совет доступен опытным игрокам и отправлен на проверку администратору.
             </p>
           )}
         </form>
       ) : (
-        <p className="muted">Оставлять советы могут только авторизованные доверенные игроки.</p>
+        <p className="muted">Оставлять советы могут только авторизованные опытные игроки.</p>
       )}
     </section>
   );

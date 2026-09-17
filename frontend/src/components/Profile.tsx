@@ -12,7 +12,7 @@ import {
 } from '../../../shared/achievements.js';
 import { api, send } from '../api.js';
 
-const roles = { player: 'Игрок', trusted: 'Доверенный игрок', admin: 'Администратор' };
+const roles = { player: 'Игрок', trusted: 'Опытный игрок', admin: 'Администратор' };
 export function ProfileStats({ profile }: { profile: PlayerProfile }) {
   return (
     <>

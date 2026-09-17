@@ -70,7 +70,7 @@ export function Users() {
                 onChange={(e) => update(u, { role: e.target.value as Member['role'] })}
               >
                 <option value="player">Игрок</option>
-                <option value="trusted">Доверенный игрок</option>
+                <option value="trusted">Опытный игрок</option>
                 <option value="admin">Администратор</option>
               </select>
               <button disabled={busy === u.id} onClick={() => update(u, { disabled: !u.disabled })}>
