@@ -45,6 +45,8 @@ npm start
 
 Подробно: [docs/production.md](docs/production.md). Автоматический деплой из `master`: [docs/deployment.md](docs/deployment.md). Файлы ручного запуска: `compose.production.yaml`, примеры HTTPS-прокси и ежедневных backup в `deploy/`. Рабочий сервер и CI/CD описаны в инструкции деплоя.
 
+Для переноса на Render подготовлены [минимальная конфигурация и порядок переноса](docs/render.md) и `render.yaml`.
+
 ## Роли
 
 | Роль | Возможности |
