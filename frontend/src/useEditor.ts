@@ -4,8 +4,10 @@ import { api, send, ApiError } from './api.js';
 const backupKey = 'bunker-component-draft-v1';
 export function useEditor(initial: Workspace) {
   const [cards, setCards] = useState(initial.cards),
+    [base, setBase] = useState(initial.base),
     [status, setStatus] = useState('Сохранено в базе'),
-    [dirty, setDirty] = useState(false);
+    [dirty, setDirty] = useState(false),
+    [resetting, setResetting] = useState(false);
   const [recovery, setRecovery] = useState<string | null>(() => {
     try {
       return localStorage.getItem(backupKey);
@@ -16,7 +18,7 @@ export function useEditor(initial: Workspace) {
   const state = useRef({
     cards: initial.cards,
     versions: { ...initial.versions },
-    pending: new Map<string, Card>(),
+    pending: new Map<string, Card | null>(),
     running: false,
     blocked: false,
     conflict: false,
@@ -43,13 +45,25 @@ export function useEditor(initial: Workspace) {
     try {
       while (s.pending.size) {
         const [id, card] = s.pending.entries().next().value!;
+        if (card === null) setResetting(true);
         setStatus('Сохраняем…');
-        const result = await send<{ version: number; card: Card }>(
-          '/api/cards/' + encodeURIComponent(id),
-          { card, version: s.versions[id] ?? null },
-          'PUT',
+        const result = await send<{ version: number | null; card: Card | null }>(
+          '/api/cards/' + encodeURIComponent(id) + (card === null ? '/reset' : ''),
+          { ...(card === null ? {} : { card }), version: s.versions[id] ?? null },
+          card === null ? 'POST' : 'PUT',
         );
-        s.versions[id] = result.version;
+        if (result.version === null) delete s.versions[id];
+        else s.versions[id] = result.version;
+        if (card === null && s.pending.get(id) === null) {
+          s.cards = result.card
+            ? s.cards.map((c) => (c.id === id ? result.card! : c))
+            : s.cards.filter((c) => c.id !== id);
+          setCards(s.cards);
+          setBase((previous) => [
+            ...previous.filter((c) => c.id !== id),
+            ...(result.card ? [result.card] : []),
+          ]);
+        }
         if (s.pending.get(id) === card) s.pending.delete(id);
         backup();
       }
@@ -63,6 +77,7 @@ export function useEditor(initial: Workspace) {
       backup();
     } finally {
       s.running = false;
+      setResetting(false);
     }
   }
   function update(card: Card) {
@@ -80,6 +95,7 @@ export function useEditor(initial: Workspace) {
     s.timer = window.setTimeout(flush, 700);
   }
   function updateImage(id: string, image: string) {
+    if (state.current.pending.get(id) === null) return;
     const card = state.current.cards.find((c) => c.id === id);
     if (card) update({ ...card, image });
   }
@@ -98,11 +114,24 @@ export function useEditor(initial: Workspace) {
   }, []);
   return {
     cards,
+    base,
     status,
     dirty,
+    resetting,
     recovery,
     update,
     updateImage,
+    reset: (id: string) => {
+      const s = state.current;
+      s.pending.set(id, null);
+      if (!s.conflict) s.blocked = false;
+      setDirty(true);
+      setResetting(true);
+      backup();
+      clearTimeout(s.timer);
+      if (s.blocked) setResetting(false);
+      else void flush();
+    },
     retry: () => {
       state.current.blocked = false;
       void flush();

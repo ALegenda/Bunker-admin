@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import pg from 'pg';
+import type { Card } from '../../shared/contracts.js';
 
 test('card history includes only final changes in published releases', async () => {
   const admin = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -15,7 +16,8 @@ test('card history includes only final changes in published releases', async () 
   try {
     const { migrate } = await import('../db/migrate.js');
     const { upsertCards, readWorkspace } = await import('../services/workspace.js');
-    const { saveCard, saveReleaseMeta, cardHistory } = await import('../services/cards.js');
+    const { saveCard, resetCard, saveReleaseMeta, cardHistory } =
+      await import('../services/cards.js');
     const { publish } = await import('../services/jobs.js');
     const { cardSchema } = await import('../../shared/schema.js');
     const { changes, changeStamp, summary } = await import('../../shared/model.js');
@@ -91,6 +93,31 @@ test('card history includes only final changes in published releases', async () 
     await edit('Неопубликованный черновик');
     assert.deepEqual(await cardHistory(original.id), history);
     assert.deepEqual(await cardHistory('unknown-card'), []);
+
+    const draft = await readWorkspace();
+    const reset = await resetCard(original.id, draft.versions[original.id], null);
+    assert.deepEqual(
+      reset.card,
+      draft.base.find((c: Card) => c.id === original.id),
+    );
+    const restored = await readWorkspace();
+    assert.equal(changes(restored.base, restored.cards).length, 0);
+    assert.equal(restored.changelogStamp, '');
+    assert.equal(restored.revision, draft.revision + 1);
+    assert.deepEqual(await cardHistory(original.id), history);
+    await assert.rejects(resetCard(original.id, draft.versions[original.id], null), {
+      statusCode: 409,
+    });
+    assert.deepEqual((await readWorkspace()).cards, restored.cards);
+
+    const added = await saveCard({ ...original, id: 'new-draft', name: 'Новая' }, null, null);
+    assert.equal((await resetCard('new-draft', added.version, null)).card, null);
+    assert.deepEqual((await readWorkspace()).cards, restored.cards);
+    assert.deepEqual(await cardHistory('new-draft'), []);
+    // Discarding before the first autosave must not create a card.
+    assert.equal((await resetCard('never-saved', null, null)).card, null);
+    // A stale tab cannot remove a card created or edited by another editor.
+    await assert.rejects(resetCard(original.id, null, null), { statusCode: 409 });
   } finally {
     await pool.end();
     await admin.query(`DROP SCHEMA ${schema} CASCADE`);

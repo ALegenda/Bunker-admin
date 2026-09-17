@@ -53,6 +53,29 @@ export async function saveCard(input: unknown, version: number | null, actor: st
     return { ...result, revision: r.rows[0].revision };
   });
 }
+export async function resetCard(id: string, version: number | null, actor: string | null) {
+  return transaction(async (c) => {
+    const workspace = (await c.query('SELECT * FROM workspace WHERE id=1 FOR UPDATE')).rows[0];
+    const old = (await c.query('SELECT * FROM cards WHERE id=$1 FOR UPDATE', [id])).rows[0];
+    if ((old && old.version !== version) || (!old && version !== null))
+      throw new AppError(409, 'Карточка уже изменена. Обновите страницу перед откатом.');
+    const baseline = (workspace.baseline as Card[]).find((card) => card.id === id);
+    let result: { card: Card | null; version: number | null };
+    if (baseline) {
+      result = await writeCard(c, baseline, version, actor);
+    } else {
+      if (old) {
+        await c.query('DELETE FROM cards WHERE id=$1', [id]);
+        await audit(c, actor, 'card.discard', id, rowCard(old), null);
+      }
+      result = { card: null, version: null };
+    }
+    const updated = await c.query(
+      "UPDATE workspace SET revision=revision+1,changelog_stamp='',updated_at=now() WHERE id=1 RETURNING revision",
+    );
+    return { ...result, revision: updated.rows[0].revision };
+  });
+}
 export async function saveReleaseMeta(
   input: { revision: number; release: string; changelog: string; changelogStamp: string },
   actor: string | null,

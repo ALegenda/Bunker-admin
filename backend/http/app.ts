@@ -2,7 +2,7 @@ import { security } from './security.js';
 import { authRoutes } from './routes/auth.js';
 import { communityRoutes } from './routes/community.js';
 import { publicAsset } from '../services/catalog.js';
-import { saveCard, saveReleaseMeta, cardHistory } from '../services/cards.js';
+import { saveCard, resetCard, saveReleaseMeta, cardHistory } from '../services/cards.js';
 import Fastify from 'fastify';
 import staticFiles from '@fastify/static';
 import multipart from '@fastify/multipart';
@@ -63,6 +63,13 @@ export async function createApp() {
     if ((body.card as { id?: string })?.id !== id)
       throw new AppError(400, 'Идентификаторы карточки не совпадают');
     return saveCard(body.card, body.version, req.actor?.id || null);
+  });
+  app.post('/api/cards/:id/reset', async (req) => {
+    const { version } = z
+      .object({ version: z.number().int().positive().nullable() })
+      .parse(req.body);
+    const { id } = z.object({ id: z.string().min(1).max(100) }).parse(req.params);
+    return resetCard(id, version, req.actor?.id || null);
   });
   app.get('/api/cards/:id/history', async (req) => ({
     history: await cardHistory(z.object({ id: z.string().max(100) }).parse(req.params).id),
@@ -177,7 +184,9 @@ export async function createApp() {
     cacheControl: true,
     maxAge: '1y',
     immutable: true,
-    setHeaders: (response,file) => {if(file.endsWith('index.html')) response.header('Cache-Control','no-cache');},
+    setHeaders: (response, file) => {
+      if (file.endsWith('index.html')) response.header('Cache-Control', 'no-cache');
+    },
   });
   app.setNotFoundHandler(async (req, reply) => {
     if (

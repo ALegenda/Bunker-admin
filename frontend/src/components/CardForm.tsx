@@ -1,7 +1,7 @@
 import { DescriptionEditor } from './DescriptionEditor.js';
 import type { Card } from '../../../shared/contracts.js';
 import { api } from '../api.js';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 export const cardTypes = [
   'правило',
   'роль',
@@ -20,6 +20,13 @@ export function CardForm({
   onImage: (id: string, image: string) => void;
 }) {
   const [error, setError] = useState('');
+  const active = useRef(true);
+  useEffect(() => {
+    active.current = true;
+    return () => {
+      active.current = false;
+    };
+  }, []);
   const patch = (value: Partial<Card>) => onChange({ ...card, ...value });
   const attr = (key: keyof Card['attributes'], value: string | string[]) =>
     patch({ attributes: { ...card.attributes, [key]: value } });
@@ -63,6 +70,7 @@ export function CardForm({
                 method: 'POST',
                 body: form,
               });
+              if (!active.current) return;
               onImage(card.id, result.image);
               setError('');
             } catch (e) {
