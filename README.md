@@ -71,3 +71,29 @@ npm run backup
 Тесты используют отдельные временные схемы PostgreSQL и не меняют рабочие карточки. Проверяются версии карточек, публикация, очередь PDF, Telegram-подписи, CSRF, роли, предложения и отзыв доступа. Браузерную проверку на отдельной копии можно запустить через `node --import tsx backend/tests/browser-fixture.ts`; это отдельный процесс на loopback-порту 4174, тестовые маршруты не входят в рабочий сервер.
 
 Backup сохраняет БД и связанные объекты S3 с контрольными суммами в `tmp/backups/<дата>`. Порядок восстановления и настройки хранения описаны в инструкции production. Не запускайте `docker compose down -v`, если нужно сохранить данные.
+
+### Диагностика долгой сборки PDF
+
+API и worker пишут JSON-события с `component: "pdf"`, временем `timestamp` и
+идентификатором `jobId`. У каждой попытки worker есть отдельный `attemptId` и номер
+`attempt`. После обновления приложения логи следующей сборки можно получить так:
+
+```sh
+docker compose -f compose.yaml -f compose.production.yaml --profile app logs --since 30m --timestamps api worker
+```
+
+Найдите `job.requested` или `job.started` и отфильтруйте вывод по его `jobId`.
+`ageSinceQueuedMs` — возраст задания при запуске (при повторной попытке включает
+предыдущие попытки); `elapsedMs` — время с начала текущей попытки; `durationMs` —
+длительность отдельного этапа. Вложенные этапы перекрываются: складывать их время
+с временем родительского этапа не нужно.
+
+Основные этапы: `html.render`, `image.lookup`, `image.download`, `image.convert`,
+`pdf.render`, `chromium.print`, `pdf.validate`, `pdf.cleanup`, `upload.*`,
+`job.save_result`. Для изображений записываются `assetId`, размеры в байтах и
+прогресс обработки. Долгие этапы каждые 15 секунд пишут `.waiting`. События
+`chromium.spawned`, `chromium.output_detected`, `chromium.exit` и
+`chromium.timeout` помогают отличить запуск браузера от ожидания готового файла.
+`job.ready` содержит итоговое время попытки, число страниц и размер PDF.
+Ошибки фиксируются в `.failed`; проблемы продления аренды задания — в
+`job.lease_renewal_failed`. Тексты карточек, HTML и содержимое картинок в логи не пишутся.

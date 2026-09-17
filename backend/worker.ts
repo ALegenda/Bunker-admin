@@ -4,6 +4,7 @@ import { pool, transaction } from './db/index.js';
 import { renderRules, renderChangelog } from './services/print-template.js';
 import { renderPdf } from './services/pdf-renderer.js';
 import { putObject } from './services/storage.js';
+import { createPdfLog, pdfError } from './services/pdf-log.js';
 import { changes } from '../shared/model.js';
 let stopped = false;
 process.on('SIGTERM', () => {
@@ -30,25 +31,39 @@ export async function runOne() {
     return job;
   });
   if (!job) return false;
+  const log = createPdfLog({ jobId: job.id, attempt: job.attempts + 1, attemptId: token });
+  log.event('job.started', {
+    revision: job.workspace_revision,
+    templateVersion: job.template_version,
+    ageSinceQueuedMs: Math.max(0, Date.now() - new Date(job.created_at).getTime()),
+    cards: job.snapshot.cards.length,
+  });
   const timer = setInterval(() => {
     pool
       .query(
         "UPDATE pdf_jobs SET lease_until=now()+interval '90 seconds' WHERE id=$1 AND lease_token=$2 AND status='running'",
         [job.id, token],
       )
-      .catch(() => {});
+      .catch((e) => log.event('job.lease_renewal_failed', pdfError(e)));
   }, 20000);
   try {
-    const html = await renderRules(job.snapshot);
-    const result = await renderPdf(html);
+    const html = await log.stage('html.render', () => renderRules(job.snapshot, log));
+    log.event('html.ready', { bytes: Buffer.byteLength(html) });
+    const result = await log.stage('pdf.render', () => renderPdf(html, log));
     const key = `builds/${job.id}/${token}/rules.pdf`,
       htmlKey = `builds/${job.id}/${token}/rules.html`;
-    await putObject(key, result.data, 'application/pdf');
-    await putObject(htmlKey, Buffer.from(html), 'text/html; charset=utf-8');
-    await putObject(
-      `builds/${job.id}/${token}/changelog.html`,
-      Buffer.from(renderChangelog(job.snapshot)),
-      'text/html; charset=utf-8',
+    await log.stage('upload.pdf', () => putObject(key, result.data, 'application/pdf'), {
+      bytes: result.data.length,
+    });
+    await log.stage('upload.html', () =>
+      putObject(htmlKey, Buffer.from(html), 'text/html; charset=utf-8'),
+    );
+    await log.stage('upload.changelog', () =>
+      putObject(
+        `builds/${job.id}/${token}/changelog.html`,
+        Buffer.from(renderChangelog(job.snapshot)),
+        'text/html; charset=utf-8',
+      ),
     );
     const report = {
       mode: 'html',
@@ -65,17 +80,21 @@ export async function runOne() {
         'PDF собран из данных редактора. Переносы и число страниц меняются вместе с содержанием.',
       ],
     };
-    await pool.query(
-      "UPDATE pdf_jobs SET status='ready',object_key=$3,html_key=$4,report=$5,finished_at=now(),lease_until=NULL WHERE id=$1 AND lease_token=$2",
-      [job.id, token, key, htmlKey, JSON.stringify(report)],
+    await log.stage('job.save_result', () =>
+      pool.query(
+        "UPDATE pdf_jobs SET status='ready',object_key=$3,html_key=$4,report=$5,finished_at=now(),lease_until=NULL WHERE id=$1 AND lease_token=$2",
+        [job.id, token, key, htmlKey, JSON.stringify(report)],
+      ),
     );
-    console.log('PDF ready', job.id, result.pages, 'pages');
+    log.event('job.ready', { pages: result.pages, bytes: result.data.length });
   } catch (e) {
-    await pool.query(
-      "UPDATE pdf_jobs SET status='failed',error=$3,finished_at=now(),lease_until=NULL WHERE id=$1 AND lease_token=$2",
-      [job.id, token, e instanceof Error ? e.message.slice(0, 400) : 'Ошибка генератора'],
+    log.event('job.failed', pdfError(e));
+    await log.stage('job.save_failure', () =>
+      pool.query(
+        "UPDATE pdf_jobs SET status='failed',error=$3,finished_at=now(),lease_until=NULL WHERE id=$1 AND lease_token=$2",
+        [job.id, token, e instanceof Error ? e.message.slice(0, 400) : 'Ошибка генератора'],
+      ),
     );
-    console.error('PDF failed', job.id);
   } finally {
     clearInterval(timer);
   }
@@ -87,7 +106,7 @@ if (process.argv[1]?.endsWith('worker.ts') || process.argv[1]?.endsWith('worker.
     try {
       if (!(await runOne())) await sleep(1500);
     } catch (e) {
-      console.error('Worker database unavailable; retrying');
+      createPdfLog({}).event('worker.loop_failed', { ...pdfError(e), retryAfterMs: 5000 });
       await sleep(5000);
     }
   }

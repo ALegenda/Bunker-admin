@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 const changelogCss = readFileSync('resources/print/changelog.css', 'utf8');
 import { readFile } from 'node:fs/promises';
 import type { Draft, Card } from '../domain/schema.js';
+import type { PdfLog } from './pdf-log.js';
 import { imageDataUrl } from './storage.js';
 export const escapeHtml = (v: unknown) =>
   String(v ?? '').replace(
@@ -33,16 +34,16 @@ export function cardMarkup(c: Card, image: string) {
     description = description.slice(c.name.length).replace(/^\s*[–—-]\s*/, '');
   return `<article class="card" data-card-id="${escapeHtml(c.id)}">${image ? `<img class="card-picture" src="${image}" alt="">` : ''}<div class="card-description"><strong>${escapeHtml(c.name)}</strong>${description ? ' — ' : ''}${descriptionHtml(description)}</div>${details ? `<p class="attributes">(${escapeHtml(details)})</p>` : ''}</article>`;
 }
-export async function renderRules(state: Draft) {
+export async function renderRules(state: Draft, log?: PdfLog) {
   const rulesCss = await readFile('resources/print/rules.css', 'utf8');
-  const fonts = await Promise.all(
-    ['segoepr.ttf', 'segoeprb.ttf'].map(async (n) =>
-      (await readFile('resources/fonts/' + n)).toString('base64'),
-    ),
-  );
   const images = new Map<string, string>();
+  const imageCount = new Set(state.cards.map((c) => c.image).filter(Boolean)).size;
+  log?.event('images.started', { imageCount, cards: state.cards.length });
   for (const c of state.cards) {
-    if (c.image && !images.has(c.image)) images.set(c.image, await imageDataUrl(c.image));
+    if (c.image && !images.has(c.image)) {
+      images.set(c.image, await imageDataUrl(c.image, log));
+      log?.event('images.progress', { completed: images.size, total: imageCount });
+    }
   }
   const groups: [string, string][] = [
     ['правило', 'Правила игры'],
@@ -59,8 +60,7 @@ export async function renderRules(state: Draft) {
       return `<section><h1>${escapeHtml(title)}</h1>${cards.map((c) => (type === 'правило' ? `<article class="rule"><h2>${escapeHtml(c.name)}</h2>${descriptionHtml(c.description)}</article>` : cardMarkup(c, images.get(c.image) || ''))).join('')}</section>`;
     })
     .join('');
-  return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'"><title>${escapeHtml(state.release)}</title><style>
- @font-face{font-family:Rules;src:url(data:font/ttf;base64,${fonts[0]}) format('truetype');font-weight:400}@font-face{font-family:Rules;src:url(data:font/ttf;base64,${fonts[1]}) format('truetype');font-weight:700}
+  return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><title>${escapeHtml(state.release)}</title><style>
 ${rulesCss}
  </style></head><body><header><div class="release-label">Бункер · ${escapeHtml(state.release)}</div></header>${content}</body></html>`;
 }

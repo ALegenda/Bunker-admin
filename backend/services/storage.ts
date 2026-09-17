@@ -7,6 +7,7 @@ import {
 } from '@aws-sdk/client-s3';
 import { createHash, randomUUID } from 'node:crypto';
 import sharp, { type Metadata } from 'sharp';
+import type { PdfLog } from './pdf-log.js';
 import { config } from '../config.js';
 import { pool } from '../db/index.js';
 import { AppError } from '../domain/schema.js';
@@ -91,17 +92,28 @@ export async function resolveImage(value: string, allowLegacy = false): Promise<
   }
   throw new AppError(400, 'Изображение не найдено в хранилище. Загрузите его заново.');
 }
-export async function imageDataUrl(url: string) {
+export async function imageDataUrl(url: string, log?: PdfLog) {
   if (!url) return '';
   const id = url.match(/^\/api\/assets\/([a-f0-9-]{36})$/)?.[1];
   if (!id) throw Error('Unsupported image reference');
-  const r = await pool.query('SELECT object_key FROM assets WHERE id=$1', [id]);
+  const measure = <T>(name: string, action: () => Promise<T>) =>
+    log ? log.stage(name, action, { assetId: id }) : action();
+  const r = await measure('image.lookup', () =>
+    pool.query('SELECT object_key FROM assets WHERE id=$1', [id]),
+  );
   if (!r.rowCount) throw Error('Missing asset');
-  const object = await getObject(r.rows[0].object_key);
-  const printImage = await sharp(object.data)
-    .resize({ width: 400, height: 620, fit: 'inside', withoutEnlargement: true })
-    .flatten({ background: '#fff' })
-    .jpeg({ quality: 88 })
-    .toBuffer();
+  const object = await measure('image.download', () => getObject(r.rows[0].object_key));
+  const printImage = await measure('image.convert', () =>
+    sharp(object.data)
+      .resize({ width: 400, height: 620, fit: 'inside', withoutEnlargement: true })
+      .flatten({ background: '#fff' })
+      .jpeg({ quality: 88 })
+      .toBuffer(),
+  );
+  log?.event('image.ready', {
+    assetId: id,
+    inputBytes: object.data.length,
+    outputBytes: printImage.length,
+  });
   return `data:image/jpeg;base64,${printImage.toString('base64')}`;
 }

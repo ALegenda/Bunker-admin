@@ -1,3 +1,4 @@
+import { createPdfLog } from './pdf-log.js';
 import { refreshCatalog } from './catalog.js';
 import { audit } from './audit.js';
 import { randomUUID } from 'node:crypto';
@@ -7,7 +8,7 @@ import { AppError } from '../domain/schema.js';
 import { changes, changeStamp } from '../../shared/model.js';
 export const TEMPLATE_VERSION = 'rules-html-v2';
 export async function createJob(expectedRevision: number) {
-  return transaction(async (c) => {
+  const result = await transaction(async (c) => {
     await c.query('SELECT id FROM workspace WHERE id=1 FOR UPDATE');
     const state = await readWorkspace(c);
     if (state.revision !== expectedRevision)
@@ -16,7 +17,13 @@ export async function createJob(expectedRevision: number) {
       "SELECT id,status FROM pdf_jobs WHERE workspace_revision=$1 AND template_version=$2 AND status IN ('queued','running','ready') ORDER BY created_at DESC LIMIT 1",
       [state.revision, TEMPLATE_VERSION],
     );
-    if (old.rowCount) return old.rows[0];
+    if (old.rowCount) {
+      createPdfLog({ jobId: old.rows[0].id }).event('job.reused', {
+        status: old.rows[0].status,
+        revision: state.revision,
+      });
+      return old.rows[0];
+    }
     const id = randomUUID();
     await c.query(
       'INSERT INTO pdf_jobs(id,workspace_revision,snapshot,template_version) VALUES($1,$2,$3,$4)',
@@ -24,6 +31,11 @@ export async function createJob(expectedRevision: number) {
     );
     return { id, status: 'queued' };
   });
+  createPdfLog({ jobId: result.id }).event('job.requested', {
+    status: result.status,
+    revision: expectedRevision,
+  });
+  return result;
 }
 export async function getJob(id: string) {
   const r = await pool.query(
