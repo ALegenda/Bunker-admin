@@ -2,7 +2,7 @@
 
 Каталог карточек для игроков, редактор правил и совместная вычитка. React + TypeScript, Fastify, PostgreSQL, MinIO/S3 и отдельный обработчик HTML → PDF.
 
-Сайт: https://bunker-176-113-82-38.sslip.io · Редактор: https://bunker-176-113-82-38.sslip.io/admin
+Сайт: https://bunker-vdk.ru · Редактор: https://bunker-vdk.ru/admin
 
 ## Страницы
 

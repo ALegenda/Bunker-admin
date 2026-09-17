@@ -1,6 +1,6 @@
 # Copy to /etc/caddy/bunker.caddy and import it from /etc/caddy/Caddyfile.
 # Caddy obtains and renews HTTPS certificates when ports 80/443 are reachable.
 # release.sh replaces this maintenance response after the application is healthy.
-bunker-176-113-82-38.sslip.io {
+bunker-vdk.ru {
     respond "Bunker Studio: deployment in progress" 503
 }

@@ -1,6 +1,8 @@
 # Production и CI/CD
 
-Адрес: https://bunker-176-113-82-38.sslip.io. Бесплатное DNS-имя sslip.io указывает на 176.113.82.38. Репозиторий: https://github.com/ALegenda/Bunker-admin, ветка master.
+Адрес: https://bunker-vdk.ru. Домен зарегистрирован в REG.RU; A-записи @ и www указывают на 176.113.82.38. Репозиторий: https://github.com/ALegenda/Bunker-admin, ветка master.
+
+Основной адрес хранится в `/opt/bunker/domain`, origin — в `/opt/bunker/.env`. Старый адрес `bunker-176-113-82-38.sslip.io` и `www.bunker-vdk.ru` перенаправляются на основной домен с сохранением пути и параметров. Конфигурация `deploy/nginx.redirects.conf` установлена отдельно как `/etc/nginx/sites-available/bunker-redirects` с ссылкой в `sites-enabled`, поэтому обычный деплой не перезаписывает редиректы. Сертификат `bunker-vdk.ru` покрывает основной домен и www; старый сертификат сохраняется для HTTPS-редиректа. Оба продлеваются через Certbot. После перехода на новый домен нужно заново войти: браузер не переносит cookie между доменами.
 
 ## Сервер
 
@@ -24,12 +26,12 @@ Workflow `.github/workflows/check.yml` проверяет типы, сборку
 
 Публичные ключи берутся только с официального HTTPS endpoint Telegram на GitHub runner: при каждом деплое и каждые шесть часов (`telegram-keys.yml`). Они атомарно устанавливаются в `/opt/bunker/telegram-keys/jwks.json`, каталог монтируется в API только для чтения. Ключи старше семи дней отвергаются. Ошибки refresh workflow нужно устранять; это необходимо для ротации ключей Telegram. `TELEGRAM_JWKS_FILE` включает этот режим, без него используется прямой JWKS endpoint.
 
-`PUBLIC_ORIGIN=https://bunker-176-113-82-38.sslip.io`, первый администратор `TELEGRAM_ADMIN_IDS=231142381` (@TomKuper). Client ID/Secret находятся только в серверном .env. В BotFather Web Login нужны Allowed URLs:
+`PUBLIC_ORIGIN=https://bunker-vdk.ru`, первый администратор `TELEGRAM_ADMIN_IDS=231142381` (@TomKuper). Client ID/Secret находятся только в серверном .env. В BotFather Web Login нужны Allowed URLs:
 
-- https://bunker-176-113-82-38.sslip.io
-- https://bunker-176-113-82-38.sslip.io/auth/callback
+- https://bunker-vdk.ru
+- https://bunker-vdk.ru/auth/callback
 
-Чужие Telegram-аккаунты получают роль player. При смене IP потребуется новое DNS-имя, сертификат, origin и Allowed URLs.
+Чужие Telegram-аккаунты получают роль player. При смене IP обновите A-записи @ и www в REG.RU; origin и Allowed URLs остаются прежними.
 
 ## Резервные копии
 
@@ -39,6 +41,6 @@ Workflow `.github/workflows/check.yml` проверяет типы, сборку
 
 ## Повторный запуск и проверка
 
-Повторить деплой или откатить приложение при совместимой схеме: `bash /opt/bunker/releases/<SHA>/deploy/release.sh <SHA>` (образ должен оставаться на сервере). Проверка: `curl -f https://bunker-176-113-82-38.sslip.io/api/health`. Логи: `docker compose -p bunker-blue -f /opt/bunker/releases/<SHA>/deploy/compose.release.yaml logs --tail 100` с соответствующими RELEASE и APP_PORT; для green использовать другой слот.
+Повторить деплой или откатить приложение при совместимой схеме: `bash /opt/bunker/releases/<SHA>/deploy/release.sh <SHA>` (образ должен оставаться на сервере). Проверка: `curl -f https://bunker-vdk.ru/api/health`. Логи: `docker compose -p bunker-blue -f /opt/bunker/releases/<SHA>/deploy/compose.release.yaml logs --tail 100` с соответствующими RELEASE и APP_PORT; для green использовать другой слот.
 
 Первичная установка на новом сервере: Docker Compose v2; `deploy/compose.infra.yaml` и .env в `/opt/bunker`; поднять инфраструктуру; создать приватный bucket и scoped S3-пользователя; подготовить DNS, Nginx и сертификат; установить backup service/timer; настроить GitHub secrets; включить DEPLOY_ENABLED и отправить коммит в master. `deploy/nginx.conf.template` — рабочий шаблон; старые Caddy-примеры для этого сервера не используются.
