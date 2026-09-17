@@ -1,0 +1,37 @@
+name: Production diagnostics
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - deploy/diagnose.sh
+      - .github/workflows/production-diagnostics.yml
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Measure public connection from runner
+        run: |
+          for attempt in 1 2 3; do
+            curl -sS --compressed --connect-timeout 10 --max-time 20 -o /dev/null \
+              -w 'public status=%{http_code} protocol=%{http_version} connect=%{time_connect} tls=%{time_appconnect} ttfb=%{time_starttransfer} total=%{time_total}\n' \
+              https://bunker-vdk.ru/ || true
+          done
+      - name: Read server resource and connection health
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+          ssh -o BatchMode=yes -o ConnectTimeout=15 "$DEPLOY_USER@$DEPLOY_HOST" 'bash -s' < deploy/diagnose.sh
+      - if: always()
+        run: rm -f ~/.ssh/id_ed25519
