@@ -1,4 +1,4 @@
-# Full application: HTTPS API + PDF worker + private S3 + managed PostgreSQL.
+# Full application: HTTPS API + scheduled PDF jobs + private S3 + managed PostgreSQL.
 # Paid resources. See docs/render.md before creating this Blueprint.
 services:
   - type: pserv
@@ -76,17 +76,17 @@ services:
       - key: S3_BUCKET
         value: bunker
 
-  - type: worker
+  - type: cron
     name: bunker-pdf
     runtime: docker
     repo: https://github.com/ALegenda/Bunker-admin
     region: singapore
-    plan: 0.5c-512mb
+    plan: 1c-2g
     branch: codex/render-hosting
     dockerfilePath: ./Dockerfile
-    dockerCommand: sh deploy/render/start.sh worker
+    dockerCommand: sh deploy/render/start.sh worker-once
+    schedule: '* * * * *'
     autoDeployTrigger: off
-    maxShutdownDelaySeconds: 300
     envVars:
       - key: NODE_ENV
         value: production

@@ -6,6 +6,9 @@ import { randomUUID } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import sharp from 'sharp';
 import { writeFile, mkdir } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 // Every run uses its own schema. Never edit the user's workspace during tests.
 await test('PostgreSQL, S3, API and PDF integration', async (t) => {
   const admin = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -259,12 +262,16 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         );
       },
     );
-    await t.test('worker renders immutable database snapshot and stores PDF in S3', async () => {
+    await t.test('scheduled worker stores the immutable PDF and exits after draining the queue', async () => {
       const state = await readWorkspace();
       const job = await createJob(state.revision);
       jobId = job.id;
       assert.equal((await createJob(state.revision)).id, jobId);
-      await runOne();
+      await promisify(execFile)(
+        process.execPath,
+        ['--import', 'tsx', fileURLToPath(new URL('../worker-once.ts', import.meta.url))],
+        { env: process.env, timeout: 30000 },
+      );
       const result = await getJob(jobId);
       assert.equal(result.status, 'ready');
       assert.ok(result.report.pages >= 3);
