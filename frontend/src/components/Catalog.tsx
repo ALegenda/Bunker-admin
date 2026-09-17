@@ -1,3 +1,5 @@
+import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
+import { matchesCard } from '../card-attributes.js';
 import { descriptionText } from '../../../shared/rich-text.js';
 import { DescriptionEditor } from './DescriptionEditor.js';
 import { CardTips } from './CardTips.js';
@@ -15,6 +17,7 @@ export function Catalog({ user }: { user: User | null }) {
     [tags, setTags] = useState<string[]>(params.getAll('tag')),
     [time, setTime] = useState(params.get('time') || ''),
     [place, setPlace] = useState(params.get('place') || ''),
+    [frequency, setFrequency] = useState(params.get('frequency') || ''),
     [selected, setSelected] = useState(params.get('card') || ''),
     [propose, setPropose] = useState<PublicCard | null | false>(false);
   useEffect(() => {
@@ -29,26 +32,19 @@ export function Catalog({ user }: { user: User | null }) {
     for (const t of tags) p.append('tag', t);
     if (time) p.set('time', time);
     if (place) p.set('place', place);
+    if (frequency) p.set('frequency', frequency);
     if (selected) p.set('card', selected);
     history.replaceState(null, '', '/?' + p);
-  }, [query, type, tags, time, place, selected]);
+  }, [query, type, tags, time, place, frequency, selected]);
   if (error) return <p role="alert">{error}</p>;
   if (!data) return <p role="status">Загружаем карточки…</p>;
-  const filters = (key: 'tags' | 'activationTime' | 'usageLocation') =>
-    [...new Set(data.cards.flatMap((c) => c.attributes[key]).filter(Boolean))].sort((a, b) =>
-      a.localeCompare(b, 'ru'),
-    );
-  const visible = data.cards.filter(
-    (c) =>
-      (!type || c.cardType === type) &&
-      (!query ||
-        (c.name + ' ' + descriptionText(c.description))
-          .toLocaleLowerCase('ru')
-          .includes(query.toLocaleLowerCase('ru'))) &&
-      tags.every((t) => c.attributes.tags.includes(t)) &&
-      (!time || c.attributes.activationTime.includes(time)) &&
-      (!place || c.attributes.usageLocation.includes(place)),
-  );
+  const attributes = {
+    tags,
+    activationTime: time ? [time] : [],
+    usageLocation: place ? [place] : [],
+    usageFrequency: frequency ? [frequency] : [],
+  };
+  const visible = data.cards.filter((c) => matchesCard(c, query, type, attributes));
   const card = data.cards.find((c) => c.id === selected),
     trusted = user?.role === 'trusted' || user?.role === 'admin';
   return (
@@ -69,7 +65,7 @@ export function Catalog({ user }: { user: User | null }) {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Название или текст…"
+              placeholder="Название, текст или тег…"
             />
           </label>
           <label>
@@ -81,39 +77,16 @@ export function Catalog({ user }: { user: User | null }) {
               ))}
             </select>
           </label>
-          <label>
-            Время
-            <select value={time} onChange={(e) => setTime(e.target.value)}>
-              <option value="">Любое</option>
-              {filters('activationTime').map((t) => (
-                <option key={t}>{t}</option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Место
-            <select value={place} onChange={(e) => setPlace(e.target.value)}>
-              <option value="">Любое</option>
-              {filters('usageLocation').map((t) => (
-                <option key={t}>{t}</option>
-              ))}
-            </select>
-          </label>
-          <fieldset>
-            <legend>Теги · должны совпасть все выбранные</legend>
-            {filters('tags').map((t) => (
-              <label className="check" key={t}>
-                <input
-                  type="checkbox"
-                  checked={tags.includes(t)}
-                  onChange={() =>
-                    setTags(tags.includes(t) ? tags.filter((v) => v !== t) : [...tags, t])
-                  }
-                />
-                {t}
-              </label>
-            ))}
-          </fieldset>
+          <CardAttributeFilters
+            cards={data.cards}
+            value={attributes}
+            onChange={(value) => {
+              setTags(value.tags);
+              setTime(value.activationTime[0] || '');
+              setPlace(value.usageLocation[0] || '');
+              setFrequency(value.usageFrequency[0] || '');
+            }}
+          />
           <button
             onClick={() => {
               setQuery('');
@@ -121,6 +94,7 @@ export function Catalog({ user }: { user: User | null }) {
               setTags([]);
               setTime('');
               setPlace('');
+              setFrequency('');
             }}
           >
             Сбросить фильтры
@@ -148,11 +122,7 @@ export function Catalog({ user }: { user: User | null }) {
                     {descriptionText(c.description).slice(0, 140)}
                     {descriptionText(c.description).length > 140 ? '…' : ''}
                   </p>
-                  <div className="tags">
-                    {c.attributes.tags.map((t) => (
-                      <span key={t}>{t}</span>
-                    ))}
-                  </div>
+                  <CardAttributes card={c} />
                 </div>
               </button>
             ))}
@@ -201,18 +171,7 @@ function CardDialog({
         {card.image && <img className="card-art" src={card.image} alt={card.name} />}
         <RichDescription value={card.description} />
       </div>
-      <div className="tags">
-        {[
-          ...card.attributes.activationTime,
-          card.attributes.usageFrequency,
-          ...card.attributes.usageLocation,
-          ...card.attributes.tags,
-        ]
-          .filter(Boolean)
-          .map((t, i) => (
-            <span key={i}>{t}</span>
-          ))}
-      </div>
+      <CardAttributes card={card} />
       {propose && <button onClick={propose}>Предложить правку описания</button>}
       <p>
         <button onClick={() => navigator.clipboard.writeText(location.href)}>

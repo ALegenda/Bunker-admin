@@ -711,3 +711,38 @@ textarea {
 }
 
 .achievement progress { width: 100%; height: 12px; accent-color: #8b9c3e; }
+
+.attribute-filters fieldset {
+  border: 0;
+  padding: 0;
+  margin: 12px 0;
+  max-height: 240px;
+  overflow: auto;
+}
+.attribute-filters legend {
+  font-size: 12px;
+  font-weight: 650;
+  margin-bottom: 6px;
+}
+.attribute-filters small {
+  color: #67715e;
+}
+.filter-count {
+  margin-left: auto;
+  color: #67715e;
+  font-size: 12px;
+}
+.editor-filters {
+  margin: 12px 0;
+}
+.editor-filters summary {
+  cursor: pointer;
+  font-size: 12px;
+}
+.tags b {
+  font-weight: 500;
+}
+.card-list .tags {
+  margin-top: 6px;
+  gap: 4px;
+}

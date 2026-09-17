@@ -1,3 +1,5 @@
+import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
+import { emptyAttributeFilters, matchesCard } from '../card-attributes.js';
 import { RichDescription } from './RichDescription.js';
 import { useState, useEffect } from 'react';
 import type { Workspace, Card, CardHistoryEntry } from '../../../shared/contracts.js';
@@ -11,6 +13,7 @@ export function Editor({ initial }: { initial: Workspace }) {
   const [selected, setSelected] = useState(initial.cards[0]?.id || ''),
     [query, setQuery] = useState(''),
     [type, setType] = useState(''),
+    [attributes, setAttributes] = useState(emptyAttributeFilters),
     [tab, setTab] = useState('text'),
     [history, setHistory] = useState<CardHistoryEntry[] | null>(null),
     [historyError, setHistoryError] = useState(''),
@@ -42,11 +45,7 @@ export function Editor({ initial }: { initial: Workspace }) {
       active = false;
     };
   }, [selected, tab, historyRetry]);
-  const filtered = editor.cards.filter(
-    (c) =>
-      (!type || c.cardType === type) &&
-      c.name.toLocaleLowerCase('ru').includes(query.toLocaleLowerCase('ru')),
-  );
+  const filtered = editor.cards.filter((c) => matchesCard(c, query, type, attributes));
   return (
     <>
       <div className="heading">
@@ -81,7 +80,7 @@ export function Editor({ initial }: { initial: Workspace }) {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Название…"
+                placeholder="Название, текст или тег…"
               />
             </label>
             <select aria-label="Категория" value={type} onChange={(e) => setType(e.target.value)}>
@@ -90,6 +89,25 @@ export function Editor({ initial }: { initial: Workspace }) {
                 <option key={t}>{t}</option>
               ))}
             </select>
+            <details className="editor-filters">
+              <summary>Характеристики · выбрано {Object.values(attributes).flat().length}</summary>
+              <CardAttributeFilters
+                cards={editor.cards}
+                value={attributes}
+                onChange={setAttributes}
+              />
+            </details>
+            {(query || type || Object.values(attributes).some((values) => values.length)) && (
+              <button
+                onClick={() => {
+                  setQuery('');
+                  setType('');
+                  setAttributes(emptyAttributeFilters());
+                }}
+              >
+                Сбросить фильтры
+              </button>
+            )}
             <div className="list-title">
               {filtered.length} карточек{' '}
               <button
@@ -117,6 +135,7 @@ export function Editor({ initial }: { initial: Workspace }) {
                 + Добавить
               </button>
             </div>
+            {!filtered.length && <p role="status">Нет карточек с такими условиями.</p>}
             <div className="card-list" id="card-list">
               {filtered.map((c) => (
                 <button
@@ -138,6 +157,7 @@ export function Editor({ initial }: { initial: Workspace }) {
                   <span>
                     {c.name}
                     <small>{c.cardType}</small>
+                    <CardAttributes card={c} />
                   </span>
                 </button>
               ))}
