@@ -1,3 +1,4 @@
+import { enrichSourceTags } from '../services/tag-migration.js';
 import { migrateSourceRules, correctSourceAttributes } from '../services/source-migration.js';
 import { refreshCatalog } from '../services/catalog.js';
 import { readFile } from 'node:fs/promises';
@@ -13,6 +14,7 @@ export async function seed() {
   if ((await pool.query('SELECT id FROM workspace WHERE id=1')).rowCount) {
     await migrateSourceRules();
     await correctSourceAttributes();
+    await enrichSourceTags();
     console.log('Database initialized; source migrations checked');
     return;
   }
@@ -47,6 +49,7 @@ export async function seed() {
   });
   await migrateSourceRules();
   await correctSourceAttributes();
+  await enrichSourceTags();
   console.log(`Imported ${cards.length} cards and rules into PostgreSQL; images stored in S3`);
 }
 if (process.argv[1]?.endsWith('seed.ts') || process.argv[1]?.endsWith('seed.js')) {
