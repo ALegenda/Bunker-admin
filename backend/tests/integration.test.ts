@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 import { randomUUID } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import sharp from 'sharp';
 import { writeFile, mkdir } from 'node:fs/promises';
 // Every run uses its own schema. Never edit the user's workspace during tests.
@@ -37,7 +38,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
     await migrate();
     await migrate();
     await ensureBucket();
-    await t.test('homepage has styled content before JavaScript loads', async () => {
+    await t.test('homepage is complete and interactive without application scripts', async () => {
       const page = await app.inject({ url: '/', headers: { host: 'localhost' } });
       assert.equal(page.statusCode, 200);
       assert.match(page.headers['cache-control'] || '', /no-cache/);
@@ -45,6 +46,19 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       assert.match(page.body, /<h1[^>]*>КОНЕЦ СВЕТА\?/);
       assert.match(page.body, /<style>[\s\S]*\.landing/);
       assert.doesNotMatch(page.body, /<link[^>]+rel="stylesheet"/);
+      assert.doesNotMatch(page.body, /<script\b|rel="modulepreload"/i);
+      assert.ok(
+        gzipSync(page.body).length < 20000,
+        'Keep the initial HTML and CSS under 20 KB gzip',
+      );
+      assert.match(page.body, /<details class="landing-mobile-menu">/);
+      for (const group of ['role', 'situation']) {
+        for (let index = 0; index < 3; index++) {
+          assert.match(page.body, new RegExp(`type="radio"[^>]+id="${group}-choice-${index}"`));
+          assert.match(page.body, new RegExp(`for="${group}-choice-${index}"`));
+        }
+      }
+      assert.match(page.body, /<source[^>]+type="image\/avif"[^>]+srcSet=/);
       assert.match(page.body, /href="\/catalog"/);
       for (const path of ['/catalog', '/profile', '/admin']) {
         const internal = await app.inject({ url: path, headers: { host: 'localhost' } });

@@ -1,3 +1,6 @@
+body {
+  margin: 0;
+}
 html:has(.landing) {
   scroll-behavior: smooth;
   scroll-padding-top: 24px;
@@ -135,7 +138,7 @@ html:has(.landing) {
   font-weight: 800;
   white-space: nowrap;
 }
-.landing .landing-menu {
+.landing .landing-mobile-menu {
   display: none;
 }
 .landing .landing-skip {
@@ -178,7 +181,7 @@ html:has(.landing) {
   display: inline-block;
   font-size: 23px;
   color: #b74e2d;
-  animation: landing-spin 24s linear infinite;
+  animation: landing-spin 2s ease-out 1;
 }
 .landing h1 {
   margin: 23px 0 24px;
@@ -255,7 +258,7 @@ html:has(.landing) {
 }
 .landing .hero-visual {
   position: relative;
-  padding: 23px 8px 35px 0;
+  padding: 0 8px 16px 0;
   min-width: 0;
 }
 .landing .hero-art-card {
@@ -290,9 +293,11 @@ html:has(.landing) {
   border-top: 2px solid var(--ink);
 }
 .landing .hero-speech {
-  position: absolute;
-  top: -22px;
-  left: 17px;
+  position: relative;
+  width: fit-content;
+  margin-bottom: 24px;
+  top: auto;
+  left: auto;
   z-index: 2;
   padding: 12px 24px;
   font-size: 18px;
@@ -301,47 +306,8 @@ html:has(.landing) {
   background: var(--paper);
   border: 2px solid var(--ink);
   border-radius: 50%;
-  transform: rotate(-8deg);
+  transform: none;
   box-shadow: 3px 3px 0 #213c3930;
-}
-.landing .hero-speech::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  right: 25px;
-  width: 17px;
-  height: 17px;
-  border-right: 2px solid var(--ink);
-  border-bottom: 2px solid var(--ink);
-  background: var(--paper);
-  transform: skewY(35deg);
-}
-.landing .hero-sticker {
-  position: absolute;
-  right: -18px;
-  bottom: -1px;
-  z-index: 2;
-  width: 125px;
-  height: 125px;
-  padding-top: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 50%;
-  background: var(--yellow);
-  border: 2px solid var(--ink);
-  outline: 2px dashed var(--ink);
-  outline-offset: -9px;
-  font-size: 13px;
-  line-height: 1.3;
-  transform: rotate(12deg);
-}
-.landing .hero-sticker b {
-  font-size: 17px;
-}
-.landing .hero-sticker > span {
-  margin-top: 6px;
-  font-size: 13px;
 }
 .landing .hero-bottom {
   grid-column: 1 / -1;
@@ -355,17 +321,6 @@ html:has(.landing) {
   font-size: 9px;
   letter-spacing: 0.08em;
   font-weight: 700;
-}
-.landing .motion-toggle {
-  padding: 8px 0 8px 12px;
-  border: 0;
-  background: transparent;
-  min-height: 44px;
-  font-size: 11px;
-  white-space: nowrap;
-}
-.landing .motion-toggle:hover {
-  text-decoration: underline;
 }
 .landing .landing-ribbon {
   display: flex;
@@ -470,6 +425,8 @@ html:has(.landing) {
   gap: 24px;
 }
 .landing .role-pick {
+  cursor: pointer;
+  margin: 0;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -483,7 +440,6 @@ html:has(.landing) {
     background 0.2s,
     transform 0.2s;
 }
-.landing .role-pick[aria-pressed='true'],
 .landing .role-pick:hover {
   background: var(--tone);
 }
@@ -522,7 +478,6 @@ html:has(.landing) {
 .landing .role-pick:nth-child(2) img {
   transform: rotate(3deg);
 }
-.landing .role-pick[aria-pressed='true'] img,
 .landing .role-pick:hover img {
   transform: rotate(0deg) translateY(-3px);
 }
@@ -654,19 +609,6 @@ html:has(.landing) {
   font-size: 0.7em;
   padding: 0 5px;
 }
-.landing .card-open {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  background: var(--paper);
-  font-size: 20px;
-}
 .landing .example-copy {
   display: flex;
   flex-direction: column;
@@ -719,7 +661,9 @@ html:has(.landing) {
   flex-wrap: wrap;
   margin-bottom: 24px;
 }
-.landing .situation-selector button {
+.landing .situation-selector label {
+  cursor: pointer;
+  margin: 0;
   display: flex;
   align-items: center;
   gap: 11px;
@@ -731,15 +675,11 @@ html:has(.landing) {
   font-size: 13px;
   font-weight: 800;
 }
-.landing .situation-selector button[aria-pressed='true'] {
-  background: var(--ink);
-  color: var(--paper);
-  box-shadow: 3px 3px 0 var(--yellow);
-}
-.landing .situation-selector button:hover:not([aria-pressed='true']) {
+
+.landing .situation-selector label:hover {
   background: var(--yellow);
 }
-.landing .situation-selector button span {
+.landing .situation-selector label span {
   font-size: 10px;
   opacity: 0.7;
 }
@@ -766,40 +706,31 @@ html:has(.landing) {
   background-size: 8px 8px;
 }
 .landing .situation-card-pair {
-  position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
+  justify-items: center;
   width: 100%;
   padding: 20px 0;
-  gap: 17px;
+  gap: 12px;
 }
 .landing .situation-card-pair > .game-card-art {
-  width: 41%;
+  width: 100%;
   max-width: 184px;
   aspect-ratio: 237 / 360;
   object-fit: contain;
   border-radius: 12px;
-  box-shadow: 5px 7px 0 #213c3940;
-  transform: rotate(-9deg);
-}
-.landing .situation-card-pair > .game-card-art:last-child {
-  transform: rotate(9deg);
+  box-shadow: 3px 5px 0 #213c3940;
 }
 .landing .pair-symbol {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
   display: grid;
   place-items: center;
   background: var(--paper);
-  width: 55px;
-  height: 55px;
+  width: 40px;
+  height: 40px;
   border: 2px solid var(--ink);
   border-radius: 50%;
-  font-size: 35px;
+  font-size: 27px;
   line-height: 1;
 }
 .landing .situation-art-note {
@@ -992,6 +923,8 @@ html:has(.landing) {
   font-size: 13px;
 }
 .landing .landing-footer nav {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 24px;
   font-size: 12px;
@@ -1014,27 +947,6 @@ html:has(.landing) {
   font-size: 8px;
   font-weight: 800;
   letter-spacing: 0.1em;
-}
-.landing [data-reveal].reveal-ready {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 0.55s ease,
-    transform 0.55s ease;
-}
-.landing [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-.landing.motion-paused *,
-.landing.motion-paused *::before,
-.landing.motion-paused *::after {
-  animation: none !important;
-  transition: none !important;
-}
-.landing.motion-paused [data-reveal] {
-  opacity: 1;
-  transform: none;
 }
 @keyframes landing-spin {
   to {
@@ -1089,16 +1001,6 @@ html:has(.landing) {
   }
   .landing .art-card-caption {
     font-size: 11px;
-  }
-  .landing .hero-sticker {
-    width: 106px;
-    height: 106px;
-    padding-top: 23px;
-    font-size: 11px;
-    right: -8px;
-  }
-  .landing .hero-sticker b {
-    font-size: 14px;
   }
   .landing .landing-ribbon {
     font-size: 12px;
@@ -1163,11 +1065,18 @@ html:has(.landing) {
   }
   .landing .landing-nav {
     display: none;
+  }
+  .landing .landing-mobile-menu {
+    display: block;
+  }
+  .landing .landing-mobile-menu > nav {
     position: absolute;
     left: 0;
     right: 0;
     top: 75px;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     padding: 16px 20px;
     background: var(--paper);
     border: 2px solid var(--ink);
@@ -1175,11 +1084,15 @@ html:has(.landing) {
     box-shadow: 5px 5px 0 var(--ink);
     z-index: 20;
     font-size: 15px;
+    font-weight: 700;
   }
-  .landing .landing-nav.is-open {
+  .landing .landing-mobile-menu:not([open]) > nav {
+    display: none;
+  }
+  .landing .landing-mobile-menu nav a {
     display: flex;
-    flex-direction: column;
-    gap: 0;
+    align-items: center;
+    min-height: 44px;
   }
   .landing .landing-nav a:last-child {
     display: flex;
@@ -1207,12 +1120,6 @@ html:has(.landing) {
   .landing .art-card-caption {
     font-size: 10px;
     padding: 12px;
-  }
-  .landing .hero-sticker {
-    bottom: -5px;
-    width: 95px;
-    height: 95px;
-    padding-top: 20px;
   }
   .landing .hero-bottom > span {
     max-width: 340px;
@@ -1270,7 +1177,7 @@ html:has(.landing) {
   .landing .situation-selector {
     gap: 8px;
   }
-  .landing .situation-selector button {
+  .landing .situation-selector label {
     font-size: 11px;
     padding-inline: 12px;
   }
@@ -1360,7 +1267,7 @@ html:has(.landing) {
   .landing .landing-menu {
     flex-shrink: 0;
   }
-  .landing .landing-nav {
+  .landing .landing-mobile-menu > nav {
     top: 69px;
   }
   .landing .landing-hero {
@@ -1412,12 +1319,12 @@ html:has(.landing) {
     font-size: 10px;
   }
   .landing .hero-visual {
-    margin-top: 45px;
+    margin-top: 25px;
     padding: 15px 7px 22px 1px;
   }
   .landing .hero-speech {
-    top: -13px;
-    left: 17px;
+    top: auto;
+    left: auto;
     font-size: 14px;
     padding: 8px 17px;
   }
@@ -1438,22 +1345,6 @@ html:has(.landing) {
   .landing .art-card-caption b {
     display: block;
   }
-  .landing .hero-sticker {
-    right: -4px;
-    bottom: 0;
-    width: 95px;
-    height: 95px;
-    font-size: 10px;
-    padding-top: 22px;
-    outline-offset: -7px;
-  }
-  .landing .hero-sticker b {
-    font-size: 13px;
-  }
-  .landing .hero-sticker > span {
-    margin-top: 3px;
-    font-size: 10px;
-  }
   .landing .hero-bottom {
     min-height: 60px;
     gap: 14px;
@@ -1463,10 +1354,6 @@ html:has(.landing) {
   }
   .landing .hero-bottom > span {
     max-width: 165px;
-  }
-  .landing .motion-toggle {
-    font-size: 9px;
-    padding-left: 0;
   }
   .landing .landing-ribbon {
     padding: 14px 10px;
@@ -1621,13 +1508,6 @@ html:has(.landing) {
     padding-block: 8px;
     font-size: 11px;
   }
-  .landing .card-open {
-    width: 24px;
-    height: 24px;
-    bottom: 8px;
-    right: 8px;
-    font-size: 17px;
-  }
   .landing .example-copy {
     padding: 16px 12px 12px;
   }
@@ -1668,12 +1548,12 @@ html:has(.landing) {
     gap: 10px;
     margin-bottom: 22px;
   }
-  .landing .situation-selector button {
+  .landing .situation-selector label {
     font-size: 13px;
     padding: 11px 17px;
     text-align: left;
   }
-  .landing .situation-selector button span {
+  .landing .situation-selector label span {
     font-size: 11px;
   }
   .landing .situation-panel {
@@ -1686,6 +1566,8 @@ html:has(.landing) {
     border-bottom: 2px solid var(--ink);
   }
   .landing .situation-card-pair {
+    grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr);
+    gap: 10px;
     padding: 10px 0;
   }
   .landing .situation-card-pair > .game-card-art {
@@ -1695,9 +1577,9 @@ html:has(.landing) {
     font-size: 8px;
   }
   .landing .pair-symbol {
-    width: 45px;
-    height: 45px;
-    font-size: 29px;
+    width: 32px;
+    height: 32px;
+    font-size: 23px;
   }
   .landing .situation-copy {
     padding: 25px 23px;
@@ -1891,8 +1773,131 @@ html:has(.landing) {
     animation: none !important;
     transition: none !important;
   }
-  .landing [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
+}
+
+.landing .landing-menu {
+  list-style: none;
+  cursor: pointer;
+}
+.landing .landing-menu::-webkit-details-marker {
+  display: none;
+}
+.landing .landing-menu svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+.landing .landing-mobile-menu[open] .landing-menu {
+  background: var(--yellow);
+}
+.landing .choice-explorer {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  position: relative;
+}
+.landing .choice-input,
+.landing .landing-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.landing .role-selection-mark::before {
+  content: '↗';
+}
+.landing .role-panels > article,
+.landing .situation-panels > article {
+  display: none;
+}
+.landing .example-link > span {
+  flex-shrink: 0;
+  width: 20px;
+  text-align: right;
+}
+
+.landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) {
+  background: var(--tone);
+}
+.landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) .role-selection-mark::before {
+  content: '✓';
+}
+.landing #role-choice-0:checked ~ .role-selector > label:nth-child(1) img {
+  transform: none;
+}
+.landing #role-choice-0:focus-visible ~ .role-selector > label:nth-child(1),
+.landing #situation-choice-0:focus-visible ~ .situation-selector > label:nth-child(1) {
+  outline: 3px solid #247c9c;
+  outline-offset: 5px;
+}
+.landing #role-choice-0:checked ~ .role-panels > article:nth-child(1),
+.landing #situation-choice-0:checked ~ .situation-panels > article:nth-child(1) {
+  display: grid;
+}
+.landing #situation-choice-0:checked ~ .situation-selector > label:nth-child(1) {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 3px 3px 0 var(--yellow);
+}
+
+.landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) {
+  background: var(--tone);
+}
+.landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) .role-selection-mark::before {
+  content: '✓';
+}
+.landing #role-choice-1:checked ~ .role-selector > label:nth-child(2) img {
+  transform: none;
+}
+.landing #role-choice-1:focus-visible ~ .role-selector > label:nth-child(2),
+.landing #situation-choice-1:focus-visible ~ .situation-selector > label:nth-child(2) {
+  outline: 3px solid #247c9c;
+  outline-offset: 5px;
+}
+.landing #role-choice-1:checked ~ .role-panels > article:nth-child(2),
+.landing #situation-choice-1:checked ~ .situation-panels > article:nth-child(2) {
+  display: grid;
+}
+.landing #situation-choice-1:checked ~ .situation-selector > label:nth-child(2) {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 3px 3px 0 var(--yellow);
+}
+
+.landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) {
+  background: var(--tone);
+}
+.landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) .role-selection-mark::before {
+  content: '✓';
+}
+.landing #role-choice-2:checked ~ .role-selector > label:nth-child(3) img {
+  transform: none;
+}
+.landing #role-choice-2:focus-visible ~ .role-selector > label:nth-child(3),
+.landing #situation-choice-2:focus-visible ~ .situation-selector > label:nth-child(3) {
+  outline: 3px solid #247c9c;
+  outline-offset: 5px;
+}
+.landing #role-choice-2:checked ~ .role-panels > article:nth-child(3),
+.landing #situation-choice-2:checked ~ .situation-panels > article:nth-child(3) {
+  display: grid;
+}
+.landing #situation-choice-2:checked ~ .situation-selector > label:nth-child(3) {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 3px 3px 0 var(--yellow);
+}
+
+@media (max-width: 620px) {
+  .landing .role-panels > article.role-dossier,
+  .landing .situation-panels > article.situation-panel {
+    grid-template-columns: 1fr;
   }
 }

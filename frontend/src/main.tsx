@@ -1,10 +1,12 @@
 import { Header } from './components/Header.js';
 import { TelegramLogin } from './components/TelegramLogin.js';
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import type { Me, Workspace } from '../../shared/contracts.js';
 import { api, setCsrf, send } from './api.js';
-import { Landing } from './components/Landing.js';
+const Landing = lazy(() =>
+  import('./components/Landing.js').then((module) => ({ default: module.Landing })),
+);
 import { legacyCatalogUrl } from '../../shared/navigation.js';
 import './style.css';
 
@@ -174,7 +176,9 @@ const root = document.getElementById('root')!;
 const app = (
   <ErrorBoundary>
     {location.pathname === '/' ? (
-      <Landing />
+      <Suspense fallback={<main>Загружаем…</main>}>
+        <Landing />
+      </Suspense>
     ) : (
       <Suspense
         fallback={
@@ -188,8 +192,5 @@ const app = (
     )}
   </ErrorBoundary>
 );
-if (location.pathname === '/' && root.dataset.prerendered === 'landing') {
-  hydrateRoot(root, app);
-} else {
-  createRoot(root).render(app);
-}
+// The production landing is complete HTML and never loads this application entry.
+createRoot(root).render(app);

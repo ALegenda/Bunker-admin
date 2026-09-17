@@ -1,5 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import hero from '../assets/bunker-cartoon.webp';
+import hero480 from '../assets/bunker-cartoon-480.webp';
+import hero800 from '../assets/bunker-cartoon-800.webp';
+import heroAvif480 from '../assets/bunker-cartoon-480.avif';
+import heroAvif800 from '../assets/bunker-cartoon-800.avif';
+import heroAvif1200 from '../assets/bunker-cartoon-1200.avif';
 import survivor from '../assets/survivor.webp';
 import marauder from '../assets/marauder.webp';
 import medic from '../assets/medic.webp';
@@ -20,7 +25,7 @@ function CardArt({ image, name }: { image: string; name: string }) {
       <div className="game-card-art supply-face" role="img" aria-label={`Карточка «${name}»`}>
         <span>ПОЛЕЗНЫЙ ПРИПАС</span>
         <b>{name}</b>
-        <img src={image} width="400" height="262" loading="lazy" alt="" />
+        <img src={image} width="400" height="262" loading="lazy" decoding="async" alt="" />
         <strong>{image === soap ? '3 применения' : 'Санитару в помощь'}</strong>
         <span aria-hidden="true">✦ ✦ ✦</span>
       </div>
@@ -217,52 +222,8 @@ const questions = [
 ];
 
 export function Landing() {
-  const root = useRef<HTMLDivElement>(null);
-  const [activeRole, setActiveRole] = useState(0);
-  const [activeSituation, setActiveSituation] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [motionPaused, setMotionPaused] = useState(false);
-  const role = roles[activeRole];
-  const situation = situations[activeSituation];
-
-  useEffect(() => {
-    document.title = 'Бункер — выживать веселее в компании';
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setMotionPaused(media.matches);
-    const update = () => setMotionPaused(media.matches);
-    if (media.addEventListener) media.addEventListener('change', update);
-    else media.addListener(update);
-    const elements = root.current?.querySelectorAll<HTMLElement>('[data-reveal]');
-    const observer =
-      typeof IntersectionObserver === 'undefined'
-        ? null
-        : new IntersectionObserver(
-            (entries) => {
-              for (const entry of entries) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('is-visible');
-                  observer?.unobserve(entry.target);
-                }
-              }
-            },
-            { threshold: 0.08 },
-          );
-    if (observer)
-      elements?.forEach((element) => {
-        // Keep prerendered content visible during hydration, including on slow mobile networks.
-        if (element.getBoundingClientRect().top < window.innerHeight) return;
-        element.classList.add('reveal-ready');
-        observer.observe(element);
-      });
-    return () => {
-      observer?.disconnect();
-      if (media.removeEventListener) media.removeEventListener('change', update);
-      else media.removeListener(update);
-    };
-  }, []);
-
   return (
-    <div ref={root} className={`landing${motionPaused ? ' motion-paused' : ''}`}>
+    <div className="landing">
       <a className="landing-skip" href="#main-content">
         К содержанию
       </a>
@@ -273,18 +234,7 @@ export function Landing() {
             БУНКЕР<span className="brand-caption">ВЛАДИВОСТОК</span>
           </span>
         </a>
-        <nav
-          className={`landing-nav${menuOpen ? ' is-open' : ''}`}
-          id="landing-navigation"
-          aria-label="Главная навигация"
-          onClick={() => setMenuOpen(false)}
-          onKeyDown={(event) => {
-            if (event.key === 'Escape') {
-              setMenuOpen(false);
-              document.getElementById('landing-menu')?.focus();
-            }
-          }}
-        >
+        <nav className="landing-nav" aria-label="Главная навигация">
           <a href="#about">Что за игра?</a>
           <a href="#roles">Кто ты?</a>
           <a href="#cards">Карточки</a>
@@ -294,16 +244,25 @@ export function Landing() {
         <a className="landing-header-cta" href="/profile">
           Я уже игрок <Arrow diagonal />
         </a>
-        <button
-          className="landing-menu"
-          id="landing-menu"
-          aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
-          aria-expanded={menuOpen}
-          aria-controls="landing-navigation"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? '✕' : '☰'}
-        </button>
+        <details className="landing-mobile-menu">
+          <summary className="landing-menu" aria-label="Меню">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 6h14M5 12h14M5 18h14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </summary>
+          <nav aria-label="Мобильная навигация">
+            <a href="#about">Что за игра?</a>
+            <a href="#roles">Кто ты?</a>
+            <a href="#cards">Карточки</a>
+            <a href="#situations">Примеры ходов</a>
+            <a href="#faq">Вопросы</a>
+          </nav>
+        </details>
       </header>
       <main className="landing-main" id="main-content">
         <section className="landing-hero" aria-labelledby="hero-title">
@@ -347,34 +306,31 @@ export function Landing() {
                 <span>ПАМЯТКА ЖИТЕЛЯ БУНКЕРА</span>
                 <span>№ 001</span>
               </div>
-              <img
-                className="hero-art"
-                src={hero}
-                alt="Мультяшные жители бункера хитро улыбаются, играя в карты за общим столом"
-                fetchPriority="high"
-                width="1200"
-                height="800"
-              />
+              <picture>
+                <source
+                  type="image/avif"
+                  srcSet={`${heroAvif480} 480w, ${heroAvif800} 800w, ${heroAvif1200} 1200w`}
+                  sizes="(max-width: 620px) calc(100vw - 48px), (max-width: 1408px) 48vw, 660px"
+                />
+                <img
+                  className="hero-art"
+                  src={hero}
+                  srcSet={`${hero480} 480w, ${hero800} 800w, ${hero} 1200w`}
+                  sizes="(max-width: 620px) calc(100vw - 48px), (max-width: 1408px) 48vw, 660px"
+                  alt="Мультяшные жители бункера хитро улыбаются, играя в карты за общим столом"
+                  fetchPriority="high"
+                  decoding="async"
+                  width="1200"
+                  height="800"
+                />
+              </picture>
               <div className="art-card-caption">
                 Сохраняйте спокойствие. <b>И свою роль в секрете.</b>
               </div>
             </div>
-            <span className="hero-sticker" aria-hidden="true">
-              БЛЕФ
-              <br />
-              <b>ВКЛЮЧЁН!</b>
-              <span>✦ ✦ ✦</span>
-            </span>
           </div>
           <div className="hero-bottom">
             <span>ОСТОРОЖНО: ДРУЖБА ПРОЙДЁТ ПРОВЕРКУ НА ПРОЧНОСТЬ</span>
-            <button
-              className="motion-toggle"
-              aria-pressed={motionPaused}
-              onClick={() => setMotionPaused(!motionPaused)}
-            >
-              {motionPaused ? '▷ Включить анимации' : 'Ⅱ Пауза анимаций'}
-            </button>
           </div>
         </section>
         <div className="landing-ribbon" aria-hidden="true">
@@ -387,7 +343,7 @@ export function Landing() {
         </div>
 
         <section className="landing-section landing-about" id="about">
-          <div className="section-intro" data-reveal>
+          <div className="section-intro">
             <div>
               <span className="landing-eyebrow">01 / КРАТКИЙ КУРС ВЫЖИВАНИЯ</span>
               <h2>
@@ -428,7 +384,7 @@ export function Landing() {
                 '☾',
               ],
             ].map(([number, title, text, tag, color, symbol]) => (
-              <article className={`step-card tone-${color}`} key={number} data-reveal>
+              <article className={`step-card tone-${color}`} key={number}>
                 <div className="step-card-top">
                   <span>ШАГ {number}</span>
                   <b aria-hidden="true">{symbol}</b>
@@ -445,7 +401,7 @@ export function Landing() {
         </section>
 
         <section className="landing-section landing-roles" id="roles">
-          <div className="section-intro" data-reveal>
+          <div className="section-intro">
             <div>
               <span className="landing-eyebrow">02 / ЗНАКОМЬТЕСЬ, ВАШИ СОСЕДИ</span>
               <h2>
@@ -460,53 +416,70 @@ export function Landing() {
               Нажми на карточку и узнай, какие планы у её владельца на эту ночь.
             </p>
           </div>
-          <div className="role-selector" aria-label="Выбор роли">
+          <fieldset className="role-explorer choice-explorer">
+            <legend className="landing-sr-only">Выбор роли</legend>
             {roles.map((item, index) => (
-              <button
+              <input
                 key={item.id}
-                className={`role-pick tone-${item.color}`}
-                aria-pressed={index === activeRole}
-                aria-controls="role-dossier"
-                onClick={() => setActiveRole(index)}
-              >
-                <span className="role-pick-top">
-                  <span>СЕКРЕТНАЯ РОЛЬ</span>
-                  <span aria-hidden="true">{index === activeRole ? '✓' : '↗'}</span>
-                </span>
-                <img
-                  src={item.image}
-                  width="237"
-                  height="360"
-                  loading="lazy"
-                  alt={`Игровая карточка «${item.name}»`}
-                />
-                <strong>{item.name}</strong>
-                <span className="role-pick-label">{item.label}</span>
-              </button>
+                className="choice-input"
+                type="radio"
+                name="landing-role"
+                id={`role-choice-${index}`}
+                defaultChecked={index === 0}
+                aria-controls={`role-dossier-${index}`}
+              />
             ))}
-          </div>
-          <div
-            className={`role-dossier tone-${role.color}`}
-            id="role-dossier"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <div>
-              <span className="landing-eyebrow">ТВОЯ РОЛЬ: {role.name.toUpperCase()}</span>
-              <h3>{role.quote}</h3>
+            <div className="role-selector">
+              {roles.map((item, index) => (
+                <label
+                  key={item.id}
+                  className={`role-pick tone-${item.color}`}
+                  htmlFor={`role-choice-${index}`}
+                >
+                  <span className="role-pick-top">
+                    <span>СЕКРЕТНАЯ РОЛЬ</span>
+                    <span className="role-selection-mark" aria-hidden="true" />
+                  </span>
+                  <img
+                    src={item.image}
+                    width="237"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                    alt={`Игровая карточка «${item.name}»`}
+                  />
+                  <strong>{item.name}</strong>
+                  <span className="role-pick-label">{item.label}</span>
+                </label>
+              ))}
             </div>
-            <div>
-              <p>{role.text}</p>
-              <a href={'/catalog?card=' + role.id} className="landing-text-link">
-                Полное описание роли <Arrow diagonal />
-              </a>
+            <div className="role-panels">
+              {roles.map((role, index) => (
+                <article
+                  key={role.id}
+                  className={`role-dossier tone-${role.color}`}
+                  id={`role-dossier-${index}`}
+                  aria-label={role.name}
+                >
+                  <div>
+                    <span className="landing-eyebrow">ТВОЯ РОЛЬ: {role.name.toUpperCase()}</span>
+                    <h3>{role.quote}</h3>
+                  </div>
+                  <div>
+                    <p>{role.text}</p>
+                    <a href={'/catalog?card=' + role.id} className="landing-text-link">
+                      Полное описание роли <Arrow diagonal />
+                    </a>
+                  </div>
+                </article>
+              ))}
             </div>
-          </div>
+          </fieldset>
         </section>
 
         <section className="landing-cards-wrap" id="cards">
           <div className="landing-section">
-            <div className="section-intro" data-reveal>
+            <div className="section-intro">
               <div>
                 <span className="landing-eyebrow">03 / НЕ ТОЛЬКО КРАСИВЫЕ КАРТИНКИ</span>
                 <h2>
@@ -527,14 +500,10 @@ export function Landing() {
                   className={`example-card tone-${card.color}`}
                   key={card.id}
                   href={'/catalog?card=' + card.id}
-                  data-reveal
                 >
                   <div className="example-art">
                     <span className="card-type">{card.type}</span>
                     <CardArt image={card.image} name={card.name} />
-                    <span className="card-open" aria-hidden="true">
-                      ↗
-                    </span>
                   </div>
                   <div className="example-copy">
                     <h3>{card.name}</h3>
@@ -561,7 +530,7 @@ export function Landing() {
         </section>
 
         <section className="landing-section landing-situations" id="situations">
-          <div className="section-intro" data-reveal>
+          <div className="section-intro">
             <div>
               <span className="landing-eyebrow">04 / А ТЕПЕРЬ ПРЕДСТАВЬ…</span>
               <h2>
@@ -576,63 +545,76 @@ export function Landing() {
               Переключай примеры — увидишь, как карточки меняют игру.
             </p>
           </div>
-          <div className="situation-selector" aria-label="Игровые ситуации">
+          <fieldset className="situation-explorer choice-explorer">
+            <legend className="landing-sr-only">Игровые ситуации</legend>
             {situations.map((item, index) => (
-              <button
+              <input
                 key={item.number}
-                aria-pressed={index === activeSituation}
-                aria-controls="situation-panel"
-                onClick={() => setActiveSituation(index)}
-              >
-                <span>{item.number}</span>
-                {item.name}
-              </button>
+                className="choice-input"
+                type="radio"
+                name="landing-situation"
+                id={`situation-choice-${index}`}
+                defaultChecked={index === 0}
+                aria-controls={`situation-panel-${index}`}
+              />
             ))}
-          </div>
-          <div
-            className={`situation-panel tone-${situation.color}`}
-            id="situation-panel"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <div className="situation-art">
-              <span className="landing-eyebrow">{situation.stamp}</span>
-              <div className="situation-card-pair">
-                {situation.images.map((item, index) => (
-                  <React.Fragment key={item.src}>
-                    {index === 1 && (
-                      <b className="pair-symbol" aria-hidden="true">
-                        {situation.symbol}
-                      </b>
-                    )}
-                    <CardArt image={item.src} name={item.name} />
-                  </React.Fragment>
-                ))}
-              </div>
-              <span className="situation-art-note">ДВЕ КАРТЫ. ОДНА НОВАЯ ИСТОРИЯ.</span>
+            <div className="situation-selector">
+              {situations.map((item, index) => (
+                <label key={item.number} htmlFor={`situation-choice-${index}`}>
+                  <span>{item.number}</span>
+                  {item.name}
+                </label>
+              ))}
             </div>
-            <div className="situation-copy">
-              <h3>{situation.title}</h3>
-              <p>
-                <b>Ситуация.</b> {situation.setup}
-              </p>
-              <p>
-                <b>Твой ход.</b> {situation.action}
-              </p>
-              <div className="situation-result">
-                <span>ЧТО ПОЛУЧИЛОСЬ</span>
-                <strong>{situation.result}</strong>
-              </div>
-              <p className="situation-detail">{situation.detail}</p>
-              <a className="landing-text-link" href={'/catalog?card=' + situation.link}>
-                Проверить правило в каталоге <Arrow diagonal />
-              </a>
+            <div className="situation-panels">
+              {situations.map((situation, index) => (
+                <article
+                  key={situation.number}
+                  className={`situation-panel tone-${situation.color}`}
+                  id={`situation-panel-${index}`}
+                  aria-label={situation.name}
+                >
+                  <div className="situation-art">
+                    <span className="landing-eyebrow">{situation.stamp}</span>
+                    <div className="situation-card-pair">
+                      {situation.images.map((item, index) => (
+                        <React.Fragment key={item.src}>
+                          {index === 1 && (
+                            <b className="pair-symbol" aria-hidden="true">
+                              {situation.symbol}
+                            </b>
+                          )}
+                          <CardArt image={item.src} name={item.name} />
+                        </React.Fragment>
+                      ))}
+                    </div>
+                    <span className="situation-art-note">ДВЕ КАРТЫ. ОДНА НОВАЯ ИСТОРИЯ.</span>
+                  </div>
+                  <div className="situation-copy">
+                    <h3>{situation.title}</h3>
+                    <p>
+                      <b>Ситуация.</b> {situation.setup}
+                    </p>
+                    <p>
+                      <b>Твой ход.</b> {situation.action}
+                    </p>
+                    <div className="situation-result">
+                      <span>ЧТО ПОЛУЧИЛОСЬ</span>
+                      <strong>{situation.result}</strong>
+                    </div>
+                    <p className="situation-detail">{situation.detail}</p>
+                    <a className="landing-text-link" href={'/catalog?card=' + situation.link}>
+                      Проверить правило в каталоге <Arrow diagonal />
+                    </a>
+                  </div>
+                </article>
+              ))}
             </div>
-          </div>
+          </fieldset>
         </section>
 
         <section className="landing-section landing-faq" id="faq">
-          <div data-reveal>
+          <div>
             <span className="landing-eyebrow">05 / БЕЗ ПАНИКИ</span>
             <h2>
               Есть вопросы?
@@ -648,7 +630,7 @@ export function Landing() {
               </p>
             </div>
           </div>
-          <div className="faq-list" data-reveal>
+          <div className="faq-list">
             {questions.map(([question, answer]) => (
               <details key={question}>
                 <summary>
@@ -667,7 +649,7 @@ export function Landing() {
           <div className="join-decoration" aria-hidden="true">
             ✳
           </div>
-          <div className="join-content" data-reveal>
+          <div className="join-content">
             <span className="landing-eyebrow">УБЕЖИЩЕ НАЙДЕНО. ОСТАЛОСЬ ЗНАКОМСТВО.</span>
             <h2>
               Заходи.

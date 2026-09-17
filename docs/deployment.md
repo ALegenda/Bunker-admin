@@ -44,3 +44,11 @@ Workflow `.github/workflows/check.yml` проверяет типы, сборку
 Повторить деплой или откатить приложение при совместимой схеме: `bash /opt/bunker/releases/<SHA>/deploy/release.sh <SHA>` (образ должен оставаться на сервере). Проверка: `curl -f https://bunker-vdk.ru/api/health`. Логи: `docker compose -p bunker-blue -f /opt/bunker/releases/<SHA>/deploy/compose.release.yaml logs --tail 100` с соответствующими RELEASE и APP_PORT; для green использовать другой слот.
 
 Первичная установка на новом сервере: Docker Compose v2; `deploy/compose.infra.yaml` и .env в `/opt/bunker`; поднять инфраструктуру; создать приватный bucket и scoped S3-пользователя; подготовить DNS, Nginx и сертификат; установить backup service/timer; настроить GitHub secrets; включить DEPLOY_ENABLED и отправить коммит в master. `deploy/nginx.conf.template` — рабочий шаблон; старые Caddy-примеры для этого сервера не используются.
+
+## Загрузка главной и диагностика
+
+Главная собирается из отдельного `frontend/landing.html`: стили встроены в HTML, JavaScript на этой странице отсутствует. Мобильное меню использует `<details>`, роли и ситуации — нативные радиокнопки и CSS. `index.html` и React остаются у каталога, профиля и админки. Иллюстрация использует адаптивные AVIF/WebP. Бюджет первой HTML-страницы со стилями — менее 20 КБ gzip, проверяется интеграционным тестом.
+
+Nginx включает HTTP/2 через `listen 443 ssl http2` (совместимо с установленной версией 1.18); AVIF имеет отдельное правило MIME. При смене шаблона деплой выполняет `nginx -t` и откатывается при ошибке. См. [документацию HTTP/2](https://nginx.org/en/docs/http/ngx_http_v2_module.html).
+
+Workflow `Production diagnostics` запускается вручную или при изменении своего скрипта/конфигурации. Он только читает состояние: три внешних запроса с runner, нагрузку, память, диск, контейнеры, сетевые счётчики и время ответа origin. Не выводит секреты, содержимое `.env` или данные запросов. Скрипт — `deploy/diagnose.sh`.
