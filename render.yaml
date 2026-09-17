@@ -7,7 +7,7 @@ services:
     repo: https://github.com/ALegenda/Bunker-admin
     region: singapore
     plan: 0.5c-512mb
-    branch: codex/render-hosting
+    branch: master
     dockerfilePath: ./deploy/render/Minio.Dockerfile
     autoDeployTrigger: off
     disk:
@@ -30,12 +30,12 @@ services:
     repo: https://github.com/ALegenda/Bunker-admin
     region: singapore
     plan: 0.5c-512mb
-    branch: codex/render-hosting
+    branch: master
     dockerfilePath: ./Dockerfile
     dockerCommand: sh deploy/render/start.sh api
     preDeployCommand: sh deploy/render/start.sh seed
     healthCheckPath: /api/health
-    autoDeployTrigger: off
+    autoDeployTrigger: checksPass
     envVars:
       - key: NODE_ENV
         value: production
@@ -82,11 +82,11 @@ services:
     repo: https://github.com/ALegenda/Bunker-admin
     region: singapore
     plan: 1c-2g
-    branch: codex/render-hosting
+    branch: master
     dockerfilePath: ./Dockerfile
     dockerCommand: sh deploy/render/start.sh worker-once
-    schedule: '* * * * *'
-    autoDeployTrigger: off
+    schedule: '*/5 * * * *'
+    autoDeployTrigger: checksPass
     envVars:
       - key: NODE_ENV
         value: production
