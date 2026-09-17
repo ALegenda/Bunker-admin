@@ -74,7 +74,28 @@ export async function saveReleaseMeta(
 export async function cardHistory(id: string) {
   return (
     await pool.query(
-      'SELECT a.id,a.action,a.before_data,a.after_data,a.created_at,u.display_name FROM audit_log a LEFT JOIN users u ON u.id=a.actor_id WHERE a.entity_id=$1 ORDER BY a.id DESC LIMIT 100',
+      `WITH versions AS (
+        SELECT id,title,created_at,workspace_revision,snapshot,
+          lag(snapshot) OVER (ORDER BY workspace_revision) AS previous_snapshot
+        FROM releases
+      ), snapshots AS (
+        SELECT id,title AS release_title,created_at,workspace_revision,
+          (SELECT card FROM jsonb_array_elements(
+            COALESCE(previous_snapshot->'cards',snapshot->'base','[]'::jsonb)
+          ) card WHERE card->>'id'=$1) AS before_data,
+          (SELECT card FROM jsonb_array_elements(snapshot->'cards') card
+            WHERE card->>'id'=$1) AS after_data
+        FROM versions
+      )
+      SELECT id,id AS release_id,release_title,created_at,before_data,after_data,
+        CASE WHEN before_data IS NULL THEN 'release.card.add'
+          WHEN after_data IS NULL THEN 'release.card.remove'
+          ELSE 'release.card.update' END AS action,
+        NULL::text AS display_name
+      FROM snapshots
+      WHERE (before_data - ARRAY['kind','note','source'])
+        IS DISTINCT FROM (after_data - ARRAY['kind','note','source'])
+      ORDER BY workspace_revision DESC LIMIT 100`,
       [id],
     )
   ).rows;

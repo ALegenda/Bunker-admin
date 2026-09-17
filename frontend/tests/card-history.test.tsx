@@ -92,7 +92,7 @@ test('creation, archive and image replacement render meaningful snapshots', () =
   const archived = { ...entry, action: 'source.archive', after_data: null };
   assert.equal(historyTitle(archived), 'Карточка архивирована');
   const html = renderToStaticMarkup(<HistoryDetails entry={archived} />);
-  assert.ok(html.includes('До архивации'));
+  assert.ok(html.includes('До удаления из правил'));
   assert.ok(html.includes('Раз за игру'));
   const images = {
     ...entry,
@@ -107,7 +107,7 @@ test('system attribution, loading, failure and empty states are distinct', () =>
   const render = (entries: CardHistoryEntry[] | null, error = '') =>
     renderToStaticMarkup(<CardHistory entries={entries} error={error} onRetry={() => {}} />);
   assert.ok(render(null).includes('Загружаем историю'));
-  assert.ok(render([]).includes('Сохранённых правок пока нет'));
+  assert.ok(render([]).includes('Опубликованных изменений пока нет'));
   const failure = render(null, 'Сеть недоступна');
   assert.ok(failure.includes('role="alert"'));
   assert.ok(failure.includes('Повторить'));
@@ -116,6 +116,30 @@ test('system attribution, loading, failure and empty states are distinct', () =>
     render([{ ...entry, action: 'source.migrate', display_name: null }]).includes('Система'),
   );
   assert.ok(render([{ ...entry, display_name: null }]).includes('Автор не указан'));
+});
+test('published history shows release title and date with gameplay differences only', () => {
+  const published = {
+    ...entry,
+    action: 'release.card.update',
+    release_id: 'release-1',
+    release_title: 'Правила 2.0',
+  };
+  assert.equal(historyTitle(published), 'Правила 2.0');
+  assert.deepEqual(
+    historyChanges(published).map((c) => c.field),
+    ['description', 'attributes.usageFrequency'],
+  );
+  const html = renderToStaticMarkup(
+    <CardHistory entries={[published]} error="" onRetry={() => {}} />,
+  );
+  assert.match(html, /Правила 2.0/);
+  assert.match(html, /Опубликовано/);
+  assert.match(html, /dateTime="2026-09-17T10:00:00Z"/);
+  assert.match(html, /Усилена способность/);
+  assert.doesNotMatch(html, /Автор не указан|100 сохранений/);
+  const details = renderToStaticMarkup(<HistoryDetails entry={published} />);
+  assert.match(details, /<del>игру<\/del><ins>раунд<\/ins>/);
+  assert.doesNotMatch(details, /<h3>Комментарий для сводки/);
 });
 test('historical text stays escaped and source key order does not create false changes', () => {
   const unsafe = {

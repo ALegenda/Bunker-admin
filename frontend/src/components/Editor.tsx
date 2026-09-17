@@ -31,7 +31,7 @@ export function Editor({ initial }: { initial: Workspace }) {
     return () => {
       active = false;
     };
-  }, [selected, tab, editor.dirty, historyRetry]);
+  }, [selected, tab, historyRetry]);
   const filtered = editor.cards.filter(
     (c) =>
       (!type || c.cardType === type) &&
@@ -137,7 +137,7 @@ export function Editor({ initial }: { initial: Workspace }) {
               Изменения к выпуску
             </button>
             <button aria-pressed={tab === 'history'} onClick={() => setTab('history')}>
-              История правок
+              История публикаций
             </button>
           </div>
           {tab === 'text' ? (

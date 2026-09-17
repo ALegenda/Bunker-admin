@@ -67,7 +67,7 @@ export function HistoryDetails({ entry }: { entry: CardHistoryEntry }) {
                 <div className="history-comparison">
                   {entry.before_data && (
                     <div className="history-before">
-                      <strong>{entry.after_data ? 'Было' : 'До архивации'}</strong>
+                      <strong>{entry.after_data ? 'Было' : 'До удаления из правил'}</strong>
                       <SnapshotValue field={change.field} value={change.before} />
                     </div>
                   )}
@@ -97,15 +97,36 @@ function HistoryItem({ entry }: { entry: CardHistoryEntry }) {
       <summary>
         <strong>{historyTitle(entry)}</strong>
         <span className="history-meta">
-          {entry.display_name || (system ? 'Система' : 'Автор не указан')} ·{' '}
+          {entry.release_id
+            ? 'Опубликовано'
+            : entry.display_name || (system ? 'Система' : 'Автор не указан')}{' '}
+          ·{' '}
           <time dateTime={entry.created_at}>{new Date(entry.created_at).toLocaleString('ru')}</time>
         </span>
+        {entry.release_id && (
+          <span>
+            {entry.before_data
+              ? entry.after_data
+                ? 'Карточка изменена'
+                : 'Карточка удалена из правил'
+              : 'Карточка добавлена'}
+          </span>
+        )}
         {entry.after_data?.kind && <span className="history-kind">{entry.after_data.kind}</span>}
         {entry.after_data?.note?.trim() && (
           <span className="history-note">Комментарий для сводки: {entry.after_data.note}</span>
         )}
       </summary>
-      {open && <HistoryDetails entry={entry} />}
+      {open && (
+        <>
+          {entry.release_id && (
+            <p>
+              <a href={'/releases/' + entry.release_id}>Сводка выпуска ↗</a>
+            </p>
+          )}
+          <HistoryDetails entry={entry} />
+        </>
+      )}
     </details>
   );
 }
@@ -120,10 +141,11 @@ export function CardHistory({
   onRetry: () => void;
 }) {
   return (
-    <section aria-label="История правок">
-      <h2>История правок</h2>
+    <section aria-label="История публикаций">
+      <h2>История публикаций</h2>
       <p className="history-help">
-        Сохранённые изменения карточки, от новых к старым. Раскройте запись для сравнения.
+        Изменения карточки в опубликованных версиях правил, от новых к старым. Раскройте выпуск для
+        сравнения «Было / Стало». Правки черновика появятся после публикации.
       </p>
       {error ? (
         <div role="alert">
@@ -137,11 +159,11 @@ export function CardHistory({
             <HistoryItem key={entry.id} entry={entry} />
           ))}
           {entries.length >= 100 && (
-            <p className="history-help">Показаны последние 100 сохранений.</p>
+            <p className="history-help">Показаны последние 100 выпусков с изменениями карточки.</p>
           )}
         </>
       ) : (
-        <p>Сохранённых правок пока нет. Они появятся после изменения карточки.</p>
+        <p>Опубликованных изменений пока нет. Они появятся после публикации новой версии правил.</p>
       )}
     </section>
   );

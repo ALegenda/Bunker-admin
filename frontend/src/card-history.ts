@@ -43,6 +43,7 @@ export function historyChanges(entry: CardHistoryEntry) {
         snapshot,
       );
   return fields.flatMap(([field, label]) => {
+    if (entry.release_id && ['kind', 'note', 'source'].includes(field)) return [];
     const before = read(entry.before_data, field),
       after = read(entry.after_data, field);
     if (stable(before) === stable(after)) return [];
@@ -60,6 +61,7 @@ export function historyChanges(entry: CardHistoryEntry) {
   });
 }
 export function historyTitle(entry: CardHistoryEntry) {
+  if (entry.release_id) return entry.release_title || 'Опубликованная версия';
   const changes = historyChanges(entry);
   if (entry.action === 'source.archive') return 'Карточка архивирована';
   if (entry.action === 'card.create') return 'Карточка создана';

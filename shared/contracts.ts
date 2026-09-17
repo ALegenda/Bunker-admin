@@ -18,6 +18,8 @@ export type Workspace = {
 export type Release = { id: string; title: string; created_at: string };
 export type CardHistoryEntry = {
   id: string | number;
+  release_id?: string;
+  release_title?: string;
   action: string;
   before_data: Partial<Card> | null;
   after_data: Partial<Card> | null;
