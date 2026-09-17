@@ -10,10 +10,15 @@ import { api, send } from '../api.js';
 import { cardTypes } from './CardForm.js';
 export function Catalog({ user }: { user: User | null }) {
   const [data, setData] = useState<CatalogData | null>(null),
-    [error, setError] = useState('');
+    [error, setError] = useState(''),
+    [showFilters, setShowFilters] = useState(
+      () => typeof window !== 'undefined' && window.matchMedia('(min-width: 800px)').matches,
+    );
   const params = useMemo(() => new URLSearchParams(location.search), []);
   const [query, setQuery] = useState(params.get('q') || ''),
     [type, setType] = useState(params.get('type') || ''),
+    [color, setColor] = useState(params.get('color') || ''),
+    [effects, setEffects] = useState<string[]>(params.getAll('effect')),
     [tags, setTags] = useState<string[]>(params.getAll('tag')),
     [time, setTime] = useState(params.get('time') || ''),
     [place, setPlace] = useState(params.get('place') || ''),
@@ -29,16 +34,20 @@ export function Catalog({ user }: { user: User | null }) {
     const p = new URLSearchParams();
     if (query) p.set('q', query);
     if (type) p.set('type', type);
+    if (color) p.set('color', color);
+    for (const effect of effects) p.append('effect', effect);
     for (const t of tags) p.append('tag', t);
     if (time) p.set('time', time);
     if (place) p.set('place', place);
     if (frequency) p.set('frequency', frequency);
     if (selected) p.set('card', selected);
     history.replaceState(null, '', '/?' + p);
-  }, [query, type, tags, time, place, frequency, selected]);
+  }, [query, type, tags, time, place, frequency, color, effects, selected]);
   if (error) return <p role="alert">{error}</p>;
   if (!data) return <p role="status">Загружаем карточки…</p>;
   const attributes = {
+    cardColor: color ? [color] : [],
+    effects,
     tags,
     activationTime: time ? [time] : [],
     usageLocation: place ? [place] : [],
@@ -77,21 +86,34 @@ export function Catalog({ user }: { user: User | null }) {
               ))}
             </select>
           </label>
-          <CardAttributeFilters
-            cards={data.cards}
-            value={attributes}
-            onChange={(value) => {
-              setTags(value.tags);
-              setTime(value.activationTime[0] || '');
-              setPlace(value.usageLocation[0] || '');
-              setFrequency(value.usageFrequency[0] || '');
-            }}
-          />
+          <details
+            className="catalog-attribute-filter"
+            open={showFilters}
+            onToggle={(e) => setShowFilters(e.currentTarget.open)}
+          >
+            <summary>
+              Цвет, эффекты и теги · {Object.values(attributes).flat().length} выбрано
+            </summary>
+            <CardAttributeFilters
+              cards={data.cards}
+              value={attributes}
+              onChange={(value) => {
+                setTags(value.tags);
+                setColor(value.cardColor[0] || '');
+                setEffects(value.effects);
+                setTime(value.activationTime[0] || '');
+                setPlace(value.usageLocation[0] || '');
+                setFrequency(value.usageFrequency[0] || '');
+              }}
+            />
+          </details>
           <button
             onClick={() => {
               setQuery('');
               setType('');
               setTags([]);
+              setColor('');
+              setEffects([]);
               setTime('');
               setPlace('');
               setFrequency('');
@@ -109,22 +131,28 @@ export function Catalog({ user }: { user: User | null }) {
           <p role="status">Найдено: {visible.length}</p>
           <div className="catalog-grid">
             {visible.map((c) => (
-              <button className="catalog-card" key={c.id} onClick={() => setSelected(c.id)}>
-                {c.image ? (
-                  <img src={c.image} alt="" loading="lazy" />
-                ) : (
-                  <div className="placeholder">Б</div>
-                )}
-                <div>
-                  <small>{c.cardType}</small>
-                  <h2>{c.name}</h2>
-                  <p>
-                    {descriptionText(c.description).slice(0, 140)}
-                    {descriptionText(c.description).length > 140 ? '…' : ''}
-                  </p>
-                  <CardAttributes card={c} />
-                </div>
-              </button>
+              <article className="catalog-card" key={c.id}>
+                <button
+                  className="catalog-card-open"
+                  onClick={() => setSelected(c.id)}
+                  aria-label={`Открыть карточку «${c.name}»`}
+                >
+                  {c.image ? (
+                    <img src={c.image} alt="" loading="lazy" />
+                  ) : (
+                    <div className="placeholder">Б</div>
+                  )}
+                  <div>
+                    <small>{c.cardType}</small>
+                    <h2>{c.name}</h2>
+                    <p>
+                      {descriptionText(c.description).slice(0, 140)}
+                      {descriptionText(c.description).length > 140 ? '…' : ''}
+                    </p>
+                  </div>
+                </button>
+                <CardAttributes card={c} compact selected={attributes} />
+              </article>
             ))}
           </div>
           {!visible.length && (

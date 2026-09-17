@@ -1,3 +1,4 @@
+import { cardColorNames, effectSuggestions } from '../../../shared/card-metadata.js';
 import { DescriptionEditor } from './DescriptionEditor.js';
 import type { Card } from '../../../shared/contracts.js';
 import { api } from '../api.js';
@@ -114,6 +115,26 @@ export function CardForm({
           />
         </label>
         <label>
+          Цвет окантовки карточки
+          <select
+            value={card.attributes.cardColor || ''}
+            onChange={(e) => attr('cardColor', e.target.value)}
+          >
+            <option value="">Не указан</option>
+            {cardColorNames.map((color) => (
+              <option key={color}>{color}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Накладываемые эффекты через запятую
+          <TokenInput
+            value={card.attributes.effects || []}
+            onChange={(value) => attr('effects', value)}
+          />
+          <small>Состояния, которые карта накладывает. Условия и срок действия — в описании.</small>
+        </label>
+        <label>
           Теги через запятую
           <TokenInput value={card.attributes.tags} onChange={(value) => attr('tags', value)} />
         </label>
@@ -126,6 +147,22 @@ export function CardForm({
           </select>
         </label>
       </div>
+      <details className="effect-suggestions">
+        <summary>Добавить известный эффект</summary>
+        <div className="attribute-chips">
+          {effectSuggestions
+            .filter((effect) => !card.attributes.effects?.includes(effect))
+            .map((effect) => (
+              <button
+                type="button"
+                key={effect}
+                onClick={() => attr('effects', [...(card.attributes.effects || []), effect])}
+              >
+                {effect}
+              </button>
+            ))}
+        </div>
+      </details>
       <label>
         Комментарий для сводки
         <textarea
@@ -142,19 +179,28 @@ export function CardForm({
 
 function TokenInput({ value, onChange }: { value: string[]; onChange: (value: string[]) => void }) {
   const [text, setText] = useState(value.join(', '));
+  const lastEmitted = useRef(value);
+  useEffect(() => {
+    if (value !== lastEmitted.current) {
+      setText(value.join(', '));
+      lastEmitted.current = value;
+    }
+  }, [value]);
   return (
     <input
       value={text}
       onChange={(e) => {
         setText(e.target.value);
-        onChange([
+        const next = [
           ...new Set(
             e.target.value
               .split(',')
               .map((s) => s.trim())
               .filter(Boolean),
           ),
-        ]);
+        ];
+        lastEmitted.current = next;
+        onChange(next);
       }}
       onBlur={() => setText(value.join(', '))}
     />

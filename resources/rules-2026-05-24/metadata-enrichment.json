@@ -1,0 +1,6164 @@
+{
+  "id": "rules-2026-05-24-metadata-v1",
+  "sourceSha256": "1f2b906309f3cb755ba77247c0025c15b6f78d9a8ad4c0800cfc2d6df5e4c94e",
+  "entries": [
+    {
+      "id": "role-survivor",
+      "name": "Выживший",
+      "cardType": "роль",
+      "descriptionSha256": "599e4fc6c526128439ddaf2e8b5ab7f7c875a8741ec0aa655c08748f778f6089",
+      "cardColor": "оранжевый",
+      "imageSha256": "4a35c69e3394208d0595619f5d076ebe5c1145ff9acd86fdfd9af7da30d5493c",
+      "colorEvidence": {
+        "page": 3,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "role-marauder",
+      "name": "Мародер",
+      "cardType": "роль",
+      "descriptionSha256": "9091847179a4de1dee81b82a0c06603d2d2b76317c72eae150bc1a65c3f54877",
+      "cardColor": "розовый",
+      "imageSha256": "7ea961a636f0fa8b7324da20c3cebc973ca0599963b69001ada04db9358f4c28",
+      "colorEvidence": {
+        "page": 3,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "role-medic",
+      "name": "Санитар",
+      "cardType": "роль",
+      "descriptionSha256": "f9d12e221d364d1e8bce260ebf8f8b4f7093ecd2f02424da4633476239bb2bd6",
+      "cardColor": "жёлтый",
+      "imageSha256": "3b01f61feb3303b1ff6a84ff13d1bf78235a7ec4ae3c211c5b66ece60b48027f",
+      "colorEvidence": {
+        "page": 3,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "0",
+      "name": "Лидер",
+      "cardType": "умение",
+      "descriptionSha256": "a142923e4b267102996e3aaf044cd44ca0505452ec2a96a102e97d221678c1ff",
+      "cardColor": "оранжевый",
+      "imageSha256": "1b28f466ac923338506a54b11491ae40530f3cc199a19053fcab54d870f07411",
+      "colorEvidence": {
+        "page": 4,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "1",
+      "name": "Август Фарш",
+      "cardType": "умение",
+      "descriptionSha256": "92f875231c4c35c6a2fc829e138e4dfe2c85cf2da57339113962907ed7123c02",
+      "cardColor": "розовый",
+      "imageSha256": "4af6af1169b313486ce1eb5a9fd40223a8f53afced98166a366b0381a4205cee",
+      "colorEvidence": {
+        "page": 4,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "2",
+      "name": "Адвокат",
+      "cardType": "умение",
+      "descriptionSha256": "a164690822d7f9869b026280c8311a02ee8dda7718a045c7de383d03ad9505e4",
+      "cardColor": "жёлтый",
+      "imageSha256": "2a26a53a3198d51831ac792a0f2b2e4c611b8c89a9866847673a72841a80f08a",
+      "colorEvidence": {
+        "page": 4,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "3",
+      "name": "Алиби",
+      "cardType": "умение",
+      "descriptionSha256": "ad0da8232cbf8030dd9d365b3831fb612588efdfabee0c0479b0b278edb46d64",
+      "cardColor": "оранжевый",
+      "imageSha256": "48cce03dac6ab847ae6171455882e11aa13777458aa3a89248eba06e85f89b40",
+      "colorEvidence": {
+        "page": 5,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "4",
+      "name": "Алла, я в бар",
+      "cardType": "умение",
+      "descriptionSha256": "10617c91c9f42a1c0ab84a920a772176ed651205f724f3e2965187e833853bc2",
+      "cardColor": "оранжевый",
+      "imageSha256": "60453ab1d2a8121779ed89373bf96d0d599e8d318ce83501e9a1808a1fe59060",
+      "colorEvidence": {
+        "page": 5,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "pdf24-03b3a1581d8c",
+      "name": "Антеннолог",
+      "cardType": "умение",
+      "descriptionSha256": "6e5886adab7100e6035b84335f6dbdfdda381104e7df6eb4211b3b61bd64f3d7",
+      "cardColor": "оранжевый",
+      "imageSha256": "2a236116b234da222e391c774f13dc6759c2a0dcf81b16b81195b8ee0fed9e64",
+      "colorEvidence": {
+        "page": 5,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "5",
+      "name": "Анти-Линкольн",
+      "cardType": "умение",
+      "descriptionSha256": "3fe136e745a3286794387cc11f1502f4f7dc98c01d0110a00f4aabf295c1fe3e",
+      "cardColor": "розовый",
+      "imageSha256": "47516fb8920e955a4a125d5e5728496a50961e8f7170e10c804e982db0dc8db9",
+      "colorEvidence": {
+        "page": 5,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Телохранитель",
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "6",
+      "name": "Банкир",
+      "cardType": "умение",
+      "descriptionSha256": "5c7e915379dd1ccf569a8159d3dc685a3c75e64f2259400187fde55aaa16a838",
+      "cardColor": "зелёный",
+      "imageSha256": "a68a13e61e53f9beed78ea5933b5c47ad23c3d715e04d9c4a4fc6b051a1f89d5",
+      "colorEvidence": {
+        "page": 6,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "7",
+      "name": "Безумный Макс",
+      "cardType": "умение",
+      "descriptionSha256": "3a78bcaca0e00225983e37074c4fa4fd72c6bfe5d2e01e8c3ccf7c0a573af932",
+      "cardColor": "оранжевый",
+      "imageSha256": "81cfa805c9d71f2f11aa0de451dc083234d5aa45e926a68053d6259826d9286a",
+      "colorEvidence": {
+        "page": 6,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Бессмертный",
+      "cardType": "умение",
+      "descriptionSha256": "1902661da3badc694b008069c95cc172f5a059eaa00e8f3360e48495c86e84e1",
+      "cardColor": "розовый",
+      "imageSha256": "865b784f8ad80ab28e51cf97046c0ba157358bc03ef1d12b03df7bd3698b8912",
+      "colorEvidence": {
+        "page": 7,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "9",
+      "name": "Благая весть",
+      "cardType": "умение",
+      "descriptionSha256": "a192b70ed1736fb759308a3d998a7ce55d057587f1e50a761de61e792fa82d29",
+      "cardColor": "сиреневый",
+      "imageSha256": "94a9706e21353676b32324e48a23b604d4f36530ab72e60292a1570a353de0aa",
+      "colorEvidence": {
+        "page": 7,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Изгнание"
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Большой куш",
+      "cardType": "умение",
+      "descriptionSha256": "629778064dcc5c20ccf17dd88b8337c4bc4e9477111ca70261862bc6b775d4a0",
+      "cardColor": "зелёный",
+      "imageSha256": "8d65a94e6d877cb3e083c2b25152bf1d5587592eaf6a8736a8d57efe8758defc",
+      "colorEvidence": {
+        "page": 7,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "11",
+      "name": "Бомбамен",
+      "cardType": "умение",
+      "descriptionSha256": "47054c30518f887f6d5d6124040c53983c0d8d31bb00cc378bdce782bfac6932",
+      "cardColor": "оранжевый",
+      "imageSha256": "9214e9a8e97c03e61c4c7cd423744977abdb168d2950f0380068a1b41328ed22",
+      "colorEvidence": {
+        "page": 7,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "12",
+      "name": "Бунтарь",
+      "cardType": "умение",
+      "descriptionSha256": "1e2e8223044b7d3201dbc098bdc7c9cd170a785c3651f3cdcb23f19d365b1f08",
+      "cardColor": "оранжевый",
+      "imageSha256": "14f306670a9f9a50076d434a6ea1916aa22a95be35475d1e68d35b4d61db7ef0",
+      "colorEvidence": {
+        "page": 8,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": []
+    },
+    {
+      "id": "13",
+      "name": "В танке",
+      "cardType": "умение",
+      "descriptionSha256": "61c63dcf718b6edac96f143ecc8d482b8bba1e0fdcd263938ae5b4c3afab04ee",
+      "cardColor": "розовый",
+      "imageSha256": "c3bf155196670e0d637b3a5a02436d24795151765c5a2008e0dd7aa9c8e9dfd1",
+      "colorEvidence": {
+        "page": 8,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "14",
+      "name": "Весомый аргумент",
+      "cardType": "умение",
+      "descriptionSha256": "3464ff203b003625155c5caf69969fe810836bfc3fad9844693f42fdc49e8522",
+      "cardColor": "оранжевый",
+      "imageSha256": "18e197cbc626fa7f2195790816da6321dd2cd5ce10e73ea7d3c446962926e560",
+      "colorEvidence": {
+        "page": 8,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "15",
+      "name": "Взятка",
+      "cardType": "умение",
+      "descriptionSha256": "f4e5c97ab3c81a395efc8d6a94f22d2219686468cf2d460102d7ba738ec77c54",
+      "cardColor": "голубой",
+      "imageSha256": "13c66a655b2135d8121ebf16e04eefeea8b2749818d8fddd457e9443ea0823e3",
+      "colorEvidence": {
+        "page": 8,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "pdf24-250922c2ecda",
+      "name": "Висельчак",
+      "cardType": "умение",
+      "descriptionSha256": "0aff8ea682d53b31db980c560c6d88288d2014db7e9b476f6a17dcfdb5002ade",
+      "cardColor": "оранжевый",
+      "imageSha256": "72858a10b3a00be7e849389097b26c67011a93dfdb655c67445ae7b3736f5263",
+      "colorEvidence": {
+        "page": 9,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "16",
+      "name": "Властелин костей",
+      "cardType": "умение",
+      "descriptionSha256": "f25bec12d4ee64d2c93dd59975229790ac73a00a2a5408054d51b1032caee239",
+      "cardColor": "жёлтый",
+      "imageSha256": "a8831c1595e1b1f9d61736e69567cc7620ed5eae7e09cf42ac2b73ffa8c84a62",
+      "colorEvidence": {
+        "page": 9,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "17",
+      "name": "Возврату подлежит",
+      "cardType": "умение",
+      "descriptionSha256": "a75ce631c7d2a536bb46607a797abc4b75b8b134f00c831fb740a71f43bf54b3",
+      "cardColor": "зелёный",
+      "imageSha256": "00c34b608b06921db892ee4192e77b9031702c5c31a7885f0fe84eaae028ea9c",
+      "colorEvidence": {
+        "page": 9,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "18",
+      "name": "Воришка",
+      "cardType": "умение",
+      "descriptionSha256": "36e53e08a1aaecc7ea0e1ce4e4f6d1ca3a1c326939b460cee7666239f06bf73a",
+      "cardColor": "голубой",
+      "imageSha256": "c355f77eb549edb84df75bc4a00e7498606dc7258c5c72c0a0caf7fb088b2f4b",
+      "colorEvidence": {
+        "page": 9,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "19",
+      "name": "Вот упырь!",
+      "cardType": "умение",
+      "descriptionSha256": "259431b6cc458aa979113bf12ec97853abfa92b387b8bb918b22c9cfb95eed75",
+      "cardColor": "розовый",
+      "imageSha256": "b41f5e9f109b4179e07bc1a95cba8fcb49a00ed4a68dcad7295945741f7e4a0e",
+      "colorEvidence": {
+        "page": 10,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "20",
+      "name": "Второй шанс",
+      "cardType": "умение",
+      "descriptionSha256": "4675dd76ad53649f0872d368ee7b27ed0d8d0c85a64230c2762ac88e5d7917fc",
+      "cardColor": "оранжевый",
+      "imageSha256": "63f8d6751c9b21348e0f312d6f355d5656e673fd6e85d6dd1bdb0c1289b41372",
+      "colorEvidence": {
+        "page": 10,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "21",
+      "name": "Вышибала",
+      "cardType": "умение",
+      "descriptionSha256": "d80150b3efef672683f6b3445090bb83e4ca26380fc736cb4d7426366f80b94c",
+      "cardColor": "зелёный",
+      "imageSha256": "efef81d77c7183eec96edc682562e2030c0b6cf8d3dcbb7e05203d857e267d63",
+      "colorEvidence": {
+        "page": 10,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "22",
+      "name": "Гений",
+      "cardType": "умение",
+      "descriptionSha256": "827945141640560db66e29ac4b01beb371f0d45a1315753a5687098adbf10692",
+      "cardColor": "жёлтый",
+      "imageSha256": "e884ba5174ecf08a3129e014a9759231fdd9b8e5ff91eefba9a8293593e9e012",
+      "colorEvidence": {
+        "page": 10,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "23",
+      "name": "Голодный",
+      "cardType": "умение",
+      "descriptionSha256": "86f4bb3138cac9bfcb4e49a58ab7abf1cafd8cb71cd8cfa0795685ea2071ba1d",
+      "cardColor": "сиреневый",
+      "imageSha256": "5f41bb0a2c3f0d26375ee2d60f9061328de6f63c9c8459a81b69de40d39bbbce",
+      "colorEvidence": {
+        "page": 11,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "24",
+      "name": "Горе-генерал",
+      "cardType": "умение",
+      "descriptionSha256": "9e83154631e9f2bfb1720be44d3bd7f52a6bc43d477d8fb94e9d394a728e376a",
+      "cardColor": "оранжевый",
+      "imageSha256": "fbfd73de926991a1075a6aff48f91c2d5ae50c87355a3b599d05244ec221297a",
+      "colorEvidence": {
+        "page": 11,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "25",
+      "name": "Граната",
+      "cardType": "умение",
+      "descriptionSha256": "7f6a20b3f74630d589d736fba8d622f0bc96e7804654e768cf797291b5fb7b5d",
+      "cardColor": "сиреневый",
+      "imageSha256": "28d76da74b255e4bcbc0c47573da58a10a696b9ca2f743ad35616c01decc0f63",
+      "colorEvidence": {
+        "page": 11,
+        "rgb": [
+          208,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "26",
+      "name": "Грибоед",
+      "cardType": "умение",
+      "descriptionSha256": "77e3090204dabb722d56bc5da617dda4d641dfce4e8240cb6e0d59679f621e06",
+      "cardColor": "зелёный",
+      "imageSha256": "02a691bc9672dc4ff8f0be6294c2833d6563ed3ed70eae2fa0a5f9286d49b02d",
+      "colorEvidence": {
+        "page": 11,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Отравление"
+      ],
+      "tags": [
+        "Отравление"
+      ]
+    },
+    {
+      "id": "27",
+      "name": "Делай раз, делай два",
+      "cardType": "умение",
+      "descriptionSha256": "0a673c262a65b59792878ee8656d84b861e154db85b3ede9ac5c855fdab12ce1",
+      "cardColor": "голубой",
+      "imageSha256": "bb5092c9f3f3ba1703ddbe41fc4f4bc83c42993b05728fb83479221ded04f3e7",
+      "colorEvidence": {
+        "page": 12,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "28",
+      "name": "Диктатор",
+      "cardType": "умение",
+      "descriptionSha256": "f051b4d7dc796619935b49adebb707c1ad053e20ce1fc1c5943d6c26419143f9",
+      "cardColor": "розовый",
+      "imageSha256": "03f46fb24c1676dd7892351683a8efb98f1fa95bc406a5ee724050dc96ae0c54",
+      "colorEvidence": {
+        "page": 12,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "29",
+      "name": "Дик и пёс",
+      "cardType": "умение",
+      "descriptionSha256": "a4eec0699cb556eb59ef813a348a4031819b6deb6ccd866cfd7d465a19b2430c",
+      "cardColor": "голубой",
+      "imageSha256": "b2074fbb69bb896e2ea57b4b50b4bc005ab82fc29696f914e5a8e4b088d86321",
+      "colorEvidence": {
+        "page": 12,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "30",
+      "name": "Догонялки",
+      "cardType": "умение",
+      "descriptionSha256": "a702b4e6666698a6b7d3caec1fa32148cd2d62963e66007813cb120ef4965163",
+      "cardColor": "голубой",
+      "imageSha256": "ac198037ffa317dd77271cc11b00b290b225163c905c19db30636604fc1ad58d",
+      "colorEvidence": {
+        "page": 12,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "31",
+      "name": "Доцент под процент",
+      "cardType": "умение",
+      "descriptionSha256": "5a746f13a45c5f94a325c9e2f03c400bfb94af23fbf03ec42ae43cf4d110f91a",
+      "cardColor": "голубой",
+      "imageSha256": "58ad2a47e1bdf63169c3c4f008e79f913a656ef609a7e361d6723ff48aa080a6",
+      "colorEvidence": {
+        "page": 13,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "32",
+      "name": "Дробовик",
+      "cardType": "умение",
+      "descriptionSha256": "cc4c0d2756b8ef5bad1aeae47f1ebf64b8229b39fb2e65f81e2175dcd0ea2d9b",
+      "cardColor": "оранжевый",
+      "imageSha256": "95b0df8196e2ae73aa122a68a089ca671380441453a0b5b03f97925a72955dc3",
+      "colorEvidence": {
+        "page": 13,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "33",
+      "name": "Дэйви Джонс",
+      "cardType": "умение",
+      "descriptionSha256": "b6afbcc2d4be0c55c225691d9630d53a2255d8a9557b97407d0aa7603082879b",
+      "cardColor": "оранжевый",
+      "imageSha256": "c76572710ed6e7b5ece0c80a4ab8951d7a1c696bba358f1952725f018c0f1092",
+      "colorEvidence": {
+        "page": 13,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "34",
+      "name": "Жадина",
+      "cardType": "умение",
+      "descriptionSha256": "22ce8ef6855f6f7fda1a999c83e86f52b58febf8f9b0b1b0d073ba9b32d728b4",
+      "cardColor": "оранжевый",
+      "imageSha256": "893c832362f54a599e4bb30a6b0c249fe7a2a6176a977d632c7014eca3f0a118",
+      "colorEvidence": {
+        "page": 14,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "35",
+      "name": "Жижа",
+      "cardType": "умение",
+      "descriptionSha256": "58f003aaca58646e7c64e2b8aac44ee02d0b037585e49ca298cd4e442be3323c",
+      "cardColor": "жёлтый",
+      "imageSha256": "98f242f3a89c3ec939b86957ea2568cc0b507ac330cf36db519c377eb4c90169",
+      "colorEvidence": {
+        "page": 14,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "36",
+      "name": "Звездная болезнь",
+      "cardType": "умение",
+      "descriptionSha256": "c5bda9aa22c67747bc714e688a35cc3f201b223d24eec672245575ae2f3bbd49",
+      "cardColor": "сиреневый",
+      "imageSha256": "882716f78083fb9dbce6f15acdf719643192d1b4c6eef43f462c00d175456779",
+      "colorEvidence": {
+        "page": 14,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "37",
+      "name": "Изгой",
+      "cardType": "умение",
+      "descriptionSha256": "18aa3e23f940942d0081550919faaa5d5ba39fc2f2acaf2fab6b6f59e67f23c2",
+      "cardColor": "жёлтый",
+      "imageSha256": "c04e475e16eb7f411a433d593eef95e998491b01e979261b9484b20ded63c582",
+      "colorEvidence": {
+        "page": 14,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "38",
+      "name": "Инвестор",
+      "cardType": "умение",
+      "descriptionSha256": "511860b4f4cc0d43f3316910a359890f856d676c431144ef37e7ad6ec8989913",
+      "cardColor": "голубой",
+      "imageSha256": "9c59ebe8b189bf4d55839a8438fdf06820e0f8346a9c5953639d6ecf6f8b36bd",
+      "colorEvidence": {
+        "page": 15,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "39",
+      "name": "Кан-кан на капкане",
+      "cardType": "умение",
+      "descriptionSha256": "a9f81f837cb2a875fc626cfb52e471c45c651d47f0eef02ef58a407ad1458b38",
+      "cardColor": "голубой",
+      "imageSha256": "224ef6a4b483ac7a00d2660879e4d2be46c94a1a02185e592477730281899137",
+      "colorEvidence": {
+        "page": 15,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "40",
+      "name": "Капельница",
+      "cardType": "умение",
+      "descriptionSha256": "4fb76f3303cc41c08a55132c6e30ab2afb675f551178fad57e8eb551983c01b0",
+      "cardColor": "жёлтый",
+      "imageSha256": "f7dbaf2da4a4bc5f2670b31988bc3fc593a1ffa0522de530924973d0533524b9",
+      "colorEvidence": {
+        "page": 15,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "41",
+      "name": "Капитан бесполезность",
+      "cardType": "умение",
+      "descriptionSha256": "d674c8a08c253baf99604f49644ac3a87c0d9ef06b3624e3a185438a808319ac",
+      "cardColor": "жёлтый",
+      "imageSha256": "2124ef462df2fda11ff5f6d1c9d20fb7327dcb01ca41bbf1cec3da25ae8c7d42",
+      "colorEvidence": {
+        "page": 16,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "42",
+      "name": "Классика",
+      "cardType": "умение",
+      "descriptionSha256": "53421eccff4c2727b499c88177cd9db6c41068c8d031989912827353d1dee6e5",
+      "cardColor": "оранжевый",
+      "imageSha256": "b9ef30608ce9b37097337e96b20fb56e256c3d321d9a881ef68309fb609c24b7",
+      "colorEvidence": {
+        "page": 16,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "43",
+      "name": "Коварные планы",
+      "cardType": "умение",
+      "descriptionSha256": "760fe25fc03dca564751658f5074818295bbbb04b829ad2d0bdd747b10179d93",
+      "cardColor": "оранжевый",
+      "imageSha256": "8a64e29f74f23d67650473f16fae156925319bf2ccfddf4c8998d1a2c3e516e6",
+      "colorEvidence": {
+        "page": 16,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "pdf24-3e5bbc568c9e",
+      "name": "Коллектор",
+      "cardType": "умение",
+      "descriptionSha256": "d10dbc6bdb938a2833ce28f7c60b56e42d1a27383f4fa093732f9bb11b6bb3be",
+      "cardColor": "зелёный",
+      "imageSha256": "4c1a6e7e59443327d1b7dc9f354223ac2d2a8f1b334b38fa4a0e418423d3f955",
+      "colorEvidence": {
+        "page": 17,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Паралич",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "44",
+      "name": "Коллекционер",
+      "cardType": "умение",
+      "descriptionSha256": "e63fdbae1d40804c61ce0dfba9f1b59ca9a7e83ee431fb00c360fa6c8bcbf80f",
+      "cardColor": "зелёный",
+      "imageSha256": "99a5787256a5cce7e0de9dabe5e5306c0d642761b32177ebddcc6df8f35f03c5",
+      "colorEvidence": {
+        "page": 17,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Бессмертие",
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "45",
+      "name": "Корешок",
+      "cardType": "умение",
+      "descriptionSha256": "c2ecc05946c6803a887f45750ed13cbfcb54f1701b2799ac7ab2b8b9a97e2be6",
+      "cardColor": "зелёный",
+      "imageSha256": "ff8c09ebaca04859f9a7f120f8cc3757d1b0b6d6f95046b56e1dae0689c7994f",
+      "colorEvidence": {
+        "page": 17,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "46",
+      "name": "Король ринга",
+      "cardType": "умение",
+      "descriptionSha256": "27805c21ffd2a74394ae4b01c44d7596ddc65fbf793d56a14f194681ff6d4ee8",
+      "cardColor": "оранжевый",
+      "imageSha256": "cb66dc54de0042108206249754cbfe4db70cb4a6b07687441848401660cfa85c",
+      "colorEvidence": {
+        "page": 18,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "47",
+      "name": "Коммандор",
+      "cardType": "умение",
+      "descriptionSha256": "a7517da06994f0d3693303a7697207fe548b7512fc20f551d955e9cfda79cb7f",
+      "cardColor": "зелёный",
+      "imageSha256": "f69f03a68ebfe314d0a5146d59acaed86842a84aeb942443aed501e4cc56083a",
+      "colorEvidence": {
+        "page": 18,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-2f2d1eacecca",
+      "name": "Консерватор",
+      "cardType": "умение",
+      "descriptionSha256": "a67d03dbbd212615e3ebdb7e65d1b41465f49dc3864ac49ed7746ab0ce454d88",
+      "cardColor": "оранжевый",
+      "imageSha256": "0f134006f894bf7cf5b9594d0205c0c38f917e701a332f8302ded7281dc796f5",
+      "colorEvidence": {
+        "page": 18,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Отравление"
+      ],
+      "tags": [
+        "Отравление"
+      ]
+    },
+    {
+      "id": "48",
+      "name": "Костюм РХБЗ",
+      "cardType": "умение",
+      "descriptionSha256": "bb529ae462681eac6640847093fdf2dd94ffeb0089e97d779e4d6637285ebcbc",
+      "cardColor": "зелёный",
+      "imageSha256": "f632e8a57dbc05473fb93f16d4d4bc5c97ba4acef4aa6474b51e3fed56b4eb60",
+      "colorEvidence": {
+        "page": 19,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Радиация"
+      ],
+      "tags": []
+    },
+    {
+      "id": "49",
+      "name": "Крутите барабан",
+      "cardType": "умение",
+      "descriptionSha256": "dbb98320186d6d6082c61a8a874b1ede768da3280eec3845004b7a6365fb30da",
+      "cardColor": "зелёный",
+      "imageSha256": "f9092bc7d898e46c7786c737526b1c8b92eb13d98432d9cd6882e33cd80934fa",
+      "colorEvidence": {
+        "page": 19,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "50",
+      "name": "Кто здесь?",
+      "cardType": "умение",
+      "descriptionSha256": "96a47319472cf648d45fecbd10a7b01427a40dfc7423bd339a47b9fb3376d575",
+      "cardColor": "жёлтый",
+      "imageSha256": "8c3f79d8ef94343a82cb77b6b8cd059474f4b5aae6b7543c26c25128b3b980c4",
+      "colorEvidence": {
+        "page": 19,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "51",
+      "name": "Культиватор",
+      "cardType": "умение",
+      "descriptionSha256": "ec9a57e53dd106e230ac087a377005c12a19da3f5e6b43ad1f9c3c491145567d",
+      "cardColor": "зелёный",
+      "imageSha256": "f33d678c6e2ae506c4fbf5bba57b7c1b703dcef78575fa06e3a8ef45783c050b",
+      "colorEvidence": {
+        "page": 19,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "52",
+      "name": "Кумир",
+      "cardType": "умение",
+      "descriptionSha256": "e21cc1bed0e1e98b7e7252a408e3609dc960c3c77d2958bc6744538fe48ac102",
+      "cardColor": "жёлтый",
+      "imageSha256": "ab5f824963083a868fbcb727af5202a2f730e8ed9956b21dcb075444d23c234c",
+      "colorEvidence": {
+        "page": 20,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "pdf24-5d56c5a763ac",
+      "name": "Курьер",
+      "cardType": "умение",
+      "descriptionSha256": "e9528955a5163b525391e86580cf93db082d30027ae38f538f59b608a60b25fc",
+      "cardColor": "сиреневый",
+      "imageSha256": "924d1dbc712c23fdebefa5de52773ed271fabc87b891ed60660be81c9be2fbf5",
+      "colorEvidence": {
+        "page": 20,
+        "rgb": [
+          208,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "53",
+      "name": "Левый",
+      "cardType": "умение",
+      "descriptionSha256": "b1346b943549314ad6ea0b53fd9bba36dfda5bd46589179b60a0a0041c3b6911",
+      "cardColor": "жёлтый",
+      "imageSha256": "6a83db55d86954f1b17c2313bde5dea242150008644e3c9888951a32c96c45e9",
+      "colorEvidence": {
+        "page": 20,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "54",
+      "name": "Личные счёты",
+      "cardType": "умение",
+      "descriptionSha256": "81223fe14a8fcd30041372beb1799e3ddf414129e8396aee1c917dfb4ac5f2c8",
+      "cardColor": "зелёный",
+      "imageSha256": "fa683f2648f60f2cd973102e1e30244fb8995f57ba170da800504e26303f6d12",
+      "colorEvidence": {
+        "page": 21,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "55",
+      "name": "Любопытный",
+      "cardType": "умение",
+      "descriptionSha256": "a625c447ac35947b2706938645c9e3516886247f6f874e4f6c009be70a9f3779",
+      "cardColor": "розовый",
+      "imageSha256": "7a0f0c2b88592380ac4cbc2ed32968234f948f70f125535833e3f4dd7acfcbae",
+      "colorEvidence": {
+        "page": 21,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "56",
+      "name": "Между двух огней",
+      "cardType": "умение",
+      "descriptionSha256": "b31b9785b849e096eb3597e5db40a33fcd066b536255f80898640493e4e682d0",
+      "cardColor": "оранжевый",
+      "imageSha256": "7e79e7c06a946c36f6c3a3ed106b827e6094fa8e17b71c49ed02b1380a02b27c",
+      "colorEvidence": {
+        "page": 21,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "57",
+      "name": "Мелочь, а приятно",
+      "cardType": "умение",
+      "descriptionSha256": "708e27bb0a76c4e27358327276ca91b361a381626a933d115edc922cf06a26b4",
+      "cardColor": "розовый",
+      "imageSha256": "49d583c5d9da58daf0de6ed47eeec9d7048976d22bfc7ecd7c6d709f0703b5fc",
+      "colorEvidence": {
+        "page": 21,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "58",
+      "name": "Меню",
+      "cardType": "умение",
+      "descriptionSha256": "36c06d84d4c0de80ee04cbb5103e5455c270c46099fa82c28969d2a98337766b",
+      "cardColor": "жёлтый",
+      "imageSha256": "8864f417b8fb96e976ec98e5a908c9325ce5bf05a2ff5226d4ffac8bb30423cd",
+      "colorEvidence": {
+        "page": 21,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "59",
+      "name": "Металлоискатель",
+      "cardType": "умение",
+      "descriptionSha256": "3415d77c1e40476218f61da70eb45222912390c88afbeb35124f63f54f8a6309",
+      "cardColor": "голубой",
+      "imageSha256": "b89d9a4be14e871c1dac43d71e8a4ae553b1aa1b3dcf3b80862939bca18d4f45",
+      "colorEvidence": {
+        "page": 22,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-eb513d34480d",
+      "name": "Мешатель",
+      "cardType": "умение",
+      "descriptionSha256": "8cb60b7fd11f3da7e886470789bb8de38fe38dd3c9a44a940db18e5042341775",
+      "cardColor": "голубой",
+      "imageSha256": "ca3494228f5c15afe9670fb71e3c0ffd34dd96d01cd3ef789680aca3963f25f9",
+      "colorEvidence": {
+        "page": 22,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "60",
+      "name": "Мистер Z",
+      "cardType": "умение",
+      "descriptionSha256": "547a96c32d7792473ace106ed36b2a8820b251f3b43608cd993da9f38bbd6b1c",
+      "cardColor": "зелёный",
+      "imageSha256": "5cff9ce3ac6b8f233223be87033987ced62ba0ecc17aff418b0745fc98839e91",
+      "colorEvidence": {
+        "page": 22,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Связь жизней",
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "61",
+      "name": "Молчание-Золото",
+      "cardType": "умение",
+      "descriptionSha256": "1134bc1daa106c54db3f34d604c887c75b67b26562bd94225fd2b96158c66e05",
+      "cardColor": "сиреневый",
+      "imageSha256": "b3514cdbe60e16c476f1d1deaac2d121c1e6461f51f23e64ab8d9cd8a96489e5",
+      "colorEvidence": {
+        "page": 23,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Молчание"
+      ],
+      "tags": []
+    },
+    {
+      "id": "62",
+      "name": "На живца",
+      "cardType": "умение",
+      "descriptionSha256": "a663ae1b4cce0330f9b0453b13e141fcf545ba84a351ca1a3c7c64aef53bd35f",
+      "cardColor": "зелёный",
+      "imageSha256": "58f1fd2ab32f86e4d5b05958b4c449b5775629a58ce62086f159b81856f98998",
+      "colorEvidence": {
+        "page": 23,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "63",
+      "name": "Насквозь",
+      "cardType": "умение",
+      "descriptionSha256": "05252a43ed3a08b82753f814dc16d5800b7ede07c3cbdd11774d440863abd347",
+      "cardColor": "голубой",
+      "imageSha256": "beb04f5dd63b39a08559212343e36945cbfcf1c1cbb69bbe8c4b9947c6f3dbcb",
+      "colorEvidence": {
+        "page": 23,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "64",
+      "name": "Настоящий Детектив",
+      "cardType": "умение",
+      "descriptionSha256": "874d74ccfbde4db29a9561067e58a09975bfacfc0127bebf59155b05164a7261",
+      "cardColor": "оранжевый",
+      "imageSha256": "9ef39fbfad35c5ac85850efa5840ff678f5ddc016632d26fc7ada8d445974b57",
+      "colorEvidence": {
+        "page": 23,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "65",
+      "name": "Наследник",
+      "cardType": "умение",
+      "descriptionSha256": "747b5aeee958929f4c2bb4d0b0598ddc0a9041411a0575eb6d4021668c3b5f17",
+      "cardColor": "голубой",
+      "imageSha256": "4e1d81c49714c44f76f8c762688f6fdba89c1ee73d30b872c5333ec22e09bed6",
+      "colorEvidence": {
+        "page": 23,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "66",
+      "name": "Невезучий",
+      "cardType": "умение",
+      "descriptionSha256": "d921805addf3705517a89d145b710490c9faa0a897a1a14c48ac7358e974a007",
+      "cardColor": "жёлтый",
+      "imageSha256": "bad5d678a7065ca23ccbc96e9820d5614d95d0ed09a3483deaa9f73ffe7604a4",
+      "colorEvidence": {
+        "page": 24,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "67",
+      "name": "Необдуманный поступок",
+      "cardType": "умение",
+      "descriptionSha256": "453698bd8f204755ff8fdc94119b13cb27664c6a031db810e51290427f6befc6",
+      "cardColor": "оранжевый",
+      "imageSha256": "6c7bda8568ce1f25c98b27a13712ce2a5836301f939057a58c1085565ad8e733",
+      "colorEvidence": {
+        "page": 24,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "68",
+      "name": "Нечего скрывать",
+      "cardType": "умение",
+      "descriptionSha256": "0a06a0b8eb5f1be547114d3b860bc395a3742476cbd1c1f2c040317af63fd519",
+      "cardColor": "оранжевый",
+      "imageSha256": "58505065b05a4b7ffa5affb0d0a985e8e2cfc7a79b8b0a6f2344867271e1d58c",
+      "colorEvidence": {
+        "page": 24,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "69",
+      "name": "Ниган",
+      "cardType": "умение",
+      "descriptionSha256": "28c3ce12e3d844425522fa3be80d3090924314268886c4fe77570b3f876cec72",
+      "cardColor": "оранжевый",
+      "imageSha256": "10addf7cd527295c04aaf8e907eace504c7c33c971e537b6dcd6b8eb59745933",
+      "colorEvidence": {
+        "page": 24,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "70",
+      "name": "Ниндзя",
+      "cardType": "умение",
+      "descriptionSha256": "4ac4b8b0c9fcfac914b593e63e8167e2f9cedac4ad97b93f2bcb85123dfcc9e4",
+      "cardColor": "голубой",
+      "imageSha256": "5e0f8fb114233d85395148d4749309182dc6708bea669294abea37f08f05af72",
+      "colorEvidence": {
+        "page": 25,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "71",
+      "name": "Ночной снайпер",
+      "cardType": "умение",
+      "descriptionSha256": "a6c5b4ddc02edd74ed9ad77cb71937a899757777b97a9bc6d0c5da4d3ab852ed",
+      "cardColor": "голубой",
+      "imageSha256": "8d7416acb38b99b74fd45a5e3be08ac123c1c85202fe34bde1fae26ddec564a4",
+      "colorEvidence": {
+        "page": 25,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "72",
+      "name": "Обуза",
+      "cardType": "умение",
+      "descriptionSha256": "cbb669762c9bb50a0c4a5466b36985af1da110e3322d68cfe4c57b97c35de1de",
+      "cardColor": "зелёный",
+      "imageSha256": "f425772acc2ffbaa6a1484298c58b9bc05745ad2f66eb41e8b074fa23f0600f7",
+      "colorEvidence": {
+        "page": 25,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Связь жизней"
+      ],
+      "tags": []
+    },
+    {
+      "id": "73",
+      "name": "Один микрофон",
+      "cardType": "умение",
+      "descriptionSha256": "5a7d79345a9783c686a2716c1ae4dd02b1207d31ce0c5b8c6a7e605452399585",
+      "cardColor": "оранжевый",
+      "imageSha256": "55e78e31824e291a1206542ee12548b33088c9960e4a4ebb765bdf6a73ad9128",
+      "colorEvidence": {
+        "page": 25,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Подчинение",
+        "Молчание"
+      ],
+      "tags": []
+    },
+    {
+      "id": "74",
+      "name": "Одной ногой",
+      "cardType": "умение",
+      "descriptionSha256": "418b77e1e92aae208dfdd64d3be8e4330173f482e9cfa3b0f351daf16bb11eb9",
+      "cardColor": "зелёный",
+      "imageSha256": "8cee90cd3a6696562bdd792341e8391edac3d08e7b37d0406de57c32eac13eb5",
+      "colorEvidence": {
+        "page": 26,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "75",
+      "name": "Оскар",
+      "cardType": "умение",
+      "descriptionSha256": "3e5ebc5a33f03995dafc0cfe6762ca9d2f3d05d883fe3f6fc751a7c869a19665",
+      "cardColor": "оранжевый",
+      "imageSha256": "711ef2df6ea581ca23541ba8f7178bc615e967c57a31110e030c29e173a9e6fd",
+      "colorEvidence": {
+        "page": 26,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "76",
+      "name": "Отросток",
+      "cardType": "умение",
+      "descriptionSha256": "534251e8158ccb353aea8153a6d3c15e83b6f758ad75096e2c3dab5f4dac280c",
+      "cardColor": "оранжевый",
+      "imageSha256": "06c58f524920a593114599ff4f7e6a27b650fb44c311bd49c2850e99f601a1e3",
+      "colorEvidence": {
+        "page": 26,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "77",
+      "name": "Отягчающие обстоятельства",
+      "cardType": "умение",
+      "descriptionSha256": "5b5267d4b7ba39c2c698ba952e8fb1bf4221fc72cf20fa84994a5e8b62fc1031",
+      "cardColor": "розовый",
+      "imageSha256": "5a3d91faf5bcfe60fc30b04ab0d3f8a9095d5e6808e64483850cfaa9f845fba6",
+      "colorEvidence": {
+        "page": 26,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "78",
+      "name": "Охотник за привидениями",
+      "cardType": "умение",
+      "descriptionSha256": "6c443a55abadacd32dd5d7fe4a67a1c055791d1d5099ed9e326cffb2bc35167e",
+      "cardColor": "голубой",
+      "imageSha256": "1a1e83144aa198557c4c93f0106b0e185949f17132caae071ed28f398e4772bf",
+      "colorEvidence": {
+        "page": 27,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "79",
+      "name": "Плечом к плечу",
+      "cardType": "умение",
+      "descriptionSha256": "011873433a064c03d5ac905ac00acd0bb83e3e52c193630588cdfba7caf8d36b",
+      "cardColor": "оранжевый",
+      "imageSha256": "40183876bb14eef5802cef16fa53d1fd9931bd25b9839d49ad2ecc3f31b5fab8",
+      "colorEvidence": {
+        "page": 27,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "80",
+      "name": "Пока не сдох",
+      "cardType": "умение",
+      "descriptionSha256": "42fde975f7a5e6a224df73fbbd4f82dc7a477aab6a0298ae1bdd9bffa94cb546",
+      "cardColor": "розовый",
+      "imageSha256": "27fd8da2a908f0fd509f0fcad171afb5fe8a3a51de01626ec2840a89a6ef397a",
+      "colorEvidence": {
+        "page": 27,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "81",
+      "name": "По старой дружбе",
+      "cardType": "умение",
+      "descriptionSha256": "2ba3f1219c13cab50e624aa0c80769b96ac0e651206409abcc425681a406742e",
+      "cardColor": "сиреневый",
+      "imageSha256": "787e8f7493f698d68d6281373f72f22aac5ef0af1c2a1b054c701cd91e89c915",
+      "colorEvidence": {
+        "page": 27,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "82",
+      "name": "Поворот не туда",
+      "cardType": "умение",
+      "descriptionSha256": "3dd1db2f576cdfc892e225fc22e422ca3fb60f38d47ebc987e9f920aadc4ef36",
+      "cardColor": "зелёный",
+      "imageSha256": "e2f52b6bf1334c998b34827f39d3015a32bd951929661db3c5fc67ceb5e74002",
+      "colorEvidence": {
+        "page": 28,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "83",
+      "name": "Под препаратом",
+      "cardType": "умение",
+      "descriptionSha256": "61afce781859cfd2b0d031b57bb6df8d9350df2d70a2fab4dbad1f427681d70d",
+      "cardColor": "голубой",
+      "imageSha256": "65e307d8697f3d8a68bd8182e6328c3a4c0478c7812fe043aa6691488afa26c8",
+      "colorEvidence": {
+        "page": 28,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "84",
+      "name": "Под прицелом",
+      "cardType": "умение",
+      "descriptionSha256": "2ca1999ca0f2bf9c57837ec03254dc02a40de0cea6c8187a55e7412c610c9540",
+      "cardColor": "голубой",
+      "imageSha256": "73897f9fe3f7835986fa1fc31d7b3f60ba2d70e031477b95e8255d349a904bc5",
+      "colorEvidence": {
+        "page": 28,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "85",
+      "name": "Под рентгеном",
+      "cardType": "умение",
+      "descriptionSha256": "1499d65ca9dc5fad3f77daf5b793789f172e0f733a9acf2dace974b100d74952",
+      "cardColor": "розовый",
+      "imageSha256": "a829e76178abf63155758ffafbd450a18a4e0a40b6cd6fbde67fc5b312673d7a",
+      "colorEvidence": {
+        "page": 28,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "86",
+      "name": "Под шумок!",
+      "cardType": "умение",
+      "descriptionSha256": "ccab0e92fe23485172d3a18c94e0ce9c25a9e6537bccf844957d3036ab294a14",
+      "cardColor": "оранжевый",
+      "imageSha256": "ba6a1c714cb90c7cc35a66e6c3115a1daeb626d7b0462f7655ed5d30cf9597af",
+      "colorEvidence": {
+        "page": 29,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "87",
+      "name": "Подсолнух",
+      "cardType": "умение",
+      "descriptionSha256": "dd2343e4457909f490ee8a551f8efeda6280c761d78d8ad9daf2810826e1d9b6",
+      "cardColor": "зелёный",
+      "imageSha256": "c7952a1190d6209fd6a2b131c3af24c088375fb9035ea2e264daedfe3f0fba84",
+      "colorEvidence": {
+        "page": 29,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "88",
+      "name": "Пойман, не пойман – вор!",
+      "cardType": "умение",
+      "descriptionSha256": "f5fd25f295a8aa62d4494a5d914e7e0cdff09f505e37b3b282bc1149daf89177",
+      "cardColor": "зелёный",
+      "imageSha256": "9b9eb9857c63f5ff59d56fc9f82b8ada2f120535629911a922fec61ca4ffa256",
+      "colorEvidence": {
+        "page": 29,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "89",
+      "name": "Предвзятое мнение",
+      "cardType": "умение",
+      "descriptionSha256": "ffb520766affd5807cd62752998cd71f56a4a02b5fc73ec416fe92a013af72a4",
+      "cardColor": "голубой",
+      "imageSha256": "0b06b6d432578058b3d541e40a999f1427b183d91b81b8802d4dd335bf0f43f5",
+      "colorEvidence": {
+        "page": 29,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-109377157d3c",
+      "name": "Проигрыватель",
+      "cardType": "умение",
+      "descriptionSha256": "01bf4a0a07e2be90726bb8bc4e66ff37195bcbaed38ce460716f78294bffa0cb",
+      "cardColor": "зелёный",
+      "imageSha256": "775c0ee1b47567a0fabda1973f3edb46d446052b1729e16782551974bf8677cf",
+      "colorEvidence": {
+        "page": 30,
+        "rgb": [
+          176,
+          192,
+          32
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "90",
+      "name": "Прятки",
+      "cardType": "умение",
+      "descriptionSha256": "ec04667e1b865476bf476be48ab61c4024029c5d905cc72ca5642b5ed3604a4f",
+      "cardColor": "голубой",
+      "imageSha256": "529d3f9a8e75043d99eb61376bdcfa0362b4fed2379dadd67b493e64891d1372",
+      "colorEvidence": {
+        "page": 30,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "91",
+      "name": "Психопат",
+      "cardType": "умение",
+      "descriptionSha256": "c118f1544ae563e9fd2ea1fd747d3cf6f27db582772c42e5a2e3507086e194b3",
+      "cardColor": "голубой",
+      "imageSha256": "b3acbb7b0b79274c10eeb55d8ac999ba431a0c85ffc3dcc266db26e99ead58db",
+      "colorEvidence": {
+        "page": 30,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "92",
+      "name": "Разжигатель",
+      "cardType": "умение",
+      "descriptionSha256": "aa371d6c7c2c1fc739d09f36781d429dc51bfd12c972ecf3e6d14d4f67e2bf56",
+      "cardColor": "жёлтый",
+      "imageSha256": "2ddb47390ec6d8ec7c0bc4603551d08b51e6aebc24dd0baf8435ab98e3a9330c",
+      "colorEvidence": {
+        "page": 31,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "93",
+      "name": "Работяга",
+      "cardType": "умение",
+      "descriptionSha256": "06dd598f615ad6b49073800c5089c4cc9c48628c458bd9d6bfba3d5da1a5f6bf",
+      "cardColor": "оранжевый",
+      "imageSha256": "26d1aa28faf16d9f26a06261aa557788812f7e74f87acc6f9ab2e45841108098",
+      "colorEvidence": {
+        "page": 31,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "94",
+      "name": "Реверс",
+      "cardType": "умение",
+      "descriptionSha256": "b3ea0ea870814400c09e40a75691c02ad571c0e42930e458225dafacd7705c0c",
+      "cardColor": "голубой",
+      "imageSha256": "9c8260af50829809b6cc43ba7711a222ce5fa23165a56070e8a51f448539cd4c",
+      "colorEvidence": {
+        "page": 31,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "95",
+      "name": "Робот де Ниро",
+      "cardType": "умение",
+      "descriptionSha256": "290983507d2d73acc3c2bb4f6d01f4d128effc469591c34c5077d7697d8d348b",
+      "cardColor": "голубой",
+      "imageSha256": "b45076b6d22c9bb81107485f348749a2fe4125946e7948547a6a2724c2713bb9",
+      "colorEvidence": {
+        "page": 32,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "96",
+      "name": "Ромео и Джульетта",
+      "cardType": "умение",
+      "descriptionSha256": "906b50036b4d64af31edaebd123b6f73ae6da29f52c4ec1f7942a8ff675346f6",
+      "cardColor": "голубой",
+      "imageSha256": "16e28e3362598c7d0216ad1d1874b29631c3e8f5651836f95e2bea094c5febab",
+      "colorEvidence": {
+        "page": 32,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Связь жизней"
+      ],
+      "tags": []
+    },
+    {
+      "id": "97",
+      "name": "С того света",
+      "cardType": "умение",
+      "descriptionSha256": "55d711a89e84ccdae30b907351156f4201ca3a0b938646944fd0a6ade5b83a81",
+      "cardColor": "сиреневый",
+      "imageSha256": "9e3176ce09d4376c87ed3b197e6b66f577dddd6cf5a88fc60ca93d3ad3896032",
+      "colorEvidence": {
+        "page": 32,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "98",
+      "name": "Сапер",
+      "cardType": "умение",
+      "descriptionSha256": "fcb228223e600b2b7366f86b76c2fad01a8e2a3676a7806262a3321255f3622e",
+      "cardColor": "оранжевый",
+      "imageSha256": "54f4c688a2ff6e4604fe2ac4e93b82f148f5f4250b8f69e93ef69c95a15c1eda",
+      "colorEvidence": {
+        "page": 32,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "99",
+      "name": "Свежие новости",
+      "cardType": "умение",
+      "descriptionSha256": "49757aecdf9a1e02cb2fb02882e47c50e983b91c4fd535f44e075f908dafd22b",
+      "cardColor": "оранжевый",
+      "imageSha256": "b3107be75595b465d683decf6d0dc480609ce95355751d681ccb0c4267c297ad",
+      "colorEvidence": {
+        "page": 32,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "100",
+      "name": "Свой среди акул",
+      "cardType": "умение",
+      "descriptionSha256": "ae7a1587422d0e9c51779a726d4397467384541adf5e83fab8dc0edc03d3ef13",
+      "cardColor": "зелёный",
+      "imageSha256": "076db6910b4ff0af2320b560ea866e4963ac50a64e090eab18dbcd620377f4cd",
+      "colorEvidence": {
+        "page": 33,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Связь жизней"
+      ],
+      "tags": [
+        "Смена роли"
+      ]
+    },
+    {
+      "id": "101",
+      "name": "Связи в суде",
+      "cardType": "умение",
+      "descriptionSha256": "d77c532909b9923f47aed73c59dae301c510191bece558ab72bcc7d58b4356a0",
+      "cardColor": "голубой",
+      "imageSha256": "c8fe2ab2986a31900a6845d66b3beff81d63a3499470b9b2f81cff230243c720",
+      "colorEvidence": {
+        "page": 33,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "102",
+      "name": "Святой",
+      "cardType": "умение",
+      "descriptionSha256": "861853da761baef3c94d3ec5d63e0f4605271d68e0736e9097ebb69c593a19ff",
+      "cardColor": "сиреневый",
+      "imageSha256": "0f9a7f52a3938f299706c8d982baf162cae59e3412d26b18a9712abce702e5ee",
+      "colorEvidence": {
+        "page": 33,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "103",
+      "name": "Сирота",
+      "cardType": "умение",
+      "descriptionSha256": "3346329f256e63929eed1fac5164a7f220ce8c07af3d18bc0310ca846c2bd5ae",
+      "cardColor": "сиреневый",
+      "imageSha256": "94f7476a60cc5f482df7f8f8df5f62bae1c7255c064fda5bf3630dabfcaebebb",
+      "colorEvidence": {
+        "page": 33,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "104",
+      "name": "Следопыт",
+      "cardType": "умение",
+      "descriptionSha256": "dcf3047f7203023193833af08a33d14f56a6f8eedcbe5d29d9c0ce9e8c2b105f",
+      "cardColor": "сиреневый",
+      "imageSha256": "7690d4c06a0440d2bb18bf0e3e5c5b686a84e502f751e77aa25918c2f288f3b0",
+      "colorEvidence": {
+        "page": 34,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "105",
+      "name": "Сова",
+      "cardType": "умение",
+      "descriptionSha256": "e54d5af28ce40cea281c003b44b0b10d151eb5ae3b541ac80e3daa92994e895c",
+      "cardColor": "зелёный",
+      "imageSha256": "20f9779c40b5d4202e3745c9d92716dce5fa06ed3d2884378dda5a6c8ccefa46",
+      "colorEvidence": {
+        "page": 34,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "106",
+      "name": "Сомния",
+      "cardType": "умение",
+      "descriptionSha256": "2e9601f6f8eaf52a2d6a755643424e66325c365c9155a99a40be8659f6de8ce5",
+      "cardColor": "сиреневый",
+      "imageSha256": "c2478edd7909f4e3e321da9b86eef4e9d664a4e3c524188455646f5cdef9ad5c",
+      "colorEvidence": {
+        "page": 34,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании",
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "107",
+      "name": "Сорвиголова",
+      "cardType": "умение",
+      "descriptionSha256": "f00eaa9a05a40bd7981056277d89e1ebb0d2cfe3e8dac06c70647d32ab6c53f9",
+      "cardColor": "зелёный",
+      "imageSha256": "e57e194d8c43b4b717a449fe7977622ca91bb77e6332f8b158aea727590a5188",
+      "colorEvidence": {
+        "page": 34,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "108",
+      "name": "Судья",
+      "cardType": "умение",
+      "descriptionSha256": "7ab059d86826a9109715d49798bf753b1b00b4871c71cc46a19cb4fe0b826495",
+      "cardColor": "голубой",
+      "imageSha256": "b5e68c6a2e8d56e4d9c805477bf480e78ee604d307d407c6ab459df0c51e1e62",
+      "colorEvidence": {
+        "page": 35,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Изгнание"
+      ]
+    },
+    {
+      "id": "109",
+      "name": "Счетчик Гейгера",
+      "cardType": "умение",
+      "descriptionSha256": "bad1b984c9beeac0c729917f6627305c4ade59e17639d29b580b37b7950638cf",
+      "cardColor": "зелёный",
+      "imageSha256": "871113b0f0dfa0da2d0f6e248988c386cd6a17fbcb8a3283fe4654a1f9e9edf5",
+      "colorEvidence": {
+        "page": 35,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "110",
+      "name": "Сюрприз",
+      "cardType": "умение",
+      "descriptionSha256": "2c25b4e56d179fe143c3f45656a9c2697702f71b770f9380fc1b1afd98016db4",
+      "cardColor": "зелёный",
+      "imageSha256": "27a79956f9476a2c37228aa9b5689c533bed5dfeb1166f30378b3b181da5e2c8",
+      "colorEvidence": {
+        "page": 35,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Заминирован"
+      ],
+      "tags": []
+    },
+    {
+      "id": "111",
+      "name": "Тренер",
+      "cardType": "умение",
+      "descriptionSha256": "1e56cccf682491806870c1672c4cdd209dbf4610241d9346e63b836d1e0bc1e9",
+      "cardColor": "зелёный",
+      "imageSha256": "21452634c73f6785bd60c59fa9866b19a212b5503de2938e942ee2412ea7ab1a",
+      "colorEvidence": {
+        "page": 35,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "112",
+      "name": "Телохранитель",
+      "cardType": "умение",
+      "descriptionSha256": "88163cb68423a0a6e66e5573e749e07a699188ebae5b7e073ee52fd4349e2d95",
+      "cardColor": "жёлтый",
+      "imageSha256": "3d8489c7987364d33a905258605e11fc8986a4aee0ac38f5f023f3085d581aa0",
+      "colorEvidence": {
+        "page": 36,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "113",
+      "name": "Темная лошадка",
+      "cardType": "умение",
+      "descriptionSha256": "19f16e5e2acf7d09418e50ed91325180d4abdd8d72b1da91863b30aac16f0581",
+      "cardColor": "зелёный",
+      "imageSha256": "173a1ccf32e01611adae2a6948bc640da1dc68e037a59b864842d8847426255e",
+      "colorEvidence": {
+        "page": 36,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-5e717ee6a316",
+      "name": "Тих-Мен",
+      "cardType": "умение",
+      "descriptionSha256": "3a8b790ec7102add2a40f28767dcc45f9ff40047412d83b8c354f53a27fcc844",
+      "cardColor": "сиреневый",
+      "imageSha256": "24913cc1b9fb4d59a7c10e0acc202932010915f63a75691f9f314019a22f64c5",
+      "colorEvidence": {
+        "page": 36,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "114",
+      "name": "Тут как тут",
+      "cardType": "умение",
+      "descriptionSha256": "478c6b310d636da494c0c429c01814835c3fb5227880d6644a96f866c377a3dd",
+      "cardColor": "голубой",
+      "imageSha256": "55904f0d185dbddb560bae52b47ec82b7c15fd92820dec394fb56dd3fd908aaa",
+      "colorEvidence": {
+        "page": 37,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-4abd131c1357",
+      "name": "Уборщик",
+      "cardType": "умение",
+      "descriptionSha256": "24f725ad511d911f9c2cacadbf336530b5427dae174b918aa6bce7e966dab675",
+      "cardColor": "сиреневый",
+      "imageSha256": "e7bc77ffc808924f7415ed15204b269749cf0434954b4302d8e6f9a9522c38a1",
+      "colorEvidence": {
+        "page": 37,
+        "rgb": [
+          208,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-6dfa65a50796",
+      "name": "Угадай кто",
+      "cardType": "умение",
+      "descriptionSha256": "7a89334579f9a39444b4ed1402439b403daa3b44dc28eb9950d60620bbe84601",
+      "cardColor": "сиреневый",
+      "imageSha256": "76c5e7a94d0d8383ace96961e97fb32a5a625c91ab87aa0b8651c70e928e5e7d",
+      "colorEvidence": {
+        "page": 37,
+        "rgb": [
+          208,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "115",
+      "name": "Уйти в закат",
+      "cardType": "умение",
+      "descriptionSha256": "3a39e4afe92769a7a54d520b682956c5bc3ebc7aa205937d440c41fe26e94a6e",
+      "cardColor": "зелёный",
+      "imageSha256": "fec215842b3fe5bee3a34a0d83057adb6e84b0f0d398b897cb5b359fad01ae9a",
+      "colorEvidence": {
+        "page": 37,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "116",
+      "name": "Умелые ручки",
+      "cardType": "умение",
+      "descriptionSha256": "c8b74f77a0ebee5c0ec0d4212204ba133d7a2129c9001d671f3da83120420864",
+      "cardColor": "оранжевый",
+      "imageSha256": "5f54a7802f05ac800a8c6eeb5ef1fc03c75cc6001a40d6e5938f792ba91921e3",
+      "colorEvidence": {
+        "page": 37,
+        "rgb": [
+          240,
+          128,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "117",
+      "name": "Ух, ловкач",
+      "cardType": "умение",
+      "descriptionSha256": "140515f8fbebb7a9d587cca313f4e0ef4c3642d2ce84dfa59c267a9c985f9946",
+      "cardColor": "жёлтый",
+      "imageSha256": "204d65c2b927fcfbde9ecf9b70331f1a8bfde773427d3708bb1ecaf26a21be1f",
+      "colorEvidence": {
+        "page": 38,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "118",
+      "name": "Ухо-жор",
+      "cardType": "умение",
+      "descriptionSha256": "a39401d6ab1e73b72dd507e2703d31cf799f5d4354feb4b81b6cb05d11fecbeb",
+      "cardColor": "зелёный",
+      "imageSha256": "ed8ae36a0aa1aecbbb54c287878fc9397698417834831742b750031a828adf1f",
+      "colorEvidence": {
+        "page": 38,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "pdf24-7937a55c1caf",
+      "name": "Фокусник",
+      "cardType": "умение",
+      "descriptionSha256": "39bf28690fc2dc4b94bda46e916988e384a30c778b13c0e56208137df74f0041",
+      "cardColor": "голубой",
+      "imageSha256": "384af74be1ddcd05e68ec108c63f6498f93b47dd966643666bb066ee892c8479",
+      "colorEvidence": {
+        "page": 38,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Бессмертие",
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "119",
+      "name": "Хакер",
+      "cardType": "умение",
+      "descriptionSha256": "e227681329000430a98a24b4a13f7c7ecf3e6aee052ded21e805b670961e2d40",
+      "cardColor": "зелёный",
+      "imageSha256": "25a3772c73f129976f7acad521a7b7cf4bdd99ef2b7064cffddf2632e6049880",
+      "colorEvidence": {
+        "page": 38,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "120",
+      "name": "Химик",
+      "cardType": "умение",
+      "descriptionSha256": "317493b8aa18fafe54ac5b9a0c7226b60935ee4053581b23eb6a6ce22a56284c",
+      "cardColor": "сиреневый",
+      "imageSha256": "0a1afbe1564da17a670a85ae1c286ff242475e604bca51c628a18164f0bd37d8",
+      "colorEvidence": {
+        "page": 39,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Бессмертие",
+        "Паралич",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "121",
+      "name": "Чеканутый",
+      "cardType": "умение",
+      "descriptionSha256": "ce13e0a023ee8508e247f41b403bdb09b9928a67493e6a227a32ee376073237c",
+      "cardColor": "сиреневый",
+      "imageSha256": "dee8a841c5db59aa6c77494c562ef17b2f71cfbfd6a39fa8c1897880c717c6ce",
+      "colorEvidence": {
+        "page": 39,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "122",
+      "name": "Чемодан",
+      "cardType": "умение",
+      "descriptionSha256": "5de719de560cd1c34e1bf0dfa723f35e556f2655f1057f0fd168a409ed472140",
+      "cardColor": "жёлтый",
+      "imageSha256": "8e8157cdedea1085291e33bbe9b0b0b4773408b51d3e7c285eae6c7b7b5faa8d",
+      "colorEvidence": {
+        "page": 39,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "123",
+      "name": "Шеф",
+      "cardType": "умение",
+      "descriptionSha256": "fe3dcf4bed37ac7fe3f96e8d1bf2e87eb0cce7df249b0cd5a0e3a747baa53ad6",
+      "cardColor": "оранжевый",
+      "imageSha256": "2e81e21511fc524a83fe76fa85889da4ba087fe93a421a12a6aea0bf59bc92d0",
+      "colorEvidence": {
+        "page": 40,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "124",
+      "name": "Шулер",
+      "cardType": "умение",
+      "descriptionSha256": "dafc607e5af39476a0baf17311aebf9aa63f5e2abb01bf1f8f42785d1ed33b3a",
+      "cardColor": "оранжевый",
+      "imageSha256": "63e84540f4fa5546f7d3f560a9b11390cd1f580426ebebc592f4929ab020a421",
+      "colorEvidence": {
+        "page": 40,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "125",
+      "name": "Я не подведу",
+      "cardType": "умение",
+      "descriptionSha256": "6704858995f4cc0c998ec73e3a34be06ed137a06aef1e8b8ea3016192cb7512c",
+      "cardColor": "зелёный",
+      "imageSha256": "c06d070c770556f11f21f37ab30b07e03e935cc489f5be3ef272915461ccc8d5",
+      "colorEvidence": {
+        "page": 40,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "126",
+      "name": "Ядермен",
+      "cardType": "умение",
+      "descriptionSha256": "4cb714c391c4ca825ed07ea9a7cb9a048745e6570b6b974db624224f598c3a21",
+      "cardColor": "голубой",
+      "imageSha256": "dbbcfd3d2916190d697720ed12b52a056bde2071daefa6d87886b257b4216985",
+      "colorEvidence": {
+        "page": 40,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Опасная личность",
+        "Радиация"
+      ],
+      "tags": []
+    },
+    {
+      "id": "211",
+      "name": "Алло-это НЛО!",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "0782828dfda13e6304a2dfa58130e00df8f30c60389bad981911fda8902117f0",
+      "cardColor": "зелёный",
+      "imageSha256": "b96fa9b56545d8f404229a0d0e8870f160126abecaf9c76f33352f2f4d0ffc2e",
+      "colorEvidence": {
+        "page": 41,
+        "rgb": [
+          176,
+          192,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "212",
+      "name": "Аукцион",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "6f93fde0fffa4c100aaf6d97045a1ec06c1fc75eb4efa51a4ca027a758cde368",
+      "cardColor": "зелёный",
+      "imageSha256": "1321c6df731749fe5f7a872c50a71900c15d2e81bf18686aa686cf9d0d29c921",
+      "colorEvidence": {
+        "page": 41,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "213",
+      "name": "Бессмертный",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "ceb96b04139c0cd0654a2027df79ea5371aead9c86baef88b2cb9d8e419b49af",
+      "cardColor": "жёлтый",
+      "imageSha256": "531307cd37ed084f5c826e22974309bc69803c7fb7914f0a9cb6630d577c6ac9",
+      "colorEvidence": {
+        "page": 41,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "214",
+      "name": "Биг Бэнг",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "44dc8af61d5ee77a66e6e087e9dc0f80897527468a651f43b1dd2bda48cc00a8",
+      "cardColor": "жёлтый",
+      "imageSha256": "2b3d6380c7bde06554dcde30d37008b850c668441605bd06de2825a5db78f97e",
+      "colorEvidence": {
+        "page": 41,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Ярость"
+      ],
+      "tags": []
+    },
+    {
+      "id": "215",
+      "name": "Большое путешествие",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "f5525f72628c3f92cf0e4db46bcbd295923a24b4203639d023ac089795b64839",
+      "cardColor": "сиреневый",
+      "imageSha256": "9415c66c9ce1b054f9e6068b85142f1385348183ae2ae7c53c8c29a23d0c1583",
+      "colorEvidence": {
+        "page": 42,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "216",
+      "name": "В горле пересохло",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "5b94dc95dde0d7171b8573e74e4411d2415c1e4249ee6a53a408f632b09539cc",
+      "cardColor": "жёлтый",
+      "imageSha256": "86d9e7fb0d611f4ec852a75c2092e7b85cfd43d5526270519325d5e01c01537d",
+      "colorEvidence": {
+        "page": 42,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "218",
+      "name": "Вот так сюрприз",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "a5b0bfbaf8d0e2046bd0b72bed9a63767cabcf6abc709df9c84d83bec27e32fb",
+      "cardColor": "жёлтый",
+      "imageSha256": "419fe0a2f7b86a25d2a3dd1b6f145b635b3ad1c251d5b56c5c37c8cf48be3275",
+      "colorEvidence": {
+        "page": 42,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-8170ca7fdd6c",
+      "name": "Вот это кино",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "78452de76b4f75cb1a5790d05b26aaed7c72e5898531af94e8c68fdb15dac750",
+      "cardColor": "оранжевый",
+      "imageSha256": "0e51e6a79f47ac46b43fa6fc2e2eed80c6c3306a4e652fa05e1d950715b1fe18",
+      "colorEvidence": {
+        "page": 42,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "219",
+      "name": "Второй шанс",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "ab59cf79948a71c81906917fc0f9477652b4b49bf1f6700d0d19ac1e7e85b187",
+      "cardColor": "оранжевый",
+      "imageSha256": "63f8d6751c9b21348e0f312d6f355d5656e673fd6e85d6dd1bdb0c1289b41372",
+      "colorEvidence": {
+        "page": 43,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "220",
+      "name": "Двери закрываются",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "0968d982dad0c6c8f7fca82e70f3b544af4766d3793cd978cd9fef8c3f747458",
+      "cardColor": "розовый",
+      "imageSha256": "ddbcb1db4d8cb72c1bc688a5ded2c9204a87a023320176069b0bae90579f5c0d",
+      "colorEvidence": {
+        "page": 43,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "221",
+      "name": "Дедуктивный подход",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "3ee06927a1da515f308b56ea397b098acbd3b0eafac2baddfb0d0db1ef20bae0",
+      "cardColor": "сиреневый",
+      "imageSha256": "50f0d1dd2f8a9aa8d262ca9161e0199b0bc4c263ad396bcfb3e2ffc704748c8e",
+      "colorEvidence": {
+        "page": 43,
+        "rgb": [
+          208,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "222",
+      "name": "День благодарения",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "b02e51b5c4ca8576b20b633a1c0d19390260b69fb79ba5d8a12be24fdbb431bb",
+      "cardColor": "оранжевый",
+      "imageSha256": "731fa3b23b776e66698ce0ca0a588fe9604c9752ac95100d0b2bfa48315be20d",
+      "colorEvidence": {
+        "page": 43,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "223",
+      "name": "Доброе утро",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "fe116232a9b48d454f9c4071c3fc0121d4f8bc9a61dfa12c381bde0965788628",
+      "cardColor": "сиреневый",
+      "imageSha256": "6d051046c375c0bbe6dd8c91a4c5aabb535cd3a7480f3ade689c2522588f8483",
+      "colorEvidence": {
+        "page": 43,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "224",
+      "name": "Забей",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "8f9a20de7a97450b5accbd742f6fa6a193e4fdd0b95c06c12400c20b43446fd8",
+      "cardColor": "зелёный",
+      "imageSha256": "1e2a0b63680ec51a17930189b3beabd53b17432036a2ad95b4fd1e216b7279ee",
+      "colorEvidence": {
+        "page": 44,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Забей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "225",
+      "name": "Задохлик",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "d9cc4de6f9da6041a05f9fb9285a3aa6da2918946f938f6b176c69c5e9962bda",
+      "cardColor": "зелёный",
+      "imageSha256": "6497b7c78c47a77104c4151a256b5af1ba32fce87fe0d29f264b2a4f662e7c9a",
+      "colorEvidence": {
+        "page": 44,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "226",
+      "name": "Золотая лихорадка",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "2bf9b8f601d1e3cf7b48f137c26d9096b3d8ed16f0ba5ddc93a15b11b796389a",
+      "cardColor": "оранжевый",
+      "imageSha256": "a946f3dffc2ff41e6b6d22c5da19de733000f18257d77d894ceef9cc829ee625",
+      "colorEvidence": {
+        "page": 44,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "227",
+      "name": "Избранный",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "620e7ac40afd86e7b152df907d0d9f46fd64acd116a00617f7c965bf3286f608",
+      "cardColor": "жёлтый",
+      "imageSha256": "04f7c4731256f389e95b4195db2248024d81de4e6c028a5ed3b973ddcbadf1df",
+      "colorEvidence": {
+        "page": 44,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "228",
+      "name": "Иоанна 15:13",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "8139e6d0288f51f2314165c9a0e630ac3f60c5a9cd77a3d70d59a5751163fb51",
+      "cardColor": "жёлтый",
+      "imageSha256": "85c97a44c67e9a4c459cd0d6feb93426e277fb9f7d88ad49d71a234b6dc1d436",
+      "colorEvidence": {
+        "page": 44,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "229",
+      "name": "Истории у костра",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "59723ec9656e240856063c5baca8b42548ebaf8ac14c306852cd9a9f4bf5ccaa",
+      "cardColor": "оранжевый",
+      "imageSha256": "8bc090f4aab12f0043bbba12393548d9e6d15acdd6e45a2af1018377008c2e4b",
+      "colorEvidence": {
+        "page": 45,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "230",
+      "name": "Как без рук",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "a835f027ff98fa36f663a639f9e32284f8aed5e260c30fa01fa89fd4d0c83f3d",
+      "cardColor": "голубой",
+      "imageSha256": "6c2ac07e927b05eab38a7697b993d4f47f079ab738faf1333ca29e629f0b3356",
+      "colorEvidence": {
+        "page": 45,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "231",
+      "name": "Козел отмщения",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "c2a18b85d6942bd76ef6f7b91ac39c2ec9c808b031ddfcd065269054b71cc5b8",
+      "cardColor": "розовый",
+      "imageSha256": "f0ea768d746e644b92efd1b5ce81e7fe34ea65b32d4f4074cc91068dde7f4991",
+      "colorEvidence": {
+        "page": 45,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "232",
+      "name": "Корень зла",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "51b3ec88d20525ea594c4531db525d7ac4a92e9de50f25547abd137066778a2f",
+      "cardColor": "зелёный",
+      "imageSha256": "74358f50fe937b29a2370f13db659875477487d50ae6dd8466690fa17b2fa4dc",
+      "colorEvidence": {
+        "page": 45,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "233",
+      "name": "Криокамера",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "83908aa3c37ad312e12abca12b5e8021fc5c69ec0c1d34b6915d61d41ea078cd",
+      "cardColor": "голубой",
+      "imageSha256": "1db873c33c50088728e74174dc8eafff331b7d934aabbf6f162ad0fee954fb78",
+      "colorEvidence": {
+        "page": 45,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "234",
+      "name": "Ловкость рук",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "b7d49c4eb2639cdc7b6860688f1b06f1da5c34713cd662c7d51bb90f7b832f32",
+      "cardColor": "зелёный",
+      "imageSha256": "dd99370407af847f16d0a5784f5bde90257306c5b7682c660c913f4d189ca19f",
+      "colorEvidence": {
+        "page": 46,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "235",
+      "name": "Лотерея",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "74934abb8ed1594b15422800d2ae3e4645ce9812a8879895a3a917bfe6c1e8a4",
+      "cardColor": "оранжевый",
+      "imageSha256": "2b23b5b995a85431ca2e0fecb3b80ca428eb27212885fbf237f495f70ea1a111",
+      "colorEvidence": {
+        "page": 46,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-78343aad8b70",
+      "name": "Легкие неровности",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "5e4e186049986ee2dfba2e3b231260a85a88221e41caeb06bb7faffff6e5dad7",
+      "cardColor": "сиреневый",
+      "imageSha256": "7c134e162a376d3ddc67529cf95035ac3ea065b89eab10ece05e47a7c6a1341c",
+      "colorEvidence": {
+        "page": 46,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "236",
+      "name": "Мертвая монополия",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "009e194280f4de332c3fb8cead078b52ab649c5b3513c8ffcf127733764a29af",
+      "cardColor": "сиреневый",
+      "imageSha256": "5749639d2c9c6d0e27cc288f31023116a84be5375049ce6c381f6374bce7c142",
+      "colorEvidence": {
+        "page": 46,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "237",
+      "name": "Молчание-золото",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "ba9107ce7166768ec96a845cd828e77a18507fda175629c9fccb6d664fc8a9fc",
+      "cardColor": "сиреневый",
+      "imageSha256": "b3514cdbe60e16c476f1d1deaac2d121c1e6461f51f23e64ab8d9cd8a96489e5",
+      "colorEvidence": {
+        "page": 46,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [
+        "Молчание"
+      ],
+      "tags": []
+    },
+    {
+      "id": "238",
+      "name": "Некуда класть",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "e859e4814d60a76f837d6436737205f99cfff8b27fd1f52837f9828c9180a374",
+      "cardColor": "голубой",
+      "imageSha256": "aef121f188421ec9b28fc40189a62ce6e3702e02beeb2b3d6f2af3965744db84",
+      "colorEvidence": {
+        "page": 47,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "pdf24-2fec44260b2c",
+      "name": "Не та кнопка",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "32461849672773d692249dffe2f19a2742bddc609f6eeef6fd11e3749d96653d",
+      "cardColor": "зелёный",
+      "imageSha256": "6b70055aca16b52d6a801e40dfb7166934f7ef00320374a905d1c80276ba0e71",
+      "colorEvidence": {
+        "page": 47,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "240",
+      "name": "Одним махом",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "d0053c62926f084f08e02b41a3d8f2599a15311c1d3dca54e7b24e08e3577a59",
+      "cardColor": "оранжевый",
+      "imageSha256": "e739d30ecc066ae6075c29170ec76d22ade602fe81868293041956c8aaed9066",
+      "colorEvidence": {
+        "page": 47,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "241",
+      "name": "Особо опасен",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "55e59f5c07232465a95eacda9c226903270d85919b8bafc29016c8c8d3032ec3",
+      "cardColor": "оранжевый",
+      "imageSha256": "fab52117d331006355df9f8d6e6e2d9fbb80abbe805f9f462b9f37a6e13ae20d",
+      "colorEvidence": {
+        "page": 47,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "242",
+      "name": "От всего сердца",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "efc23aecfdf509e412f5db4f343e75bd8a0a3330b4339013d7b9272b9d5ff06d",
+      "cardColor": "сиреневый",
+      "imageSha256": "b35e0aab6d7528208fd99b9d70515d9063e28c7b3d6e808be7de857251589c5e",
+      "colorEvidence": {
+        "page": 48,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "243",
+      "name": "Отравление",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "713593de6fe65a92866cd630ff97e51def7a2085f6c72ec7d05738cdd2aacc2e",
+      "cardColor": "зелёный",
+      "imageSha256": "98420b0dace119035626f2a47e8d2e8d494f31fb1d5f21916d57608d38074c99",
+      "colorEvidence": {
+        "page": 48,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Отравление"
+      ],
+      "tags": [
+        "Перемещение",
+        "Отравление"
+      ]
+    },
+    {
+      "id": "244",
+      "name": "Отягчающие обстоятельства",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "a4b241fb495e813bdcd84e39385e72966525bb10248d6275291aaee57e2af802",
+      "cardColor": "розовый",
+      "imageSha256": "5a3d91faf5bcfe60fc30b04ab0d3f8a9095d5e6808e64483850cfaa9f845fba6",
+      "colorEvidence": {
+        "page": 48,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-6902f9f81b4d",
+      "name": "Пати на ножах",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "f49d6dd5eb57f70bf0d82f9475674466a00f67205369b0497604e131e1c8be85",
+      "cardColor": "оранжевый",
+      "imageSha256": "0bded802b6d29242172303f40d2791f6f99ef5b7a9123fb99e471fdba785bb3d",
+      "colorEvidence": {
+        "page": 48,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "245",
+      "name": "Первооткрыватель",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "2538791571787ce5b4148e46e18d81df93668e69d033a468011989d0098614c5",
+      "cardColor": "оранжевый",
+      "imageSha256": "e9793d1ccb61b2518395b2e67737ecd5882f07940595d6a1f05ed9bd6d726eb2",
+      "colorEvidence": {
+        "page": 48,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-800b8d6c37f4",
+      "name": "Питомник",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "26ae4dc9ab38255fc4143bffb720442f66c1b544f0301ba88b482e23335bd025",
+      "cardColor": "жёлтый",
+      "imageSha256": "2389b6589d38d4937cbc02fe0926f9844635d1212475e8edf03db7291673738e",
+      "colorEvidence": {
+        "page": 49,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [
+        "Отравление"
+      ],
+      "tags": [
+        "Отравление"
+      ]
+    },
+    {
+      "id": "246",
+      "name": "Плохой Санта",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "13c94174d6813cb2977c6f14e2a70a62ca2ad3f878713d1d4522618d6fb50abe",
+      "cardColor": "голубой",
+      "imageSha256": "c42691059383e83a1dcf3daf263aaf0202015411b1976ff822845127a1328dfb",
+      "colorEvidence": {
+        "page": 49,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "247",
+      "name": "Под рентгеном",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "b66b78a0bd9dd22cf8c2588c076bcb883b203b7312ed4dc7ae3f15865d23d59e",
+      "cardColor": "розовый",
+      "imageSha256": "a829e76178abf63155758ffafbd450a18a4e0a40b6cd6fbde67fc5b312673d7a",
+      "colorEvidence": {
+        "page": 49,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "248",
+      "name": "Полевой врач",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "0be002d216d4ec964525168b81152f26ef7c92940788c3f4e6618095eb4c5858",
+      "cardColor": "сиреневый",
+      "imageSha256": "078c8b1773cca932325cc92f86f29e75a07fc41b7a5f944176064908d0da41e8",
+      "colorEvidence": {
+        "page": 49,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Смена роли"
+      ]
+    },
+    {
+      "id": "249",
+      "name": "Радиация",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "c897e3a9a619e9fcf685e8e4d12e5420ec95679f9b95ad0c6780d1aae399c774",
+      "cardColor": "оранжевый",
+      "imageSha256": "7869145f3f1dd93fb7dda5482a2ac6c48bb466977b4ba7d1dfcd2c7b6cfef3b4",
+      "colorEvidence": {
+        "page": 50,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Радиация"
+      ],
+      "tags": []
+    },
+    {
+      "id": "250",
+      "name": "С днем Рождения",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "afbf2920128758318df1dcc75baac3b6778b14d782f0bf280fdeeda15e264595",
+      "cardColor": "зелёный",
+      "imageSha256": "9a0ac37e06195aca4ef49a49d64cc7501ba135a1c9cda3e51d6d26ba4ce6efb5",
+      "colorEvidence": {
+        "page": 50,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "252",
+      "name": "Святой",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "6a472962424368f48dfd583b4a23d0113873448e4b0a38fed65714c59d845424",
+      "cardColor": "зелёный",
+      "imageSha256": "636cc3022ce4d358b71f4ae14e20ceb83515ab99bfbb8e6f57a9cd7238b97853",
+      "colorEvidence": {
+        "page": 50,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-48a6d9a60756",
+      "name": "Справочник",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "26ba68873b94dbbe41d8d38e8d149562032f61ede49aa383df1da05d3a406efb",
+      "cardColor": "голубой",
+      "imageSha256": "88dabedd5bb6a594c8932afe21318c18ec7f4a39d73b4c7b8c4d99a0c76b7c57",
+      "colorEvidence": {
+        "page": 50,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-60df0508e470",
+      "name": "С огоньком",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "369f71c51b8a78f4cf4588c24ceb9ab1f9b533e1d31cbb651f1b277d994aff90",
+      "cardColor": "оранжевый",
+      "imageSha256": "8b379f2578faa1fde937cb4f5637307d5a86f4c188bcfa0ad8a632ea045ea305",
+      "colorEvidence": {
+        "page": 51,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "253",
+      "name": "Счастливчик",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "47aa8e8109becdc9a74ada6b89def251458434d06e1a8c9845a7e957d83ee0fd",
+      "cardColor": "розовый",
+      "imageSha256": "5707ab7b48b13c5d39cc22233d1053639385ab552d2dcfe5c32e13f9eb6d4bee",
+      "colorEvidence": {
+        "page": 51,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Бессмертие",
+        "Иммунитет на голосовании"
+      ],
+      "tags": []
+    },
+    {
+      "id": "pdf24-c4a91f13794e",
+      "name": "Счастлив поневоле",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "7fb47a22321ca16234e2a4d211cd99ae95470f0fa20c199ca4343718b04ffc3f",
+      "cardColor": "розовый",
+      "imageSha256": "750bdc271e054e70cdc28a607c79019d0934039d78e5efae3a8d8ae8eb901610",
+      "colorEvidence": {
+        "page": 51,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "254",
+      "name": "Туши свет",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "0fdc6f0d2ae7890dd32a84ec442cb57873e401755de6db1d826266511e780efa",
+      "cardColor": "розовый",
+      "imageSha256": "25a64525c02d6086fc5ed94e26e2668bd7bcdb171b52e5aa240d5aa97052f6d3",
+      "colorEvidence": {
+        "page": 51,
+        "rgb": [
+          240,
+          16,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "255",
+      "name": "Чарли Рэд",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "4752383ab8777aba97d9344bb6ccfb378cf30a72cd36775c2dfa89855cde4ac7",
+      "cardColor": "розовый",
+      "imageSha256": "4298d7bc51af030e642c52b0dac1a321f93682939e3fadf8f260f54b6bd9d1ca",
+      "colorEvidence": {
+        "page": 51,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "256",
+      "name": "Чем-то зарядил",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "06cd67bdfbedb70c9dec0867b85b213f8394f259cb337a30450e0e7e07685e4c",
+      "cardColor": "голубой",
+      "imageSha256": "e04b2b11da170ee1b777b1bc4988b994d798f8363863dcce0d7e133545ad618f",
+      "colorEvidence": {
+        "page": 52,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "257",
+      "name": "Чем-то насолил",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "5eec84a8797cf2df3eafda1184890bca18b95b63f9557b0a64f18a77c3b0b2e2",
+      "cardColor": "розовый",
+      "imageSha256": "5d1cc1e339de0944363e2da19b16073625d4d61ff17a199b225342d85d08087e",
+      "colorEvidence": {
+        "page": 52,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "258",
+      "name": "Шулер",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "51eb1740330407f501ebf9b31749c385770f0090e7aeba496715e375d68604b7",
+      "cardColor": "оранжевый",
+      "imageSha256": "63e84540f4fa5546f7d3f560a9b11390cd1f580426ebebc592f4929ab020a421",
+      "colorEvidence": {
+        "page": 52,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "259",
+      "name": "Ярость",
+      "cardType": "мёртвый бонус",
+      "descriptionSha256": "2a033be8162ca9c63da7854056ae16d06325db5a200c8d5964fbfd04f8a08916",
+      "cardColor": "розовый",
+      "imageSha256": "55479d5848a29cd0b6989c2dd7dcf7313b12f6e923d787edf87781f1adcf26d2",
+      "colorEvidence": {
+        "page": 52,
+        "rgb": [
+          240,
+          0,
+          96
+        ]
+      },
+      "effects": [
+        "Ярость"
+      ],
+      "tags": []
+    },
+    {
+      "id": "127",
+      "name": "Адреналин",
+      "cardType": "припас",
+      "descriptionSha256": "4775801de82e0148447482d8031a4098844b78cd37423034639e17b7df125d50",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "95196276b16c3b74f9532810483f66023b94e68a2c484ff91c0892565bf210e8",
+      "colorEvidence": {
+        "page": 53,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "128",
+      "name": "Аптечка",
+      "cardType": "припас",
+      "descriptionSha256": "a96d4cb419e2769c1834164efb3eebe87fae5a655d7a4f9eb6b1c8da6fd54140",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "b7ed0491cc98cf1e572a8d64405d5c217485c5c4711efbb087335ba5a98fb17a",
+      "colorEvidence": {
+        "page": 53,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-6b60b7ad418c",
+      "name": "Арахис",
+      "cardType": "припас",
+      "descriptionSha256": "da453a978862294cc2e87900f0f4bb21a014ce09f98bdaece7107c95d5f660df",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "7b4cf692f575ecd2f3a8ef6abcd384a3d42b2ff4f4476850904c5a38a1461a6b",
+      "colorEvidence": {
+        "page": 53,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "129",
+      "name": "Аудиокассета",
+      "cardType": "припас",
+      "descriptionSha256": "a3e093cd539e8243abf557c3ab231fe5b8ad4302d67baaed02bd1a53b6048492",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "00fcc049a0265d53188633eb3b0f5f9738378a1c36e3575e1c39cdc026370d79",
+      "colorEvidence": {
+        "page": 53,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-054ee883a671",
+      "name": "Баллон с пропаном",
+      "cardType": "припас",
+      "descriptionSha256": "f4b471b791476b02b1a5e56fa5c8f427b11a10200611479101abc7dd7f6f71c0",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "baf2db6fd363d3061442595a50cfe10c07e7865e7215c88e22bdbd00c3a92168",
+      "colorEvidence": {
+        "page": 54,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "130",
+      "name": "Банка с краской",
+      "cardType": "припас",
+      "descriptionSha256": "2a10a19a88ce63ab521e7558898c34df6fa6455a8cfb7731f53e33c3da27997a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "d6cdb2d741c243308391b6f7436c34c0b1afa646cef316843cd7c15991ffd3ba",
+      "colorEvidence": {
+        "page": 54,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "131",
+      "name": "Бензопила",
+      "cardType": "припас",
+      "descriptionSha256": "04e1c878a15b4e6928a7e3af7b211e1ef0bb60b00c03e0594d6c89afc46cff74",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "baf43fd2db03c6c2305a46ce3ef8393bc236b46ddf63bc90598c6b62daace667",
+      "colorEvidence": {
+        "page": 54,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "132",
+      "name": "Библия",
+      "cardType": "припас",
+      "descriptionSha256": "3ede647751a793f6cba52fedc9edf1083ed2533e004c3a1bcb7e7ce6e4dacd49",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "9bac2bee310f588209679ddc8c48cd61ba24c46d94a317a684ef0373a4bd25d9",
+      "colorEvidence": {
+        "page": 54,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Смена роли",
+        "Изгнание"
+      ]
+    },
+    {
+      "id": "pdf24-c87e6e2ec1e5",
+      "name": "Бильярдный шар",
+      "cardType": "припас",
+      "descriptionSha256": "4717858cc0b174716fb99895b78a01641ff5452834f19dfbe166c31aa3b881d5",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8b62a174e06744cc0677b0f2221f23970bb04af30efa2cb01af944d3896018e9",
+      "colorEvidence": {
+        "page": 55,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Изгнание"
+      ]
+    },
+    {
+      "id": "133",
+      "name": "Бинокль",
+      "cardType": "припас",
+      "descriptionSha256": "433f939b26e05529400a0fafa43c821b2c0d1672bee1347b529179d2d78eca22",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "3498946821a21052f04ede0938096705bb5c47e0be892b97e7cc1753ae6075bf",
+      "colorEvidence": {
+        "page": 55,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "134",
+      "name": "Бронежилет",
+      "cardType": "припас",
+      "descriptionSha256": "4fa1117382346e438f8490a32d702c4a37801aa52d267d348965490bd93be21d",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "9361c9ce155de332e95e77d64a8fb8060a79230561e234ffbe548ca59f5f77f3",
+      "colorEvidence": {
+        "page": 55,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "135",
+      "name": "Будильник",
+      "cardType": "припас",
+      "descriptionSha256": "753b1557114822419968f223a6f7227c9fe31ab7cbc8ecc2c9f1427d6684a5b7",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "11bb4077c374398f7c671ff4d0c46c6f7ca31d2c41628ad045c326575fd5b666",
+      "colorEvidence": {
+        "page": 55,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "136",
+      "name": "Бумеранг",
+      "cardType": "припас",
+      "descriptionSha256": "23754869a30eb47e66568701757ea72771b8c831b1d5f4e003587fed6bd96b7f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "1d803f4607998aeb542556705a5b3ddc06dec085440fb7b7ddadd731d837e674",
+      "colorEvidence": {
+        "page": 56,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "137",
+      "name": "Веревка",
+      "cardType": "припас",
+      "descriptionSha256": "dae9d661ca4d736e973e81446f89731fcf89908c37c7d848bdc02375e5c4acb3",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8a7e9a6c62197fa916a8bf6237b809b0b0336a53c08cf65f138b1c697822e1e0",
+      "colorEvidence": {
+        "page": 56,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "138",
+      "name": "Взрывчатка",
+      "cardType": "припас",
+      "descriptionSha256": "562ef3320e4b049023318bdc57d5af13608d30110fce4cd339048b2feb7152c6",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "cd989808b38118d76757e3440fdeaca6e083c68429588a9d0f46a5a5be6ceb66",
+      "colorEvidence": {
+        "page": 56,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "140",
+      "name": "Голова манекена",
+      "cardType": "припас",
+      "descriptionSha256": "ab872f74c973b1c19ace2658722e1d2ab406a4cfd2578db765b4851800920659",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "46597c602f31b656608065d177c9761ca12d642b1bb607494a8c251fed20ac66",
+      "colorEvidence": {
+        "page": 56,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "141",
+      "name": "Граната",
+      "cardType": "припас",
+      "descriptionSha256": "0a30695276974ea6dd14cbcf14d0c9c4ae1bf0848452918c84c0125423e59026",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "7445cca8d0697e4bd718892f6d0ebe31be7c720f69503b9c7d107cf5cd817cd1",
+      "colorEvidence": {
+        "page": 56,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "142",
+      "name": "Градусник",
+      "cardType": "припас",
+      "descriptionSha256": "57ea05988f39f52d9ec96574c296dfdb6ddd608796b5c8cc794715032ca22647",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "44bcf1bc45e208fb3b90f70960758b258dbf003baeabd728ba680753da4df9f6",
+      "colorEvidence": {
+        "page": 57,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "143",
+      "name": "Деньги",
+      "cardType": "припас",
+      "descriptionSha256": "244d6683790354ce4622ca2e91de6a60ba6a66f3bbc4b915c58f7634338d911d",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "5896ea05e6c8d64e443717f45302d2e1c899c428574ebd4c32bc746ad4dab7bf",
+      "colorEvidence": {
+        "page": 57,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "144",
+      "name": "Детонатор",
+      "cardType": "припас",
+      "descriptionSha256": "ff89bc794d33d4f0d8fd838c0eb8673a03826004f3d8ff363c8dd1b22d43bf29",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "41da459077210160dbabd0edd7b0f542f605637e23687b98de4abc6fb65fc918",
+      "colorEvidence": {
+        "page": 57,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "145",
+      "name": "Дефибриллятор",
+      "cardType": "припас",
+      "descriptionSha256": "d4d2a467b7edd42067d6c31c5877970327ee2073b9e72ac303beb8929bf03779",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "51f4aed67176a896dffcbe1e10178ad56d6e3781bca9e07817e71acf7880ac51",
+      "colorEvidence": {
+        "page": 57,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "146",
+      "name": "Диктофон",
+      "cardType": "припас",
+      "descriptionSha256": "480d3c531e18bea4d20609bb8b1cbaecedcfa73688256b75c808a8fa2bfaa28f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "6df108c765c1d28e1f44b43a9d3120ca588673b4bb607bf4f0dec2da4e564638",
+      "colorEvidence": {
+        "page": 57,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "147",
+      "name": "Дробовик",
+      "cardType": "припас",
+      "descriptionSha256": "752bbfd9129b6cd768a792f3a7108e80cc4a9a82a9155fa13cda5f3919c50200",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "0d768a6f6ebfdcbce2b8ce7bc1d7cfb5987181f6326bbd51c1cd5c9e407cf715",
+      "colorEvidence": {
+        "page": 58,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "148",
+      "name": "Духи",
+      "cardType": "припас",
+      "descriptionSha256": "cdf1454e3c976ac7846f68afdce5ae176f32f1a16f3ead1523006f994b9a91f6",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "b4e2fa0602324afde9e4adf65a298aca6c8a96c16eb381c63ed5feea9b77d3d9",
+      "colorEvidence": {
+        "page": 58,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "149",
+      "name": "Дымовые гранаты",
+      "cardType": "припас",
+      "descriptionSha256": "d4dc2ba5e7c170b74e15134811cf51e30cafa65fe1f96237ebb401ea76b209a6",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "2e894df40dcff2c751a8e3267217355a69fb34446391b69c8c726c1b139166e8",
+      "colorEvidence": {
+        "page": 58,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Радиация"
+      ],
+      "tags": []
+    },
+    {
+      "id": "150",
+      "name": "Зажигалка",
+      "cardType": "припас",
+      "descriptionSha256": "7585ecc6c52554872b3d3e502be20470723b434eb66e82c668ac47d19e107bf5",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "5979a7d45629d6dfbd8e8d07f24612a2db63394d4fceb85671dda5101c412783",
+      "colorEvidence": {
+        "page": 59,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "151",
+      "name": "Замок",
+      "cardType": "припас",
+      "descriptionSha256": "975d9f8a72da08f52420b7cd8afd20610c8b25425c0403952747c98ee3a3e209",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "eb9fca88f35b3332d844e4f60ca8416ec23e03018a613443c11834feddc0f552",
+      "colorEvidence": {
+        "page": 59,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "152",
+      "name": "Карабин",
+      "cardType": "припас",
+      "descriptionSha256": "3675239d02eceafc6d609b6e10f4ff9ce0f25c5f93a8c8c9f2b6762e0e820c38",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8edbff07112d5039ecf7dfc63e06e576ae0c2d8d342b6cd78dcd21576e0eecb7",
+      "colorEvidence": {
+        "page": 59,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "153",
+      "name": "Камера",
+      "cardType": "припас",
+      "descriptionSha256": "6dcf980c148792810dcd4bc4fe3863cde8b4fcffb2703bee1a3498ab37713ac8",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8df81797085a5eb45eb30aacfdb01131648c93408e66e5e01c509cbc3a45f8b7",
+      "colorEvidence": {
+        "page": 59,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "154",
+      "name": "Канистра",
+      "cardType": "припас",
+      "descriptionSha256": "e74e46c26cebb1a5394020c7396ddf49058ba5cf22d1e80f821133eb803eea8f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "792df65801c7324d4e39c6a8a15b3d0b02e45cd89e4b77f7993b71fd4f44e55a",
+      "colorEvidence": {
+        "page": 59,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "155",
+      "name": "Капкан",
+      "cardType": "припас",
+      "descriptionSha256": "d9702c57bf971518f4c927a6a9c99135ace8818b9ac355f76d134f15740f9b7d",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8f6d8eb716e6ac320d04095a8a460fee8379bf5993023e2fe9ab4ce84ceff32f",
+      "colorEvidence": {
+        "page": 60,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "156",
+      "name": "Карта сокровищ",
+      "cardType": "припас",
+      "descriptionSha256": "24f5cf2431db5a3843e24ceb671d64b18700b82f7440847ea01e5a2307263813",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "9b8fc623426961c89dd033cdd251a0a167e8a86b08fd3afdc6052ca414e55ffe",
+      "colorEvidence": {
+        "page": 60,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "157",
+      "name": "Кастет",
+      "cardType": "припас",
+      "descriptionSha256": "a241124ab45beba31a7dc7cd89b4a69ee9e048a8322746aa71229631346bdbae",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8928b2e4388415518aea604e68fd714b4441cdd80c3fb9a0bd836ed07e55ad59",
+      "colorEvidence": {
+        "page": 60,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "158",
+      "name": "Ключи от пикапа",
+      "cardType": "припас",
+      "descriptionSha256": "55884c64cb37da516f071d194e26492f604a178bd242e34d86b51d73a4e11b58",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "15b4637891a2f31f147f1276918a2f0f8c04cd64954f26a9c4dfcfe86e08c9d1",
+      "colorEvidence": {
+        "page": 61,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "159",
+      "name": "Код от сейфа",
+      "cardType": "припас",
+      "descriptionSha256": "9273b419a793555f27a386b0bac696b47aa8f333d8914ce54515dc5b99917cb8",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "87aee63d02105bf79524e38de97a7c121079e07ab06bee6b68e31b60978d6f2b",
+      "colorEvidence": {
+        "page": 61,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "160",
+      "name": "Кока-кола",
+      "cardType": "припас",
+      "descriptionSha256": "3e028ace4130279e3d7acf7609cb85dac166b4e52e87b204cd134e92c9e2518d",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "332315fca84cc5bffc62aa6680156aac3cdf98a6351148b5a0c67a50282529e6",
+      "colorEvidence": {
+        "page": 61,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "161",
+      "name": "Коктейль Молотова",
+      "cardType": "припас",
+      "descriptionSha256": "63db4ca69fa3e11505e87c2f34c32f3a9611f0c93fa3b45d10d51a27d964f65e",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "2392d1fc34e9c94bb26f63a66d9862a085f59217e3d2632e68f2f080ecc387cd",
+      "colorEvidence": {
+        "page": 61,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "162",
+      "name": "Компас",
+      "cardType": "припас",
+      "descriptionSha256": "ca88b747e42242f145e7a729bd99648936f2aaa6fb66dd0f1bc8fdb803353db0",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "86ec405c4109dee423d2f2a90913ffc120daa8af494f0c7e69a2c913a8d5cb56",
+      "colorEvidence": {
+        "page": 62,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "163",
+      "name": "Конверт",
+      "cardType": "припас",
+      "descriptionSha256": "c5e688b97b28da73a90f38b3f19a1941dc6910acb0a0a9decbb59bb48e86ed42",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "5f7b384e882e1836768357f3de5204f4e9ac33641f0b2378fdfae5d48d3cf4e3",
+      "colorEvidence": {
+        "page": 62,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "164",
+      "name": "Консерва",
+      "cardType": "припас",
+      "descriptionSha256": "a3ec1fa1bce75827504e5c9d7da2a9ec9d61bfdebdead516c5b3b4c89b9a031f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "bc45fbc09960e4caf19a253d64fe742577ef9413804a204710e8d1716f680896",
+      "colorEvidence": {
+        "page": 62,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Отравление"
+      ],
+      "tags": [
+        "Отравление"
+      ]
+    },
+    {
+      "id": "165",
+      "name": "Кофе",
+      "cardType": "припас",
+      "descriptionSha256": "72ad448ea5d8ec6f5ff622b98888afe782e8eb3558866cb932921181481b9bf9",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "2f783c7eb8a04f29f648c9f74e0bfc88e3f902bb2b9f1b7d0676cbf914c2ac47",
+      "colorEvidence": {
+        "page": 62,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-e4c9825e72fe",
+      "name": "Кошелек с картами",
+      "cardType": "припас",
+      "descriptionSha256": "3ce449fa4ac594e3dd3556c19213944f1827ac503a35ec09b313046f0ddebf51",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "63c4a337bf474ae7ea0c1f1120e8abdbb77fc1781e50fa04dee06e4888d56ac9",
+      "colorEvidence": {
+        "page": 63,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-19649a258128",
+      "name": "Кубик Рубика",
+      "cardType": "припас",
+      "descriptionSha256": "1e2bd123694fe3a09acb3fb5269349c5c1d122ef12e8cf9cec32bbdc1c42409a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "ece45d4f34f4f246e029bea8dc3a3bb0183a5137d044f7d571ea184724978975",
+      "colorEvidence": {
+        "page": 63,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "166",
+      "name": "Кукла с проводами",
+      "cardType": "припас",
+      "descriptionSha256": "6faa049ece037cc7814e2fa00dbe73868e731bb62bde8ecbb6bc1363b880ae93",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "c6ecce756e627a3d964590a23af3a5f3f7891636b4780d4ea1dea45caa12f822",
+      "colorEvidence": {
+        "page": 63,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Бессмертие"
+      ],
+      "tags": []
+    },
+    {
+      "id": "167",
+      "name": "Куртка",
+      "cardType": "припас",
+      "descriptionSha256": "1f432f20dd7f47263b4332b6e5bf5c3b57fe75d6a920822cbb560132453af232",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "c948f2ad405e4d6c77c243d3fe53d9952776107698d55e18e488578d4932e557",
+      "colorEvidence": {
+        "page": 63,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "pdf24-3e1429376c7d",
+      "name": "Лезвие",
+      "cardType": "припас",
+      "descriptionSha256": "8bef1ef91b108caa3e2fb1d3b14c6dce5f336cce68ec98a86cd929019c93c4b6",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "4826f4765c8df25402b73df0ca23e455633027487588b982c875cf7c119586c2",
+      "colorEvidence": {
+        "page": 64,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "168",
+      "name": "Лопата",
+      "cardType": "припас",
+      "descriptionSha256": "38dee19fc33b95c524fd23122a5f63ef6e39a6a6a2e98c36653bf534ebcaa90e",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "7c206e1f7cb1ad577eb96de55c89bf366e961a1e1367875dfeecd37a597ab6a3",
+      "colorEvidence": {
+        "page": 64,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "169",
+      "name": "Лупа",
+      "cardType": "припас",
+      "descriptionSha256": "e0ee8e49a7addd2002bc2e2cb62eecf334a21c8241f496d788e0f20eab8f8e4d",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "1f22bd4aff7b93fec7e6db68a2c299c89b1611ce9b01605ca5f1958c88b7f518",
+      "colorEvidence": {
+        "page": 64,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "170",
+      "name": "Марка",
+      "cardType": "припас",
+      "descriptionSha256": "450b72a7cfbf4d8e7bda9598ffdb9c9f1674649de9c17935b1cc6a11dcb431c5",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "e7c25a28597a20469f138143336a9a453e2f7348ae096cd86f454c86bfca6d1d",
+      "colorEvidence": {
+        "page": 64,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "171",
+      "name": "Маска",
+      "cardType": "припас",
+      "descriptionSha256": "ee88b38eec48afa2320b283fde618be2e294929e12837a13f4cecc2bc0fa2367",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "1b97258b253b2aea3d8291b32b06eb8345e1b150f0edcde62674e86b7dd46679",
+      "colorEvidence": {
+        "page": 64,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "172",
+      "name": "Мачете",
+      "cardType": "припас",
+      "descriptionSha256": "6cd529cc2d5693d1fe52ce0b0541998be0bef84dc577f01dbb271ff30ebbe4d0",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "65a565599eb3f5e8c938c464a13d07dc23a1509754fdffce19eb09276cbb8465",
+      "colorEvidence": {
+        "page": 64,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "173",
+      "name": "Мегафон",
+      "cardType": "припас",
+      "descriptionSha256": "06d65813ecf334ddfa11af247e0b32e2a511f08f226e6e17498ee1ab7df2d899",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8742d75a368855ae8560e1c82e94957fb9967e3f3cfc6dec44f7033a499c6fde",
+      "colorEvidence": {
+        "page": 65,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Иммунитет на голосовании",
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "174",
+      "name": "Мина",
+      "cardType": "припас",
+      "descriptionSha256": "f38707ce9eb6410fb2eb54ec1d8724df8e08bb914da92608009cb30edca68924",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "000a36e73718e8c886e41ce1cd5a3881abe298a37add36b7d5d9461e589b3b64",
+      "colorEvidence": {
+        "page": 65,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "175",
+      "name": "Монета",
+      "cardType": "припас",
+      "descriptionSha256": "9e91b2f9f486c04ec8263d4544f63fd8402c8577617bbd8e23d4ce6ae4df2977",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "04d427479efa3a638d31b4eacb8114ac36eaf0c894dd3d114c0a23a8cf9d71a3",
+      "colorEvidence": {
+        "page": 65,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "176",
+      "name": "Мыло",
+      "cardType": "припас",
+      "descriptionSha256": "31d97a16219c6894a7794558a0ff93a338bb069d65d30659aca326aa39201d2e",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "6ff87b49c5b8aeaf982ab75461d2089c379f656837466971bf69ebd8288eaaf5",
+      "colorEvidence": {
+        "page": 65,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "177",
+      "name": "Мышеловка",
+      "cardType": "припас",
+      "descriptionSha256": "9bf679d8f820579bb544b168e9cbe1c3b84291f162ebc5036d9f7cecd1e8ba0f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "73b804fd0c3169f559833fd835a96310716bc78912c6be254d58a8d900023cba",
+      "colorEvidence": {
+        "page": 65,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "178",
+      "name": "Мясо",
+      "cardType": "припас",
+      "descriptionSha256": "28078b707083a05479291a07f6e22ec90b40b61de0c0309cf2223d2317abeeb3",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "cdd1598b9b1c108b14b0bc4ca94f822fcb87431fc0a44c39fbb986cfbba85b69",
+      "colorEvidence": {
+        "page": 66,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "179",
+      "name": "Набор хирурга",
+      "cardType": "припас",
+      "descriptionSha256": "e4b502c739dadd7f911af92d2e8aa0f5b0ff46ee207732655f80cc6e9044927a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "cd11a6235e01dbd0358d2b789aec07a336db1e27620c7604d425bba81d6deb74",
+      "colorEvidence": {
+        "page": 66,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "180",
+      "name": "Наручники",
+      "cardType": "припас",
+      "descriptionSha256": "924dbdd25e6c356aa445519c95351ee7d0b21359e95108414285f29564c27cb4",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "1fc1a23b3dbb55498a19d6eaa0892c7612d1cbe5b7deb8451ce62996ecb51bba",
+      "colorEvidence": {
+        "page": 66,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Связь жизней"
+      ],
+      "tags": []
+    },
+    {
+      "id": "pdf24-7e9098ec041d",
+      "name": "Огнемет",
+      "cardType": "припас",
+      "descriptionSha256": "245a20314892c9e8750c97239e207d626bea8be817b992033846863a67e9804d",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "836ac5b04ab804a8407230319eeb4b56b14d755f72c98aaa69e5b2093b03a79f",
+      "colorEvidence": {
+        "page": 66,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Пожар"
+      ],
+      "tags": []
+    },
+    {
+      "id": "181",
+      "name": "Огнетушитель",
+      "cardType": "припас",
+      "descriptionSha256": "d21d36003db74fb546afd99372dc52fcee80df34900efe0b683402a3c88f7c25",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "9c90f3a020090aecb72d427ef254f3aba0819a91b9c60adf1a316b2bb7f8b5be",
+      "colorEvidence": {
+        "page": 66,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "182",
+      "name": "Очки",
+      "cardType": "припас",
+      "descriptionSha256": "8fc7dc6895440889a48881276f1d28cbe81a1fb875b7776b3aa9375fdb5bbd3a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "b7cdc128695ddc33f0ae3ae73a6ed094a489af8b7001796722fb5a7d5b403eaf",
+      "colorEvidence": {
+        "page": 67,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "183",
+      "name": "Патроны",
+      "cardType": "припас",
+      "descriptionSha256": "7ccec6642fe65782e361fe5a5e2206b5482da4b9a0eb8786000a18faed6e8c32",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "5985500daa7f5fbf52042f892b3911290fc030083c9130661781d467f9ff5cc0",
+      "colorEvidence": {
+        "page": 67,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "184",
+      "name": "Перчатки",
+      "cardType": "припас",
+      "descriptionSha256": "5e13913daf9408ddc94210e172288881af330d3cac98fabd503ff345254ec799",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "f88639c490b567a598cd8ed8f88945bc617240c823611e72f57265f8c5a093c4",
+      "colorEvidence": {
+        "page": 67,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-4da207e2a575",
+      "name": "Перцовый Баллончик",
+      "cardType": "припас",
+      "descriptionSha256": "eb32062dad025c025df53b4fd3a60e145156d6ad27b27dd2dbf15267d26572d5",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "dafb80e3d47412c447563a5c0e55f88bccff294dca4bb0a148d570189893397f",
+      "colorEvidence": {
+        "page": 67,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "185",
+      "name": "Пистолет",
+      "cardType": "припас",
+      "descriptionSha256": "98a47b6be76dd3ff21996922a37989bbc7f7482d1fb432ec4bfbde8abf91cd10",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "b3dfc54cc4abf6bcfc5fbedcfd73a0a887d565465fb2c16a49bbc4de6b9ca375",
+      "colorEvidence": {
+        "page": 68,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "186",
+      "name": "Подарок",
+      "cardType": "припас",
+      "descriptionSha256": "e97e9bb93ed6d51934d642850ff67f59fd47fefecbbae8149489f5436a529c7a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "e5624a090fc902b33b26eae8ba5cb42da7a1a705f28587d58349c16ed039bb27",
+      "colorEvidence": {
+        "page": 68,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "187",
+      "name": "Противогаз",
+      "cardType": "припас",
+      "descriptionSha256": "033b2533cdc2c51aa6cd653cb5a326c9233a1da08eb6bd58973357949e29473a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "e8479b054add5d2745538b1b82a7c204cc89bc00d53de0ef02ae496f706f5cf3",
+      "colorEvidence": {
+        "page": 68,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Радиация"
+      ],
+      "tags": []
+    },
+    {
+      "id": "139",
+      "name": "Разводной ключ",
+      "cardType": "припас",
+      "descriptionSha256": "e1984e7aef11019e1556c92922fb042f90d84d9efab4f1177fa53583981bc843",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "b419a705c124a8bc2a6370856810c505b308ef70689093eda28fe9693d5f7910",
+      "colorEvidence": {
+        "page": 68,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "188",
+      "name": "Рация",
+      "cardType": "припас",
+      "descriptionSha256": "bbe8c7a864ccfa44291fe599c4c5b419213911ad8b9c0f098a18678baf300ea8",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "f4ed5a428fc97aebad3ae380c05c3e27408cfc9c485007974c42d0970849f198",
+      "colorEvidence": {
+        "page": 68,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "189",
+      "name": "Револьвер с одним патроном",
+      "cardType": "припас",
+      "descriptionSha256": "1f906ab335c643bfdd84c7204b092bfe28b3b5db060c1f84df4941a8e53e42d6",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "00d0b91503f5064e1f4064c5bf11f2258870de0b9dac65a41b4c823c2b1675f4",
+      "colorEvidence": {
+        "page": 69,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "190",
+      "name": "Регби мяч",
+      "cardType": "припас",
+      "descriptionSha256": "bb4a28b838945a3bbf515cf13c150c9fba25279b26b33ad39621598fef5bc9d6",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "5b85f1c06f0d4f1ebcc3a21d8e3cf523629653413b59d5afc9c08647a6e0cafb",
+      "colorEvidence": {
+        "page": 69,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "191",
+      "name": "Рюкзак",
+      "cardType": "припас",
+      "descriptionSha256": "c04a8dfc997ff9a21930d40dadd80ecd4bb6a96fb204a9b71b95d8b172161a3f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "98f41405c1d196f43c52f4e0f43c443fc4d08f9696cf863598e30f745f3ed40d",
+      "colorEvidence": {
+        "page": 69,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-d39e5b578e0d",
+      "name": "Сахар",
+      "cardType": "припас",
+      "descriptionSha256": "c688e469b32378911d606e1eb438e189521ec422459befd37c6edddd0f1d240f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "8f337a27c6aa02764c1d7e0163816422a35f37f765f52167746568a7cee92fe1",
+      "colorEvidence": {
+        "page": 70,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Заминирован"
+      ],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "pdf24-fd7fe1e48200",
+      "name": "Светошумовая граната",
+      "cardType": "припас",
+      "descriptionSha256": "c866bef5316a74bd4dcba85266d68a5236bac703765287cba2b560d6f5dda408",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "ca3edfac9674796014843268ddc30490bc337a88573c9d015b752e5c30d82fa0",
+      "colorEvidence": {
+        "page": 70,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "192",
+      "name": "Скотч",
+      "cardType": "припас",
+      "descriptionSha256": "e8fd5d302b28cab5e801c5837c62480e13514011b15b5070442e87472d8beb09",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "a399220643a6743b099c94c4c44b619be4c8d72e0dffdfdeb9beed143d32c8a5",
+      "colorEvidence": {
+        "page": 70,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Молчание",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "193",
+      "name": "Степлер",
+      "cardType": "припас",
+      "descriptionSha256": "e3e67380916b65a87a3af5429ca294a8a8808d3bcb7e1bf0c24f1e6564d33efd",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "751bfe20d717c092284fb5317d091a53dfd55e168159d914f97c30f270ef2d98",
+      "colorEvidence": {
+        "page": 70,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "pdf24-4782982e5adb",
+      "name": "Суперклей",
+      "cardType": "припас",
+      "descriptionSha256": "03ffa0ded347d1781421545ad5d5d6d9eca35233a391be67bd1c7a56648b3bcb",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "79e6755fac815d84ce0fbd69ae486b153547ccd68a7078aba12709ed673f341a",
+      "colorEvidence": {
+        "page": 71,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Подчинение"
+      ],
+      "tags": [
+        "Уничтожение карт"
+      ]
+    },
+    {
+      "id": "194",
+      "name": "Сухпаёк",
+      "cardType": "припас",
+      "descriptionSha256": "0018d42c1170bddc5be763b4cde18554e2078ead6afe700ca060985c890754f1",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "bfae3c4c2ef0db83bfdad5b54873dee75e453324f8dae66643abc45a0bb231d5",
+      "colorEvidence": {
+        "page": 71,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "pdf24-392ff20a663e",
+      "name": "Сэндвич",
+      "cardType": "припас",
+      "descriptionSha256": "4a8b4d105ce59d078188832b19092a8ca841be991447cf4c37547f5a5307203b",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "a2db8450deb23d8f19dda496c02472c815bab48896344df8f20212863c869ca5",
+      "colorEvidence": {
+        "page": 71,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Телохранитель",
+        "Подчинение"
+      ],
+      "tags": []
+    },
+    {
+      "id": "195",
+      "name": "Таблетки",
+      "cardType": "припас",
+      "descriptionSha256": "8036f1b84fbeeadd0e75011f2885b49d7c6eaeacf8457a02a8a4d8fd7f09d52c",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "f320be69addc9151fdfeb278630a41f0bc0aec11d0dff376241c1a4a50b26104",
+      "colorEvidence": {
+        "page": 72,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "196",
+      "name": "Тату машинка",
+      "cardType": "припас",
+      "descriptionSha256": "51454ed61aae5236f6f3bb239d0b8d97050e0507ab35b633474f3e5591b0d706",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "f793960351f85f1cba360270150455f7abf3a41698a82fc666dc5ac370549f7f",
+      "colorEvidence": {
+        "page": 72,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "197",
+      "name": "Термос",
+      "cardType": "припас",
+      "descriptionSha256": "bf7fb497a70c1dec31d54d9c0b4592f95da6d7fb95e69c786e10d49049bdb3ab",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "adbc6dcd7217086bcc20d60ae3d6a2a2cacfd8558f2ddf641c9444e92e14ef56",
+      "colorEvidence": {
+        "page": 72,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "198",
+      "name": "Топор",
+      "cardType": "припас",
+      "descriptionSha256": "927f882beedf2bc945e711a03be7daac37b55f69fc8e9bd2ae9cc13d0d4bfb4f",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "3cdca663c42c49f4967bd5eb1b40ae66ffce05df43de1632dcc3f74849208587",
+      "colorEvidence": {
+        "page": 72,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "199",
+      "name": "Три туза",
+      "cardType": "припас",
+      "descriptionSha256": "c7f66f8016533312a78fe926960d2fe936c2854ceadad887ceec0d69b895df46",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "923b344f243a8e0fd5002d566d9a3edc2e1201df02f9a62def3fff3fdeb0d8b5",
+      "colorEvidence": {
+        "page": 73,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "200",
+      "name": "Уточка",
+      "cardType": "припас",
+      "descriptionSha256": "c7f4cdea21ae7cfde9d9e6618bcb698d542a8624a7312a7053054546e86e920e",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "e5973bcbf19f61a3d43b891ed175276cfc1b7036c85f8627afcedd444dd313a6",
+      "colorEvidence": {
+        "page": 73,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "201",
+      "name": "Фонарь",
+      "cardType": "припас",
+      "descriptionSha256": "8f872a97a1c3a33e5a6db195183050a2807584882fbbef6e54efa039fc415c4a",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "4ab36086a69d8709debaa13a5d2c8f0665f77532cf8e261ecf1eb260d82b6d91",
+      "colorEvidence": {
+        "page": 73,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "202",
+      "name": "Фальшвеер",
+      "cardType": "припас",
+      "descriptionSha256": "e4c5f593970efa096f4c3578ede8a3ec3a7e54c5c5bacd4278992a46e79353b5",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "729b4ec742592c9a65426a0924ca87629e3ea91c28fc3c40bd8cf9158eed681c",
+      "colorEvidence": {
+        "page": 73,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "203",
+      "name": "Фотоаппарат",
+      "cardType": "припас",
+      "descriptionSha256": "9523d1c0446fe2150f908311fe1ededd722c4cce312ec2536d79b0f465fd42aa",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "7821b25ae76379e47de43c0e55100b4d6e1d810a60318d6e4f301b62ba898f45",
+      "colorEvidence": {
+        "page": 73,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "204",
+      "name": "Футбольный шлем",
+      "cardType": "припас",
+      "descriptionSha256": "ddb23f2d69e353c5163460d17f23db86af7d59e46d1c3e76a895484be3acb2af",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "dde76eeaddab89fe62cb6da195e9e35eb6377f36f61712e2e146e8bfcdbdfaef",
+      "colorEvidence": {
+        "page": 74,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Паралич",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "205",
+      "name": "Часы",
+      "cardType": "припас",
+      "descriptionSha256": "501ce24407734de578b25bdb0a3a1e69470fa3c04ef6842b8e6c65bd7338e9e8",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "d2074ea58a04413a828e8bbcd3b4516edf2aecc05afd5e6d6a326881f68510eb",
+      "colorEvidence": {
+        "page": 74,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "206",
+      "name": "Шокер",
+      "cardType": "припас",
+      "descriptionSha256": "5361ef35b91bc04edb606aac6b44519bb59c58f71b538a0099398d88d304f356",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "c939869bb0ae424e0ea0b09c7b1649c1e1571838d7c623a69ae8c5945ab0c578",
+      "colorEvidence": {
+        "page": 74,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Молчание",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "207",
+      "name": "Шприц",
+      "cardType": "припас",
+      "descriptionSha256": "d736a14dd8e28d63876a32c6a02aa2f116cd7775ec30545346276b0b8864f0f2",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "763f11e9af23f8ef1e0b1fb995f4904a5ee4726a0fcd88dc10a844783396a319",
+      "colorEvidence": {
+        "page": 74,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Бессмертие",
+        "Иммунитет на голосовании",
+        "Опасная личность"
+      ],
+      "tags": []
+    },
+    {
+      "id": "208",
+      "name": "Энергетический батончик",
+      "cardType": "припас",
+      "descriptionSha256": "095ba03ea710c20ce9fe2ce1ae1ae6e86fc6eeefb4e52c6855666f11e39daddf",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "e0ebb678da6bdf27f175fda64810f9e33b3e823e2d57752d83c8971cca682137",
+      "colorEvidence": {
+        "page": 74,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "209",
+      "name": "Яд",
+      "cardType": "припас",
+      "descriptionSha256": "76ddcb71fce7f756a7768cb73b9ba9c36aa506f7311e1922127524c42522a4ab",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "50b7963bab368e132a16220230847393dffb7007c4dc89974291dbc686747a87",
+      "colorEvidence": {
+        "page": 75,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [
+        "Отравление"
+      ],
+      "tags": [
+        "Отравление"
+      ]
+    },
+    {
+      "id": "210",
+      "name": "Ящик с инструментами",
+      "cardType": "припас",
+      "descriptionSha256": "580f5c694a3231a32324d37707614286a6f9934dbd807e12ecac4aa371210909",
+      "cardColor": "чёрно-жёлтый",
+      "imageSha256": "eac066efba08697688eeed55ebafc0a1299fbe926732edc5122e40f0dde68e17",
+      "colorEvidence": {
+        "page": 75,
+        "rgb": [
+          16,
+          16,
+          16
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-dc943632cc4f",
+      "name": "Айтишник",
+      "cardType": "наёмник",
+      "descriptionSha256": "e1d141de540b5acdc07e0714922c80da17730dd7467853172ceaecc469f18ea9",
+      "cardColor": "голубой",
+      "imageSha256": "b6521979ad87bf1283139385fbf45303a7cd5940462943cc08dd4f31f08e22ee",
+      "colorEvidence": {
+        "page": 76,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [
+        "Радиация"
+      ],
+      "tags": []
+    },
+    {
+      "id": "merc-821f693af169",
+      "name": "Аллигатор",
+      "cardType": "наёмник",
+      "descriptionSha256": "784341000b38f9c081b5284554aa69dbd528e2bd6dd10d352e22afa228f42a36",
+      "cardColor": "фиолетовый",
+      "imageSha256": "0cc4a32a6ef1938a4a48e433ed68d2807dfb61416fefda3c6e1b10808241aa53",
+      "colorEvidence": {
+        "page": 76,
+        "rgb": [
+          112,
+          80,
+          112
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-5a2ee5cce396",
+      "name": "Близняшки",
+      "cardType": "наёмник",
+      "descriptionSha256": "e934b30449e1e7574a50ce3d61b9ebb81471a9f8c56cde8c492c28f5cfff89cd",
+      "cardColor": "голубой",
+      "imageSha256": "934dfa7e5098fdc669966d3da04b407fc0bac8e13668bb320d418d66ae1b042f",
+      "colorEvidence": {
+        "page": 76,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-9eee52e01b8a",
+      "name": "Братья Панкис",
+      "cardType": "наёмник",
+      "descriptionSha256": "7686c347c27b59881105250f0d1f8855d6a0a4fe6868ff986ee17e4301f09861",
+      "cardColor": "фиолетовый",
+      "imageSha256": "50c49f180ffd76a3b857edbdcd8298c1517d5151ce0e620ea16fc9ffc4d92e13",
+      "colorEvidence": {
+        "page": 77,
+        "rgb": [
+          80,
+          64,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Изгнание"
+      ]
+    },
+    {
+      "id": "merc-24c57c40cf9a",
+      "name": "Бруно",
+      "cardType": "наёмник",
+      "descriptionSha256": "e9196ab87db233753ded4d9374f4c3892a6abd6935a3b5b757f6fddbf9488bb4",
+      "cardColor": "жёлтый",
+      "imageSha256": "dbff924539316e2af1eb3fe93db1050bc9097eda9fc4114d22c95ed83f9edf94",
+      "colorEvidence": {
+        "page": 77,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-4061bf8cd0df",
+      "name": "Верзила Джек",
+      "cardType": "наёмник",
+      "descriptionSha256": "80c004f786396c829d699c09ccb1e66e025ea147a7f0ae0858eb472f6d173911",
+      "cardColor": "красный",
+      "imageSha256": "eee02f00871a96bc73e674557c4a48c34587973658b7b07fbb838e74739bce63",
+      "colorEvidence": {
+        "page": 77,
+        "rgb": [
+          224,
+          48,
+          32
+        ]
+      },
+      "effects": [
+        "Паралич",
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "merc-46dc4ba99615",
+      "name": "Гайка",
+      "cardType": "наёмник",
+      "descriptionSha256": "c85b3543270d666cea95067b41098696150eb987eed33ae3b72fcb1920fd41bc",
+      "cardColor": "коричневый",
+      "imageSha256": "ef004e0e5c1aaea40adc7df0868381f18412959a99fae9c0bd3fe980e7c9f224",
+      "colorEvidence": {
+        "page": 78,
+        "rgb": [
+          112,
+          64,
+          0
+        ]
+      },
+      "effects": [
+        "Блокировка способностей"
+      ],
+      "tags": []
+    },
+    {
+      "id": "merc-cbfcb1bed9ca",
+      "name": "Группа Альфа",
+      "cardType": "наёмник",
+      "descriptionSha256": "6aa151b6959100a31a568b00c646dad56d409ef20b7ded08713d15b7b09183cd",
+      "cardColor": "зелёный",
+      "imageSha256": "5908349ef58b19afe129ad8592ebcc7804fca86fddc252fbe7d6f9bfd0723531",
+      "colorEvidence": {
+        "page": 78,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-698717bd315e",
+      "name": "Губернатор",
+      "cardType": "наёмник",
+      "descriptionSha256": "749c8b3dc6b8d5c916108938c1da2afc46967d3a95950cbdbdf6a7044f912bea",
+      "cardColor": "тёмно-синий",
+      "imageSha256": "39fb4f201eb8c97e0722c34e2b10e36a35856f8ccbc433426cbdbada0cc3b33c",
+      "colorEvidence": {
+        "page": 78,
+        "rgb": [
+          0,
+          48,
+          64
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-12f6e896cb1c",
+      "name": "Дантист",
+      "cardType": "наёмник",
+      "descriptionSha256": "ecc59686a052ea746488cc201846660a0f395a65e8aab9eec491eeb3c47950db",
+      "cardColor": "оранжевый",
+      "imageSha256": "9c853f9aeeb7614eef0e5d6a5bebaee81d84a34a0c74eed1bd6c624665af4d0c",
+      "colorEvidence": {
+        "page": 78,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-53b6854621a5",
+      "name": "Диего и Пинч",
+      "cardType": "наёмник",
+      "descriptionSha256": "b2b80701d613a474e2611403d7d099c687cb0a3acb70783f95ca57d2b270e3d2",
+      "cardColor": "бирюзовый",
+      "imageSha256": "0895842bb108e35eeeaa225f72022caccad8747f70e614ddcb01f272308e7b0a",
+      "colorEvidence": {
+        "page": 79,
+        "rgb": [
+          0,
+          112,
+          128
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-2b28ae0dc51e",
+      "name": "Дровосек",
+      "cardType": "наёмник",
+      "descriptionSha256": "878449f7b724e121e7af6f26cae460e218448821c6a9fc71bb8355baca9f1584",
+      "cardColor": "оранжевый",
+      "imageSha256": "11e3983d223a0b815a45d6e1bcd91b688e488e3b69c3e424876fc4b48a03a6b7",
+      "colorEvidence": {
+        "page": 79,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Ярость"
+      ],
+      "tags": []
+    },
+    {
+      "id": "merc-fc361bea1ce0",
+      "name": "Журналист",
+      "cardType": "наёмник",
+      "descriptionSha256": "cab2d4f4f80dfa47bb152d3621a7057f28d17c4fe026d44ff95be5b97204e8ce",
+      "cardColor": "оранжевый",
+      "imageSha256": "0fad89ad175671a079803e15f70698120f28222f5d9e5fcfc06951254998bdff",
+      "colorEvidence": {
+        "page": 80,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-f54f58cf08df",
+      "name": "Игрок",
+      "cardType": "наёмник",
+      "descriptionSha256": "724bf7de1588ab9f507483cf23d4eb0cc4fd537c0cb4e61b3686f0881e5ad4fd",
+      "cardColor": "зелёный",
+      "imageSha256": "5bb209abefcffc4fce0d40f64347fa2ba2c5445fdd25f0151118e354c4940f1d",
+      "colorEvidence": {
+        "page": 80,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-5eb29c7acba1",
+      "name": "Капитан Шляпа",
+      "cardType": "наёмник",
+      "descriptionSha256": "0c242c2c075afb6a49fdaff8d251a7dff3d040f5d545d0508dd3b24571b29431",
+      "cardColor": "голубой",
+      "imageSha256": "aa53f75c61605ebccecbd105f347ac8fe4b2e90077af77fb45e62c4caddb1931",
+      "colorEvidence": {
+        "page": 80,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-5c5258da08e6",
+      "name": "Кевин Хряк",
+      "cardType": "наёмник",
+      "descriptionSha256": "a46ea36e0a969d36355e9b7cf7659fdf67518ec069942a5837b251a0ad0d4f53",
+      "cardColor": "сиреневый",
+      "imageSha256": "a706b7927ca96c6ec6c36de15e2895e93e49feea5e7e764be3809ae3ec2b5de8",
+      "colorEvidence": {
+        "page": 80,
+        "rgb": [
+          192,
+          160,
+          192
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-9c8dce51471a",
+      "name": "Лапка",
+      "cardType": "наёмник",
+      "descriptionSha256": "1705b56c9419f58d34749ba734ceb212a7404bbc0f729868830f79dc45c736a0",
+      "cardColor": "оливковый",
+      "imageSha256": "f067e130cee31a81b7e75aea9555fbd807cb5794bb5d391810c61646563c54f3",
+      "colorEvidence": {
+        "page": 80,
+        "rgb": [
+          112,
+          128,
+          64
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-05140b85becd",
+      "name": "Леди Ди",
+      "cardType": "наёмник",
+      "descriptionSha256": "24108ae6a122dc50f221c8284f3055ae018d4eeca434e6bdfc44a355008073ce",
+      "cardColor": "жёлтый",
+      "imageSha256": "0b7788bc5729e183ee8b79fcc0b97804a8ba12bbc255790b126d4aafd6cb8d74",
+      "colorEvidence": {
+        "page": 81,
+        "rgb": [
+          255,
+          240,
+          0
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-d16d6090edf9",
+      "name": "Лунатик",
+      "cardType": "наёмник",
+      "descriptionSha256": "2f3318465021252e396551c613fee19df2bdd3ee3977ce2402b12fe863dc92e4",
+      "cardColor": "зелёный",
+      "imageSha256": "476d90a2d293f7121a453684f11d23b7d2ffde7ad51e57ed81fa9a246cc29d5f",
+      "colorEvidence": {
+        "page": 81,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-7176477569b7",
+      "name": "Лысый Сэм",
+      "cardType": "наёмник",
+      "descriptionSha256": "b060db03c2fd816a3f393c3a8c230a959e75fcd0995c66f7bf0fde457bff5e90",
+      "cardColor": "зелёный",
+      "imageSha256": "e0d98d1fe6dea639183c1706ab3db3f4fab786f4f24f820ee4cef6e850b57ed5",
+      "colorEvidence": {
+        "page": 81,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [
+        "Телохранитель"
+      ],
+      "tags": []
+    },
+    {
+      "id": "merc-c5dbfaed1581",
+      "name": "Майор",
+      "cardType": "наёмник",
+      "descriptionSha256": "ebabe4ddf7eb2272b906707365496684dacee2b7c38868abf13026edcc2e5e6a",
+      "cardColor": "зелёный",
+      "imageSha256": "3ea89c85ff44253a8e35622fce032a79b4fe2e95b113470c61f91446590459b1",
+      "colorEvidence": {
+        "page": 82,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-0b49c1dfca24",
+      "name": "Оливия",
+      "cardType": "наёмник",
+      "descriptionSha256": "1be797f6e972bb075359c33ae6ef60753d35983e422cef031e384dd8db13ccd2",
+      "cardColor": "тёмно-зелёный",
+      "imageSha256": "8955bd16350f96c589be55f5c02f9e2a8b71de958be1aa27e8169f1605795424",
+      "colorEvidence": {
+        "page": 82,
+        "rgb": [
+          64,
+          128,
+          48
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-cf247539e67d",
+      "name": "Офицер Майк",
+      "cardType": "наёмник",
+      "descriptionSha256": "b75b827eca8d3304ef6eeb805cd7636c1d1ce3fb0984aaecb999e9ea4e15b4c5",
+      "cardColor": "голубой",
+      "imageSha256": "d450046b5a9b44aca96a42bdfe5d48226f3011045497eeb49eb8b567a0f06100",
+      "colorEvidence": {
+        "page": 82,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "merc-48ada16177e8",
+      "name": "Офицер Эшли",
+      "cardType": "наёмник",
+      "descriptionSha256": "e8276037fe55e36543c3b0624045abe2ad61446f1a1fd9d7a0ee697a1f591b88",
+      "cardColor": "голубой",
+      "imageSha256": "076dbba7394bc6504502d8df193476c11043c9bdbc39d4ff708615aabf51c781",
+      "colorEvidence": {
+        "page": 82,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-41ff2c2b089e",
+      "name": "Палач",
+      "cardType": "наёмник",
+      "descriptionSha256": "a9819bae5adcbb48848641a79655301acb6be5c842d6d773962fe6ef9f4a6fb3",
+      "cardColor": "оранжевый",
+      "imageSha256": "985e61ea9fd3b63b326260af14b99e5b57d155fc496e06fc90a814c17de9fc66",
+      "colorEvidence": {
+        "page": 83,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-36bb71a0cd98",
+      "name": "Пинк Гай",
+      "cardType": "наёмник",
+      "descriptionSha256": "1e66a9410ca97cff0ab10a7001349f89c260b92215bd52a0d5d3e0394dd9b208",
+      "cardColor": "розовый",
+      "imageSha256": "476b4a3d980eb9e13c1e990201f89fecf63305bef5f442dc15b40ce81be42da7",
+      "colorEvidence": {
+        "page": 83,
+        "rgb": [
+          255,
+          128,
+          224
+        ]
+      },
+      "effects": [],
+      "tags": [
+        "Изгнание"
+      ]
+    },
+    {
+      "id": "merc-9f472be641c1",
+      "name": "Рикардо",
+      "cardType": "наёмник",
+      "descriptionSha256": "fb6e95e946f76b5f84b4c81cd6571913965d121848ad4b5319c92dd406ae16fc",
+      "cardColor": "голубой",
+      "imageSha256": "edbc22d5ff2b506ff2fcc7c47b66cac29a3dbe17cea6ba5a32bc226c60b7de6d",
+      "colorEvidence": {
+        "page": 83,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-4dbab11b6147",
+      "name": "Сахарок",
+      "cardType": "наёмник",
+      "descriptionSha256": "0cdeed7b413381aed92b5f679c32c6896094f07ba854e070bbd0fb23f8f45ac7",
+      "cardColor": "зелёный",
+      "imageSha256": "798ff2966b02945b2d01a709be9a388a58cea5819fa327e14a13cd656335d4d1",
+      "colorEvidence": {
+        "page": 83,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-473482d25820",
+      "name": "Таракан",
+      "cardType": "наёмник",
+      "descriptionSha256": "e7c1a33bea995240a0b6a310367a83ee6269868d1d765523a6c335512d4740d0",
+      "cardColor": "оранжевый",
+      "imageSha256": "c6fd9949ae576fc31b8c5f9770d1dd7adfc79cc43137fcab870e58d7a4c2f8d6",
+      "colorEvidence": {
+        "page": 84,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [
+        "Забей"
+      ],
+      "tags": [
+        "Перемещение"
+      ]
+    },
+    {
+      "id": "merc-d98e1ee5930c",
+      "name": "Чарли Браун",
+      "cardType": "наёмник",
+      "descriptionSha256": "ad13ac71dcd857928745cda8ba0ba82d53de7c08518d4d353b302bd1b0c21d14",
+      "cardColor": "оранжевый",
+      "imageSha256": "99213b7809e87f7b1767544f6aceb89b989748a20c952e970e3e64931fda05d2",
+      "colorEvidence": {
+        "page": 84,
+        "rgb": [
+          240,
+          128,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-a5b6a7f844d1",
+      "name": "Черри",
+      "cardType": "наёмник",
+      "descriptionSha256": "58b8919702d5e44eb84612a25e1577ab96c271f2741f07c64cb05e6e5c6a71c8",
+      "cardColor": "красный",
+      "imageSha256": "881f03c874da0d79b2c586f3dd9f67a725e64c865a3cef5a5319cc41c156debf",
+      "colorEvidence": {
+        "page": 84,
+        "rgb": [
+          192,
+          32,
+          16
+        ]
+      },
+      "effects": [
+        "Отравление",
+        "Связь жизней",
+        "Опасная личность"
+      ],
+      "tags": [
+        "Отравление"
+      ]
+    },
+    {
+      "id": "merc-ecce80b11052",
+      "name": "Шарлота",
+      "cardType": "наёмник",
+      "descriptionSha256": "fe69075f6627de33d69375998b4fd2996b331b0907adaa3d61f4367fee79d791",
+      "cardColor": "зелёный",
+      "imageSha256": "315675acbfebb0d3bf92bbb00188ed9214178c4bb324fdd024fcb9914c2dcbd2",
+      "colorEvidence": {
+        "page": 85,
+        "rgb": [
+          176,
+          208,
+          32
+        ]
+      },
+      "effects": [],
+      "tags": []
+    },
+    {
+      "id": "merc-8fed62d9f046",
+      "name": "Швейцар",
+      "cardType": "наёмник",
+      "descriptionSha256": "362c26a174e5e14c2f1147987205e44ce71bd617e0939d9009ca888a8d986d8a",
+      "cardColor": "голубой",
+      "imageSha256": "cd107b7c6b7324ee1bb99aa5002a2bc49de33d0292a213fad2ee06fde73e3652",
+      "colorEvidence": {
+        "page": 85,
+        "rgb": [
+          80,
+          160,
+          240
+        ]
+      },
+      "effects": [],
+      "tags": []
+    }
+  ]
+}

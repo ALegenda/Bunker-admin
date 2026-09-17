@@ -21,6 +21,8 @@ export function cardMarkup(c: Card, image: string) {
     ...attrs.activationTime,
     attrs.usageFrequency,
     ...attrs.tags,
+    ...(attrs.effects?.length ? ['эффекты: ' + attrs.effects.join(', ')] : []),
+    ...(attrs.cardColor ? ['цвет: ' + attrs.cardColor] : []),
     attrs.usageLocation.length ? 'используется, находясь ' + attrs.usageLocation.join(', ') : '',
   ]
     .filter(Boolean)

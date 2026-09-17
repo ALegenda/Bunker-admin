@@ -9,6 +9,8 @@ const fields = [
   ['attributes.usageFrequency', 'Частота применения'],
   ['attributes.usageLocation', 'Место применения'],
   ['attributes.tags', 'Теги'],
+  ['attributes.cardColor', 'Цвет карточки'],
+  ['attributes.effects', 'Накладываемые эффекты'],
   ['image', 'Изображение'],
   ['kind', 'Характер изменения'],
   ['note', 'Комментарий для сводки'],

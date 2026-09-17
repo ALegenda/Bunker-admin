@@ -3,7 +3,12 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { PublicCard } from '../../shared/contracts.js';
-import { attributeOptions, emptyAttributeFilters, matchesCard } from '../src/card-attributes.js';
+import {
+  attributeOptions,
+  compactAttributes,
+  emptyAttributeFilters,
+  matchesCard,
+} from '../src/card-attributes.js';
 import { CardAttributes, CardAttributeFilters } from '../src/components/CardAttributes.js';
 
 const card: PublicCard = {
@@ -73,4 +78,51 @@ test('options count cards once and preserve obsolete selections so they can be c
     ),
     [],
   );
+});
+
+test('compact cards expose overflow in native disclosure without nested buttons or lost attributes', () => {
+  const enriched = {
+    ...card,
+    attributes: {
+      ...card.attributes,
+      cardColor: 'голубой' as const,
+      effects: ['Паралич', 'Бессмертие'],
+      tags: ['Голосование', 'металлический', 'Защита', 'Вылазка', 'Тег с очень длинным названием'],
+    },
+  };
+  const html = renderToStaticMarkup(<CardAttributes card={enriched} compact />);
+  assert.match(html, /<details class="attribute-overflow">/);
+  assert.match(html, /<summary>/);
+  assert.match(html, /Ещё /);
+  for (const value of ['Паралич', 'Бессмертие', 'голубой', ...enriched.attributes.tags])
+    assert.ok(html.includes(value));
+  assert.doesNotMatch(html, /<button/);
+  assert.match(html, /color-swatch/);
+  const full = renderToStaticMarkup(<CardAttributes card={enriched} />);
+  assert.doesNotMatch(full, /Ещё /);
+  assert.match(full, /<dt>Эффекты<\/dt>/);
+  const filters = { ...emptyAttributeFilters(), effects: ['Паралич'], cardColor: ['голубой'] };
+  assert.ok(matchesCard(enriched, 'ПАРАЛИЧ', '', filters));
+  assert.ok(!matchesCard(enriched, '', '', { ...filters, cardColor: ['жёлтый'] }));
+});
+
+test('compact preview prioritizes selected values and defers duplicate labels without losing groups', () => {
+  const enriched = {
+    ...card,
+    attributes: {
+      ...card.attributes,
+      cardColor: 'голубой' as const,
+      effects: ['Бессмертие', 'Паралич'],
+      tags: ['Бессмертие', 'Голосование'],
+    },
+  };
+  const filters = { ...emptyAttributeFilters(), effects: ['Паралич'], tags: ['Голосование'] };
+  const preview = compactAttributes(enriched, filters);
+  assert.deepEqual(preview.visible.slice(0, 2), [
+    { key: 'effects', value: 'Паралич' },
+    { key: 'tags', value: 'Голосование' },
+  ]);
+  assert.equal(new Set(preview.visible.map((item) => item.value)).size, preview.visible.length);
+  assert.ok(preview.hidden.some((item) => item.key === 'tags' && item.value === 'Бессмертие'));
+  assert.equal(preview.visible.length + preview.hidden.length, preview.total);
 });

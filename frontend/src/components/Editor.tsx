@@ -138,28 +138,29 @@ export function Editor({ initial }: { initial: Workspace }) {
             {!filtered.length && <p role="status">Нет карточек с такими условиями.</p>}
             <div className="card-list" id="card-list">
               {filtered.map((c) => (
-                <button
-                  key={c.id}
-                  className={c.id === selected ? 'selected' : ''}
-                  onClick={() => {
-                    setSelected(c.id);
-                    if (c.id !== selected) {
-                      setHistory(null);
-                      setHistoryError('');
-                    }
-                  }}
-                >
-                  {c.image ? (
-                    <img src={c.image} alt="" loading="lazy" />
-                  ) : (
-                    <span className="mini-placeholder">Б</span>
-                  )}
-                  <span>
-                    {c.name}
-                    <small>{c.cardType}</small>
-                    <CardAttributes card={c} />
-                  </span>
-                </button>
+                <div className="card-list-item" key={c.id}>
+                  <button
+                    className={c.id === selected ? 'selected' : ''}
+                    onClick={() => {
+                      setSelected(c.id);
+                      if (c.id !== selected) {
+                        setHistory(null);
+                        setHistoryError('');
+                      }
+                    }}
+                  >
+                    {c.image ? (
+                      <img src={c.image} alt="" loading="lazy" />
+                    ) : (
+                      <span className="mini-placeholder">Б</span>
+                    )}
+                    <span>
+                      {c.name}
+                      <small>{c.cardType}</small>
+                    </span>
+                  </button>
+                  <CardAttributes card={c} compact selected={attributes} />
+                </div>
               ))}
             </div>
           </aside>

@@ -1,3 +1,4 @@
+import { cardColorNames } from './card-metadata.js';
 import { z } from 'zod';
 import { normalizeDescription } from './rich-text.js';
 export const attributes = z
@@ -5,9 +6,17 @@ export const attributes = z
     activationTime: z.array(z.string().max(80)).max(10).default([]),
     usageFrequency: z.string().max(80).default(''),
     usageLocation: z.array(z.string().max(120)).max(10).default([]),
+    cardColor: z.enum(['', ...cardColorNames]).optional(),
+    effects: z.array(z.string().trim().min(1).max(120)).max(30).optional(),
     tags: z.array(z.string().max(120)).max(50).default([]),
   })
-  .default({ activationTime: [], usageFrequency: '', usageLocation: [], tags: [] });
+  .default({ activationTime: [], usageFrequency: '', usageLocation: [], tags: [] })
+  .transform((value) => {
+    const result = { ...value };
+    if (!result.cardColor) delete result.cardColor;
+    if (!result.effects?.length) delete result.effects;
+    return result;
+  });
 export const cardSchema = z.object({
   id: z.string().min(1).max(100),
   name: z.string().min(1).max(250),

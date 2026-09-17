@@ -62,6 +62,8 @@ function attributesChangesText(after: Card['attributes'], before: Card['attribut
     usageFrequency: 'Частота применения',
     usageLocation: 'Место применения',
     tags: 'Теги',
+    cardColor: 'Цвет карточки',
+    effects: 'Накладываемые эффекты',
   };
   return (Object.keys(labels) as (keyof Card['attributes'])[])
     .filter((key) => stable(after?.[key]) !== stable(before?.[key]))

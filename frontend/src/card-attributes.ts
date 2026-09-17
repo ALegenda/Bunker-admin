@@ -2,6 +2,8 @@ import type { PublicCard } from '../../shared/contracts.js';
 import { descriptionText } from '../../shared/rich-text.js';
 
 export const attributeLabels = {
+  cardColor: 'Цвет карточки',
+  effects: 'Эффекты',
   activationTime: 'Время',
   usageFrequency: 'Частота',
   usageLocation: 'Место',
@@ -11,6 +13,8 @@ export type AttributeKey = keyof typeof attributeLabels;
 export const attributeKeys = Object.keys(attributeLabels) as AttributeKey[];
 export type AttributeFilters = Record<AttributeKey, string[]>;
 export const emptyAttributeFilters = (): AttributeFilters => ({
+  cardColor: [],
+  effects: [],
   activationTime: [],
   usageFrequency: [],
   usageLocation: [],
@@ -18,7 +22,7 @@ export const emptyAttributeFilters = (): AttributeFilters => ({
 });
 export function attributeValues(card: PublicCard, key: AttributeKey): string[] {
   const value = card.attributes[key];
-  return [...new Set((Array.isArray(value) ? value : [value]).filter(Boolean))];
+  return [...new Set((Array.isArray(value) ? value : value ? [value] : []).filter(Boolean))];
 }
 export function attributeOptions(cards: PublicCard[], key: AttributeKey, selected: string[] = []) {
   const counts = new Map<string, number>();
@@ -46,4 +50,44 @@ export function matchesCard(
       filters[key].every((value) => attributeValues(card, key).includes(value)),
     )
   );
+}
+
+export type AttributeItem = { key: AttributeKey; value: string };
+export function attributeItems(card: PublicCard): AttributeItem[] {
+  return attributeKeys.flatMap((key) =>
+    attributeValues(card, key).map((value) => ({ key, value })),
+  );
+}
+// Include selected values first; rotate groups so several effects do not hide every tag.
+export function compactAttributes(card: PublicCard, selected?: AttributeFilters, limit = 4) {
+  const items = attributeItems(card);
+  const active = items.filter((item) => selected?.[item.key].includes(item.value));
+  const groups = (
+    [
+      'cardColor',
+      'effects',
+      'tags',
+      'activationTime',
+      'usageFrequency',
+      'usageLocation',
+    ] as AttributeKey[]
+  ).map((key) => items.filter((item) => item.key === key && !active.includes(item)));
+  const ordered = [...active];
+  const shownValues = new Set(active.map((item) => item.value.toLocaleLowerCase('ru')));
+  const repeated: AttributeItem[] = [];
+  while (groups.some((group) => group.length))
+    for (const group of groups) {
+      const item = group.shift();
+      if (item) {
+        const value = item.value.toLocaleLowerCase('ru');
+        if (shownValues.has(value)) repeated.push(item);
+        else {
+          ordered.push(item);
+          shownValues.add(value);
+        }
+      }
+    }
+  ordered.push(...repeated);
+  const count = Math.max(limit, active.length);
+  return { visible: ordered.slice(0, count), hidden: ordered.slice(count), total: items.length };
 }
