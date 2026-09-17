@@ -45,7 +45,7 @@ const labels: Record<string, string> = {
   cardType: 'Тип',
 };
 function valueText(value: unknown) {
-  return value == null || value === ''
+  return value == null || value === '' || (Array.isArray(value) && !value.length)
     ? 'не указано'
     : Array.isArray(value)
       ? value.join(', ')
@@ -56,18 +56,20 @@ export function fieldChanges(card: Card, before?: Card) {
     .filter((k) => stable(card[k]) !== stable(before?.[k]))
     .map((k) => ({ field: k, label: labels[k], before: before?.[k], after: card[k] }));
 }
-function attributesText(attrs: unknown) {
-  const labels: Record<string, string> = {
-    activationTime: 'Время',
-    usageFrequency: 'Частота',
-    usageLocation: 'Место',
+function attributesChangesText(after: Card['attributes'], before: Card['attributes']) {
+  const labels: Record<keyof Card['attributes'], string> = {
+    activationTime: 'Время применения',
+    usageFrequency: 'Частота применения',
+    usageLocation: 'Место применения',
     tags: 'Теги',
   };
-  return (
-    Object.entries(attrs || {})
-      .map(([k, v]) => `${labels[k] || k}: ${valueText(v)}`)
-      .join('; ') || 'не указаны'
-  );
+  return (Object.keys(labels) as (keyof Card['attributes'])[])
+    .filter((key) => stable(after?.[key]) !== stable(before?.[key]))
+    .map(
+      (key) =>
+        `Обновлено: ${labels[key].toLowerCase()}.\nБыло: ${valueText(before?.[key])}\nСтало: ${valueText(after?.[key])}`,
+    )
+    .join('\n\n');
 }
 export function summary(items: Change[]) {
   return groupChanges(items)
@@ -77,12 +79,14 @@ export function summary(items: Change[]) {
         group.items
           .map(({ card, before }) => {
             const heading = `### ${before ? 'Изменено' : 'Добавлено'}: ${card.name}`;
-            if (card.note?.trim()) return `${heading}\n\n${card.note.trim()}`;
+            const intro = [heading, card.note?.trim()].filter(Boolean).join('\n\n');
             if (!before)
-              return `${heading}\n\n${descriptionText(card.description) || 'Добавлен новый элемент.'}`;
+              return `${intro}\n\n${descriptionText(card.description) || 'Добавлен новый элемент.'}`;
             const details = fieldChanges(card, before)
               .map((change) => {
                 if (change.field === 'image') return 'Обновлено изображение.';
+                if (change.field === 'attributes')
+                  return attributesChangesText(card.attributes, before.attributes);
                 if (
                   change.field === 'description' &&
                   descriptionText(String(change.before ?? '')) ===
@@ -90,15 +94,14 @@ export function summary(items: Change[]) {
                 )
                   return 'Обновлено форматирование описания.';
                 const format =
-                  change.field === 'attributes'
-                    ? attributesText
-                    : change.field === 'description'
-                      ? (v: unknown) => descriptionText(String(v ?? ''))
-                      : valueText;
+                  change.field === 'description'
+                    ? (v: unknown) => descriptionText(String(v ?? ''))
+                    : valueText;
                 return `Обновлено: ${change.label.toLowerCase()}.\nБыло: ${format(change.before)}\nСтало: ${format(change.after)}`;
               })
+              .filter(Boolean)
               .join('\n\n');
-            return `${heading}\n\n${details}`;
+            return [intro, details].filter(Boolean).join('\n\n');
           })
           .join('\n\n'),
     )

@@ -120,7 +120,13 @@ export function CardForm({
       </div>
       <label>
         Комментарий для сводки
-        <textarea rows={2} value={card.note} onChange={(e) => patch({ note: e.target.value })} />
+        <textarea
+          rows={2}
+          value={card.note}
+          placeholder="Объясните, зачем внесено изменение и что важно игрокам"
+          onChange={(e) => patch({ note: e.target.value })}
+        />
+        <small>Комментарий появится перед сравнением «Было / Стало» в сводке.</small>
       </label>
     </>
   );

@@ -20,6 +20,61 @@ test('author explanation appears in summary literally', () => {
   );
 });
 
+test('author explanation supplements before/after instead of replacing it', () => {
+  const before = { id: '1', name: 'Алиби', description: 'Один раз за раунд' };
+  const card = { ...before, description: 'Один раз за игру', note: '  Выбирайте момент.  ' };
+  const text = summary(changes([before], [card]));
+  assert.match(text, /Выбирайте момент\.\n\nОбновлено: описание\./);
+  assert.match(text, /Было: Один раз за раунд\nСтало: Один раз за игру/);
+});
+
+test('new cards retain their description alongside the author explanation', () => {
+  const text = summary([
+    { card: { name: 'Новая', description: 'Описание механики', note: 'Зачем добавлена' } },
+  ]);
+  assert.match(text, /Добавлено: Новая\n\nЗачем добавлена\n\nОписание механики/);
+  assert.doesNotMatch(text, /Было:/);
+});
+
+test('summary compares only changed attributes and labels empty values', () => {
+  const before = {
+    id: '1',
+    name: 'Алиби',
+    description: 'Текст',
+    attributes: {
+      activationTime: ['Ночью'],
+      usageFrequency: 'Раз за раунд',
+      usageLocation: ['Бункер'],
+      tags: [],
+    },
+  };
+  const card = {
+    ...before,
+    note: 'Изменили ограничения',
+    attributes: {
+      ...before.attributes,
+      usageFrequency: 'Раз за игру',
+      usageLocation: [],
+      tags: ['Защита'],
+    },
+  };
+  const text = summary(changes([before], [card]));
+  assert.match(text, /Изменили ограничения/);
+  assert.match(text, /частота применения\.\nБыло: Раз за раунд\nСтало: Раз за игру/);
+  assert.match(text, /место применения\.\nБыло: Бункер\nСтало: не указано/);
+  assert.match(text, /теги\.\nБыло: не указано\nСтало: Защита/);
+  assert.doesNotMatch(text, /Ночью|время применения|характеристики/);
+});
+
+test('blank notes do not add empty paragraphs to comparisons', () => {
+  const before = { name: 'Алиби', description: 'До' };
+  const card = { ...before, description: 'После' };
+  assert.equal(
+    summary([{ before, card }]),
+    summary([{ before, card: { ...card, note: '  \n ' } }]),
+  );
+});
+
 import { migrateImages } from './model.js';
 test('image migration preserves edits and user images, upgrades prototype images', () => {
   const input = [
