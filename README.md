@@ -43,9 +43,11 @@ npm start
 
 Бот: `@bunker_vdk_bot`. Домен покупать необязательно — можно использовать постоянный HTTPS-адрес хостинга. Реальный вход требует Client ID/Client Secret из Web Login в BotFather, Allowed URLs и числового Telegram ID первого администратора.
 
-Подробно: [docs/production.md](docs/production.md). Автоматический деплой из `master`: [docs/deployment.md](docs/deployment.md). Файлы ручного запуска: `compose.production.yaml`, примеры HTTPS-прокси и ежедневных backup в `deploy/`. Рабочий сервер и CI/CD описаны в инструкции деплоя.
-
-Для переноса на Render подготовлены [минимальная конфигурация и порядок переноса](docs/render.md) и `render.yaml`.
+Размещение на Render, ресурсы, стоимость и автодеплой из `master` после CI:
+[docs/render.md](docs/render.md), конфигурация `render.yaml`.
+Общая настройка Telegram: [docs/production.md](docs/production.md).
+Прежний VPS-деплой описан в [docs/deployment.md](docs/deployment.md) и отключён
+переменной `DEPLOY_ENABLED=false`; его файлы сохранены для восстановления.
 
 ## Роли
 
