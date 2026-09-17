@@ -232,6 +232,42 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       await mkdir('tmp/backend-tests', { recursive: true });
       await writeFile('tmp/backend-tests/long-description.pdf', pdf.data);
     });
+    await t.test('ready PDF survives reload, repeated save and review after building', async () => {
+      const state = await readWorkspace();
+      const meta = {
+        revision: state.revision,
+        release: state.release,
+        changelog: state.changelog,
+        changelogStamp: '',
+      };
+      const save = async (payload: typeof meta) => {
+        const response = await app.inject({
+          method: 'PATCH',
+          url: '/api/workspace/meta',
+          headers: localHeaders,
+          payload,
+        });
+        assert.equal(response.statusCode, 200, response.body);
+        return response.json();
+      };
+      assert.equal((await save(meta)).revision, state.revision);
+      await assert.rejects(publish(jobId, state.revision), { statusCode: 409 });
+      const current = await app.inject({
+        method: 'GET',
+        url: '/api/pdf/current',
+        headers: localHeaders,
+      });
+      assert.equal(current.statusCode, 200);
+      assert.equal(current.json().job.jobId, jobId);
+      assert.equal(current.json().job.status, 'ready');
+      assert.equal(current.json().job.revision, state.revision);
+      assert.equal(
+        (await save({ ...meta, changelogStamp: changeStamp(changes(state.base, state.cards)) }))
+          .revision,
+        state.revision,
+      );
+      assert.equal((await createJob(state.revision)).id, jobId);
+    });
     await t.test(
       'release freezes PDF and changelog, advances baseline, rejects stale job',
       async () => {
@@ -251,6 +287,32 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         });
         assert.equal(page.statusCode, 200);
         assert.ok(page.body.includes('Проверка длинного описания'));
+      },
+    );
+    await t.test(
+      'published and outdated builds cannot be restored for a new revision',
+      async () => {
+        const current = await app.inject({
+          method: 'GET',
+          url: '/api/pdf/current',
+          headers: localHeaders,
+        });
+        assert.equal(current.json().job, null);
+        const state = await readWorkspace();
+        const response = await app.inject({
+          method: 'PATCH',
+          url: '/api/workspace/meta',
+          headers: localHeaders,
+          payload: {
+            revision: state.revision,
+            release: state.release + ' новая',
+            changelog: 'Новая сводка',
+            changelogStamp: '',
+          },
+        });
+        assert.equal(response.statusCode, 200);
+        assert.equal(response.json().revision, state.revision + 1);
+        await assert.rejects(publish(jobId, state.revision + 1), { statusCode: 409 });
       },
     );
     await t.test('expired worker lease returns the job to the queue', async () => {

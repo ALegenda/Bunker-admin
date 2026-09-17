@@ -61,9 +61,11 @@ export async function saveReleaseMeta(
     const old = (await c.query('SELECT * FROM workspace WHERE id=1 FOR UPDATE')).rows[0];
     if (old.revision !== input.revision)
       throw new AppError(409, 'Черновик изменился. Обновите страницу публикации.');
+    // Review confirmation does not change the exported content or invalidate its PDF.
+    const contentChanged = old.release_title !== input.release || old.changelog !== input.changelog;
     const r = await c.query(
-      'UPDATE workspace SET release_title=$1,changelog=$2,changelog_stamp=$3,revision=revision+1,updated_at=now() WHERE id=1 RETURNING revision',
-      [input.release, input.changelog, input.changelogStamp],
+      'UPDATE workspace SET release_title=$1,changelog=$2,changelog_stamp=$3,revision=revision+$4,updated_at=now() WHERE id=1 RETURNING revision',
+      [input.release, input.changelog, input.changelogStamp, contentChanged ? 1 : 0],
     );
     await audit(c, actor, 'release.prepare', 'workspace', null, input);
     return { revision: r.rows[0].revision };

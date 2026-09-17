@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react';
 import type { Workspace, PdfJob, Release } from '../../../shared/contracts.js';
 import { changes, changeStamp, summary } from '../../../shared/model.js';
+import { publicationBlocker } from '../publication-state.js';
 import { api, send, downloadDraft } from '../api.js';
 export function Publication({ initial }: { initial: Workspace }) {
-  const [recovery] = useState<{ revision: number; title: string; log: string } | null>(() => {
+  const [recovery] = useState<{
+    revision: number;
+    title: string;
+    log: string;
+    reviewed?: boolean;
+  } | null>(() => {
     try {
       const value = JSON.parse(localStorage.getItem('bunker-publication-v1') || 'null');
       return value &&
@@ -21,19 +27,36 @@ export function Publication({ initial }: { initial: Workspace }) {
     [title, setTitle] = useState(restored?.title || initial.release),
     [log, setLog] = useState(restored?.log ?? initial.changelog),
     [reviewed, setReviewed] = useState(
-      !restored &&
-        initial.changelogStamp === changeStamp(changes(initial.base, initial.cards)) &&
-        Boolean(initial.changelog),
+      restored
+        ? Boolean(restored.reviewed)
+        : initial.changelogStamp === changeStamp(changes(initial.base, initial.cards)) &&
+            Boolean(initial.changelog),
     ),
     [dirty, setDirty] = useState(Boolean(restored)),
     [job, setJob] = useState<PdfJob | null>(null),
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false),
-    [releases, setReleases] = useState<Release[]>([]);
+    [releases, setReleases] = useState<Release[]>([]),
+    [savedContent, setSavedContent] = useState({ title: initial.release, log: initial.changelog }),
+    [loadingJob, setLoadingJob] = useState(true);
+  const contentChanged = title !== savedContent.title || log !== savedContent.log;
+  const blocker = publicationBlocker({
+    busy,
+    loadingJob,
+    title,
+    log,
+    reviewed,
+    contentChanged,
+    revision,
+    job,
+  });
   useEffect(() => {
     if (!dirty) return;
     try {
-      localStorage.setItem('bunker-publication-v1', JSON.stringify({ revision, title, log }));
+      localStorage.setItem(
+        'bunker-publication-v1',
+        JSON.stringify({ revision, title, log, reviewed }),
+      );
     } catch {}
     const warn = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -41,8 +64,24 @@ export function Publication({ initial }: { initial: Workspace }) {
     };
     window.addEventListener('beforeunload', warn);
     return () => window.removeEventListener('beforeunload', warn);
-  }, [dirty, revision, title, log]);
+  }, [dirty, revision, title, log, reviewed]);
   const diff = changes(initial.base, initial.cards);
+  useEffect(() => {
+    let cancelled = false;
+    api<{ job: PdfJob | null }>('/api/pdf/current')
+      .then(({ job }) => {
+        if (!cancelled) setJob(job);
+      })
+      .catch((e) => {
+        if (!cancelled) setError(e.message);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingJob(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   useEffect(() => {
     api<{ releases: Release[] }>('/api/releases')
       .then((v) => setReleases(v.releases))
@@ -51,13 +90,23 @@ export function Publication({ initial }: { initial: Workspace }) {
   useEffect(() => {
     if (job?.status !== 'running') return;
     let cancelled = false;
+    let pending = false;
     const timer = setInterval(() => {
+      if (pending) return;
+      pending = true;
       api<PdfJob>('/api/pdf/jobs/' + job.jobId)
         .then((j) => {
-          if (!cancelled) setJob(j);
+          if (!cancelled) {
+            setJob(j);
+            setError('');
+          }
         })
         .catch((e) => {
-          if (!cancelled) setError(e.message);
+          if (!cancelled)
+            setError('Не удалось проверить готовность PDF. Повторяем автоматически. ' + e.message);
+        })
+        .finally(() => {
+          pending = false;
         });
     }, 1500);
     return () => {
@@ -65,25 +114,35 @@ export function Publication({ initial }: { initial: Workspace }) {
       clearInterval(timer);
     };
   }, [job?.jobId, job?.status]);
+  async function saveMeta() {
+    const saved = await send<{ revision: number }>(
+      '/api/workspace/meta',
+      {
+        revision,
+        release: title,
+        changelog: log,
+        changelogStamp: reviewed ? changeStamp(diff) : '',
+      },
+      'PATCH',
+    );
+    setRevision(saved.revision);
+    setSavedContent({ title, log });
+    setDirty(false);
+    try {
+      localStorage.removeItem('bunker-publication-v1');
+    } catch {}
+    return saved.revision;
+  }
   async function build() {
     setBusy(true);
     setError('');
     try {
-      const saved = await send<{ revision: number }>(
-        '/api/workspace/meta',
-        {
-          revision,
-          release: title,
-          changelog: log,
-          changelogStamp: reviewed ? changeStamp(diff) : '',
-        },
-        'PATCH',
-      );
-      setRevision(saved.revision);
-      setDirty(false);
-      localStorage.removeItem('bunker-publication-v1');
-      const j = await send<PdfJob>('/api/pdf/build', { revision: saved.revision });
-      setJob(await api<PdfJob>('/api/pdf/jobs/' + j.jobId));
+      const savedRevision = await saveMeta();
+      const j = await send<Pick<PdfJob, 'jobId' | 'status'>>('/api/pdf/build', {
+        revision: savedRevision,
+      });
+      // Keep the ID immediately so polling can recover even if the first GET fails.
+      setJob({ ...j, revision: savedRevision });
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -91,11 +150,12 @@ export function Publication({ initial }: { initial: Workspace }) {
     }
   }
   async function publish() {
-    if (!job) return;
+    if (!job || blocker) return;
     setBusy(true);
     setError('');
     try {
-      await send('/api/releases', { jobId: job.jobId, revision });
+      const savedRevision = await saveMeta();
+      await send('/api/releases', { jobId: job.jobId, revision: savedRevision });
       window.location.href = '/admin?view=publish';
     } catch (e) {
       setError((e as Error).message);
@@ -109,6 +169,10 @@ export function Publication({ initial }: { initial: Workspace }) {
           <small>ВЕРСИИ ПРАВИЛ</small>
           <h1>Готовим новый выпуск.</h1>
           <p>{diff.length} карточек изменено. После публикации обновится каталог игроков.</p>
+          <p>
+            Правки карточек сохраняются автоматически в редакторе. Здесь вы выпускаете версию для
+            игроков.
+          </p>
         </div>
       </div>
       {recovery && (
@@ -122,6 +186,7 @@ export function Publication({ initial }: { initial: Workspace }) {
           <label>
             Название выпуска
             <input
+              disabled={busy}
               value={title}
               maxLength={200}
               onChange={(e) => {
@@ -131,6 +196,7 @@ export function Publication({ initial }: { initial: Workspace }) {
             />
           </label>
           <button
+            disabled={busy}
             onClick={() => {
               if (log && !window.confirm('Заменить текущую сводку?')) return;
               setLog(summary(diff));
@@ -143,6 +209,7 @@ export function Publication({ initial }: { initial: Workspace }) {
           <label>
             Сводка для игроков
             <textarea
+              disabled={busy}
               rows={19}
               value={log}
               onChange={(e) => {
@@ -154,6 +221,7 @@ export function Publication({ initial }: { initial: Workspace }) {
           </label>
           <label className="check">
             <input
+              disabled={busy}
               type="checkbox"
               checked={reviewed}
               onChange={(e) => {
@@ -163,7 +231,15 @@ export function Publication({ initial }: { initial: Workspace }) {
             />
             Сводка проверена и готова для игроков
           </label>
-          <button disabled={busy || job?.status === 'running' || !title.trim()} onClick={build}>
+          <button
+            disabled={
+              busy ||
+              loadingJob ||
+              (job?.status === 'running' && job.revision === revision) ||
+              !title.trim()
+            }
+            onClick={build}
+          >
             Собрать PDF текущей версии
           </button>
           {job && (
@@ -172,9 +248,13 @@ export function Publication({ initial }: { initial: Workspace }) {
                 'Собираем PDF…'
               ) : job.status === 'ready' ? (
                 <>
-                  <strong>PDF готов · {job.pages} страниц</strong>
+                  <strong>PDF готов{job.pages ? ` · ${job.pages} страниц` : ''}</strong>
                   <p>
-                    <a href={job.url} target="_blank" rel="noreferrer">
+                    <a
+                      href={job.url || `/api/pdf/jobs/${job.jobId}/file`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Открыть PDF ↗
                     </a>{' '}
                     ·{' '}
@@ -194,18 +274,15 @@ export function Publication({ initial }: { initial: Workspace }) {
           )}
           <button
             className="primary"
-            disabled={
-              busy ||
-              dirty ||
-              !reviewed ||
-              !log.trim() ||
-              job?.status !== 'ready' ||
-              job.revision !== revision
-            }
+            disabled={Boolean(blocker)}
+            aria-describedby="publication-status"
             onClick={publish}
           >
             Опубликовать для игроков
           </button>
+          <p id="publication-status" role="status">
+            {blocker || 'Всё готово. Можно опубликовать версию для игроков.'}
+          </p>
           {error && <p role="alert">{error}</p>}
         </section>
         <section className="panel changelog">

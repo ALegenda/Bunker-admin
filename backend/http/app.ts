@@ -13,7 +13,7 @@ import { config } from '../config.js';
 import { pool } from '../db/index.js';
 import { readWorkspace, saveWorkspace, mergeLegacyDraft } from '../services/workspace.js';
 import { storeImage, getObject, storageHealthy } from '../services/storage.js';
-import { createJob, getJob, publish } from '../services/jobs.js';
+import { currentJob, jobResponse, createJob, getJob, publish } from '../services/jobs.js';
 import { renderChangelog } from '../services/print-template.js';
 import { AppError } from '../domain/schema.js';
 const revisionBody = z.object({ revision: z.number().int().nonnegative() });
@@ -126,17 +126,11 @@ export async function createApp() {
       .code(202)
       .send({ jobId: job.id, status: job.status === 'queued' ? 'running' : job.status });
   });
-  app.get('/api/pdf/jobs/:id', async (req) => {
-    const job = await getJob(idOf(req.params));
-    return {
-      ...job.report,
-      jobId: job.id,
-      revision: job.workspace_revision,
-      status: job.status === 'queued' ? 'running' : job.status,
-      error: job.error,
-      url: job.status === 'ready' ? `/api/pdf/jobs/${job.id}/file` : undefined,
-    };
+  app.get('/api/pdf/current', async () => {
+    const job = await currentJob();
+    return { job: job ? jobResponse(job) : null };
   });
+  app.get('/api/pdf/jobs/:id', async (req) => jobResponse(await getJob(idOf(req.params))));
   app.get('/api/pdf/jobs/:id/file', async (req, reply) => {
     const job = await getJob(idOf(req.params));
     if (job.status !== 'ready') throw new AppError(409, 'PDF ещё не собран');

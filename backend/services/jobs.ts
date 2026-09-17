@@ -6,7 +6,7 @@ import { transaction, pool } from '../db/index.js';
 import { readWorkspace } from './workspace.js';
 import { AppError } from '../domain/schema.js';
 import { changes, changeStamp } from '../../shared/model.js';
-export const TEMPLATE_VERSION = 'rules-html-v2';
+export const TEMPLATE_VERSION = 'rules-html-v3';
 export async function createJob(expectedRevision: number) {
   const result = await transaction(async (c) => {
     await c.query('SELECT id FROM workspace WHERE id=1 FOR UPDATE');
@@ -36,6 +36,24 @@ export async function createJob(expectedRevision: number) {
     revision: expectedRevision,
   });
   return result;
+}
+export async function currentJob() {
+  const r = await pool.query(
+    `SELECT j.id FROM pdf_jobs j JOIN workspace w ON w.id=1 AND w.revision=j.workspace_revision
+     WHERE j.template_version=$1 ORDER BY j.created_at DESC LIMIT 1`,
+    [TEMPLATE_VERSION],
+  );
+  return r.rowCount ? getJob(r.rows[0].id) : null;
+}
+export function jobResponse(job: any) {
+  return {
+    ...job.report,
+    jobId: job.id,
+    revision: job.workspace_revision,
+    status: job.status === 'queued' ? 'running' : job.status,
+    error: job.error,
+    url: job.status === 'ready' ? `/api/pdf/jobs/${job.id}/file` : undefined,
+  };
 }
 export async function getJob(id: string) {
   const r = await pool.query(
