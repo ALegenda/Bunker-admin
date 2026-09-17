@@ -18,6 +18,7 @@ COPY backend/db/migrations ./backend/db/migrations
 COPY public ./public
 COPY docs/cards.json ./docs/cards.json
 COPY resources ./resources
+COPY deploy/render/start.sh ./deploy/render/start.sh
 ENV CHROME_PATH=/usr/bin/chromium
 USER node
 CMD ["node","dist/backend/http/server.js"]

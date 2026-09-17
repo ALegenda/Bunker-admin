@@ -1,0 +1,142 @@
+# Full application: HTTPS API + scheduled PDF jobs + private S3 + managed PostgreSQL.
+# Paid resources. See docs/render.md before creating this Blueprint.
+services:
+  - type: pserv
+    name: bunker-storage
+    runtime: docker
+    repo: https://github.com/ALegenda/Bunker-admin
+    region: singapore
+    plan: 0.5c-512mb
+    branch: master
+    dockerfilePath: ./deploy/render/Minio.Dockerfile
+    autoDeployTrigger: off
+    disk:
+      name: bunker-objects
+      mountPath: /data
+      sizeGB: 5
+    envVars:
+      - key: MINIO_ROOT_USER
+        value: bunker-storage-admin
+      - key: MINIO_ROOT_PASSWORD
+        generateValue: true
+      - key: S3_ACCESS_KEY
+        value: bunker-app
+      - key: S3_SECRET_KEY
+        generateValue: true
+
+  - type: web
+    name: bunker-studio
+    runtime: docker
+    repo: https://github.com/ALegenda/Bunker-admin
+    region: singapore
+    plan: 0.5c-512mb
+    branch: master
+    dockerfilePath: ./Dockerfile
+    dockerCommand: sh deploy/render/start.sh api
+    preDeployCommand: sh deploy/render/start.sh seed
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AUTH_MODE
+        value: telegram
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: '10000'
+      # Use the exact URL assigned by Render, then the main domain at cutover.
+      - key: PUBLIC_ORIGIN
+        sync: false
+      - key: TELEGRAM_CLIENT_ID
+        sync: false
+      - key: TELEGRAM_CLIENT_SECRET
+        sync: false
+      - key: TELEGRAM_ADMIN_IDS
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bunker-db
+          property: connectionString
+      - key: S3_HOST
+        fromService:
+          type: pserv
+          name: bunker-storage
+          property: host
+      - key: S3_ACCESS_KEY
+        fromService:
+          type: pserv
+          name: bunker-storage
+          envVarKey: S3_ACCESS_KEY
+      - key: S3_SECRET_KEY
+        fromService:
+          type: pserv
+          name: bunker-storage
+          envVarKey: S3_SECRET_KEY
+      - key: S3_BUCKET
+        value: bunker
+
+  - type: cron
+    name: bunker-pdf
+    runtime: docker
+    repo: https://github.com/ALegenda/Bunker-admin
+    region: singapore
+    plan: 1c-2g
+    branch: master
+    dockerfilePath: ./Dockerfile
+    dockerCommand: sh deploy/render/start.sh worker-once
+    schedule: '*/5 * * * *'
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: AUTH_MODE
+        value: telegram
+      - key: CHROMIUM_NO_SANDBOX
+        value: 'true'
+      - key: PUBLIC_ORIGIN
+        fromService:
+          type: web
+          name: bunker-studio
+          envVarKey: PUBLIC_ORIGIN
+      - key: TELEGRAM_CLIENT_ID
+        fromService:
+          type: web
+          name: bunker-studio
+          envVarKey: TELEGRAM_CLIENT_ID
+      - key: TELEGRAM_CLIENT_SECRET
+        fromService:
+          type: web
+          name: bunker-studio
+          envVarKey: TELEGRAM_CLIENT_SECRET
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bunker-db
+          property: connectionString
+      - key: S3_HOST
+        fromService:
+          type: pserv
+          name: bunker-storage
+          property: host
+      - key: S3_ACCESS_KEY
+        fromService:
+          type: pserv
+          name: bunker-storage
+          envVarKey: S3_ACCESS_KEY
+      - key: S3_SECRET_KEY
+        fromService:
+          type: pserv
+          name: bunker-storage
+          envVarKey: S3_SECRET_KEY
+      - key: S3_BUCKET
+        value: bunker
+
+databases:
+  - name: bunker-db
+    region: singapore
+    plan: 0.1c-256mb
+    postgresMajorVersion: '17'
+    databaseName: bunker
+    user: bunker
+    diskSizeGB: 1
+    ipAllowList: []
