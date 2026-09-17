@@ -78,7 +78,11 @@ export async function security(app: FastifyInstance) {
       '/releases/:id/pdf',
     ]).has(path);
     const communityRoute = path.startsWith('/api/proposals');
-    if (path.startsWith('/api/') && !publicRoute && !communityRoute) requireRole(req, 'admin');
+    const profileRoute = path === '/api/profile';
+    const tipsRoute = path === '/api/catalog/:cardId/tips';
+    if (path.startsWith('/api/') && !publicRoute && !communityRoute && !profileRoute && !tipsRoute)
+      requireRole(req, 'admin');
     if (communityRoute) requireRole(req, 'trusted', 'admin');
+    if (profileRoute) requireRole(req, 'player', 'trusted', 'admin');
   });
 }

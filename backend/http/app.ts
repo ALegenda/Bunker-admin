@@ -1,5 +1,6 @@
 import { security } from './security.js';
 import { authRoutes } from './routes/auth.js';
+import { playerRoutes } from './routes/players.js';
 import { communityRoutes } from './routes/community.js';
 import { publicAsset } from '../services/catalog.js';
 import { saveCard, resetCard, saveReleaseMeta, cardHistory } from '../services/cards.js';
@@ -33,6 +34,7 @@ export async function createApp() {
   await security(app);
   await authRoutes(app);
   await communityRoutes(app);
+  await playerRoutes(app);
   app.setErrorHandler((error, req, reply) => {
     if (error instanceof ZodError)
       return reply.code(400).send({
@@ -191,7 +193,9 @@ export async function createApp() {
   app.setNotFoundHandler(async (req, reply) => {
     if (
       req.method === 'GET' &&
-      ['/', '/admin', '/proposals', '/users'].includes(req.url.split('?')[0])
+      ['/', '/admin', '/proposals', '/users', '/profile', '/tips', '/achievements'].includes(
+        req.url.split('?')[0],
+      )
     )
       return reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('index.html');
     return reply.code(404).send({ error: 'Страница не найдена' });

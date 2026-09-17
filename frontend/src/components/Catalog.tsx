@@ -1,5 +1,6 @@
 import { descriptionText } from '../../../shared/rich-text.js';
 import { DescriptionEditor } from './DescriptionEditor.js';
+import { CardTips } from './CardTips.js';
 import { RichDescription } from './RichDescription.js';
 import { useEffect, useMemo, useState } from 'react';
 import type { Catalog as CatalogData, PublicCard, User } from '../../../shared/contracts.js';
@@ -165,7 +166,9 @@ export function Catalog({ user }: { user: User | null }) {
       </div>
       {card && (
         <CardDialog
+          key={card.id}
           card={card}
+          user={user}
           close={() => setSelected('')}
           propose={
             trusted
@@ -183,10 +186,12 @@ export function Catalog({ user }: { user: User | null }) {
 }
 function CardDialog({
   card,
+  user,
   close,
   propose,
 }: {
   card: PublicCard;
+  user: User | null;
   close: () => void;
   propose?: () => void;
 }) {
@@ -214,6 +219,7 @@ function CardDialog({
           Скопировать ссылку на карточку
         </button>
       </p>
+      <CardTips cardId={card.id} user={user} />
     </Modal>
   );
 }

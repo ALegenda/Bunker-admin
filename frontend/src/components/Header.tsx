@@ -16,6 +16,11 @@ export function Header({
       <a className="brand" href="/">
         Б<span>•</span> <b>БУНКЕР</b>
       </a>
+      {!user && (
+        <a className="telegram" href="/profile">
+          Войти
+        </a>
+      )}
       {user && (
         <>
           <nav>
@@ -30,10 +35,22 @@ export function Header({
                 <a href="/admin?view=publish" aria-current={publish ? 'page' : undefined}>
                   Публикация
                 </a>
-                <a href="/users">Доступ</a>
+                <a href="/users">Игроки</a>
+                <a
+                  href="/achievements"
+                  aria-current={path === '/achievements' ? 'page' : undefined}
+                >
+                  Достижения
+                </a>
+                <a href="/tips" aria-current={path === '/tips' ? 'page' : undefined}>
+                  Советы
+                </a>
               </>
             )}
             {['admin', 'trusted'].includes(user.role) && <a href="/proposals">Предложения</a>}
+            <a href="/profile" aria-current={path === '/profile' ? 'page' : undefined}>
+              Мой профиль
+            </a>
           </nav>
           <div>
             <span className="user-name">{user.name}</span>

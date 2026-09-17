@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { ManageProfile } from './Profile.js';
+import { Modal } from './Catalog.js';
 import { api, send } from '../api.js';
 type Member = {
   id: string;
@@ -11,7 +13,8 @@ type Member = {
 export function Users() {
   const [users, setUsers] = useState<Member[]>([]),
     [error, setError] = useState(''),
-    [busy, setBusy] = useState('');
+    [busy, setBusy] = useState(''),
+    [selected, setSelected] = useState<Member | null>(null);
   const load = () =>
     api<{ users: Member[] }>('/api/users')
       .then((r) => setUsers(r.users))
@@ -43,7 +46,7 @@ export function Users() {
   }
   return (
     <>
-      <h1>Доступ к мастерской.</h1>
+      <h1>Игроки и доступ.</h1>
       <p>
         Игрок сначала входит через Telegram. После этого здесь можно разрешить ему вычитку или
         администрирование.
@@ -59,6 +62,7 @@ export function Users() {
                   {u.username ? '@' + u.username : 'Telegram'} · ID {u.telegram_id}
                 </small>
               </div>
+              <button onClick={() => setSelected(u)}>Профиль и начисления</button>
               <select
                 aria-label={'Роль ' + u.display_name}
                 disabled={busy === u.id}
@@ -78,6 +82,11 @@ export function Users() {
           <p>Пока никто не вошёл через Telegram.</p>
         )}
       </div>
+      {selected && (
+        <Modal title="Профиль и начисления" close={() => setSelected(null)}>
+          <ManageProfile key={selected.id} userId={selected.id} />
+        </Modal>
+      )}
     </>
   );
 }

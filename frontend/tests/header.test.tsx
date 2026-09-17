@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Header } from '../src/components/Header.js';
-test('guest header contains branding only: no navigation, login or action buttons', () => {
+test('guest header offers login without private navigation', () => {
   const html = renderToStaticMarkup(
     <Header user={null} path="/" publish={false} onLogout={() => {}} />,
   );
@@ -12,7 +12,7 @@ test('guest header contains branding only: no navigation, login or action button
   assert.ok(!html.includes('<button'));
   assert.deepEqual(
     [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]),
-    ['/'],
+    ['/', '/profile'],
   );
 });
 test('trusted header offers proposals without administrative navigation', () => {
@@ -25,6 +25,8 @@ test('trusted header offers proposals without administrative navigation', () => 
     />,
   );
   assert.ok(html.includes('href="/proposals"'));
+  assert.ok(html.includes('href="/profile"'));
+  assert.ok(!html.includes('href="/tips"'));
   assert.ok(!html.includes('href="/admin'));
   assert.ok(!html.includes('href="/users"'));
 });

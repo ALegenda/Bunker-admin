@@ -9,6 +9,9 @@ import { Publication } from './components/Publication.js';
 import { Catalog } from './components/Catalog.js';
 import { Proposals } from './components/Proposals.js';
 import { Users } from './components/Users.js';
+import { Profile } from './components/Profile.js';
+import { TipsModeration } from './components/CardTips.js';
+import { Achievements } from './components/Achievements.js';
 import './style.css';
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { error: boolean }> {
   state = { error: false };
@@ -53,11 +56,13 @@ function App() {
     );
   const allowed =
     path === '/' ||
-    (admin || path === '/users'
-      ? me.user?.role === 'admin'
-      : path === '/proposals'
-        ? ['trusted', 'admin'].includes(me.user?.role || '')
-        : false);
+    (path === '/profile'
+      ? Boolean(me.user)
+      : admin || path === '/users' || path === '/tips' || path === '/achievements'
+        ? me.user?.role === 'admin'
+        : path === '/proposals'
+          ? ['trusted', 'admin'].includes(me.user?.role || '')
+          : false);
   return (
     <>
       <Header
@@ -97,11 +102,10 @@ function App() {
             ) : (
               <>
                 <p>
-                  Для вычитки и редактирования войдите через Telegram. Права выдаёт администратор.
+                  Войдите через Telegram, чтобы открыть свой профиль. Права на советы и
+                  редактирование выдаёт администратор.
                 </p>
-                {!me.user && (
-                  <TelegramLogin />
-                )}
+                {!me.user && <TelegramLogin />}
               </>
             )}
           </section>
@@ -117,6 +121,12 @@ function App() {
           ) : (
             <p>Загружаем черновик…</p>
           )
+        ) : path === '/profile' ? (
+          <Profile onNameChange={(name) => setMe({ ...me, user: { ...me.user!, name } })} />
+        ) : path === '/achievements' ? (
+          <Achievements />
+        ) : path === '/tips' ? (
+          <TipsModeration />
         ) : path === '/users' ? (
           <Users />
         ) : (

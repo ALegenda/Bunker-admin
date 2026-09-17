@@ -49,7 +49,7 @@ export async function issueSession(identity: {
       .includes(identity.telegramId);
     const r = await c.query(
       `INSERT INTO users(id,telegram_id,display_name,username,role) VALUES($1,$2,$3,$4,$5)
-      ON CONFLICT(telegram_id) DO UPDATE SET display_name=EXCLUDED.display_name,username=EXCLUDED.username,last_login_at=now()
+      ON CONFLICT(telegram_id) DO UPDATE SET display_name=CASE WHEN users.custom_display_name THEN users.display_name ELSE EXCLUDED.display_name END,username=EXCLUDED.username,last_login_at=now()
       RETURNING id,disabled`,
       [
         randomUUID(),

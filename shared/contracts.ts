@@ -46,3 +46,45 @@ export type PdfJob = {
   url?: string;
   error?: string;
 };
+
+export type Achievement = {
+  id: string;
+  title: string;
+  description: string;
+  awardedAt: string | null;
+  target?: number;
+  progress?: number;
+};
+export type AchievementDefinition = {
+  id: string;
+  title: string;
+  description: string;
+  target: number;
+  revision: number;
+};
+export type PlayerProfile = {
+  userId: string;
+  name: string;
+  role: User['role'];
+  level: number;
+  balance: number;
+  achievements: Achievement[];
+  revision: number;
+};
+export type ProgressChange = {
+  id: string;
+  created_at: string;
+  before_data: { level: number; balance: number; achievements: Achievement[] };
+  after_data: { level: number; balance: number; achievements: Achievement[]; reason: string };
+};
+export type ProfileResponse = { profile: PlayerProfile; history: ProgressChange[] };
+export type CardTip = {
+  id: string;
+  card_id: string;
+  card_name: string;
+  author_name: string;
+  body: string;
+  status: 'pending' | 'published' | 'rejected';
+  created_at: string;
+  review_note?: string;
+};
