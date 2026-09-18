@@ -41,7 +41,7 @@ test('history identifies individual attributes and editorial changes without unc
     ['description', 'attributes.usageFrequency', 'note'],
   );
   const html = renderToStaticMarkup(<HistoryDetails entry={entry} />);
-  assert.ok(html.includes('Частота применения'));
+  assert.ok(html.includes('Кол-во использований'));
   assert.ok(html.includes('Раз за игру'));
   assert.ok(html.includes('Раз за раунд'));
   assert.ok(html.includes('<del>игру</del><ins>раунд</ins>'));

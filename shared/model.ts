@@ -45,6 +45,7 @@ const labels: Record<string, string> = {
   cardType: 'Тип',
 };
 function valueText(value: unknown) {
+  if (typeof value === 'boolean') return value ? 'да' : 'нет';
   return value == null || value === '' || (Array.isArray(value) && !value.length)
     ? 'не указано'
     : Array.isArray(value)
@@ -59,7 +60,9 @@ export function fieldChanges(card: Card, before?: Card) {
 function attributesChangesText(after: Card['attributes'], before: Card['attributes']) {
   const labels: Record<keyof Card['attributes'], string> = {
     activationTime: 'Время применения',
-    usageFrequency: 'Частота применения',
+    usageFrequency: 'Кол-во использований',
+    usageCondition: 'Условия использования',
+    dangerousPersonality: 'Опасная личность',
     usageLocation: 'Место применения',
     tags: 'Теги',
     cardColor: 'Цвет карточки',

@@ -60,7 +60,7 @@ test('summary compares only changed attributes and labels empty values', () => {
   };
   const text = summary(changes([before], [card]));
   assert.match(text, /Изменили ограничения/);
-  assert.match(text, /частота применения\.\nБыло: Раз за раунд\nСтало: Раз за игру/);
+  assert.match(text, /кол-во использований\.\nБыло: Раз за раунд\nСтало: Раз за игру/);
   assert.match(text, /место применения\.\nБыло: Бункер\nСтало: не указано/);
   assert.match(text, /теги\.\nБыло: не указано\nСтало: Защита/);
   assert.doesNotMatch(text, /Ночью|время применения|характеристики/);

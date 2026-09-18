@@ -1,5 +1,10 @@
 import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
-import { matchesCard } from '../card-attributes.js';
+import {
+  matchesCard,
+  emptyAttributeFilters,
+  filtersFromParams,
+  appendFilterParams,
+} from '../card-attributes.js';
 import { descriptionText } from '../../../shared/rich-text.js';
 import { DescriptionEditor } from './DescriptionEditor.js';
 import { CardTips } from './CardTips.js';
@@ -17,12 +22,7 @@ export function Catalog({ user }: { user: User | null }) {
   const params = useMemo(() => new URLSearchParams(location.search), []);
   const [query, setQuery] = useState(params.get('q') || ''),
     [type, setType] = useState(params.get('type') || ''),
-    [color, setColor] = useState(params.get('color') || ''),
-    [effects, setEffects] = useState<string[]>(params.getAll('effect')),
-    [tags, setTags] = useState<string[]>(params.getAll('tag')),
-    [time, setTime] = useState(params.get('time') || ''),
-    [place, setPlace] = useState(params.get('place') || ''),
-    [frequency, setFrequency] = useState(params.get('frequency') || ''),
+    [attributes, setAttributes] = useState(() => filtersFromParams(params)),
     [selected, setSelected] = useState(params.get('card') || ''),
     [propose, setPropose] = useState<PublicCard | null | false>(false);
   useEffect(() => {
@@ -34,25 +34,12 @@ export function Catalog({ user }: { user: User | null }) {
     const p = new URLSearchParams();
     if (query) p.set('q', query);
     if (type) p.set('type', type);
-    if (color) p.set('color', color);
-    for (const effect of effects) p.append('effect', effect);
-    for (const t of tags) p.append('tag', t);
-    if (time) p.set('time', time);
-    if (place) p.set('place', place);
-    if (frequency) p.set('frequency', frequency);
+    appendFilterParams(p, attributes);
     if (selected) p.set('card', selected);
     history.replaceState(null, '', '/catalog' + (p.size ? '?' + p : ''));
-  }, [query, type, tags, time, place, frequency, color, effects, selected]);
+  }, [query, type, attributes, selected]);
   if (error) return <p role="alert">{error}</p>;
   if (!data) return <p role="status">Загружаем карточки…</p>;
-  const attributes = {
-    cardColor: color ? [color] : [],
-    effects,
-    tags,
-    activationTime: time ? [time] : [],
-    usageLocation: place ? [place] : [],
-    usageFrequency: frequency ? [frequency] : [],
-  };
   const visible = data.cards.filter((c) => matchesCard(c, query, type, attributes));
   const card = data.cards.find((c) => c.id === selected),
     trusted = user?.role === 'trusted' || user?.role === 'admin';
@@ -91,32 +78,14 @@ export function Catalog({ user }: { user: User | null }) {
             open={showFilters}
             onToggle={(e) => setShowFilters(e.currentTarget.open)}
           >
-            <summary>
-              Цвет, эффекты и теги · {Object.values(attributes).flat().length} выбрано
-            </summary>
-            <CardAttributeFilters
-              cards={data.cards}
-              value={attributes}
-              onChange={(value) => {
-                setTags(value.tags);
-                setColor(value.cardColor[0] || '');
-                setEffects(value.effects);
-                setTime(value.activationTime[0] || '');
-                setPlace(value.usageLocation[0] || '');
-                setFrequency(value.usageFrequency[0] || '');
-              }}
-            />
+            <summary>Характеристики · {Object.values(attributes).flat().length} выбрано</summary>
+            <CardAttributeFilters cards={data.cards} value={attributes} onChange={setAttributes} />
           </details>
           <button
             onClick={() => {
               setQuery('');
               setType('');
-              setTags([]);
-              setColor('');
-              setEffects([]);
-              setTime('');
-              setPlace('');
-              setFrequency('');
+              setAttributes(emptyAttributeFilters());
             }}
           >
             Сбросить фильтры

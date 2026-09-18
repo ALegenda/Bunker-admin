@@ -1,3 +1,11 @@
+import {
+  colorLabels,
+  normalizeAttributes,
+  canonicalValue,
+  timeValues,
+  placeValues,
+  usageValues,
+} from '../../../shared/card-classification.js';
 import { cardColorNames, effectSuggestions } from '../../../shared/card-metadata.js';
 import { DescriptionEditor } from './DescriptionEditor.js';
 import type { Card } from '../../../shared/contracts.js';
@@ -28,8 +36,9 @@ export function CardForm({
       active.current = false;
     };
   }, []);
+  const normalized = normalizeAttributes(card.attributes);
   const patch = (value: Partial<Card>) => onChange({ ...card, ...value });
-  const attr = (key: keyof Card['attributes'], value: string | string[]) =>
+  const attr = (key: keyof Card['attributes'], value: string | string[] | boolean) =>
     patch({ attributes: { ...card.attributes, [key]: value } });
   return (
     <>
@@ -93,50 +102,103 @@ export function CardForm({
             ))}
           </select>
         </label>
-        <label>
-          Частота
-          <input
-            value={card.attributes.usageFrequency}
-            onChange={(e) => attr('usageFrequency', e.target.value)}
-          />
-        </label>
-        <label>
-          Время применения
-          <TokenInput
-            value={card.attributes.activationTime}
+        <fieldset className="attribute-choice">
+          <legend>Время</legend>
+          <AttributeChoices
+            values={normalized.activationTime}
+            options={[...timeValues]}
             onChange={(value) => attr('activationTime', value)}
           />
-        </label>
-        <label>
-          Место применения
-          <TokenInput
-            value={card.attributes.usageLocation}
+          <small>Оба пункта — дневная/ночная. Ничего не выбрано — не указано.</small>
+        </fieldset>
+        <fieldset className="attribute-choice">
+          <legend>Место</legend>
+          <AttributeChoices
+            values={normalized.usageLocation}
+            options={[...placeValues]}
             onChange={(value) => attr('usageLocation', value)}
           />
-        </label>
+          <small>Оба пункта — внутри и снаружи. Особые условия — в описании.</small>
+        </fieldset>
         <label>
-          Цвет окантовки карточки
+          Кол-во использований
           <select
-            value={card.attributes.cardColor || ''}
-            onChange={(e) => attr('cardColor', e.target.value)}
+            value={normalized.usageFrequency}
+            onChange={(e) =>
+              patch({
+                attributes: {
+                  ...normalized,
+                  usageFrequency: e.target.value,
+                  usageCondition:
+                    e.target.value === 'по условию' ? normalized.usageCondition : undefined,
+                },
+              })
+            }
           >
-            <option value="">Не указан</option>
-            {cardColorNames.map((color) => (
-              <option key={color}>{color}</option>
+            <option value="">Не указано</option>
+            {usageValues.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
             ))}
           </select>
         </label>
+        {normalized.usageFrequency === 'по условию' && (
+          <label>
+            Условия использования
+            <textarea
+              rows={2}
+              maxLength={1000}
+              value={normalized.usageCondition || ''}
+              placeholder="От чего зависит количество применений"
+              onChange={(e) =>
+                patch({ attributes: { ...normalized, usageCondition: e.target.value } })
+              }
+            />
+            <small>Укажите ограничения для каждого случая применения.</small>
+          </label>
+        )}
         <label>
-          Накладываемые эффекты через запятую
+          Накладываемые эффекты
           <TokenInput
             value={card.attributes.effects || []}
             onChange={(value) => attr('effects', value)}
           />
-          <small>Состояния, которые карта накладывает. Условия и срок действия — в описании.</small>
+          <small>
+            Через запятую. Телохранитель, заминирован и забей — эффекты. Забей нельзя снять.
+          </small>
         </label>
         <label>
-          Теги через запятую
+          Цвет карты
+          <select
+            value={normalized.cardColor || ''}
+            onChange={(e) => attr('cardColor', e.target.value)}
+          >
+            <option value="">Не указан</option>
+            {cardColorNames.map((color) => (
+              <option key={color} value={color}>
+                {colorLabels[color]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <fieldset className="attribute-choice">
+          <legend>Опасная личность</legend>
+          <label className="check">
+            <input
+              type="checkbox"
+              checked={normalized.dangerousPersonality || false}
+              onChange={(e) =>
+                patch({ attributes: { ...normalized, dangerousPersonality: e.target.checked } })
+              }
+            />
+            У карты есть этот признак
+          </label>
+        </fieldset>
+        <label>
+          Теги
           <TokenInput value={card.attributes.tags} onChange={(value) => attr('tags', value)} />
+          <small>Свойства и игровые механики через запятую.</small>
         </label>
         <label>
           Характер изменения
@@ -151,7 +213,7 @@ export function CardForm({
         <summary>Добавить известный эффект</summary>
         <div className="attribute-chips">
           {effectSuggestions
-            .filter((effect) => !card.attributes.effects?.includes(effect))
+            .filter((effect) => !normalized.effects?.includes(effect))
             .map((effect) => (
               <button
                 type="button"
@@ -202,7 +264,43 @@ function TokenInput({ value, onChange }: { value: string[]; onChange: (value: st
         lastEmitted.current = next;
         onChange(next);
       }}
-      onBlur={() => setText(value.join(', '))}
+      onBlur={() => {
+        const next = [...new Set(value.map(canonicalValue).filter(Boolean))];
+        setText(next.join(', '));
+        lastEmitted.current = next;
+        onChange(next);
+      }}
     />
+  );
+}
+
+function AttributeChoices({
+  values,
+  options,
+  onChange,
+}: {
+  values: string[];
+  options: string[];
+  onChange: (value: string[]) => void;
+}) {
+  return (
+    <div className="attribute-choice-options">
+      {[...new Set([...options, ...values])].map((value) => (
+        <label className="check" key={value}>
+          <input
+            type="checkbox"
+            checked={values.includes(value)}
+            onChange={() =>
+              onChange(
+                values.includes(value)
+                  ? values.filter((item) => item !== value)
+                  : [...values, value],
+              )
+            }
+          />
+          {value}
+        </label>
+      ))}
+    </div>
   );
 }

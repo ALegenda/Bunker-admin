@@ -1,3 +1,4 @@
+import { normalizeAttributes } from '../../shared/card-classification.js';
 import { audit } from './audit.js';
 import type pg from 'pg';
 import { randomUUID } from 'node:crypto';
@@ -13,6 +14,7 @@ export async function writeCard(
   version: number | null,
   actor: string | null,
 ) {
+  card = cardSchema.parse({ ...card, attributes: normalizeAttributes(card.attributes) });
   const old = (await c.query('SELECT * FROM cards WHERE id=$1 FOR UPDATE', [card.id])).rows[0];
   if ((old && old.version !== version) || (!old && version !== null))
     throw new AppError(409, 'Карточка уже изменена. Обновите её перед сохранением.');
@@ -20,9 +22,9 @@ export async function writeCard(
   if (before && isDeepStrictEqual(before, card)) return { card: before, version: old.version };
   const imageId = card.image.split('/').at(-1) || null;
   await c.query(
-    `INSERT INTO cards(id,position,name,card_type,description,activation_time,usage_frequency,usage_location,tags,image_asset_id,change_kind,editorial_note,source,card_color,effects)
-    VALUES($1,COALESCE((SELECT max(position)+1 FROM cards),0),$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name,card_type=EXCLUDED.card_type,description=EXCLUDED.description,activation_time=EXCLUDED.activation_time,usage_frequency=EXCLUDED.usage_frequency,usage_location=EXCLUDED.usage_location,tags=EXCLUDED.tags,image_asset_id=EXCLUDED.image_asset_id,change_kind=EXCLUDED.change_kind,editorial_note=EXCLUDED.editorial_note,source=EXCLUDED.source,card_color=EXCLUDED.card_color,effects=EXCLUDED.effects,version=cards.version+1,updated_at=now()`,
+    `INSERT INTO cards(id,position,name,card_type,description,activation_time,usage_frequency,usage_location,tags,image_asset_id,change_kind,editorial_note,source,card_color,effects,dangerous_personality,usage_condition)
+    VALUES($1,COALESCE((SELECT max(position)+1 FROM cards),0),$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name,card_type=EXCLUDED.card_type,description=EXCLUDED.description,activation_time=EXCLUDED.activation_time,usage_frequency=EXCLUDED.usage_frequency,usage_location=EXCLUDED.usage_location,tags=EXCLUDED.tags,image_asset_id=EXCLUDED.image_asset_id,change_kind=EXCLUDED.change_kind,editorial_note=EXCLUDED.editorial_note,source=EXCLUDED.source,card_color=EXCLUDED.card_color,effects=EXCLUDED.effects,dangerous_personality=EXCLUDED.dangerous_personality,usage_condition=EXCLUDED.usage_condition,version=cards.version+1,updated_at=now()`,
     [
       card.id,
       card.name,
@@ -38,6 +40,8 @@ export async function writeCard(
       JSON.stringify(card.source || null),
       card.attributes.cardColor || '',
       card.attributes.effects || [],
+      card.attributes.dangerousPersonality || false,
+      card.attributes.usageCondition || '',
     ],
   );
   await audit(c, actor, old ? 'card.update' : 'card.create', card.id, before, card);

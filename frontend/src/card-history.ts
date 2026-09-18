@@ -6,7 +6,9 @@ const fields = [
   ['cardType', 'Тип карточки'],
   ['description', 'Описание'],
   ['attributes.activationTime', 'Время применения'],
-  ['attributes.usageFrequency', 'Частота применения'],
+  ['attributes.usageFrequency', 'Кол-во использований'],
+  ['attributes.usageCondition', 'Условия использования'],
+  ['attributes.dangerousPersonality', 'Опасная личность'],
   ['attributes.usageLocation', 'Место применения'],
   ['attributes.tags', 'Теги'],
   ['attributes.cardColor', 'Цвет карточки'],
@@ -31,6 +33,7 @@ function stable(value: unknown): string {
   );
 }
 export function historyValue(value: unknown): string {
+  if (typeof value === 'boolean') return value ? 'Да' : 'Нет';
   if (value == null || value === '' || (Array.isArray(value) && !value.length)) return 'Не указано';
   if (Array.isArray(value)) return value.map(String).join(', ');
   return typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);

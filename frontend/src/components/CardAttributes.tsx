@@ -1,33 +1,44 @@
 import React, { useState } from 'react';
 import type { PublicCard } from '../../../shared/contracts.js';
-import { cardColors, type CardColor } from '../../../shared/card-metadata.js';
+import { cardColors } from '../../../shared/card-metadata.js';
+import {
+  colorForLabel,
+  effectNotes,
+  normalizeAttributes,
+} from '../../../shared/card-classification.js';
 import {
   attributeKeys,
   attributeLabels,
   attributeOptions,
   attributeItems,
-  compactAttributes,
+  attributeValueLabel,
+  matchesAny,
   type AttributeFilters,
   type AttributeItem,
   type AttributeKey,
 } from '../card-attributes.js';
 
-function Badge({ item, selected, showKind = false }: { item: AttributeItem; selected?: AttributeFilters; showKind?: boolean }) {
+function Badge({ item, selected }: { item: AttributeItem; selected?: AttributeFilters }) {
   const active = selected?.[item.key].includes(item.value);
+  const color = item.key === 'cardColor' ? colorForLabel(item.value) : undefined;
+  const note =
+    item.key === 'effects' && Object.hasOwn(effectNotes, item.value)
+      ? effectNotes[item.value]
+      : undefined;
   return (
     <span
-      className={`attribute-chip attribute-${item.key}${active ? ' is-matched' : ''}`}
-      title={`${attributeLabels[item.key]}: ${item.value}`}
+      className={`attribute-chip attribute-${item.key}${color ? ' attribute-cardColor' : ''}${active ? ' is-matched' : ''}`}
+      title={note || `${attributeLabels[item.key]}: ${attributeValueLabel(item.key, item.value)}`}
     >
-      {item.key === 'cardColor' && (
+      {color && (
         <i
-          className={`color-swatch${item.value === 'чёрно-жёлтый' ? ' striped' : ''}`}
-          style={{ backgroundColor: cardColors[item.value as CardColor] }}
+          className={`color-swatch${color === 'чёрно-жёлтый' ? ' striped' : ''}`}
+          style={{ backgroundColor: cardColors[color] }}
           aria-hidden="true"
         />
       )}
-      {showKind && item.key === 'effects' && <span className="attribute-kind">Эффект:</span>}
-      {item.value}
+      {attributeValueLabel(item.key, item.value)}
+      {note && <span className="effect-note">· нельзя снять</span>}
       {active && (
         <i className="matched-mark" aria-label="Совпадает с фильтром">
           ✓
@@ -36,30 +47,13 @@ function Badge({ item, selected, showKind = false }: { item: AttributeItem; sele
     </span>
   );
 }
-function AttributeGroups({
-  items,
-  selected,
-}: {
-  items: AttributeItem[];
-  selected?: AttributeFilters;
-}) {
+function Chips({ items, selected }: { items: AttributeItem[]; selected?: AttributeFilters }) {
   return (
-    <dl className="attribute-groups">
-      {attributeKeys.map((key) => {
-        const group = items.filter((item) => item.key === key);
-        if (!group.length) return null;
-        return (
-          <div key={key}>
-            <dt>{attributeLabels[key]}</dt>
-            <dd className="attribute-chips">
-              {group.map((item) => (
-                <Badge key={item.value} item={item} selected={selected} />
-              ))}
-            </dd>
-          </div>
-        );
-      })}
-    </dl>
+    <div className="attribute-chips">
+      {items.map((item) => (
+        <Badge key={`${item.key}:${item.value}`} item={item} selected={selected} />
+      ))}
+    </div>
   );
 }
 export function CardAttributes({
@@ -72,35 +66,77 @@ export function CardAttributes({
   selected?: AttributeFilters;
 }) {
   const items = attributeItems(card);
-  if (!items.length) return null;
-  if (!compact)
-    return (
-      <div className="card-attributes" aria-label="Характеристики карточки">
-        <AttributeGroups items={items} selected={selected} />
-      </div>
-    );
-  const { visible, hidden, total } = compactAttributes(card, selected);
+  const condition = normalizeAttributes(card.attributes).usageCondition;
+  const tags = items.filter((item) => item.key === 'tags');
+  const matchedTags = tags.filter((item) => selected?.tags.includes(item.value)).length;
   return (
-    <div className="card-attributes compact-attributes" aria-label="Характеристики карточки">
-      <div className="attribute-chips">
-        {visible.map((item) => (
-          <Badge key={`${item.key}:${item.value}`} item={item} selected={selected} showKind />
-        ))}
-      </div>
-      {hidden.length > 0 && (
-        <details className="attribute-overflow">
+    <div
+      className={`card-attributes${compact ? ' compact-attributes' : ''}`}
+      aria-label="Характеристики карточки"
+    >
+      <dl className="attribute-groups">
+        {attributeKeys
+          .filter((key) => key !== 'tags')
+          .map((key) => {
+            const group = items.filter((item) => item.key === key);
+            return (
+              <div key={key} className={`attribute-group-${key}`}>
+                <dt>{attributeLabels[key]}</dt>
+                <dd>
+                  {group.length ? (
+                    <Chips items={group} selected={selected} />
+                  ) : (
+                    <span className="attribute-empty">
+                      {key === 'effects' ? 'не указаны' : 'не указано'}
+                    </span>
+                  )}
+                  {key === 'usageFrequency' && condition && (
+                    <details className="usage-condition">
+                      <summary>Условия использования</summary>
+                      <p>{condition}</p>
+                      <small>Подробности — в описании карты.</small>
+                    </details>
+                  )}
+                </dd>
+              </div>
+            );
+          })}
+        {!compact && (
+          <div>
+            <dt>Теги</dt>
+            <dd>
+              {tags.length ? (
+                <Chips items={tags} selected={selected} />
+              ) : (
+                <span className="attribute-empty">не указаны</span>
+              )}
+            </dd>
+          </div>
+        )}
+      </dl>
+      {compact && (
+        <details
+          className="attribute-tags"
+          key={selected?.tags.join('|') || 'tags'}
+          open={matchedTags > 0 || undefined}
+        >
           <summary>
-            <span className="overflow-closed">Ещё {hidden.length}</span>
-            <span className="overflow-open">Свернуть</span>
-            <span className="attribute-total"> · всего {total}</span>
+            Теги{' '}
+            <span className="attribute-total">
+              {tags.length}
+              {matchedTags > 0 ? ` · совпало ${matchedTags}` : ''}
+            </span>
           </summary>
-          <AttributeGroups items={hidden} selected={selected} />
+          {tags.length ? (
+            <Chips items={tags} selected={selected} />
+          ) : (
+            <span className="attribute-empty">не указаны</span>
+          )}
         </details>
       )}
     </div>
   );
 }
-
 function MultiFilter({
   cards,
   attribute,
@@ -108,7 +144,7 @@ function MultiFilter({
   onChange,
 }: {
   cards: PublicCard[];
-  attribute: 'tags' | 'effects';
+  attribute: AttributeKey;
   value: AttributeFilters;
   onChange: (value: AttributeFilters) => void;
 }) {
@@ -117,9 +153,11 @@ function MultiFilter({
   const filtered = options.filter(
     ([label]) =>
       value[attribute].includes(label) ||
-      label.toLocaleLowerCase('ru').includes(query.trim().toLocaleLowerCase('ru')),
+      attributeValueLabel(attribute, label, true)
+        .toLocaleLowerCase('ru')
+        .includes(query.trim().toLocaleLowerCase('ru')),
   );
-  if (!options.length) return null;
+  const any = matchesAny(attribute);
   return (
     <fieldset className="multi-attribute-filter">
       <legend>
@@ -130,12 +168,34 @@ function MultiFilter({
         <input
           type="search"
           aria-label={`Найти: ${attributeLabels[attribute].toLowerCase()}`}
-          placeholder={attribute === 'tags' ? 'Найти тег…' : 'Найти эффект…'}
+          placeholder="Найти значение…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       )}
-      <small>Должны совпасть все выбранные</small>
+      <small>{any ? 'Любой из выбранных вариантов' : 'Должны совпасть все выбранные'}</small>
+      {(attribute === 'activationTime' || attribute === 'usageLocation') && (
+        <div className="filter-shortcuts">
+          {(attribute === 'activationTime'
+            ? [
+                ['Можно днём', 'day'],
+                ['Можно ночью', 'night'],
+              ]
+            : [
+                ['Можно внутри', 'inside'],
+                ['Можно снаружи', 'outside'],
+              ]
+          ).map(([label, id]) => (
+            <button
+              type="button"
+              key={id}
+              onClick={() => onChange({ ...value, [attribute]: [id, 'both'] })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="filter-options">
         {filtered.map(([label, count]) => (
           <label className="check" key={label}>
@@ -146,17 +206,26 @@ function MultiFilter({
                 onChange({
                   ...value,
                   [attribute]: value[attribute].includes(label)
-                    ? value[attribute].filter((t) => t !== label)
+                    ? value[attribute].filter((v) => v !== label)
                     : [...value[attribute], label],
                 })
               }
             />
-            <span>{label}</span>
+            <span>{attributeValueLabel(attribute, label, true)}</span>
             <span className="filter-count">{count}</span>
           </label>
         ))}
-        {!filtered.length && <p>Нет подходящих значений</p>}
+        {!filtered.length && <p className="attribute-empty">Нет подходящих значений</p>}
       </div>
+      {value[attribute].length > 0 && (
+        <button
+          className="filter-clear"
+          type="button"
+          onClick={() => onChange({ ...value, [attribute]: [] })}
+        >
+          Сбросить: {attributeLabels[attribute].toLowerCase()}
+        </button>
+      )}
     </fieldset>
   );
 }
@@ -169,38 +238,11 @@ export function CardAttributeFilters({
   value: AttributeFilters;
   onChange: (value: AttributeFilters) => void;
 }) {
-  const singleKeys: AttributeKey[] = [
-    'cardColor',
-    'activationTime',
-    'usageFrequency',
-    'usageLocation',
-  ];
   return (
     <div className="attribute-filters">
-      {singleKeys.map((key) => {
-        const options = attributeOptions(cards, key, value[key]);
-        if (!options.length) return null;
-        return (
-          <label key={key}>
-            {attributeLabels[key]}
-            <select
-              value={value[key][0] || ''}
-              onChange={(e) =>
-                onChange({ ...value, [key]: e.target.value ? [e.target.value] : [] })
-              }
-            >
-              <option value="">Любые</option>
-              {options.map(([label, count]) => (
-                <option key={label} value={label}>
-                  {label} · {count}
-                </option>
-              ))}
-            </select>
-          </label>
-        );
-      })}
-      <MultiFilter cards={cards} attribute="effects" value={value} onChange={onChange} />
-      <MultiFilter cards={cards} attribute="tags" value={value} onChange={onChange} />
+      {attributeKeys.map((key) => (
+        <MultiFilter key={key} cards={cards} attribute={key} value={value} onChange={onChange} />
+      ))}
     </div>
   );
 }

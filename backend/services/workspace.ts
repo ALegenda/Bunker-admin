@@ -1,9 +1,10 @@
+import { normalizeAttributes } from '../../shared/card-classification.js';
 import { audit } from './audit.js';
 import { isDeepStrictEqual } from 'node:util';
 import type pg from 'pg';
 import { randomUUID } from 'node:crypto';
 import { pool, transaction } from '../db/index.js';
-import { AppError, draftSchema, type Draft, type Card } from '../domain/schema.js';
+import { AppError, cardSchema, draftSchema, type Draft, type Card } from '../domain/schema.js';
 import { resolveImage } from './storage.js';
 import { changes, summary } from '../../shared/model.js';
 export function rowCard(r: any): Card {
@@ -17,6 +18,8 @@ export function rowCard(r: any): Card {
       usageFrequency: r.usage_frequency,
       usageLocation: r.usage_location,
       tags: r.tags,
+      ...(r.dangerous_personality ? { dangerousPersonality: true } : {}),
+      ...(r.usage_condition ? { usageCondition: r.usage_condition } : {}),
       ...(r.card_color ? { cardColor: r.card_color } : {}),
       ...(r.effects?.length ? { effects: r.effects } : {}),
     },
@@ -33,12 +36,12 @@ export async function upsertCards(c: pg.PoolClient, cards: Card[]) {
     imageAssetId: v.image.split('/').at(-1) || null,
   }));
   await c.query(
-    `INSERT INTO cards(id,position,name,card_type,description,activation_time,usage_frequency,usage_location,tags,image_asset_id,change_kind,editorial_note,source,card_color,effects)
+    `INSERT INTO cards(id,position,name,card_type,description,activation_time,usage_frequency,usage_location,tags,image_asset_id,change_kind,editorial_note,source,card_color,effects,dangerous_personality,usage_condition)
  SELECT v->>'id',(v->>'position')::int,v->>'name',v->>'cardType',v->>'description',
  ARRAY(SELECT jsonb_array_elements_text(v->'attributes'->'activationTime')),v->'attributes'->>'usageFrequency',
  ARRAY(SELECT jsonb_array_elements_text(v->'attributes'->'usageLocation')),ARRAY(SELECT jsonb_array_elements_text(v->'attributes'->'tags')),
- (v->>'imageAssetId')::uuid,v->>'kind',v->>'note',v->'source',COALESCE(v->'attributes'->>'cardColor',''),ARRAY(SELECT jsonb_array_elements_text(v->'attributes'->'effects')) FROM jsonb_array_elements($1::jsonb) v
- ON CONFLICT(id) DO UPDATE SET position=EXCLUDED.position,name=EXCLUDED.name,card_type=EXCLUDED.card_type,description=EXCLUDED.description,activation_time=EXCLUDED.activation_time,usage_frequency=EXCLUDED.usage_frequency,usage_location=EXCLUDED.usage_location,tags=EXCLUDED.tags,image_asset_id=EXCLUDED.image_asset_id,change_kind=EXCLUDED.change_kind,editorial_note=EXCLUDED.editorial_note,source=EXCLUDED.source,card_color=EXCLUDED.card_color,effects=EXCLUDED.effects,version=cards.version+1,updated_at=now()`,
+ (v->>'imageAssetId')::uuid,v->>'kind',v->>'note',v->'source',COALESCE(v->'attributes'->>'cardColor',''),ARRAY(SELECT jsonb_array_elements_text(v->'attributes'->'effects')),COALESCE((v->'attributes'->>'dangerousPersonality')::boolean,false),COALESCE(v->'attributes'->>'usageCondition','') FROM jsonb_array_elements($1::jsonb) v
+ ON CONFLICT(id) DO UPDATE SET position=EXCLUDED.position,name=EXCLUDED.name,card_type=EXCLUDED.card_type,description=EXCLUDED.description,activation_time=EXCLUDED.activation_time,usage_frequency=EXCLUDED.usage_frequency,usage_location=EXCLUDED.usage_location,tags=EXCLUDED.tags,image_asset_id=EXCLUDED.image_asset_id,change_kind=EXCLUDED.change_kind,editorial_note=EXCLUDED.editorial_note,source=EXCLUDED.source,card_color=EXCLUDED.card_color,effects=EXCLUDED.effects,dangerous_personality=EXCLUDED.dangerous_personality,usage_condition=EXCLUDED.usage_condition,version=cards.version+1,updated_at=now()`,
     [JSON.stringify(values)],
   );
 }
@@ -83,7 +86,13 @@ export async function saveWorkspace(
   const draft: Draft = {
     ...parsed,
     cards: await Promise.all(
-      parsed.cards.map(async (c) => ({ ...c, image: await resolveImage(c.image, legacy) })),
+      parsed.cards.map(async (c) =>
+        cardSchema.parse({
+          ...c,
+          attributes: normalizeAttributes(c.attributes),
+          image: await resolveImage(c.image, legacy),
+        }),
+      ),
     ),
   };
   return transaction(async (c) => {

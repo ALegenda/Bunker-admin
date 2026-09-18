@@ -5,6 +5,8 @@ export const attributes = z
   .object({
     activationTime: z.array(z.string().max(80)).max(10).default([]),
     usageFrequency: z.string().max(80).default(''),
+    usageCondition: z.string().trim().max(1000).optional(),
+    dangerousPersonality: z.boolean().optional(),
     usageLocation: z.array(z.string().max(120)).max(10).default([]),
     cardColor: z.enum(['', ...cardColorNames]).optional(),
     effects: z.array(z.string().trim().min(1).max(120)).max(30).optional(),
@@ -13,6 +15,7 @@ export const attributes = z
   .default({ activationTime: [], usageFrequency: '', usageLocation: [], tags: [] })
   .transform((value) => {
     const result = { ...value };
+    if (!result.usageCondition) delete result.usageCondition;
     if (!result.cardColor) delete result.cardColor;
     if (!result.effects?.length) delete result.effects;
     return result;

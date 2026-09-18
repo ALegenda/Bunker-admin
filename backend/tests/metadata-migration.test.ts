@@ -104,7 +104,7 @@ test('metadata migration preserves edits and history, rolls back, and persists t
       attributes: {
         ...leader.attributes,
         cardColor: 'голубой' as const,
-        effects: ['Мой новый эффект'],
+        effects: ['мой новый эффект'],
       },
     };
     const saved = await transaction(async (c) => {

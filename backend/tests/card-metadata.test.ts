@@ -21,7 +21,11 @@ test('metadata evidence covers every illustrated card with source-consistent ass
     assert.equal(e.descriptionSha256, tagDescriptionHash(original.description));
     assert.equal(e.name, original.name);
     assert.equal(e.colorEvidence?.page, original.source.pageStart);
-    for (const effect of e.effects) assert.ok(effectSuggestions.includes(effect as any));
+    // Historical migration remains immutable; the new classification migrates the status.
+    for (const effect of e.effects)
+      assert.ok(
+        effect === 'Опасная личность' || effectSuggestions.includes(effect.toLowerCase() as any),
+      );
     const c = cardSchema.parse(original);
     const result = enrichCardMetadata(c, e, e.imageSha256);
     assert.deepEqual(result.skipped, []);
