@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { isDeepStrictEqual } from 'node:util';
 import { transaction, pool } from '../db/index.js';
 import { cardSchema, AppError, type Card } from '../domain/schema.js';
-import { rowCard } from './workspace.js';
+import { rowCard, refreshChangelog } from './workspace.js';
 import { resolveImage } from './storage.js';
 // Callers lock workspace first, then the card. Same lock order as publication/import.
 export async function writeCard(
@@ -41,6 +41,7 @@ export async function writeCard(
     ],
   );
   await audit(c, actor, old ? 'card.update' : 'card.create', card.id, before, card);
+  await refreshChangelog(c);
   return { card, version: old ? old.version + 1 : 1 };
 }
 export async function saveCard(input: unknown, version: number | null, actor: string | null) {
@@ -69,6 +70,7 @@ export async function resetCard(id: string, version: number | null, actor: strin
       if (old) {
         await c.query('DELETE FROM cards WHERE id=$1', [id]);
         await audit(c, actor, 'card.discard', id, rowCard(old), null);
+        await refreshChangelog(c);
       }
       result = { card: null, version: null };
     }

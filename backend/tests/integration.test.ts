@@ -116,6 +116,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       const saved = await saveWorkspace(draft, 0, true);
       assert.equal(saved.revision, 1);
       assert.equal((await readWorkspace()).cards[0].description, draft.cards[0].description);
+      assert.match((await readWorkspace()).changelog, /Стало: Изменённый Банкир/);
       assert.equal(
         (await pool.query('SELECT count(*)::int AS n FROM import_backups')).rows[0].n,
         1,
@@ -135,6 +136,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         const combined = await readWorkspace();
         assert.equal(combined.cards[0].description, 'Изменённый Банкир — кириллица Ёё');
         assert.equal(combined.cards[0].note, 'Заметка из Chrome');
+        assert.match(combined.changelog, /Заметка из Chrome/);
         await assert.rejects(
           mergeLegacyDraft(
             {
@@ -197,6 +199,54 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         null,
       );
     });
+    await t.test(
+      'card edits automatically persist the summary and invalidate its review',
+      async () => {
+        const { saveCard, resetCard, saveReleaseMeta } = await import('../services/cards.js');
+        let state = await readWorkspace();
+        const card = state.cards[0];
+        const saved = await saveCard(
+          { ...card, description: 'Новая механика' },
+          state.versions[card.id],
+          null,
+        );
+        state = await readWorkspace();
+        assert.equal(state.revision, saved.revision);
+        assert.match(state.changelog, /Было: Исходный текст\nСтало: Новая механика/);
+        await saveReleaseMeta(
+          {
+            revision: state.revision,
+            release: state.release,
+            changelog: 'Отредактированная вручную сводка',
+            changelogStamp: changeStamp(changes(state.base, state.cards)),
+          },
+          null,
+        );
+        state = await readWorkspace();
+        assert.equal(state.changelog, 'Отредактированная вручную сводка');
+        await saveCard(
+          { ...saved.card, note: 'Причина правки', kind: 'Механика и баланс' },
+          saved.version,
+          null,
+        );
+        state = await readWorkspace();
+        assert.match(state.changelog, /^## Механика и баланс/);
+        assert.match(state.changelog, /Причина правки/);
+        assert.equal(state.changelogStamp, '');
+        await assert.rejects(saveCard(card, saved.version, null), { statusCode: 409 });
+        assert.equal((await readWorkspace()).changelog, state.changelog);
+        const added = await saveCard(
+          { ...original, id: 'temporary-card', name: 'Временная' },
+          null,
+          null,
+        );
+        assert.match((await readWorkspace()).changelog, /Добавлено: Временная/);
+        await resetCard(added.card.id, added.version, null);
+        assert.doesNotMatch((await readWorkspace()).changelog, /Временная/);
+        await resetCard(card.id, state.versions[card.id], null);
+        assert.equal((await readWorkspace()).changelog, '');
+      },
+    );
     await t.test('API validates revisions and rejects cross-origin writes', async () => {
       const invalid = await app.inject({
         method: 'POST',
@@ -262,24 +312,27 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         );
       },
     );
-    await t.test('scheduled worker stores the immutable PDF and exits after draining the queue', async () => {
-      const state = await readWorkspace();
-      const job = await createJob(state.revision);
-      jobId = job.id;
-      assert.equal((await createJob(state.revision)).id, jobId);
-      await promisify(execFile)(
-        process.execPath,
-        ['--import', 'tsx', fileURLToPath(new URL('../worker-once.ts', import.meta.url))],
-        { env: process.env, timeout: 30000 },
-      );
-      const result = await getJob(jobId);
-      assert.equal(result.status, 'ready');
-      assert.ok(result.report.pages >= 3);
-      const pdf = await getObject(result.object_key);
-      assert.ok(pdf.data.subarray(0, 4).equals(Buffer.from('%PDF')));
-      await mkdir('tmp/backend-tests', { recursive: true });
-      await writeFile('tmp/backend-tests/long-description.pdf', pdf.data);
-    });
+    await t.test(
+      'scheduled worker stores the immutable PDF and exits after draining the queue',
+      async () => {
+        const state = await readWorkspace();
+        const job = await createJob(state.revision);
+        jobId = job.id;
+        assert.equal((await createJob(state.revision)).id, jobId);
+        await promisify(execFile)(
+          process.execPath,
+          ['--import', 'tsx', fileURLToPath(new URL('../worker-once.ts', import.meta.url))],
+          { env: process.env, timeout: 30000 },
+        );
+        const result = await getJob(jobId);
+        assert.equal(result.status, 'ready');
+        assert.ok(result.report.pages >= 3);
+        const pdf = await getObject(result.object_key);
+        assert.ok(pdf.data.subarray(0, 4).equals(Buffer.from('%PDF')));
+        await mkdir('tmp/backend-tests', { recursive: true });
+        await writeFile('tmp/backend-tests/long-description.pdf', pdf.data);
+      },
+    );
     await t.test('ready PDF survives reload, repeated save and review after building', async () => {
       const state = await readWorkspace();
       const meta = {
@@ -334,7 +387,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
           headers: localHeaders,
         });
         assert.equal(page.statusCode, 200);
-        assert.ok(page.body.includes('Проверка длинного описания'));
+        assert.ok(page.body.includes('КОНЕЦДЛИННОГОПРАВИЛА'));
       },
     );
     await t.test(

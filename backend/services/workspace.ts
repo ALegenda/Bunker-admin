@@ -5,6 +5,7 @@ import { randomUUID } from 'node:crypto';
 import { pool, transaction } from '../db/index.js';
 import { AppError, draftSchema, type Draft, type Card } from '../domain/schema.js';
 import { resolveImage } from './storage.js';
+import { changes, summary } from '../../shared/model.js';
 export function rowCard(r: any): Card {
   return {
     id: r.id,
@@ -65,6 +66,13 @@ export async function readWorkspace(client?: pg.PoolClient) {
     return read(c);
   });
 }
+// Called inside the card mutation transaction, with the workspace already locked.
+export async function refreshChangelog(c: pg.PoolClient) {
+  const state = await readWorkspace(c);
+  await c.query("UPDATE workspace SET changelog=$1,changelog_stamp='' WHERE id=1", [
+    summary(changes(state.base, state.cards)),
+  ]);
+}
 export async function saveWorkspace(
   input: unknown,
   expectedRevision: number,
@@ -101,6 +109,9 @@ export async function saveWorkspace(
       ]);
     const beforeRows = (await c.query('SELECT * FROM cards')).rows.map(rowCard);
     const beforeMap = new Map(beforeRows.map((card) => [card.id, card]));
+    const cardsChanged = draft.cards.some(
+      (card) => !isDeepStrictEqual(beforeMap.get(card.id), card),
+    );
     await upsertCards(c, draft.cards);
     for (const card of draft.cards) {
       const before = beforeMap.get(card.id);
@@ -111,6 +122,7 @@ export async function saveWorkspace(
       'UPDATE workspace SET revision=revision+1,release_title=$1,changelog=$2,changelog_stamp=$3,legacy_imported=legacy_imported OR $4,updated_at=now() WHERE id=1 RETURNING revision',
       [draft.release, draft.changelog, draft.changelogStamp, legacy],
     );
+    if (cardsChanged) await refreshChangelog(c);
     return { revision: updated.rows[0].revision, cards: draft.cards };
   });
 }

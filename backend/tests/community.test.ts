@@ -712,6 +712,8 @@ await test('Production access, sessions, catalogue and proposal workflow', async
       });
       assert.equal(accepted.statusCode, 200, accepted.body);
       assert.equal((await readWorkspace()).cards[0].description, 'Новое описание');
+      assert.match((await readWorkspace()).changelog, /Стало: Новое описание/);
+      assert.equal((await readWorkspace()).changelogStamp, '');
       assert.equal(
         (await app.inject({ url: '/api/catalog', headers: { host: 'localhost:4173' } })).json()
           .cards[0].description,

@@ -1,6 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { publicationBlocker } from '../src/publication-state.js';
+import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { Publication } from '../src/components/Publication.js';
+import { cardSchema } from '../../shared/schema.js';
 
 const ready = {
   busy: false,
@@ -12,6 +16,31 @@ const ready = {
   revision: 7,
   job: { jobId: 'job', revision: 7, status: 'ready' as const },
 };
+test('publication opens with an automatic summary and keeps saved editorial text', () => {
+  const card = cardSchema.parse({
+    id: 'test',
+    name: 'Лекарь',
+    cardType: 'роль',
+    description: 'Лечит',
+  });
+  const workspace = {
+    revision: 1,
+    versions: { test: 1 },
+    release: 'Выпуск',
+    base: [card],
+    cards: [{ ...card, description: 'Лечит дважды' }],
+    changelog: '',
+    changelogStamp: '',
+  };
+  const html = renderToStaticMarkup(<Publication initial={workspace} />);
+  assert.match(html, /Было: Лечит\nСтало: Лечит дважды/);
+  assert.doesNotMatch(html, /Составить сводку изменений/);
+  const saved = renderToStaticMarkup(
+    <Publication initial={{ ...workspace, changelog: 'Текст редактора' }} />,
+  );
+  assert.match(saved, /Текст редактора/);
+  assert.doesNotMatch(saved, /Было: Лечит/);
+});
 test('reviewing after PDF completion allows publication without rebuilding', () => {
   assert.match(publicationBlocker({ ...ready, reviewed: false }), /Подтвердите/);
   assert.equal(publicationBlocker(ready), '');

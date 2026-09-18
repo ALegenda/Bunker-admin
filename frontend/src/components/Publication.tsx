@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Workspace, PdfJob, Release } from '../../../shared/contracts.js';
 import { changes, changeStamp, summary } from '../../../shared/model.js';
 import { publicationBlocker } from '../publication-state.js';
@@ -25,7 +25,9 @@ export function Publication({ initial }: { initial: Workspace }) {
   const restored = recovery?.revision === initial.revision ? recovery : null;
   const [revision, setRevision] = useState(initial.revision),
     [title, setTitle] = useState(restored?.title || initial.release),
-    [log, setLog] = useState(restored?.log ?? initial.changelog),
+    [log, setLog] = useState(
+      restored?.log ?? (initial.changelog || summary(changes(initial.base, initial.cards))),
+    ),
     [reviewed, setReviewed] = useState(
       restored
         ? Boolean(restored.reviewed)
@@ -195,17 +197,10 @@ export function Publication({ initial }: { initial: Workspace }) {
               }}
             />
           </label>
-          <button
-            disabled={busy}
-            onClick={() => {
-              if (log && !window.confirm('Заменить текущую сводку?')) return;
-              setLog(summary(diff));
-              setReviewed(false);
-              setDirty(true);
-            }}
-          >
-            Составить сводку изменений
-          </button>
+          <p>
+            Сводка составляется автоматически после каждого изменения карточек. Текст можно
+            отредактировать перед выпуском; следующая правка карточек составит его заново.
+          </p>
           <label>
             Сводка для игроков
             <textarea
