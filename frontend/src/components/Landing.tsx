@@ -521,6 +521,16 @@ export function Landing() {
                 Вот шесть примеров из колоды. Каждый — повод придумать новый план.
               </p>
             </div>
+            <div className="catalog-invite">
+              <p>
+                <b>Это только начало колоды.</b>
+                <br />
+                Ещё больше способов удивить соседей — в каталоге.
+              </p>
+              <a className="landing-button" href="/catalog">
+                Все карточки <Arrow diagonal />
+              </a>
+            </div>
             <div className="example-grid">
               {examples.map((card) => (
                 <a
@@ -542,16 +552,6 @@ export function Landing() {
                   </div>
                 </a>
               ))}
-            </div>
-            <div className="catalog-invite">
-              <p>
-                <b>Это только начало колоды.</b>
-                <br />
-                Ещё больше способов удивить соседей — в каталоге.
-              </p>
-              <a className="landing-button" href="/catalog">
-                Все карточки <Arrow diagonal />
-              </a>
             </div>
           </div>
         </section>

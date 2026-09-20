@@ -647,7 +647,7 @@ html:has(.landing) {
   justify-content: space-between;
   align-items: center;
   gap: 30px;
-  margin-top: 38px;
+  margin-bottom: 38px;
 }
 .landing .catalog-invite p {
   font-size: 14px;
@@ -1532,7 +1532,7 @@ html:has(.landing) {
   }
   .landing .catalog-invite {
     display: block;
-    margin-top: 30px;
+    margin-bottom: 30px;
   }
   .landing .catalog-invite b {
     font-size: 17px;
