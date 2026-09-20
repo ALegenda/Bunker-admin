@@ -11,14 +11,7 @@ import { DescriptionEditor } from './DescriptionEditor.js';
 import type { Card } from '../../../shared/contracts.js';
 import { api } from '../api.js';
 import { useEffect, useRef, useState } from 'react';
-export const cardTypes = [
-  'правило',
-  'роль',
-  'умение',
-  'припас',
-  'мёртвый бонус',
-  'наёмник',
-] as const;
+import { cardTypes } from '../card-types.js';
 export function CardForm({
   card,
   onChange,

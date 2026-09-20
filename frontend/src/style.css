@@ -848,3 +848,11 @@ textarea {
 .usage-condition summary { cursor: pointer; font-size: 11px; color: #69735e; }
 .usage-condition p { margin: 6px 0; font-size: 12px; }
 .usage-condition small { font-size: 11px; letter-spacing: normal; text-transform: none; }
+
+.card-autoload {
+  padding: 20px 0;
+  color: #67715e;
+  text-align: center;
+  font-size: 13px;
+  overflow-anchor: none;
+}

@@ -1,18 +1,23 @@
 import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
 import {
-  matchesCard,
   emptyAttributeFilters,
   filtersFromParams,
   appendFilterParams,
 } from '../card-attributes.js';
-import { descriptionText } from '../../../shared/rich-text.js';
-import { DescriptionEditor } from './DescriptionEditor.js';
+import { searchDocument } from '../card-search.js';
+import { useCardSearch } from '../useCardSearch.js';
+import { useCardWindow } from '../useCardWindow.js';
+import type { AttributeFilters } from '../card-attributes.js';
 import { CardTips } from './CardTips.js';
 import { RichDescription } from './RichDescription.js';
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, memo, Suspense, useEffect, useMemo, useState } from 'react';
 import type { Catalog as CatalogData, PublicCard, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
-import { cardTypes } from './CardForm.js';
+import { cardTypes } from '../card-types.js';
+const DescriptionEditor = lazy(() =>
+  import('./DescriptionEditor.js').then((m) => ({ default: m.DescriptionEditor })),
+);
+
 export function Catalog({ user }: { user: User | null }) {
   const [data, setData] = useState<CatalogData | null>(null),
     [error, setError] = useState(''),
@@ -38,9 +43,9 @@ export function Catalog({ user }: { user: User | null }) {
     if (selected) p.set('card', selected);
     history.replaceState(null, '', '/catalog' + (p.size ? '?' + p : ''));
   }, [query, type, attributes, selected]);
+  const results = useCardSearch(data?.cards, query, type, attributes);
   if (error) return <p role="alert">{error}</p>;
   if (!data) return <p role="status">Загружаем карточки…</p>;
-  const visible = data.cards.filter((c) => matchesCard(c, query, type, attributes));
   const card = data.cards.find((c) => c.id === selected),
     trusted = user?.role === 'trusted' || user?.role === 'admin';
   return (
@@ -96,39 +101,14 @@ export function Catalog({ user }: { user: User | null }) {
             </p>
           )}
         </aside>
-        <section>
-          <p role="status">Найдено: {visible.length}</p>
-          <div className="catalog-grid">
-            {visible.map((c) => (
-              <article className="catalog-card" key={c.id}>
-                <button
-                  className="catalog-card-open"
-                  onClick={() => setSelected(c.id)}
-                  aria-label={`Открыть карточку «${c.name}»`}
-                >
-                  {c.image ? (
-                    <img src={c.image} alt="" loading="lazy" />
-                  ) : (
-                    <div className="placeholder">Б</div>
-                  )}
-                  <div>
-                    <small>{c.cardType}</small>
-                    <h2>{c.name}</h2>
-                    <p>
-                      {descriptionText(c.description).slice(0, 140)}
-                      {descriptionText(c.description).length > 140 ? '…' : ''}
-                    </p>
-                  </div>
-                </button>
-                <CardAttributes card={c} compact selected={attributes} />
-              </article>
-            ))}
-          </div>
-          {!visible.length && (
-            <div className="panel">
-              Нет карточек с такими условиями. Попробуйте убрать часть фильтров.
-            </div>
-          )}
+        <section aria-busy={results.pending}>
+          <p role="status">
+            {results.pending ? 'Ищем…' : `Найдено: ${results.cards.length}`}
+            {!results.pending &&
+              results.approximateCount > 0 &&
+              ` · с учётом опечаток: ${results.approximateCount}`}
+          </p>
+          <CatalogResults cards={results.cards} attributes={attributes} onSelect={setSelected} />
         </section>
       </div>
       {card && (
@@ -151,6 +131,72 @@ export function Catalog({ user }: { user: User | null }) {
     </>
   );
 }
+const CatalogResults = memo(function CatalogResults({
+  cards,
+  attributes,
+  onSelect,
+}: {
+  cards: PublicCard[];
+  attributes: AttributeFilters;
+  onSelect: (id: string) => void;
+}) {
+  const { visible, remaining, loadMoreRef } = useCardWindow(cards);
+  return (
+    <>
+      <div className="catalog-grid">
+        {visible.map((card) => (
+          <CatalogTile key={card.id} card={card} attributes={attributes} onSelect={onSelect} />
+        ))}
+      </div>
+      {remaining > 0 && (
+        <div ref={loadMoreRef} className="card-autoload" role="status">
+          Подгружаем карточки…
+        </div>
+      )}
+      {!cards.length && (
+        <div className="panel">
+          Нет карточек с такими условиями. Попробуйте изменить запрос или убрать часть фильтров.
+        </div>
+      )}
+    </>
+  );
+});
+const CatalogTile = memo(function CatalogTile({
+  card,
+  attributes,
+  onSelect,
+}: {
+  card: PublicCard;
+  attributes: AttributeFilters;
+  onSelect: (id: string) => void;
+}) {
+  const { description } = searchDocument(card);
+  return (
+    <article className="catalog-card">
+      <button
+        className="catalog-card-open"
+        onClick={() => onSelect(card.id)}
+        aria-label={`Открыть карточку «${card.name}»`}
+      >
+        {card.image ? (
+          <img src={card.image} alt="" loading="lazy" />
+        ) : (
+          <div className="placeholder">Б</div>
+        )}
+        <div>
+          <small>{card.cardType}</small>
+          <h2>{card.name}</h2>
+          <p>
+            {description.slice(0, 140)}
+            {description.length > 140 ? '…' : ''}
+          </p>
+        </div>
+      </button>
+      <CardAttributes card={card} compact selected={attributes} />
+    </article>
+  );
+});
+
 function CardDialog({
   card,
   user,
@@ -271,7 +317,9 @@ function ProposalForm({ card, close }: { card: PublicCard | null; close: () => v
               </select>
             </label>
           )}
-          <DescriptionEditor label="Предлагаемое описание" value={text} onChange={setText} />
+          <Suspense fallback={<p role="status">Загружаем редактор…</p>}>
+            <DescriptionEditor label="Предлагаемое описание" value={text} onChange={setText} />
+          </Suspense>
           <label>
             Почему стоит изменить
             <textarea

@@ -1,11 +1,14 @@
 import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
-import { emptyAttributeFilters, matchesCard } from '../card-attributes.js';
+import { emptyAttributeFilters, type AttributeFilters } from '../card-attributes.js';
 import { RichDescription } from './RichDescription.js';
-import { useState, useEffect } from 'react';
-import type { Workspace, Card, CardHistoryEntry } from '../../../shared/contracts.js';
+import { memo, useCallback, useState, useEffect } from 'react';
+import { useCardSearch } from '../useCardSearch.js';
+import { useCardWindow } from '../useCardWindow.js';
+import type { Workspace, Card, CardHistoryEntry, PublicCard } from '../../../shared/contracts.js';
 import { CardHistory } from './CardHistory.js';
 import { useEditor } from '../useEditor.js';
-import { CardForm, cardTypes } from './CardForm.js';
+import { CardForm } from './CardForm.js';
+import { cardTypes } from '../card-types.js';
 import { downloadDraft, api } from '../api.js';
 import { fieldChanges } from '../../../shared/model.js';
 export function Editor({ initial }: { initial: Workspace }) {
@@ -45,7 +48,17 @@ export function Editor({ initial }: { initial: Workspace }) {
       active = false;
     };
   }, [selected, tab, historyRetry]);
-  const filtered = editor.cards.filter((c) => matchesCard(c, query, type, attributes));
+  const results = useCardSearch(editor.cards, query, type, attributes);
+  const selectCard = useCallback(
+    (id: string) => {
+      setSelected(id);
+      if (id !== selected) {
+        setHistory(null);
+        setHistoryError('');
+      }
+    },
+    [selected],
+  );
   return (
     <>
       <div className="heading">
@@ -109,7 +122,7 @@ export function Editor({ initial }: { initial: Workspace }) {
               </button>
             )}
             <div className="list-title">
-              {filtered.length} карточек{' '}
+              {results.cards.length} карточек{' '}
               <button
                 onClick={() => {
                   const c: Card = {
@@ -135,33 +148,20 @@ export function Editor({ initial }: { initial: Workspace }) {
                 + Добавить
               </button>
             </div>
-            {!filtered.length && <p role="status">Нет карточек с такими условиями.</p>}
-            <div className="card-list" id="card-list">
-              {filtered.map((c) => (
-                <div className="card-list-item" key={c.id}>
-                  <button
-                    className={c.id === selected ? 'selected' : ''}
-                    onClick={() => {
-                      setSelected(c.id);
-                      if (c.id !== selected) {
-                        setHistory(null);
-                        setHistoryError('');
-                      }
-                    }}
-                  >
-                    {c.image ? (
-                      <img src={c.image} alt="" loading="lazy" />
-                    ) : (
-                      <span className="mini-placeholder">Б</span>
-                    )}
-                    <span>
-                      {c.name}
-                      <small>{c.cardType}</small>
-                    </span>
-                  </button>
-                  <CardAttributes card={c} compact selected={attributes} />
-                </div>
-              ))}
+            <p role="status">
+              {results.pending
+                ? 'Ищем…'
+                : results.approximateCount > 0
+                  ? `С учётом опечаток: ${results.approximateCount}`
+                  : ''}
+            </p>
+            <div aria-busy={results.pending}>
+              <EditorCardList
+                cards={results.cards}
+                selected={selected}
+                attributes={attributes}
+                onSelect={selectCard}
+              />
             </div>
           </aside>
           <section className="panel card-editor">
@@ -245,3 +245,48 @@ export function Editor({ initial }: { initial: Workspace }) {
     </>
   );
 }
+
+const EditorCardList = memo(function EditorCardList({
+  cards,
+  selected,
+  attributes,
+  onSelect,
+}: {
+  cards: PublicCard[];
+  selected: string;
+  attributes: AttributeFilters;
+  onSelect: (id: string) => void;
+}) {
+  const { visible, remaining, loadMoreRef, scrollRootRef } = useCardWindow(cards);
+  return (
+    <>
+      {!cards.length && <p role="status">Нет карточек с такими условиями.</p>}
+      <div className="card-list" id="card-list" ref={scrollRootRef}>
+        {visible.map((card) => (
+          <div className="card-list-item" key={card.id}>
+            <button
+              className={card.id === selected ? 'selected' : ''}
+              onClick={() => onSelect(card.id)}
+            >
+              {card.image ? (
+                <img src={card.image} alt="" loading="lazy" />
+              ) : (
+                <span className="mini-placeholder">Б</span>
+              )}
+              <span>
+                {card.name}
+                <small>{card.cardType}</small>
+              </span>
+            </button>
+            <CardAttributes card={card} compact selected={attributes} />
+          </div>
+        ))}
+        {remaining > 0 && (
+          <div ref={loadMoreRef} className="card-autoload" role="status">
+            Подгружаем карточки…
+          </div>
+        )}
+      </div>
+    </>
+  );
+});

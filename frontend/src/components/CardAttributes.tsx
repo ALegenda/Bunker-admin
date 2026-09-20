@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import type { PublicCard } from '../../../shared/contracts.js';
 import { cardColors } from '../../../shared/card-metadata.js';
+import { colorForLabel, effectNotes } from '../../../shared/card-classification.js';
 import {
-  colorForLabel,
-  effectNotes,
-  normalizeAttributes,
-} from '../../../shared/card-classification.js';
-import {
+  preparedAttributes,
   attributeKeys,
   attributeLabels,
   attributeOptions,
@@ -56,7 +53,7 @@ function Chips({ items, selected }: { items: AttributeItem[]; selected?: Attribu
     </div>
   );
 }
-export function CardAttributes({
+export const CardAttributes = memo(function CardAttributes({
   card,
   compact = false,
   selected,
@@ -66,7 +63,7 @@ export function CardAttributes({
   selected?: AttributeFilters;
 }) {
   const items = attributeItems(card);
-  const condition = normalizeAttributes(card.attributes).usageCondition;
+  const condition = preparedAttributes(card).normalized.usageCondition;
   const tags = items.filter((item) => item.key === 'tags');
   const matchedTags = tags.filter((item) => selected?.tags.includes(item.value)).length;
   return (
@@ -136,7 +133,7 @@ export function CardAttributes({
       )}
     </div>
   );
-}
+});
 function MultiFilter({
   cards,
   attribute,
@@ -149,7 +146,11 @@ function MultiFilter({
   onChange: (value: AttributeFilters) => void;
 }) {
   const [query, setQuery] = useState('');
-  const options = attributeOptions(cards, attribute, value[attribute]);
+  const selected = value[attribute];
+  const options = useMemo(
+    () => attributeOptions(cards, attribute, selected),
+    [cards, attribute, selected],
+  );
   const filtered = options.filter(
     ([label]) =>
       value[attribute].includes(label) ||
@@ -229,7 +230,7 @@ function MultiFilter({
     </fieldset>
   );
 }
-export function CardAttributeFilters({
+export const CardAttributeFilters = memo(function CardAttributeFilters({
   cards,
   value,
   onChange,
@@ -245,4 +246,4 @@ export function CardAttributeFilters({
       ))}
     </div>
   );
-}
+});

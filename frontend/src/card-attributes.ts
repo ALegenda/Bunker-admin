@@ -1,5 +1,4 @@
 import type { PublicCard } from '../../shared/contracts.js';
-import { descriptionText } from '../../shared/rich-text.js';
 import {
   canonicalValue,
   colorForLabel,
@@ -68,8 +67,30 @@ function category(
   if (values.length === 2 && values.includes(first) && values.includes(second)) return 'both';
   return values.join(', ');
 }
+// Cards/attributes are replaced immutably by the editor. Weak keys let old drafts be collected.
+const attributeCache = new WeakMap<
+  PublicCard['attributes'],
+  ReturnType<typeof prepareAttributes>
+>();
+function prepareAttributes(input: PublicCard['attributes']) {
+  const normalized = normalizeAttributes(input);
+  const values = Object.fromEntries(
+    attributeKeys.map((key) => [key, valuesForAttributes(normalized, key)]),
+  ) as AttributeFilters;
+  return { normalized, values };
+}
+export function preparedAttributes(card: PublicCard) {
+  let cached = attributeCache.get(card.attributes);
+  if (!cached) {
+    cached = prepareAttributes(card.attributes);
+    attributeCache.set(card.attributes, cached);
+  }
+  return cached;
+}
 export function attributeValues(card: PublicCard, key: AttributeKey): string[] {
-  const a = normalizeAttributes(card.attributes);
+  return preparedAttributes(card).values[key];
+}
+function valuesForAttributes(a: PublicCard['attributes'], key: AttributeKey): string[] {
   if (key === 'activationTime')
     return [category(a.activationTime, 'дневная', 'ночная', 'day', 'night')];
   if (key === 'usageLocation')
@@ -103,35 +124,16 @@ export const matchesAny = (key: AttributeKey) =>
     'cardColor',
     'dangerousPersonality',
   ].includes(key);
-export function matchesCard(
-  card: PublicCard,
-  query: string,
-  type: string,
-  filters: AttributeFilters,
-) {
-  const text = [
-    card.name,
-    descriptionText(card.description),
-    normalizeAttributes(card.attributes).usageCondition || '',
-    normalizeAttributes(card.attributes).dangerousPersonality ? 'опасная личность' : '',
-    ...attributeKeys.flatMap((key) =>
-      attributeValues(card, key).map((value) => attributeValueLabel(key, value)),
-    ),
-  ]
-    .join(' ')
-    .toLocaleLowerCase('ru');
+export function matchesAttributes(card: PublicCard, type: string, filters: AttributeFilters) {
   return (
     (!type || card.cardType === type) &&
-    text.includes(canonicalValue(query)) &&
     attributeKeys.every((key) => {
       const selected = filters[key];
+      if (!selected.length) return true;
       const values = attributeValues(card, key);
-      return (
-        !selected.length ||
-        (matchesAny(key)
-          ? selected.some((v) => values.includes(v))
-          : selected.every((v) => values.includes(v)))
-      );
+      return matchesAny(key)
+        ? selected.some((v) => values.includes(v))
+        : selected.every((v) => values.includes(v));
     })
   );
 }

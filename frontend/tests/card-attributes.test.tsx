@@ -7,11 +7,18 @@ import {
   attributeOptions,
   attributeValues,
   emptyAttributeFilters,
-  matchesCard,
   filtersFromParams,
   appendFilterParams,
 } from '../src/card-attributes.js';
+import { createSearchIndex, searchCards } from '../src/card-search.js';
 import { CardAttributes, CardAttributeFilters } from '../src/components/CardAttributes.js';
+
+const matchesCard = (
+  card: PublicCard,
+  query: string,
+  type: string,
+  filters: ReturnType<typeof emptyAttributeFilters>,
+) => searchCards(createSearchIndex([card]), query, type, filters).cards.length > 0;
 
 const card: PublicCard = {
   id: 'judge',
