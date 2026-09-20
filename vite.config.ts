@@ -13,6 +13,7 @@ export default defineConfig(({ isSsrBuild }) => ({
             input: {
               app: fileURLToPath(new URL('./frontend/index.html', import.meta.url)),
               landing: fileURLToPath(new URL('./frontend/landing.html', import.meta.url)),
+              qr: fileURLToPath(new URL('./frontend/qr.html', import.meta.url)),
             },
           },
         }),

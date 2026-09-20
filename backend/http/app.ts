@@ -188,6 +188,10 @@ export async function createApp() {
     if (legacyCatalog) return reply.redirect(legacyCatalog, 301);
     return reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('landing.html');
   });
+  app.get('/qr', async (_req, reply) =>
+    reply.type('text/html').header('Cache-Control', 'no-cache').sendFile('qr.html'),
+  );
+  app.get('/qr/', async (_req, reply) => reply.redirect('/qr', 301));
   await app.register(staticFiles, {
     root: path.resolve('web-dist'),
     cacheControl: true,

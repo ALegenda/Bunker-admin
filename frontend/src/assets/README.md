@@ -1,5 +1,7 @@
 # Графика лендинга
 
+`bunker-qr.svg` — QR-код страницы `/qr` с точным адресом `https://bunker-vdk.ru/`. Сгенерирован Python-библиотекой `qrcode` 8.2 (`ERROR_CORRECT_Q`, `border=4`, `box_size=8`, `SvgPathFillImage`). Белое поле входит в SVG; код работает без внешнего сервиса. Считывание проверено из браузерных снимков и печатной версии.
+
 `bunker-cartoon.webp` — текущая светлая иллюстрация главного экрана (1200 × 800). Создана встроенным imagegen, затем оптимизирована в WebP. Три существующие карточки использованы только как стилистические референсы. Исходник: `/Users/antonalekseev/.codex/generated_images/01a0ae89-1b8d-7403-868d-ab3906d9ecc4/exec-24fe6cab-01bb-4d05-a899-01a14cd48071.png`.
 
 Финальный промпт (built-in mode, generate):
