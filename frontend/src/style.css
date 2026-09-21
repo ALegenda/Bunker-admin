@@ -1,4 +1,5 @@
 @import './theme.css';
+@import './back-to-top.css';
 
 * {
   box-sizing: border-box;

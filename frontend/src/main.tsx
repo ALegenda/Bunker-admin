@@ -1,4 +1,5 @@
 import { Header } from './components/Header.js';
+import { initBackToTop } from './back-to-top.js';
 import { TelegramLogin } from './components/TelegramLogin.js';
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -194,3 +195,4 @@ const app = (
 );
 // The production landing is complete HTML and never loads this application entry.
 createRoot(root).render(app);
+initBackToTop();

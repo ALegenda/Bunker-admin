@@ -11,13 +11,13 @@ const stylesheets = [
 ];
 const scripts = [...page.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/g)];
 if (scripts.length !== 1 || !scripts[0][1].startsWith('/assets/landing-'))
-  throw Error('Landing must load only its menu enhancement');
+  throw Error('Landing must load only its lightweight enhancements');
 const preloads = [
   ...page.matchAll(/<link\b(?=[^>]*\brel="modulepreload")(?=[^>]*\bhref="([^"]+)")[^>]*>/g),
 ];
 let scriptBytes = 0;
 for (const url of new Set([...scripts, ...preloads].map((match) => match[1]))) {
-  if (!/^\/assets\/(?:landing(?:-menu)?|modulepreload-polyfill)-[\w-]+\.js$/.test(url))
+  if (!/^\/assets\/(?:landing(?:-menu)?|back-to-top|modulepreload-polyfill)-[\w-]+\.js$/.test(url))
     throw Error('Unexpected landing script: ' + url);
   scriptBytes += (await readFile(new URL('../web-dist' + url, import.meta.url))).length;
 }
