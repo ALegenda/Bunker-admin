@@ -1,7 +1,7 @@
 import { readFile, writeFile, access } from 'node:fs/promises';
 import { renderLanding } from '../tmp/landing-prerender/prerender.js';
 
-// The public landing is complete HTML/CSS with a small menu enhancement.
+// The public landing is complete HTML/CSS with lightweight menu and scroll enhancements.
 // Native controls also work without JS; no application framework is loaded.
 let page = await readFile(new URL('../web-dist/landing.html', import.meta.url), 'utf8');
 const markup = renderLanding();

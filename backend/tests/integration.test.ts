@@ -41,7 +41,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
     await migrate();
     await migrate();
     await ensureBucket();
-    await t.test('homepage is complete HTML with only a small menu enhancement', async () => {
+    await t.test('homepage is complete HTML with only lightweight enhancements', async () => {
       const page = await app.inject({ url: '/', headers: { host: 'localhost' } });
       assert.equal(page.statusCode, 200);
       assert.match(page.headers['cache-control'] || '', /no-cache/);
@@ -55,7 +55,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       for (const [, url] of page.body.matchAll(
         /<link\b(?=[^>]*\brel="modulepreload")(?=[^>]*\bhref="([^"]+)")[^>]*>/g,
       )) {
-        assert.match(url, /^\/assets\/(?:landing-menu|modulepreload-polyfill)-[\w-]+\.js$/);
+        assert.match(url, /^\/assets\/(?:landing-menu|back-to-top|modulepreload-polyfill)-[\w-]+\.js$/);
       }
       assert.ok(
         gzipSync(page.body).length < 20000,
