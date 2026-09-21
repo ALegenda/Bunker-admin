@@ -1,3 +1,4 @@
+import { CardAttributeFields } from './CardAttributeFields.js';
 import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
 import {
   emptyAttributeFilters,
@@ -10,7 +11,7 @@ import { useCardWindow } from '../useCardWindow.js';
 import type { AttributeFilters } from '../card-attributes.js';
 import { CardTips } from './CardTips.js';
 import { RichDescription } from './RichDescription.js';
-import { lazy, memo, Suspense, useEffect, useMemo, useState } from 'react';
+import React, { lazy, memo, Suspense, useEffect, useMemo, useState } from 'react';
 import type { Catalog as CatalogData, PublicCard, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
 import { cardTypes } from '../card-types.js';
@@ -229,7 +230,7 @@ function CardDialog({
         <RichDescription value={card.description} />
       </div>
       <CardAttributes card={card} />
-      {propose && <button onClick={propose}>Предложить правку описания</button>}
+      {propose && <button onClick={propose}>Предложить правку</button>}
       <p>
         <button onClick={() => navigator.clipboard.writeText(location.href)}>
           Скопировать ссылку на карточку
@@ -273,10 +274,18 @@ export function Modal({
     </dialog>
   );
 }
-function ProposalForm({ card, close }: { card: PublicCard | null; close: () => void }) {
+export function ProposalForm({ card, close }: { card: PublicCard | null; close: () => void }) {
   const [name, setName] = useState(card?.name || ''),
     [type, setType] = useState(card?.cardType || 'умение'),
     [text, setText] = useState(card?.description || ''),
+    [attributes, setAttributes] = useState<PublicCard['attributes']>(
+      card?.attributes || {
+        activationTime: [],
+        usageFrequency: '',
+        usageLocation: [],
+        tags: [],
+      },
+    ),
     [reason, setReason] = useState(''),
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false),
@@ -298,6 +307,7 @@ function ProposalForm({ card, close }: { card: PublicCard | null; close: () => v
                 name,
                 cardType: type,
                 description: text,
+                attributes,
                 reason,
               });
               setDone(true);
@@ -312,28 +322,26 @@ function ProposalForm({ card, close }: { card: PublicCard | null; close: () => v
             Название
             <input
               required
-              disabled={Boolean(card)}
               value={name}
               maxLength={250}
               onChange={(e) => setName(e.target.value)}
             />
           </label>
-          {!card && (
-            <label>
-              Тип
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value as PublicCard['cardType'])}
-              >
-                {cardTypes.map((t) => (
-                  <option key={t}>{t}</option>
-                ))}
-              </select>
-            </label>
-          )}
+          <label>
+            Тип
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value as PublicCard['cardType'])}
+            >
+              {cardTypes.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
+            </select>
+          </label>
           <Suspense fallback={<p role="status">Загружаем редактор…</p>}>
             <DescriptionEditor label="Предлагаемое описание" value={text} onChange={setText} />
           </Suspense>
+          <CardAttributeFields value={attributes} onChange={setAttributes} />
           <label>
             Почему стоит изменить
             <textarea

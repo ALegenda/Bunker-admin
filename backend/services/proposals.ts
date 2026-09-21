@@ -1,4 +1,6 @@
 import { descriptionText } from '../../shared/rich-text.js';
+import { normalizeAttributes } from '../../shared/card-classification.js';
+import { proposalChanges, proposalFields, proposalValues } from '../../shared/proposals.js';
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
 import { isDeepStrictEqual as equal } from 'node:util';
@@ -17,6 +19,7 @@ export const proposalSchema = z
       (value) => descriptionText(value).trim().length > 0,
       'Введите описание',
     ),
+    attributes: cardSchema.shape.attributes.optional(),
     reason: z.string().trim().min(1).max(3000),
   })
   .strict();
@@ -38,11 +41,17 @@ export async function submitProposal(input: unknown, author: string) {
       ? (await c.query('SELECT data FROM public_cards WHERE id=$1', [data.cardId])).rows[0]?.data
       : null;
     if (data.cardId && !base) throw new AppError(404, 'Карточка не найдена');
-    const proposed = base
-      ? { ...base, description: data.description }
-      : publicCard(cardSchema.parse({ ...data, id: randomUUID() }));
-    if (base && base.description === data.description)
-      throw new AppError(400, 'Описание не изменилось');
+    const parsed = cardSchema.parse({
+      ...base,
+      id: base?.id || randomUUID(),
+      name: data.name,
+      cardType: data.cardType,
+      description: data.description,
+      attributes: data.attributes ?? base?.attributes,
+    });
+    const proposed = publicCard({ ...parsed, attributes: normalizeAttributes(parsed.attributes) });
+    if (base && !proposalChanges(base, proposed).length)
+      throw new AppError(400, 'Карточка не изменилась');
     const id = randomUUID();
     await c.query(
       'INSERT INTO proposals(id,author_id,card_id,base,proposed,reason) VALUES($1,$2,$3,$4,$5,$6)',
@@ -69,12 +78,31 @@ export async function reviewProposal(
       if (p.card_id) {
         const old = (await c.query('SELECT * FROM cards WHERE id=$1 FOR UPDATE', [p.card_id]))
           .rows[0];
-        if (!old || !equal(old.description, p.base.description))
-          throw new AppError(
-            409,
-            'Описание уже изменено в черновике. Сверьте его с предложением; автоматическое принятие остановлено.',
-          );
-        card = { ...rowCard(old), description: p.proposed.description };
+        if (!old) throw new AppError(409, 'Карточка отсутствует в черновике.');
+        card = rowCard(old);
+        const current = proposalValues(card);
+        const base = proposalValues(p.base);
+        const proposed = proposalValues(p.proposed);
+        const changes = proposalChanges(p.base, p.proposed);
+        for (const change of changes) {
+          // Frequency and its condition form one rule; do not silently drop a draft condition.
+          const keys =
+            change.key === 'usageFrequency' || change.key === 'usageCondition'
+              ? (['usageFrequency', 'usageCondition'] as const)
+              : [change.key];
+          if (
+            keys.some(
+              (key) => !equal(current[key], base[key]) && !equal(current[key], proposed[key]),
+            )
+          )
+            throw new AppError(
+              409,
+              `Поле «${change.label}» уже изменено в черновике. Сверьте его с предложением; автоматическое принятие остановлено.`,
+            );
+          if (Object.hasOwn(proposalFields, change.key))
+            Object.assign(card, { [change.key]: change.after });
+          else Object.assign(card.attributes, { [change.key]: change.after });
+        }
         version = old.version;
       } else card = cardSchema.parse(p.proposed);
       await writeCard(c, card, version, actor);

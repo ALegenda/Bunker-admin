@@ -1,5 +1,6 @@
 import { RichDescription } from './RichDescription.js';
-import { useEffect, useState } from 'react';
+import { proposalChanges } from '../../../shared/proposals.js';
+import React, { useEffect, useState } from 'react';
 import type { Proposal, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
 const labels = {
@@ -8,6 +9,37 @@ const labels = {
   rejected: 'Отклонено',
   withdrawn: 'Отозвано',
 };
+const displayValue = (value: unknown) =>
+  typeof value === 'boolean'
+    ? value
+      ? 'Да'
+      : 'Нет'
+    : Array.isArray(value)
+      ? value.join(', ') || 'Не указано'
+      : String(value || 'Не указано');
+
+export function ProposalDiff({ proposal }: { proposal: Proposal }) {
+  const changes = proposalChanges(proposal.base, proposal.proposed);
+  return (
+    <div className="proposal-diff">
+      {(proposal.base ? (['before', 'after'] as const) : (['after'] as const)).map((side) => (
+        <section key={side}>
+          <h3>{side === 'before' ? 'Опубликовано' : 'Предложено'}</h3>
+          {changes.map((change) => (
+            <div key={change.key}>
+              <h4>{change.label}</h4>
+              {change.key === 'description' ? (
+                <RichDescription value={String(change[side] || '')} />
+              ) : (
+                <p>{displayValue(change[side])}</p>
+              )}
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+  );
+}
 export function Proposals({ user }: { user: User }) {
   const [items, setItems] = useState<Proposal[]>([]),
     [error, setError] = useState(''),
@@ -69,18 +101,7 @@ export function Proposals({ user }: { user: User }) {
             <p>
               <strong>Комментарий:</strong> {p.reason}
             </p>
-            <div className="proposal-diff">
-              {p.base && (
-                <section>
-                  <h3>Опубликовано</h3>
-                  <RichDescription value={p.base.description} />
-                </section>
-              )}
-              <section>
-                <h3>Предложено</h3>
-                <RichDescription value={p.proposed.description} />
-              </section>
-            </div>
+            <ProposalDiff proposal={p} />
             {p.review_note && <p>Ответ администратора: {p.review_note}</p>}
             {p.status === 'pending' &&
               (user.role === 'admin' ? (

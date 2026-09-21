@@ -752,6 +752,107 @@ await test('Production access, sessions, catalogue and proposal workflow', async
         assert.equal((await readWorkspace()).cards[0].description, 'Новое описание');
       },
     );
+    await t.test(
+      'attribute-only proposals merge individual fields and keep unrelated draft edits',
+      async () => {
+        const submit = async (attributes: typeof original.attributes, extra = {}) =>
+          app.inject({
+            method: 'POST',
+            url: '/api/proposals',
+            headers: await headers('trusted'),
+            payload: {
+              cardId: original.id,
+              name: original.name,
+              cardType: original.cardType,
+              description: original.description,
+              reason: 'Правка характеристик',
+              attributes,
+              ...extra,
+            },
+          });
+        const noop = await submit({
+          ...original.attributes,
+          dangerousPersonality: false,
+          effects: [],
+        });
+        assert.equal(noop.statusCode, 400, noop.body);
+        const invalid = await submit({ ...original.attributes, tags: ['x'.repeat(121)] });
+        assert.equal(invalid.statusCode, 400, invalid.body);
+        const attrs = {
+          ...original.attributes,
+          activationTime: ['ночная'],
+          usageLocation: ['снаружи'],
+          usageFrequency: 'по условию',
+          usageCondition: 'После голосования',
+          tags: ['защита'],
+          effects: ['забей'],
+          cardColor: 'розовый' as const,
+          dangerousPersonality: true,
+        };
+        const r = await submit(attrs, { name: 'Новое название', cardType: 'роль' });
+        assert.equal(r.statusCode, 200, r.body);
+        await reviewProposal(r.json().id, 'accepted', '', null);
+        const saved = (await readWorkspace()).cards[0];
+        assert.equal(saved.description, 'Новое описание');
+        assert.equal(saved.name, 'Новое название');
+        assert.equal(saved.cardType, 'роль');
+        assert.deepEqual(saved.attributes, attrs);
+        const listed = (
+          await app.inject({ url: '/api/proposals', headers: await headers('trusted') })
+        ).json().proposals;
+        assert.deepEqual(
+          listed.find((p: { id: string }) => p.id === r.json().id).proposed.attributes,
+          attrs,
+        );
+        // A stale tag edit must not replace other attributes, even if they changed independently.
+        const same = await submit(attrs);
+        assert.equal(same.statusCode, 200, same.body);
+        await reviewProposal(same.json().id, 'accepted', '', null);
+        assert.deepEqual((await readWorkspace()).cards[0].attributes, attrs);
+        const conflict = await submit({ ...original.attributes, tags: ['лечение'] });
+        const before = await readWorkspace();
+        await assert.rejects(reviewProposal(conflict.json().id, 'accepted', '', null), {
+          statusCode: 409,
+        });
+        assert.deepEqual(await readWorkspace(), before);
+        const pending = (
+          await pool.query('SELECT status FROM proposals WHERE id=$1', [conflict.json().id])
+        ).rows[0];
+        assert.equal(pending.status, 'pending');
+        const limits = await submit({ ...original.attributes, usageFrequency: 'одноразовая' });
+        await assert.rejects(reviewProposal(limits.json().id, 'accepted', '', null), {
+          statusCode: 409,
+        });
+        // Clear attributes while preserving independent draft changes to name and description.
+        await transaction(async (c) => {
+          await refreshCatalog(c, [{ ...original, attributes: attrs }]);
+        });
+        const cleared = await submit({
+          ...attrs,
+          tags: [],
+          effects: [],
+          activationTime: [],
+          usageLocation: [],
+          usageFrequency: '',
+          usageCondition: '',
+          cardColor: '',
+          dangerousPersonality: false,
+        });
+        assert.equal(cleared.statusCode, 200, cleared.body);
+        await reviewProposal(cleared.json().id, 'accepted', '', null);
+        const clearedCard = (await readWorkspace()).cards[0];
+        assert.deepEqual(clearedCard.attributes, original.attributes);
+        assert.equal(clearedCard.name, 'Новое название');
+        assert.equal(clearedCard.description, 'Новое описание');
+        const publicData = (
+          await app.inject({ url: '/api/catalog', headers: { host: 'localhost:4173' } })
+        ).json();
+        assert.deepEqual(publicData.cards[0].attributes, attrs);
+        await transaction(async (c) => {
+          await refreshCatalog(c, [original]);
+        });
+      },
+    );
     await t.test('per-card versions reject stale saves and preserve unrelated edits', async () => {
       const state = await readWorkspace();
       const updated = { ...state.cards[0], note: 'Комментарий' };
@@ -769,6 +870,7 @@ await test('Production access, sessions, catalogue and proposal workflow', async
         headers: await headers('trusted'),
         payload: {
           cardId: null,
+          attributes: { ...original.attributes, tags: ['защита'], activationTime: ['ночная'] },
           name: 'Новая идея',
           cardType: 'умение',
           description: 'Предложение',
@@ -778,6 +880,8 @@ await test('Production access, sessions, catalogue and proposal workflow', async
       assert.equal(r.statusCode, 200, r.body);
       await reviewProposal(r.json().id, 'accepted', '', null);
       assert.equal((await readWorkspace()).cards.length, 2);
+      assert.deepEqual((await readWorkspace()).cards[1].attributes.tags, ['защита']);
+      assert.deepEqual((await readWorkspace()).cards[1].attributes.activationTime, ['ночная']);
       assert.equal(
         (await app.inject({ url: '/api/catalog', headers: { host: 'localhost:4173' } })).json()
           .cards.length,
