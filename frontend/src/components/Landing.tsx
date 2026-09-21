@@ -17,6 +17,8 @@ import itSpecialist from '../assets/it-specialist.webp';
 import secondChance from '../assets/second-chance.webp';
 import '../landing.css';
 
+const announcementsUrl = 'https://t.me/bunker_vl';
+
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
     <span className="landing-arrow" aria-hidden="true">
@@ -211,6 +213,10 @@ const situations = [
 ];
 const questions = [
   [
+    'Как попасть на игру?',
+    'Вступай в нашу Telegram-группу @bunker_vl: там публикуем анонсы живых игр во Владивостоке. Следи за новостями и выбирай, когда присоединиться. Профиль на сайте для просмотра анонсов не нужен.',
+  ],
+  [
     'Что за игра «Бункер»?',
     'Это живая социальная игра в мире после ядерной катастрофы. Выжившие и мародёры скрывают свои роли, ищут союзников и пытаются вычислить друг друга. Умения, припасы и вылазки делают каждую партию новой историей.',
   ],
@@ -258,8 +264,14 @@ export function Landing() {
           <a href="#situations">Примеры ходов</a>
           <a href="#faq">Вопросы</a>
         </nav>
-        <a className="landing-header-cta" href="/profile">
-          Я уже игрок <Arrow diagonal />
+        <a
+          className="landing-header-cta"
+          href={announcementsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Анонсы игр в Telegram"
+        >
+          Анонсы игр <Arrow diagonal />
         </a>
         <details className="landing-mobile-menu">
           <summary className="landing-menu" aria-label="Меню" aria-controls="landing-mobile-nav">
@@ -306,22 +318,22 @@ export function Landing() {
               Снаружи — апокалипсис. Внутри — друзья, блеф и подозрительно хороший план выживания.
             </p>
             <div className="hero-actions">
-              <a className="landing-button" href="#roles">
-                Найти свою роль <Arrow />
+              <a
+                className="landing-button"
+                href={announcementsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Анонсы игр в Telegram <Arrow diagonal />
               </a>
               <a className="landing-text-link" href="#about">
                 А как играть? <span aria-hidden="true">↓</span>
               </a>
             </div>
-            <a
-              className="landing-text-link hero-announcements"
-              href="https://t.me/bunker_vl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Анонсы игр в Telegram · @bunker_vl <Arrow diagonal />
-            </a>
-            <p className="hero-footnote">Скрытые роли. Коварные карты. Настоящие эмоции.</p>
+            <p className="hero-footnote">
+              Присоединяйся к нашей группе @bunker_vl,
+              <br /> чтобы не пропустить следующую игру.
+            </p>
           </div>
           <div className="hero-visual">
             <div className="hero-speech">
@@ -541,7 +553,7 @@ export function Landing() {
                 <br />
                 Ещё больше способов удивить соседей — в каталоге.
               </p>
-              <a className="landing-button" href="/catalog">
+              <a className="landing-button secondary" href="/catalog">
                 Все карточки <Arrow diagonal />
               </a>
             </div>
@@ -691,24 +703,32 @@ export function Landing() {
             ✳
           </div>
           <div className="join-content">
-            <span className="landing-eyebrow">УБЕЖИЩЕ НАЙДЕНО. ОСТАЛОСЬ ЗНАКОМСТВО.</span>
+            <span className="landing-eyebrow">ХОЧЕШЬ ОКАЗАТЬСЯ ПО ТУ СТОРОНУ КАРТОЧКИ?</span>
             <h2>
-              Заходи.
-              <br />У нас тут <em>интересно.</em>
+              Следующая игра —
+              <br />
+              <em>с тобой?</em>
             </h2>
             <p>
-              Изучи карточки, познакомься с правилами
-              <br className="desktop-break" /> и открой свой профиль игрока.
+              Анонсы встреч во Владивостоке — в нашей Telegram-группе.
+              <br className="desktop-break" /> Присоединяйся, чтобы не пропустить свою партию.
             </p>
             <div className="join-actions">
-              <a className="landing-button" href="/profile">
-                Открыть профиль <Arrow diagonal />
+              <a
+                className="landing-button"
+                href={announcementsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Перейти в группу <Arrow diagonal />
               </a>
-              <a className="landing-button secondary" href="/catalog">
-                Посмотреть карточки <Arrow />
+              <a className="landing-text-link" href="/catalog">
+                Сначала изучить карточки <Arrow />
               </a>
             </div>
-            <span className="join-note">Вход через Telegram · Каталог без регистрации</span>
+            <span className="join-note">
+              @bunker_vl · Живые игры, новые знакомые и немного блефа
+            </span>
           </div>
           <div className="join-stamp" aria-hidden="true">
             ПРОВЕРЕНО
@@ -730,15 +750,15 @@ export function Landing() {
           <br />
           <b>Сначала ещё одну партию.</b>
         </p>
-        <nav aria-label="Разделы для игроков">
+        <nav aria-label="Полезные ссылки">
+          <a href={announcementsUrl} target="_blank" rel="noopener noreferrer">
+            Анонсы игр в Telegram <Arrow diagonal />
+          </a>
           <a href="/catalog">
             Каталог <Arrow diagonal />
           </a>
           <a href="/profile">
             Профиль <Arrow diagonal />
-          </a>
-          <a href="https://t.me/bunker_vl" target="_blank" rel="noopener noreferrer">
-            Анонсы игр в Telegram <Arrow diagonal />
           </a>
           <a href="#hero-title" aria-label="Вернуться наверх">
             Наверх ↑

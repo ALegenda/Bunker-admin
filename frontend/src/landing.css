@@ -252,11 +252,9 @@ html:has(.landing) {
 .landing .landing-text-link:hover {
   color: #a44022;
 }
-.landing .hero-announcements {
-  margin-top: 16px;
-}
 .landing .hero-footnote {
   font-size: 12px;
+  line-height: 1.6;
   color: #53615a;
 }
 .landing .hero-visual {
@@ -869,9 +867,12 @@ html:has(.landing) {
 }
 .landing .landing-join p {
   font-size: 17px;
+  max-width: 640px;
+  margin-inline: auto;
 }
 .landing .join-actions {
   display: flex;
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 18px;
@@ -1642,11 +1643,15 @@ html:has(.landing) {
   .landing .join-actions {
     gap: 15px;
     flex-direction: column;
+    align-items: stretch;
     max-width: 310px;
     margin: 25px auto 22px;
   }
-  .landing .join-actions a {
+  .landing .join-actions .landing-button {
     justify-content: space-between;
+  }
+  .landing .join-actions .landing-text-link {
+    justify-content: center;
   }
   .landing .join-note {
     font-size: 10px;
