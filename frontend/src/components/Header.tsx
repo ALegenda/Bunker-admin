@@ -1,4 +1,5 @@
 import React from 'react';
+import { Brand } from './Brand.js';
 import type { User } from '../../../shared/contracts.js';
 export function Header({
   user,
@@ -12,10 +13,8 @@ export function Header({
   onLogout: () => void;
 }) {
   return (
-    <header className="topbar">
-      <a className="brand" href="/">
-        Б<span>•</span> <b>БУНКЕР</b>
-      </a>
+    <header className={`topbar${user ? ' is-authenticated' : ''}`}>
+      <Brand />
       {!user && (
         <nav aria-label="Разделы сайта">
           <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
@@ -28,7 +27,7 @@ export function Header({
       )}
       {user && (
         <>
-          <nav>
+          <nav aria-label="Разделы сайта">
             <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
               Каталог
             </a>
@@ -40,7 +39,9 @@ export function Header({
                 <a href="/admin?view=publish" aria-current={publish ? 'page' : undefined}>
                   Публикация
                 </a>
-                <a href="/users">Игроки</a>
+                <a href="/users" aria-current={path === '/users' ? 'page' : undefined}>
+                  Игроки
+                </a>
                 <a
                   href="/achievements"
                   aria-current={path === '/achievements' ? 'page' : undefined}
@@ -52,12 +53,16 @@ export function Header({
                 </a>
               </>
             )}
-            {['admin', 'trusted'].includes(user.role) && <a href="/proposals">Предложения</a>}
+            {['admin', 'trusted'].includes(user.role) && (
+              <a href="/proposals" aria-current={path === '/proposals' ? 'page' : undefined}>
+                Предложения
+              </a>
+            )}
             <a href="/profile" aria-current={path === '/profile' ? 'page' : undefined}>
               Мой профиль
             </a>
           </nav>
-          <div>
+          <div className="user-menu">
             <span className="user-name">{user.name}</span>
             <button onClick={onLogout}>Выйти</button>
           </div>

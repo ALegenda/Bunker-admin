@@ -1,3 +1,5 @@
+@import './theme.css';
+
 body {
   margin: 0;
 }
@@ -7,18 +9,11 @@ html:has(.landing) {
   background: #faf3dd;
 }
 .landing {
-  --ink: #213c39;
-  --paper: #fff9e9;
-  --cream: #faf3dd;
-  --yellow: #f7ce54;
-  --mint: #b4d5c7;
-  --pink: #efb5a6;
-  --blue: #bad1dc;
   color: var(--ink);
   background-color: var(--cream);
   background-image: radial-gradient(#29463b0c 0.7px, transparent 0.7px);
   background-size: 5px 5px;
-  font-family: 'Trebuchet MS', 'Arial', sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.55;
   overflow: clip;
@@ -38,7 +33,7 @@ html:has(.landing) {
 .landing h1,
 .landing h2,
 .landing h3 {
-  font-family: 'Arial Black', 'Arial', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 900;
 }
 .landing h2 {

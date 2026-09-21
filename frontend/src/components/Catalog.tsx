@@ -50,16 +50,23 @@ export function Catalog({ user }: { user: User | null }) {
     trusted = user?.role === 'trusted' || user?.role === 'admin';
   return (
     <>
-      <div className="heading">
+      <div className="heading catalog-heading">
         <div>
           <small>СПРАВОЧНИК ИГРОКА · {data.title}</small>
-          <h1>Знай свои возможности.</h1>
+          <h1>
+            Знай свои <em>возможности.</em>
+          </h1>
           <p>Карточки, правила и ответы на вопросы — до игры и за столом.</p>
         </div>
-        {trusted && <button onClick={() => setPropose(null)}>Предложить новую карточку</button>}
+        {trusted && (
+          <button className="primary" onClick={() => setPropose(null)}>
+            Предложить новую карточку
+          </button>
+        )}
       </div>
       <div className="catalog-layout">
         <aside className="panel filters">
+          <h2 className="panel-label">Найти свою карточку</h2>
           <label>
             Поиск
             <input
@@ -101,8 +108,8 @@ export function Catalog({ user }: { user: User | null }) {
             </p>
           )}
         </aside>
-        <section aria-busy={results.pending}>
-          <p role="status">
+        <section className="catalog-results" aria-label="Карточки" aria-busy={results.pending}>
+          <p className="catalog-count" role="status">
             {results.pending ? 'Ищем…' : `Найдено: ${results.cards.length}`}
             {!results.pending &&
               results.approximateCount > 0 &&
@@ -172,19 +179,26 @@ const CatalogTile = memo(function CatalogTile({
 }) {
   const { description } = searchDocument(card);
   return (
-    <article className="catalog-card">
+    <article className="catalog-card" data-card-type={card.cardType}>
       <button
         className="catalog-card-open"
         onClick={() => onSelect(card.id)}
         aria-label={`Открыть карточку «${card.name}»`}
       >
-        {card.image ? (
-          <img src={card.image} alt="" loading="lazy" />
-        ) : (
-          <div className="placeholder">Б</div>
-        )}
-        <div>
-          <small>{card.cardType}</small>
+        <div className="catalog-card-art">
+          <span className="catalog-card-type">{card.cardType}</span>
+          {card.image ? (
+            <img src={card.image} alt="" loading="lazy" />
+          ) : (
+            <span className="placeholder" aria-hidden="true">
+              Б
+            </span>
+          )}
+          <span className="catalog-card-arrow" aria-hidden="true">
+            ↗
+          </span>
+        </div>
+        <div className="catalog-card-copy">
           <h2>{card.name}</h2>
           <p>
             {description.slice(0, 140)}

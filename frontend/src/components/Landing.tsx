@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Brand } from './Brand.js';
 import { initLandingMenu } from '../landing-menu.js';
 import hero from '../assets/bunker-cartoon.webp';
 import hero480 from '../assets/bunker-cartoon-480.webp';
@@ -57,16 +58,6 @@ function CardArt({ image, name }: { image: string; name: string }) {
       loading="lazy"
       alt={`Карточка «${name}»`}
     />
-  );
-}
-function VaultMark() {
-  return (
-    <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <path d="m20 2 15.6 9v18L20 38 4.4 29V11Z" fill="currentColor" />
-      <circle cx="20" cy="20" r="10" stroke="var(--paper)" strokeWidth="2" />
-      <circle cx="20" cy="20" r="3" fill="var(--paper)" />
-      <path d="M20 10v7m0 6v7M10 20h7m6 0h7" stroke="var(--paper)" strokeWidth="2" />
-    </svg>
   );
 }
 const roles = [
@@ -251,12 +242,7 @@ export function Landing() {
         К содержанию
       </a>
       <header className="landing-header">
-        <a href="/" className="landing-brand" aria-label="Бункер — главная">
-          <VaultMark />
-          <span>
-            БУНКЕР<span className="brand-caption">ВЛАДИВОСТОК</span>
-          </span>
-        </a>
+        <Brand className="landing-brand" />
         <nav className="landing-nav" aria-label="Главная навигация">
           <a href="#about">Что за игра?</a>
           <a href="#roles">Кто ты?</a>
@@ -739,12 +725,7 @@ export function Landing() {
         </section>
       </main>
       <footer className="landing-footer">
-        <a href="/" className="landing-brand">
-          <VaultMark />
-          <span>
-            БУНКЕР<span className="brand-caption">ВЛАДИВОСТОК</span>
-          </span>
-        </a>
+        <Brand className="landing-brand" />
         <p>
           Апокалипсис подождёт.
           <br />

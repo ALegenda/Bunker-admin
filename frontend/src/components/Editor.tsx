@@ -64,7 +64,9 @@ export function Editor({ initial }: { initial: Workspace }) {
       <div className="heading">
         <div>
           <small>МАСТЕРСКАЯ ПРАВИЛ</small>
-          <h1>Правила живут здесь.</h1>
+          <h1>
+            Правила <em>живут здесь.</em>
+          </h1>
           <p>Редактируйте карточки. Публикуйте готовую версию для игроков.</p>
         </div>
         <button onClick={() => downloadDraft(editor.cards)}>Скачать черновик</button>

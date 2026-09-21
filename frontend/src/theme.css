@@ -1,0 +1,16 @@
+/* Shared visual language for the landing, catalog and workshop. */
+:root {
+  --ink: #213c39;
+  --paper: #fff9e9;
+  --cream: #faf3dd;
+  --yellow: #f7ce54;
+  --mint: #b4d5c7;
+  --pink: #efb5a6;
+  --blue: #bad1dc;
+  --muted: #53615a;
+  --line: #213c3933;
+  --rust: #b74e2d;
+  --focus: #247c9c;
+  --font-body: 'Trebuchet MS', 'Arial', sans-serif;
+  --font-heading: 'Arial Black', 'Arial', sans-serif;
+}
