@@ -252,6 +252,9 @@ html:has(.landing) {
 .landing .landing-text-link:hover {
   color: #a44022;
 }
+.landing .hero-announcements {
+  margin-top: 16px;
+}
 .landing .hero-footnote {
   font-size: 12px;
   color: #53615a;
@@ -1789,6 +1792,13 @@ html:has(.landing) {
 }
 .landing .landing-mobile-menu[open] .landing-menu {
   background: var(--yellow);
+}
+.landing .menu-close-icon,
+.landing .landing-mobile-menu[open] .menu-open-icon {
+  display: none;
+}
+.landing .landing-mobile-menu[open] .menu-close-icon {
+  display: block;
 }
 .landing .choice-explorer {
   border: 0;

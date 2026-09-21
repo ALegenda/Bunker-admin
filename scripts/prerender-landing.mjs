@@ -1,15 +1,27 @@
 import { readFile, writeFile, access } from 'node:fs/promises';
 import { renderLanding } from '../tmp/landing-prerender/prerender.js';
 
-// The public landing is complete HTML/CSS: native controls work without a
-// framework download. Internal pages retain their separate application shell.
+// The public landing is complete HTML/CSS with a small menu enhancement.
+// Native controls also work without JS; no application framework is loaded.
 let page = await readFile(new URL('../web-dist/landing.html', import.meta.url), 'utf8');
 const markup = renderLanding();
 if (!page.includes('<div id="root"></div>')) throw Error('Missing application root');
 const stylesheets = [
   ...page.matchAll(/<link\b(?=[^>]*\brel="stylesheet")(?=[^>]*\bhref="([^"]+)")[^>]*>/g),
 ];
-if (/<script\b/i.test(page)) throw Error('Landing must work without JavaScript');
+const scripts = [...page.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/g)];
+if (scripts.length !== 1 || !scripts[0][1].startsWith('/assets/landing-'))
+  throw Error('Landing must load only its menu enhancement');
+const preloads = [
+  ...page.matchAll(/<link\b(?=[^>]*\brel="modulepreload")(?=[^>]*\bhref="([^"]+)")[^>]*>/g),
+];
+let scriptBytes = 0;
+for (const url of new Set([...scripts, ...preloads].map((match) => match[1]))) {
+  if (!/^\/assets\/(?:landing(?:-menu)?|modulepreload-polyfill)-[\w-]+\.js$/.test(url))
+    throw Error('Unexpected landing script: ' + url);
+  scriptBytes += (await readFile(new URL('../web-dist' + url, import.meta.url))).length;
+}
+if (scriptBytes > 4096) throw Error('Keep all landing scripts under 4 KB');
 if (!stylesheets.length) throw Error('Missing production stylesheet');
 for (const [tag, url] of stylesheets) {
   if (!url.startsWith('/assets/')) throw Error('Unexpected stylesheet path');

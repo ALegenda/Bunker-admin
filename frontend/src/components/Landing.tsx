@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { initLandingMenu } from '../landing-menu.js';
 import hero from '../assets/bunker-cartoon.webp';
 import hero480 from '../assets/bunker-cartoon-480.webp';
 import hero800 from '../assets/bunker-cartoon-800.webp';
@@ -236,6 +237,8 @@ const questions = [
 ];
 
 export function Landing() {
+  useEffect(initLandingMenu, []);
+
   return (
     <div className="landing">
       <a className="landing-skip" href="#main-content">
@@ -259,17 +262,20 @@ export function Landing() {
           Я уже игрок <Arrow diagonal />
         </a>
         <details className="landing-mobile-menu">
-          <summary className="landing-menu" aria-label="Меню">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M5 6h14M5 12h14M5 18h14"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
+          <summary className="landing-menu" aria-label="Меню" aria-controls="landing-mobile-nav">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path className="menu-open-icon" d="M5 6h14M5 12h14M5 18h14" />
+              <path className="menu-close-icon" d="m6 6 12 12M6 18 18 6" />
             </svg>
           </summary>
-          <nav aria-label="Мобильная навигация">
+          <nav id="landing-mobile-nav" aria-label="Мобильная навигация">
             <a href="#about">Что за игра?</a>
             <a href="#roles">Кто ты?</a>
             <a href="#cards">Карточки</a>
@@ -307,6 +313,14 @@ export function Landing() {
                 А как играть? <span aria-hidden="true">↓</span>
               </a>
             </div>
+            <a
+              className="landing-text-link hero-announcements"
+              href="https://t.me/bunker_vl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Анонсы игр в Telegram · @bunker_vl <Arrow diagonal />
+            </a>
             <p className="hero-footnote">Скрытые роли. Коварные карты. Настоящие эмоции.</p>
           </div>
           <div className="hero-visual">
@@ -722,6 +736,9 @@ export function Landing() {
           </a>
           <a href="/profile">
             Профиль <Arrow diagonal />
+          </a>
+          <a href="https://t.me/bunker_vl" target="_blank" rel="noopener noreferrer">
+            Анонсы игр в Telegram <Arrow diagonal />
           </a>
           <a href="#hero-title" aria-label="Вернуться наверх">
             Наверх ↑

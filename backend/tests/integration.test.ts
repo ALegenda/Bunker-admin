@@ -41,7 +41,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
     await migrate();
     await migrate();
     await ensureBucket();
-    await t.test('homepage is complete and interactive without application scripts', async () => {
+    await t.test('homepage is complete HTML with only a small menu enhancement', async () => {
       const page = await app.inject({ url: '/', headers: { host: 'localhost' } });
       assert.equal(page.statusCode, 200);
       assert.match(page.headers['cache-control'] || '', /no-cache/);
@@ -49,7 +49,14 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       assert.match(page.body, /<h1[^>]*>КОНЕЦ СВЕТА\?/);
       assert.match(page.body, /<style>[\s\S]*\.landing/);
       assert.doesNotMatch(page.body, /<link[^>]+rel="stylesheet"/);
-      assert.doesNotMatch(page.body, /<script\b|rel="modulepreload"/i);
+      const scripts = [...page.body.matchAll(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/g)];
+      assert.equal(scripts.length, 1);
+      assert.match(scripts[0][1], /^\/assets\/landing-[\w-]+\.js$/);
+      for (const [, url] of page.body.matchAll(
+        /<link\b(?=[^>]*\brel="modulepreload")(?=[^>]*\bhref="([^"]+)")[^>]*>/g,
+      )) {
+        assert.match(url, /^\/assets\/(?:landing-menu|modulepreload-polyfill)-[\w-]+\.js$/);
+      }
       assert.ok(
         gzipSync(page.body).length < 20000,
         'Keep the initial HTML and CSS under 20 KB gzip',
@@ -63,6 +70,7 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       }
       assert.match(page.body, /<source[^>]+type="image\/avif"[^>]+srcSet=/);
       assert.match(page.body, /href="\/catalog"/);
+      assert.match(page.body, /href="https:\/\/t\.me\/bunker_vl"/);
       for (const path of ['/catalog', '/profile', '/admin']) {
         const internal = await app.inject({ url: path, headers: { host: 'localhost' } });
         assert.doesNotMatch(internal.body, /data-prerendered="landing"/);
