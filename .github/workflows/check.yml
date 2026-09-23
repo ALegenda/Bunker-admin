@@ -22,7 +22,6 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
-      - run: node scripts/prepare-pages.mjs
       - run: docker compose up -d --wait postgres minio
       - run: npm test
       - if: always()

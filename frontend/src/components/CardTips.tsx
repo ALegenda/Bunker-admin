@@ -1,3 +1,4 @@
+import { sitePath } from '../urls.js';
 import React, { useEffect, useState } from 'react';
 import type { CardTip, User } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
@@ -25,7 +26,11 @@ export function TipItem({
     setBusy(true);
     setError('');
     try {
-      await send('/api/tips/' + tip.id + '/review', { status, expectedStatus: tip.status, note });
+      await send('/api/tips/' + tip.id + '/review', {
+        status,
+        expectedStatus: tip.status,
+        note,
+      });
       await reload?.();
     } catch (e) {
       setError((e as Error).message);
@@ -37,7 +42,7 @@ export function TipItem({
     <article className="tip-item">
       {link && (
         <h2>
-          <a href={'/catalog?card=' + encodeURIComponent(tip.card_id)}>{tip.card_name}</a>
+          <a href={sitePath('/catalog?card=' + encodeURIComponent(tip.card_id))}>{tip.card_name}</a>
         </h2>
       )}
       <div className="tip-meta">
@@ -185,7 +190,7 @@ export function CardTips({ cardId, user }: { cardId: string; user: User | null }
             />
           </label>
           <p className="muted">
-            Автор: {user.name}. Имя можно изменить в <a href="/profile">профиле</a>.
+            Автор: {user.name}. Имя можно изменить в <a href={sitePath('/profile')}>профиле</a>.
           </p>
           <button className="primary" disabled={busy || !body.trim()}>
             {busy ? 'Отправляем…' : 'Поделиться советом'}

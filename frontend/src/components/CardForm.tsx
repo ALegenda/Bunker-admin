@@ -1,3 +1,4 @@
+import { ApiImage, ApiLink } from './ApiResources.js';
 import { CardAttributeFields } from './CardAttributeFields.js';
 import { DescriptionEditor } from './DescriptionEditor.js';
 import type { Card } from '../../../shared/contracts.js';
@@ -34,9 +35,9 @@ export function CardForm({
       </label>
       <div className="art-text">
         {card.image && (
-          <a href={card.image} target="_blank" rel="noreferrer">
-            <img className="card-art" src={card.image} alt={card.name} />
-          </a>
+          <ApiLink href={card.image} target="_blank" rel="noreferrer">
+            <ApiImage className="card-art" src={card.image} alt={card.name} />
+          </ApiLink>
         )}
         <DescriptionEditor
           value={card.description}

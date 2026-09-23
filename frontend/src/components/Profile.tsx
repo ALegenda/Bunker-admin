@@ -1,3 +1,4 @@
+import { sitePath } from '../urls.js';
 import React, { useEffect, useState } from 'react';
 import type {
   Achievement,
@@ -12,7 +13,11 @@ import {
 } from '../../../shared/achievements.js';
 import { api, send } from '../api.js';
 
-const roles = { player: 'Игрок', trusted: 'Опытный игрок', admin: 'Администратор' };
+const roles = {
+  player: 'Игрок',
+  trusted: 'Опытный игрок',
+  admin: 'Администратор',
+};
 export function ProfileStats({ profile }: { profile: PlayerProfile }) {
   return (
     <>
@@ -273,7 +278,13 @@ export function ManageProfile({ userId }: { userId: string }) {
             apply(
               await send<ProfileResponse>(
                 '/api/users/' + userId + '/profile',
-                { revision: data.profile.revision, level, balance, achievements, reason },
+                {
+                  revision: data.profile.revision,
+                  level,
+                  balance,
+                  achievements,
+                  reason,
+                },
                 'PATCH',
               ),
             );
@@ -320,7 +331,9 @@ export function ManageProfile({ userId }: { userId: string }) {
           <p>
             Изменение баланса:{' '}
             {Number.isFinite(balance)
-              ? (balance - data.profile.balance).toLocaleString('ru', { signDisplay: 'always' })
+              ? (balance - data.profile.balance).toLocaleString('ru', {
+                  signDisplay: 'always',
+                })
               : '—'}
           </p>
           <h3>Достижения</h3>
@@ -341,7 +354,11 @@ export function ManageProfile({ userId }: { userId: string }) {
                     setAchievements(
                       achievements.map((v) =>
                         v.id === a.id
-                          ? { ...v, target: achievementTarget(v), progress: e.target.valueAsNumber }
+                          ? {
+                              ...v,
+                              target: achievementTarget(v),
+                              progress: e.target.valueAsNumber,
+                            }
                           : v,
                       ),
                     );
@@ -402,7 +419,7 @@ export function ManageProfile({ userId }: { userId: string }) {
           </button>
           <p className="muted">
             Новое достижение начинается с 0. Укажите текущий прогресс и сохраните показатели.{' '}
-            <a href="/achievements" target="_blank" rel="noreferrer">
+            <a href={sitePath('/achievements')} target="_blank" rel="noreferrer">
               Создать достижение в каталоге ↗
             </a>
           </p>

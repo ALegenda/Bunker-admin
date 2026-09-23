@@ -1,3 +1,4 @@
+import { ApiImage } from './ApiResources.js';
 import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
 import { emptyAttributeFilters, type AttributeFilters } from '../card-attributes.js';
 import { RichDescription } from './RichDescription.js';
@@ -271,7 +272,7 @@ const EditorCardList = memo(function EditorCardList({
               onClick={() => onSelect(card.id)}
             >
               {card.image ? (
-                <img src={card.image} alt="" loading="lazy" />
+                <ApiImage src={card.image} alt="" loading="lazy" />
               ) : (
                 <span className="mini-placeholder">Б</span>
               )}

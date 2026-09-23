@@ -1,3 +1,5 @@
+import { backendUrl } from '../urls.js';
+import { ApiImage, ApiLink } from './ApiResources.js';
 import React, { useState } from 'react';
 import type { CardHistoryEntry } from '../../../shared/contracts.js';
 import { descriptionText } from '../../../shared/rich-text.js';
@@ -8,9 +10,9 @@ function SnapshotValue({ field, value }: { field: string; value: unknown }) {
   if (field === 'description' && value) return <RichDescription value={String(value)} />;
   if (field === 'image' && typeof value === 'string' && /^(\/[^/]|https?:\/\/)/i.test(value))
     return (
-      <a href={value} target="_blank" rel="noreferrer">
-        <img className="history-image" src={value} alt="Изображение карточки" loading="lazy" />
-      </a>
+      <ApiLink href={value} target="_blank" rel="noreferrer">
+        <ApiImage className="history-image" src={value} alt="Изображение карточки" loading="lazy" />
+      </ApiLink>
     );
   return <div className="description">{historyValue(value)}</div>;
 }
@@ -121,7 +123,7 @@ function HistoryItem({ entry }: { entry: CardHistoryEntry }) {
         <>
           {entry.release_id && (
             <p>
-              <a href={'/releases/' + entry.release_id}>Сводка выпуска ↗</a>
+              <a href={backendUrl('/releases/' + entry.release_id)}>Сводка выпуска ↗</a>
             </p>
           )}
           <HistoryDetails entry={entry} />
