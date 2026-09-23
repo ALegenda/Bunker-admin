@@ -4,13 +4,44 @@ const env = z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     AUTH_MODE: z.enum(['local', 'telegram']).default('local'),
-    PUBLIC_ORIGIN: z.string().url().default('http://localhost:4173').refine(value=>{
-      const u=new URL(value);return ['http:','https:'].includes(u.protocol) && u.pathname==='/' && !u.search && !u.hash && !u.username && !u.password;
-    }, 'PUBLIC_ORIGIN must contain only scheme and host').transform(value=>new URL(value).origin),
+    PAGES_FRONTEND_URL: z
+      .string()
+      .url()
+      .default('https://alegenda.github.io/Bunker-admin/')
+      .refine((value) => {
+        const u = new URL(value);
+        return (
+          u.protocol === 'https:' &&
+          !u.username &&
+          !u.password &&
+          !u.search &&
+          !u.hash &&
+          u.pathname.endsWith('/')
+        );
+      }, 'PAGES_FRONTEND_URL must be an HTTPS URL ending with /'),
+    PUBLIC_ORIGIN: z
+      .string()
+      .url()
+      .default('http://localhost:4173')
+      .refine((value) => {
+        const u = new URL(value);
+        return (
+          ['http:', 'https:'].includes(u.protocol) &&
+          u.pathname === '/' &&
+          !u.search &&
+          !u.hash &&
+          !u.username &&
+          !u.password
+        );
+      }, 'PUBLIC_ORIGIN must contain only scheme and host')
+      .transform((value) => new URL(value).origin),
     TELEGRAM_CLIENT_ID: z.string().default(''),
     TELEGRAM_CLIENT_SECRET: z.string().default(''),
     TELEGRAM_JWKS_FILE: z.string().default(''),
-    TELEGRAM_ADMIN_IDS: z.string().regex(/^(?:\d+(?:\s*,\s*\d+)*)?$/).default(''),
+    TELEGRAM_ADMIN_IDS: z
+      .string()
+      .regex(/^(?:\d+(?:\s*,\s*\d+)*)?$/)
+      .default(''),
     DATABASE_URL: z.string().url(),
     S3_ENDPOINT: z.string().url(),
     S3_ACCESS_KEY: z.string().min(3),
