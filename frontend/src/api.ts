@@ -1,3 +1,5 @@
+import { apiOrigin, backendUrl, remoteApi } from './urls.js';
+import { sessionToken } from './pages-session.js';
 let csrf = '';
 export function setCsrf(value: string) {
   csrf = value;
@@ -10,17 +12,39 @@ export class ApiError extends Error {
     super(message);
   }
 }
+export async function apiResponse(url: string, options: RequestInit = {}): Promise<Response> {
+  const target = backendUrl(url);
+  if (remoteApi && new URL(target).origin !== apiOrigin) throw Error('Недопустимый адрес API');
+  const headers = new Headers(options.headers);
+  if (options.body && !(options.body instanceof FormData))
+    headers.set('Content-Type', 'application/json');
+  if (csrf) headers.set('X-CSRF-Token', csrf);
+  const token = sessionToken();
+  if (token) headers.set('Authorization', 'Bearer ' + token);
+  let response: Response;
+  try {
+    response = await fetch(target, {
+      ...options,
+      credentials: remoteApi ? 'omit' : 'same-origin',
+      headers,
+      signal: options.signal || AbortSignal.timeout(30000),
+    });
+  } catch (error) {
+    if (options.signal?.aborted) throw error;
+    throw new ApiError(
+      'Не удалось связаться с сервером. Проверьте соединение и попробуйте снова.',
+      0,
+    );
+  }
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new ApiError(body.error || 'Ошибка сервера', response.status);
+  }
+  return response;
+}
 export async function api<T>(url: string, options: RequestInit = {}): Promise<T> {
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...(options.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
-      'X-CSRF-Token': csrf,
-      ...options.headers,
-    },
-  });
+  const response = await apiResponse(url, options);
   const body = await response.json();
-  if (!response.ok) throw new ApiError(body.error || 'Ошибка сервера', response.status);
   return body;
 }
 export const send = <T>(url: string, body: unknown, method = 'POST') =>

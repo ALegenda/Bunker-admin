@@ -17,6 +17,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_APP_BASE: /Bunker-admin/
+      VITE_API_ORIGIN: https://bunker-vdk.ru
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

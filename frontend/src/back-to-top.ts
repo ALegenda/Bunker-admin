@@ -12,7 +12,7 @@ export function initBackToTop() {
     button.hidden = window.scrollY < 600;
   };
   button.addEventListener('click', () => {
-    document.querySelector<HTMLElement>('header a[href="/"]')?.focus({ preventScroll: true });
+    document.querySelector<HTMLElement>('header a[aria-label="Бункер — главная"]')?.focus({ preventScroll: true });
     window.scrollTo({
       top: 0,
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches

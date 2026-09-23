@@ -1,3 +1,5 @@
+import { sitePath, backendUrl } from '../urls.js';
+import { ApiLink } from './ApiResources.js';
 import React, { useEffect, useState } from 'react';
 import type { Workspace, PdfJob, Release } from '../../../shared/contracts.js';
 import { changes, changeStamp, summary } from '../../../shared/model.js';
@@ -39,7 +41,10 @@ export function Publication({ initial }: { initial: Workspace }) {
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false),
     [releases, setReleases] = useState<Release[]>([]),
-    [savedContent, setSavedContent] = useState({ title: initial.release, log: initial.changelog }),
+    [savedContent, setSavedContent] = useState({
+      title: initial.release,
+      log: initial.changelog,
+    }),
     [loadingJob, setLoadingJob] = useState(true);
   const contentChanged = title !== savedContent.title || log !== savedContent.log;
   const blocker = publicationBlocker({
@@ -157,8 +162,11 @@ export function Publication({ initial }: { initial: Workspace }) {
     setError('');
     try {
       const savedRevision = await saveMeta();
-      await send('/api/releases', { jobId: job.jobId, revision: savedRevision });
-      window.location.href = '/admin?view=publish';
+      await send('/api/releases', {
+        jobId: job.jobId,
+        revision: savedRevision,
+      });
+      window.location.href = sitePath('/admin?view=publish');
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);
@@ -245,21 +253,21 @@ export function Publication({ initial }: { initial: Workspace }) {
                 <>
                   <strong>PDF готов{job.pages ? ` · ${job.pages} страниц` : ''}</strong>
                   <p>
-                    <a
+                    <ApiLink
                       href={job.url || `/api/pdf/jobs/${job.jobId}/file`}
                       target="_blank"
                       rel="noreferrer"
                     >
                       Открыть PDF ↗
-                    </a>{' '}
+                    </ApiLink>{' '}
                     ·{' '}
-                    <a
+                    <ApiLink
                       href={'/api/pdf/jobs/' + job.jobId + '/html'}
                       target="_blank"
                       rel="noreferrer"
                     >
                       Печатный шаблон ↗
-                    </a>
+                    </ApiLink>
                   </p>
                 </>
               ) : (
@@ -301,11 +309,11 @@ export function Publication({ initial }: { initial: Workspace }) {
         {releases.length ? (
           releases.map((r) => (
             <p key={r.id}>
-              <a href={'/releases/' + r.id} target="_blank" rel="noreferrer">
+              <a href={backendUrl('/releases/' + r.id)} target="_blank" rel="noreferrer">
                 {r.title}
               </a>{' '}
               ·{' '}
-              <a href={'/releases/' + r.id + '/pdf'} target="_blank" rel="noreferrer">
+              <a href={backendUrl('/releases/' + r.id + '/pdf')} target="_blank" rel="noreferrer">
                 PDF
               </a>
             </p>
