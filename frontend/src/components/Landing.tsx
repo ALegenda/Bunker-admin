@@ -1,3 +1,4 @@
+import { sitePath } from '../urls.js';
 import React, { useEffect } from 'react';
 import { Brand } from './Brand.js';
 import { initLandingMenu } from '../landing-menu.js';
@@ -421,7 +422,7 @@ export function Landing() {
               </article>
             ))}
           </div>
-          <a href="/catalog?type=правило" className="landing-text-link section-link">
+          <a href={sitePath('/catalog?type=правило')} className="landing-text-link section-link">
             Все правила — в открытом каталоге <Arrow diagonal />
           </a>
         </section>
@@ -506,7 +507,7 @@ export function Landing() {
                   </div>
                   <div>
                     <p>{role.text}</p>
-                    <a href={'/catalog?card=' + role.id} className="landing-text-link">
+                    <a href={sitePath('/catalog?card=' + role.id)} className="landing-text-link">
                       Полное описание роли <Arrow diagonal />
                     </a>
                   </div>
@@ -539,7 +540,7 @@ export function Landing() {
                 <br />
                 Ещё больше способов удивить соседей — в каталоге.
               </p>
-              <a className="landing-button secondary" href="/catalog">
+              <a className="landing-button secondary" href={sitePath('/catalog')}>
                 Все карточки <Arrow diagonal />
               </a>
             </div>
@@ -548,7 +549,7 @@ export function Landing() {
                 <a
                   className={`example-card tone-${card.color}`}
                   key={card.id}
-                  href={'/catalog?card=' + card.id}
+                  href={sitePath('/catalog?card=' + card.id)}
                 >
                   <div className="example-art">
                     <span className="card-type">{card.type}</span>
@@ -642,7 +643,10 @@ export function Landing() {
                       <strong>{situation.result}</strong>
                     </div>
                     <p className="situation-detail">{situation.detail}</p>
-                    <a className="landing-text-link" href={'/catalog?card=' + situation.link}>
+                    <a
+                      className="landing-text-link"
+                      href={sitePath('/catalog?card=' + situation.link)}
+                    >
                       Проверить правило в каталоге <Arrow diagonal />
                     </a>
                   </div>
@@ -708,7 +712,7 @@ export function Landing() {
               >
                 Перейти в группу <Arrow diagonal />
               </a>
-              <a className="landing-text-link" href="/catalog">
+              <a className="landing-text-link" href={sitePath('/catalog')}>
                 Сначала изучить карточки <Arrow />
               </a>
             </div>
@@ -735,10 +739,10 @@ export function Landing() {
           <a href={announcementsUrl} target="_blank" rel="noopener noreferrer">
             Анонсы игр в Telegram <Arrow diagonal />
           </a>
-          <a href="/catalog">
+          <a href={sitePath('/catalog')}>
             Каталог <Arrow diagonal />
           </a>
-          <a href="/profile">
+          <a href={sitePath('/profile')}>
             Профиль <Arrow diagonal />
           </a>
           <a href="#hero-title" aria-label="Вернуться наверх">

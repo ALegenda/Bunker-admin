@@ -1,3 +1,6 @@
+import { appPath, sitePath, remoteApi } from './urls.js';
+import { clearSession } from './pages-session.js';
+import { PagesCallback } from './components/PagesLogin.js';
 import { Header } from './components/Header.js';
 import { initBackToTop } from './back-to-top.js';
 import { TelegramLogin } from './components/TelegramLogin.js';
@@ -6,34 +9,50 @@ import { createRoot } from 'react-dom/client';
 import type { Me, Workspace } from '../../shared/contracts.js';
 import { api, setCsrf, send } from './api.js';
 const Landing = lazy(() =>
-  import('./components/Landing.js').then((module) => ({ default: module.Landing })),
+  import('./components/Landing.js').then((module) => ({
+    default: module.Landing,
+  })),
 );
 import { legacyCatalogUrl } from '../../shared/navigation.js';
 import './style.css';
 
 const Editor = lazy(() =>
-  import('./components/Editor.js').then((module) => ({ default: module.Editor })),
+  import('./components/Editor.js').then((module) => ({
+    default: module.Editor,
+  })),
 );
 const Publication = lazy(() =>
-  import('./components/Publication.js').then((module) => ({ default: module.Publication })),
+  import('./components/Publication.js').then((module) => ({
+    default: module.Publication,
+  })),
 );
 const Catalog = lazy(() =>
-  import('./components/Catalog.js').then((module) => ({ default: module.Catalog })),
+  import('./components/Catalog.js').then((module) => ({
+    default: module.Catalog,
+  })),
 );
 const Proposals = lazy(() =>
-  import('./components/Proposals.js').then((module) => ({ default: module.Proposals })),
+  import('./components/Proposals.js').then((module) => ({
+    default: module.Proposals,
+  })),
 );
 const Users = lazy(() =>
   import('./components/Users.js').then((module) => ({ default: module.Users })),
 );
 const Profile = lazy(() =>
-  import('./components/Profile.js').then((module) => ({ default: module.Profile })),
+  import('./components/Profile.js').then((module) => ({
+    default: module.Profile,
+  })),
 );
 const TipsModeration = lazy(() =>
-  import('./components/CardTips.js').then((module) => ({ default: module.TipsModeration })),
+  import('./components/CardTips.js').then((module) => ({
+    default: module.TipsModeration,
+  })),
 );
 const Achievements = lazy(() =>
-  import('./components/Achievements.js').then((module) => ({ default: module.Achievements })),
+  import('./components/Achievements.js').then((module) => ({
+    default: module.Achievements,
+  })),
 );
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { error: boolean }> {
   state = { error: false };
@@ -99,7 +118,8 @@ function WorkspaceApp({ path }: { path: string }) {
         onLogout={async () => {
           try {
             await send('/auth/logout', {});
-            location.href = '/';
+            clearSession();
+            location.href = sitePath('/');
           } catch (e) {
             setError((e as Error).message);
           }
@@ -171,12 +191,14 @@ function WorkspaceApp({ path }: { path: string }) {
     </>
   );
 }
-const legacyCatalog = legacyCatalogUrl(location.pathname, location.search, location.hash);
-if (legacyCatalog) history.replaceState(null, '', legacyCatalog);
+const legacyCatalog = legacyCatalogUrl(appPath(location.pathname), location.search, location.hash);
+if (legacyCatalog) history.replaceState(null, '', sitePath(legacyCatalog));
 const root = document.getElementById('root')!;
 const app = (
   <ErrorBoundary>
-    {location.pathname === '/' ? (
+    {remoteApi && appPath(location.pathname) === '/auth/callback' ? (
+      <PagesCallback />
+    ) : appPath(location.pathname) === '/' ? (
       <Suspense fallback={<main>Загружаем…</main>}>
         <Landing />
       </Suspense>
@@ -188,7 +210,7 @@ const app = (
           </main>
         }
       >
-        <WorkspaceApp path={location.pathname} />
+        <WorkspaceApp path={appPath(location.pathname)} />
       </Suspense>
     )}
   </ErrorBoundary>

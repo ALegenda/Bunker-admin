@@ -1,3 +1,5 @@
+import { sitePath, backendUrl } from '../urls.js';
+import { ApiImage } from './ApiResources.js';
 import { CardAttributeFields } from './CardAttributeFields.js';
 import { CardAttributes, CardAttributeFilters } from './CardAttributes.js';
 import {
@@ -16,7 +18,9 @@ import type { Catalog as CatalogData, PublicCard, User } from '../../../shared/c
 import { api, send } from '../api.js';
 import { cardTypes } from '../card-types.js';
 const DescriptionEditor = lazy(() =>
-  import('./DescriptionEditor.js').then((m) => ({ default: m.DescriptionEditor })),
+  import('./DescriptionEditor.js').then((m) => ({
+    default: m.DescriptionEditor,
+  })),
 );
 
 export function Catalog({ user }: { user: User | null }) {
@@ -42,7 +46,7 @@ export function Catalog({ user }: { user: User | null }) {
     if (type) p.set('type', type);
     appendFilterParams(p, attributes);
     if (selected) p.set('card', selected);
-    history.replaceState(null, '', '/catalog' + (p.size ? '?' + p : ''));
+    history.replaceState(null, '', sitePath('/catalog' + (p.size ? '?' + p : '')));
   }, [query, type, attributes, selected]);
   const results = useCardSearch(data?.cards, query, type, attributes);
   if (error) return <p role="alert">{error}</p>;
@@ -105,7 +109,7 @@ export function Catalog({ user }: { user: User | null }) {
           </button>
           {data.releases[0] && (
             <p>
-              <a href={'/releases/' + data.releases[0].id}>Что нового ↗</a>
+              <a href={backendUrl('/releases/' + data.releases[0].id)}>Что нового ↗</a>
             </p>
           )}
         </aside>
@@ -189,7 +193,7 @@ const CatalogTile = memo(function CatalogTile({
         <div className="catalog-card-art">
           <span className="catalog-card-type">{card.cardType}</span>
           {card.image ? (
-            <img src={card.image} alt="" loading="lazy" />
+            <ApiImage src={card.image} alt="" loading="lazy" />
           ) : (
             <span className="placeholder" aria-hidden="true">
               Б
@@ -226,7 +230,7 @@ function CardDialog({
   return (
     <Modal title={card.name} close={close}>
       <div className="art-text">
-        {card.image && <img className="card-art" src={card.image} alt={card.name} />}
+        {card.image && <ApiImage className="card-art" src={card.image} alt={card.name} />}
         <RichDescription value={card.description} />
       </div>
       <CardAttributes card={card} />

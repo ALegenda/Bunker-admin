@@ -1,3 +1,5 @@
+import { remoteApi } from '../urls.js';
+import { PagesLogin } from './PagesLogin.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { api } from '../api.js';
 import { telegramResult, type LoginResult } from '../telegram-result.js';
@@ -38,6 +40,9 @@ function loadSdk() {
   }));
 }
 export function TelegramLogin() {
+  return remoteApi ? <PagesLogin /> : <CookieTelegramLogin />;
+}
+function CookieTelegramLogin() {
   const [options, setOptions] = useState<Options | null>(null);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -52,7 +57,9 @@ export function TelegramLogin() {
       if (checking) return;
       checking = true;
       try {
-        const me = await api<{ user: unknown }>('/api/me', { signal: AbortSignal.timeout(5000) });
+        const me = await api<{ user: unknown }>('/api/me', {
+          signal: AbortSignal.timeout(5000),
+        });
         if (active && me.user) location.reload();
       } catch {
         // A transient network error must not cancel the pending Telegram confirmation.
@@ -73,7 +80,9 @@ export function TelegramLogin() {
     setOptions(null);
     Promise.all([
       loadSdk(),
-      api<Options>('/auth/telegram/init', { signal: AbortSignal.timeout(15000) }),
+      api<Options>('/auth/telegram/init', {
+        signal: AbortSignal.timeout(15000),
+      }),
     ])
       .then(([, value]) => {
         if (active) setOptions(value);

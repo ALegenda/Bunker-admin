@@ -1,3 +1,4 @@
+import { sitePath } from '../urls.js';
 import React, { useEffect, useState } from 'react';
 import type { AchievementDefinition } from '../../../shared/contracts.js';
 import { api, send } from '../api.js';
@@ -41,7 +42,7 @@ export function Achievements() {
           <h1>Достижения.</h1>
           <p>Создайте достижение, затем назначьте его игроку и укажите текущий прогресс.</p>
         </div>
-        <a href="/users">Перейти к игрокам →</a>
+        <a href={sitePath('/users')}>Перейти к игрокам →</a>
       </div>
       <section className="panel">
         <h2>{editing ? 'Редактирование достижения' : 'Новое достижение'}</h2>
@@ -54,7 +55,12 @@ export function Achievements() {
             try {
               const result = await send<AchievementDefinition>(
                 editing ? '/api/achievements/' + editing.id : '/api/achievements',
-                { title, description, target, ...(editing ? { revision: editing.revision } : {}) },
+                {
+                  title,
+                  description,
+                  target,
+                  ...(editing ? { revision: editing.revision } : {}),
+                },
                 editing ? 'PATCH' : 'POST',
               );
               setItems((old) =>

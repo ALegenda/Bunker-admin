@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';
 export default defineConfig(({ isSsrBuild }) => ({
   root: 'frontend',
+  base: process.env.VITE_APP_BASE || '/',
   publicDir: false,
   build: {
     outDir: '../web-dist',

@@ -1,3 +1,4 @@
+import { sitePath } from '../urls.js';
 import React from 'react';
 import { Brand } from './Brand.js';
 import type { User } from '../../../shared/contracts.js';
@@ -17,10 +18,10 @@ export function Header({
       <Brand />
       {!user && (
         <nav aria-label="Разделы сайта">
-          <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
+          <a href={sitePath('/catalog')} aria-current={path === '/catalog' ? 'page' : undefined}>
             Каталог
           </a>
-          <a className="telegram" href="/profile">
+          <a className="telegram" href={sitePath('/profile')}>
             Войти
           </a>
         </nav>
@@ -28,37 +29,46 @@ export function Header({
       {user && (
         <>
           <nav aria-label="Разделы сайта">
-            <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
+            <a href={sitePath('/catalog')} aria-current={path === '/catalog' ? 'page' : undefined}>
               Каталог
             </a>
             {user.role === 'admin' && (
               <>
-                <a href="/admin" aria-current={path === '/admin' && !publish ? 'page' : undefined}>
+                <a
+                  href={sitePath('/admin')}
+                  aria-current={path === '/admin' && !publish ? 'page' : undefined}
+                >
                   Редактор
                 </a>
-                <a href="/admin?view=publish" aria-current={publish ? 'page' : undefined}>
+                <a
+                  href={sitePath('/admin?view=publish')}
+                  aria-current={publish ? 'page' : undefined}
+                >
                   Публикация
                 </a>
-                <a href="/users" aria-current={path === '/users' ? 'page' : undefined}>
+                <a href={sitePath('/users')} aria-current={path === '/users' ? 'page' : undefined}>
                   Игроки
                 </a>
                 <a
-                  href="/achievements"
+                  href={sitePath('/achievements')}
                   aria-current={path === '/achievements' ? 'page' : undefined}
                 >
                   Достижения
                 </a>
-                <a href="/tips" aria-current={path === '/tips' ? 'page' : undefined}>
+                <a href={sitePath('/tips')} aria-current={path === '/tips' ? 'page' : undefined}>
                   Советы
                 </a>
               </>
             )}
             {['admin', 'trusted'].includes(user.role) && (
-              <a href="/proposals" aria-current={path === '/proposals' ? 'page' : undefined}>
+              <a
+                href={sitePath('/proposals')}
+                aria-current={path === '/proposals' ? 'page' : undefined}
+              >
                 Предложения
               </a>
             )}
-            <a href="/profile" aria-current={path === '/profile' ? 'page' : undefined}>
+            <a href={sitePath('/profile')} aria-current={path === '/profile' ? 'page' : undefined}>
               Мой профиль
             </a>
           </nav>
