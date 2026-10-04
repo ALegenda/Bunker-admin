@@ -32,7 +32,10 @@ export async function security(app: FastifyInstance) {
   app.addHook('onRequest', async (req, reply) => {
     const path = req.routeOptions.url || req.url.split('?')[0];
     const pagesOrigin = new URL(config.PAGES_FRONTEND_URL).origin;
-    const fromPages = config.AUTH_MODE === 'telegram' && req.headers.origin === pagesOrigin;
+    const fromPages =
+      config.AUTH_MODE === 'telegram' &&
+      pagesOrigin !== config.PUBLIC_ORIGIN &&
+      req.headers.origin === pagesOrigin;
     const corsPath =
       req.url.startsWith('/api/') ||
       req.url.split('?')[0] === '/auth/pages/exchange' ||

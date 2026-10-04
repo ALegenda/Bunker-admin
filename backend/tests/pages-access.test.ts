@@ -159,6 +159,27 @@ await test('Pages login, CORS and bearer sessions preserve server authorization'
         );
       },
     );
+    await t.test('same-origin Pages URL keeps native cookie sessions and CSRF', async () => {
+      const previousPagesUrl = config.PAGES_FRONTEND_URL;
+      config.PAGES_FRONTEND_URL = config.PUBLIC_ORIGIN + '/';
+      const native = {
+        host: 'bunker.example',
+        origin: config.PUBLIC_ORIGIN,
+        cookie: 'bunker_session=' + adminToken,
+        'x-csrf-token': (await sessionActor(adminToken))!.csrf,
+      };
+      try {
+        const me = await app.inject({ url: '/api/me', headers: native });
+        assert.equal(me.json().user.role, 'admin');
+        assert.equal(me.headers['access-control-allow-origin'], undefined);
+        assert.equal((await app.inject({ url: '/api/workspace', headers: native })).statusCode, 200);
+        assert.equal((await app.inject({ method: 'PUT', url: '/api/cards/test', headers: native, payload: {} })).statusCode, 200);
+        assert.equal((await app.inject({ method: 'PUT', url: '/api/cards/test', headers: { ...native, 'x-csrf-token': 'wrong' }, payload: {} })).statusCode, 403);
+        assert.equal((await app.inject({ url: '/api/workspace', headers: { ...native, authorization: 'Bearer ' + adminToken } })).statusCode, 401);
+      } finally {
+        config.PAGES_FRONTEND_URL = previousPagesUrl;
+      }
+    });
     await t.test('handoff is verifier-bound, short-lived and single-use', async () => {
       const verifier = randomToken();
       const code = await issuePagesCode(adminToken, pagesChallenge(verifier));
