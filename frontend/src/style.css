@@ -820,23 +820,37 @@ textarea {
   outline: none;
 }
 .rich-description {
+  min-width: 0;
   overflow-wrap: anywhere;
   line-height: 1.7;
 }
 .rich-description p {
-  margin: 0 0 0.8em;
+  margin: 0 0 1em;
   white-space: pre-wrap;
 }
-.rich-description p:last-child {
+.rich-description > :last-child {
   margin-bottom: 0;
 }
 .rich-description ul,
 .rich-description ol {
-  padding-left: 1.6em;
-  margin: 0.7em 0;
+  padding-left: 1.5em;
+  margin: 0 0 1em;
+}
+.rich-description li {
+  padding-left: 0.3em;
+}
+.rich-description li + li {
+  margin-top: 0.75em;
+}
+.rich-description li::marker {
+  color: var(--ink);
+  font-weight: 700;
 }
 .rich-description li p {
-  margin: 0.2em 0;
+  margin: 0 0 0.6em;
+}
+.rich-description li > :last-child {
+  margin-bottom: 0;
 }
 .rich-description h2 {
   font-size: 1.4em;

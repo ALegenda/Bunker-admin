@@ -1,4 +1,5 @@
 import { normalizeCardClassification } from '../services/classification-migration.js';
+import { formatSourceDescriptions } from '../services/description-formatting-migration.js';
 import { enrichSourceMetadata } from '../services/metadata-migration.js';
 import { enrichSourceTags } from '../services/tag-migration.js';
 import { migrateSourceRules, correctSourceAttributes } from '../services/source-migration.js';
@@ -19,6 +20,7 @@ export async function seed() {
     await enrichSourceTags();
     await enrichSourceMetadata();
     await normalizeCardClassification();
+    await formatSourceDescriptions();
     console.log('Database initialized; source migrations checked');
     return;
   }
@@ -56,6 +58,7 @@ export async function seed() {
   await enrichSourceTags();
   await enrichSourceMetadata();
   await normalizeCardClassification();
+  await formatSourceDescriptions();
   console.log(`Imported ${cards.length} cards and rules into PostgreSQL; images stored in S3`);
 }
 if (process.argv[1]?.endsWith('seed.ts') || process.argv[1]?.endsWith('seed.js')) {
