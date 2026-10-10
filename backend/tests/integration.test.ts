@@ -348,7 +348,8 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
         await promisify(execFile)(
           process.execPath,
           ['--import', 'tsx', fileURLToPath(new URL('../worker-once.ts', import.meta.url))],
-          { env: process.env, timeout: 30000 },
+          // Allow the renderer's 120-second limit plus startup, cleanup and uploads.
+          { env: process.env, timeout: 180000 },
         );
         const result = await getJob(jobId);
         assert.equal(result.status, 'ready');
