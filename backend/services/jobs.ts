@@ -6,7 +6,7 @@ import { transaction, pool } from '../db/index.js';
 import { readWorkspace } from './workspace.js';
 import { AppError } from '../domain/schema.js';
 import { changes, changeStamp } from '../../shared/model.js';
-export const TEMPLATE_VERSION = 'rules-html-v3';
+export const TEMPLATE_VERSION = 'rules-html-v4';
 export async function createJob(expectedRevision: number) {
   const result = await transaction(async (c) => {
     await c.query('SELECT id FROM workspace WHERE id=1 FOR UPDATE');

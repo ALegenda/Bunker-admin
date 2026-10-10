@@ -74,6 +74,8 @@ export function historyTitle(entry: CardHistoryEntry) {
     'card.import': 'Импорт карточки',
     'source.migrate': 'Обновление из источника',
     'source.attributes': 'Обновление характеристик из источника',
+    'source.description-formatting': 'Оформление описания',
+    'source.description-formatting.public': 'Оформление опубликованного описания',
   };
   if (prefix[entry.action]) return prefix[entry.action];
   if (!changes.length) return 'Сохранение карточки';

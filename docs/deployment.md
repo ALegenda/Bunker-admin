@@ -1,54 +1,152 @@
-# Production и CI/CD
+# Production: VPS Hoster.kz
 
-Адрес: https://bunker-vdk.ru. Домен зарегистрирован в REG.RU; A-записи @ и www указывают на 176.113.82.38. Репозиторий: https://github.com/ALegenda/Bunker-admin, ветка master.
+Рабочий сайт: https://bunker-vdk.ru. С 4 октября 2026 года API, PostgreSQL,
+MinIO и обработчик PDF работают на **VPS Hoster.kz в Астане**. Параметры
+сервера и состояние контейнеров перепроверены 10 октября 2026 года.
+Render — прежнее размещение; [его инструкция](render.md) сохранена как архив.
 
-Основной адрес хранится в `/opt/bunker/domain`, origin — в `/opt/bunker/.env`. Старый адрес `bunker-176-113-82-38.sslip.io` и `www.bunker-vdk.ru` перенаправляются на основной домен с сохранением пути и параметров. Конфигурация `deploy/nginx.redirects.conf` установлена отдельно как `/etc/nginx/sites-available/bunker-redirects` с ссылкой в `sites-enabled`, поэтому обычный деплой не перезаписывает редиректы. Сертификат `bunker-vdk.ru` покрывает основной домен и www; старый сертификат сохраняется для HTTPS-редиректа. Оба продлеваются через Certbot. После перехода на новый домен нужно заново войти: браузер не переносит cookie между доменами.
+## Сервер и адреса
 
-## Сервер
+- SSH: `root@89.126.194.117`, hostname `cloud-001.h-165642.kz`.
+- Ubuntu 24.04, 2 vCPU, 4 ГБ RAM, 50 ГБ диска.
+- REG.RU: `A @ → 89.126.194.117`, `CNAME www → bunker-vdk.ru.`, TTL 3600.
+- Основной стек: `/opt/bunker-production`, Compose project `bunker-production`.
+- API: `127.0.0.1:4174`; MinIO: `127.0.0.1:59001`; PostgreSQL не опубликован наружу.
+- Прокси: Caddy, активная конфигурация `/etc/caddy/Caddyfile`; `www` перенаправляется на основной домен.
+- TLS: Let's Encrypt, продление через `certbot.timer` и HTTP webroot;
+  deploy hook `/opt/bunker-production/deploy-certificate.sh` перезагружает Caddy.
 
-На сервере уже работают Nginx и другой сайт; Bunker использует отдельный virtual host `/etc/nginx/sites-available/bunker`. HTTPS выдан Let’s Encrypt; `certbot.timer` продлевает сертификат, deploy-hook перезагружает Nginx. Порты PostgreSQL не опубликованы, MinIO доступен только на loopback 59000. API слушает loopback 4173 или 4174. Секреты находятся в `/opt/bunker/.env` с правами 600. Приложение использует отдельную S3-учётную запись с доступом только к bucket bunker. Конфигурация инфраструктуры: `/opt/bunker/compose.infra.yaml`.
+Секреты находятся отдельно: `api.env`, `db.env`, `storage.env` в каталоге
+стека, права 600. Compose читает их через `env_file` с `format: raw`.
+Не выводить эти файлы в логи и не включать их в исходники или архив релиза.
+PostgreSQL и MinIO используют постоянные тома; смена образа API их не пересоздаёт.
+Работает один PDF-worker с лимитом 1536 МБ; API — 512 МБ, PostgreSQL — 512 МБ,
+MinIO — 384 МБ. На сервере не запускать несколько тяжёлых сборок одновременно.
 
-Сервер имеет около 900 МБ RAM и 2 ГБ swap. Сборка образа выполняется на GitHub runner. API ограничен 256 МБ, PDF-воркер — 512 МБ; одновременно работает один воркер. PDF может работать медленнее при использовании swap.
+Отдельный readonly-тест остался в `/opt/bunker-test`, API на loopback 4173.
+Это исходная копия без актуальных пользователей и правок; она не является
+источником production-данных.
 
-## Деплой
+## Доступ
 
-Workflow `.github/workflows/check.yml` проверяет типы, сборку и тесты PostgreSQL/S3/PDF. При push в master и repository variable `DEPLOY_ENABLED=true` следующий job собирает Linux-образ, публикует его в приватный `ghcr.io/alegenda/bunker-admin`; сервер скачивает слои из реестра, файлы deploy передаются по SSH и запускает `deploy/release.sh` для точного SHA коммита. GitHub environment production содержит DEPLOY_HOST, DEPLOY_USER, DEPLOY_KEY, DEPLOY_KNOWN_HOSTS. Закрытый ключ и пароли не входят в Git. Для скачивания контейнера используется краткоживущий GITHUB_TOKEN текущего Actions job; временный Docker login на сервере удаляется после загрузки. Тег master в реестре служит кешем сборки, деплой использует тег точного SHA.
+Использовать существующий SSH-ключ Hoster и проверенный `trusted_host_key`
+из локального комплекта переноса. Закрытый ключ не хранится в Git.
+Проверенный ED25519 fingerprint сервера:
+`SHA256:Bt3HkaktjLmWe4tB1pOK9b8gOnHuxp+tvp1hhEDtxp8`.
 
-Релизы находятся в `/opt/bunker/releases/<SHA>`, текущий слот/SHA — в `/opt/bunker/active`. Скрипт блокирует параллельные деплои, делает дамп PostgreSQL перед повторным обновлением, применяет миграции и идемпотентный seed. Новая API-версия запускается в свободном слоте blue/green и проходит healthcheck. После этого старый воркер завершает задание, запускается новый, Nginx переключается через graceful reload. При неуспехе проверки HTTPS возвращается предыдущая конфигурация и запускается старый воркер. Через 60 секунд старая API-версия останавливается.
+```sh
+ssh -o ConnectTimeout=15 -o BatchMode=yes -o IdentitiesOnly=yes \
+  -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$BUNKER_KNOWN_HOSTS" \
+  -i "$BUNKER_SSH_KEY" root@89.126.194.117
+```
 
-База, сессии и файлы общие для обоих слотов. Хешированные JS/CSS старых версий сохраняются в `/opt/bunker/static/assets`, чтобы открытые вкладки продолжали загружать ресурсы.
+`BUNKER_SSH_KEY` и `BUNKER_KNOWN_HOSTS` — пути к существующим локальным файлам.
+При проблеме VPN можно привязать только это соединение к рабочему интерфейсу
+macOS через `-o 'ProxyCommand=nc -b en0 -w 30 %h %p'`; проверка ключа сервера
+остаётся обязательной. Системные настройки сети менять не требуется.
 
-Миграции должны оставаться совместимыми с предыдущей версией. Возврат приложения не откатывает схему БД. Старые образы и релизы автоматически не удаляются: отслеживайте свободное место, удаляйте только версии, которые больше не нужны для отката.
+## Обновление
+
+Workflow `.github/workflows/check.yml` выполняет проверки типов, сборку и тесты
+для push и pull request. После успешных проверок **push в `master` автоматически
+обновляет Hoster.kz**. Рабочие ветки и pull request production не обновляют.
+`workflow_dispatch` на `master` запускает тот же полный цикл, в том числе для
+повторной проверки или выкладки. Результат виден в job `deploy` и GitHub environment
+`production`; push с неуспешными проверками оставляет предыдущую версию сайта.
+
+Конфигурация GitHub:
+
+- Repository variable `DEPLOY_ENABLED=true` включает выкладку; `false` — аварийная
+  остановка автоматических выкладок без отключения CI.
+- Environment `production` разрешает только ветку `master`.
+- Environment secrets: `HOSTER_DEPLOY_HOST`, `HOSTER_DEPLOY_USER`,
+  `HOSTER_DEPLOY_KEY`, `HOSTER_DEPLOY_KNOWN_HOSTS`. Для Actions используется отдельный
+  SSH-ключ с отключёнными переадресацией, агентом и PTY; отпечаток сервера проверяется.
+- Пароли PostgreSQL, MinIO и Telegram остаются в серверных env-файлах. В GitHub
+  передаётся только доступ к выкладке, в CI используются отдельные тестовые данные.
+
+Job `deploy` получает полный архив проверенного коммита и его SHA256, передаёт
+их в `/opt/bunker-production/releases/<SHA>`, проверяет checksum и запускает
+`source/deploy/hoster-release.sh <SHA>`. Образ приложения собирается на VPS из
+этого архива. Старый GHCR/Nginx-сценарий `deploy/release.sh` не используется.
+Параллельные выкладки сериализуются. Если до начала выкладки в `master` появился
+новый коммит, старый job пропускается, чтобы не вернуть устаревшую версию.
+
+Релиз должен содержать production-исправление переноса
+`ce33d93c7a530d0e5098df7f618c35957cca89e1`: native cookie-сессии работают,
+когда Pages и основной сайт используют один origin. Сохранять действующий код
+Pages API и не откатывать приложение на состояние до переноса.
+
+Ручной порядок для восстановления при недоступности GitHub Actions:
+
+1. Выполнить `npm run typecheck`, `npm test`, `npm run build` локально.
+2. Создать `git archive` точного SHA; передать по проверенному SSH и распаковать
+   в `/opt/bunker-production/releases/<SHA>/source`. Не копировать `.env`,
+   локальные данные или тестовую базу.
+3. На сервере выполнить:
+
+   ```sh
+   bash /opt/bunker-production/releases/<SHA>/source/deploy/hoster-release.sh <SHA>
+   ```
+
+Скрипт блокирует параллельные обновления, собирает новый образ, запускает
+существующий полный backup и сохраняет прежний Compose. Затем применяет
+идемпотентный `db:seed` новым образом, завершает старый worker, обновляет
+API/worker и проверяет HTTPS. PostgreSQL, MinIO, секреты и Caddy не меняются.
+При ошибке или прерывании восстанавливает прежний образ приложения; миграции БД
+автоматически не откатываются. Исходники и `active.json` сохраняются на сервере
+вместе с SHA. Повторный запуск уже активного коммита проверяет HTTPS и образы обоих
+контейнеров и завершается успешно. Неуспешную попытку можно повторить после её
+отката, пока другая выкладка не сменила Compose.
+Backup-скрипт пока использует исходный образ переноса: его нельзя удалять,
+пока не обновлено и не проверено резервное копирование.
+
+После обновления проверить health, каталог, изображения, вход и затронутый
+сценарий. Для оформления карточек сверить отчёт миграции
+`rules-2026-10-10-description-formatting`: проверено 329 описаний, план меняет
+201. Ручные правки черновика и публичного текста могут уменьшить число изменений;
+пропуски с причинами и полная копия до изменений сохраняются в БД.
+Старые выпуски и готовые PDF остаются прежними; новый PDF использует новое оформление.
 
 ## Telegram
 
-На этом сервере исходящее соединение с `oauth.telegram.org:443` завершается таймаутом. Экран входа использует официальный Telegram Login JS SDK: браузер получает подписанный ID token, сервер проверяет RS256, issuer, audience, срок, одноразовый nonce и привязку к HttpOnly cookie. Секрет бота не передаётся браузеру. Прямой OIDC callback оставлен для совместимости, но при блокировке сети использовать нужно кнопку на `/admin`.
+`AUTH_MODE=telegram`, `PUBLIC_ORIGIN=https://bunker-vdk.ru`, существующий
+бот `@bunker_vdk_bot`. Client ID/Secret и остальные параметры сохраняются
+в серверном `api.env`; нового бота для обновления создавать не нужно.
+Allowed URLs включают основной origin и `https://bunker-vdk.ru/auth/callback`.
+Local/dev auth в production недоступен.
 
-Публичные ключи берутся только с официального HTTPS endpoint Telegram на GitHub runner: при каждом деплое и каждые шесть часов (`telegram-keys.yml`). Они атомарно устанавливаются в `/opt/bunker/telegram-keys/jwks.json`, каталог монтируется в API только для чтения. Ключи старше семи дней отвергаются. Ошибки refresh workflow нужно устранять; это необходимо для ротации ключей Telegram. `TELEGRAM_JWKS_FILE` включает этот режим, без него используется прямой JWKS endpoint.
+## Резервные копии и откат
 
-`PUBLIC_ORIGIN=https://bunker-vdk.ru`, первый администратор `TELEGRAM_ADMIN_IDS=231142381` (@TomKuper). Client ID/Secret находятся только в серверном .env. В BotFather Web Login нужны Allowed URLs:
+`bunker-hoster-backup.timer` запускает `/opt/bunker-production/backup.sh`.
+Копия включает PostgreSQL, объекты MinIO, `SHA256SUMS` и маркер `COMPLETE`;
+каталог `/opt/bunker-production/backups/daily` доступен только root.
+Автоматическое удаление копий не включено. Копии переноса также сохранены
+в локальном комплекте; актуальную копию после новых записей нужно сохранять
+вне VPS отдельно.
 
-- https://bunker-vdk.ru
-- https://bunker-vdk.ru/auth/callback
+Перед откатом сохранить новую копию. Для совместимой схемы вернуть
+`compose.before.yaml` из каталога нужного релиза в `compose.yaml` и выполнить
+`docker compose up -d --no-deps api worker` из `/opt/bunker-production`.
+Это возвращает приложение, сохраняя текущие данные. Восстановление БД
+проводить отдельно в новую базу после проверки checksum; оно может потерять
+записи после снимка. Старые образы и архивы не удалять до проверки отката.
+Не выполнять `docker compose down -v` для рабочего стека.
 
-Чужие Telegram-аккаунты получают роль player. При смене IP обновите A-записи @ и www в REG.RU; origin и Allowed URLs остаются прежними.
+## Проверка и логи
 
-## Резервные копии
+```sh
+curl -fsS https://bunker-vdk.ru/api/health
+cd /opt/bunker-production
+docker compose ps
+docker compose logs --tail 100 api worker
+systemctl status bunker-hoster-backup.timer certbot.timer
+```
 
-`bunker-production-backup.timer` ежедневно запускает `/opt/bunker/backup.sh`: дамп PostgreSQL, копия bucket и SHA256SUMS. Каталог `/opt/bunker/backups/daily` доступен только root; завершённые ежедневные копии хранятся 14 дней. Дампы перед деплоями находятся отдельно в `/opt/bunker/backups`. Локальная копия не защищает от потери сервера — внешнее хранилище пока не настроено.
-
-Для восстановления сначала проверить SHA256SUMS, восстановить database.dump через pg_restore в отдельную БД, загрузить objects в отдельный приватный bucket, отозвать старые сессии и проверить данные перед переключением. Реквизиты .env хранить отдельно от данных.
-
-## Повторный запуск и проверка
-
-Повторить деплой или откатить приложение при совместимой схеме: `bash /opt/bunker/releases/<SHA>/deploy/release.sh <SHA>` (образ должен оставаться на сервере). Проверка: `curl -f https://bunker-vdk.ru/api/health`. Логи: `docker compose -p bunker-blue -f /opt/bunker/releases/<SHA>/deploy/compose.release.yaml logs --tail 100` с соответствующими RELEASE и APP_PORT; для green использовать другой слот.
-
-Первичная установка на новом сервере: Docker Compose v2; `deploy/compose.infra.yaml` и .env в `/opt/bunker`; поднять инфраструктуру; создать приватный bucket и scoped S3-пользователя; подготовить DNS, Nginx и сертификат; установить backup service/timer; настроить GitHub secrets; включить DEPLOY_ENABLED и отправить коммит в master. `deploy/nginx.conf.template` — рабочий шаблон; старые Caddy-примеры для этого сервера не используются.
-
-## Загрузка главной и диагностика
-
-Главная собирается из отдельного `frontend/landing.html`: стили встроены в HTML, JavaScript на этой странице отсутствует. Мобильное меню использует `<details>`, роли и ситуации — нативные радиокнопки и CSS. `index.html` и React остаются у каталога, профиля и админки. Иллюстрация использует адаптивные AVIF/WebP. Бюджет первой HTML-страницы со стилями — менее 20 КБ gzip, проверяется интеграционным тестом.
-
-Nginx включает HTTP/2 через `listen 443 ssl http2` (совместимо с установленной версией 1.18); AVIF имеет отдельное правило MIME. При смене шаблона деплой выполняет `nginx -t` и откатывается при ошибке. См. [документацию HTTP/2](https://nginx.org/en/docs/http/ngx_http_v2_module.html).
-
-Workflow `Production diagnostics` запускается вручную или при изменении своего скрипта/конфигурации. Он только читает состояние: три внешних запроса с runner, нагрузку, память, диск, контейнеры, сетевые счётчики и время ответа origin. Не выводит секреты, содержимое `.env` или данные запросов. Скрипт — `deploy/diagnose.sh`.
+Не выводить `docker inspect` целиком или раскрытый Compose: они могут содержать
+секреты окружения. Для версии достаточно имени образа и OCI label revision.
+Workflow `production-diagnostics.yml` проверяет действующий Hoster: Caddy,
+ресурсы сервера, контейнеры, HTTPS и активный SHA. Запускать через
+`workflow_dispatch` на `master`; изменения сценария в `master` также запускают
+диагностику. Старый `telegram-keys.yml` удалён: текущий VPS получает публичные
+ключи Telegram через HTTPS, файл `TELEGRAM_JWKS_FILE` в нём не используется.
