@@ -3,15 +3,16 @@
 set -euo pipefail
 uptime
 free -m
-df -h /opt/bunker
+df -h /opt/bunker-production
+cat /opt/bunker-production/active.json
 docker ps --format 'table {{.Names}}\t{{.Status}}'
 docker stats --no-stream --format 'table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.NetIO}}'
 ss -s
-nginx -V 2>&1
+systemctl is-active caddy
 if command -v nstat >/dev/null; then
   nstat -az TcpRetransSegs TcpExtListenOverflows TcpExtListenDrops TcpExtSyncookiesSent
 fi
-domain=$(cat /opt/bunker/domain)
+domain=bunker-vdk.ru
 [[ "$domain" =~ ^[a-zA-Z0-9.-]+$ ]]
 for route in / /api/health; do
   curl -sS --compressed --connect-timeout 5 --max-time 15 --resolve "$domain:443:127.0.0.1" \

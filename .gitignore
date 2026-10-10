@@ -5,6 +5,7 @@ dist/
 tmp/
 .DS_Store
 web-dist/
+output/
 .env.production
 .env.*
 !.env.example

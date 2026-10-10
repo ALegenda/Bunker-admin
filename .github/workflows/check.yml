@@ -1,5 +1,5 @@
 name: checks
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: {node-version: '24', cache: npm}
+        with: { node-version: '24', cache: npm }
       - run: npm ci
       - run: npm run typecheck
       - run: npm run build
@@ -27,59 +27,62 @@ jobs:
       - if: always()
         run: docker compose logs --tail 50
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && vars.DEPLOY_ENABLED == 'true'
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/master' && vars.DEPLOY_ENABLED == 'true'
     needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 45
     concurrency:
       group: production
       cancel-in-progress: false
-    environment: production
-    permissions:
-      contents: read
-      packages: write
-    env:
-      IMAGE_NAME: ghcr.io/alegenda/bunker-admin
+    environment:
+      name: production
+      url: https://bunker-vdk.ru
     steps:
       - uses: actions/checkout@v4
-      - name: Build production image
+      - name: Check that this is still the latest master commit
+        id: current
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
-          docker pull "$IMAGE_NAME:master" || true
-          docker build --cache-from "$IMAGE_NAME:master" --build-arg BUILDKIT_INLINE_CACHE=1 \
-            --label "org.opencontainers.image.source=https://github.com/$GITHUB_REPOSITORY" \
-            -t "$IMAGE_NAME:$GITHUB_SHA" .
-          docker push "$IMAGE_NAME:$GITHUB_SHA"
-          docker tag "$IMAGE_NAME:$GITHUB_SHA" "$IMAGE_NAME:master"
-          docker push "$IMAGE_NAME:master"
+          latest=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/master" --jq .object.sha)
+          if [[ "$latest" == "$GITHUB_SHA" ]]; then
+            echo 'deploy=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'A newer master commit exists; skipping this deployment.'
+          fi
       - name: Configure SSH
+        if: steps.current.outputs.deploy == 'true'
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_KEY: ${{ secrets.HOSTER_DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.HOSTER_DEPLOY_KNOWN_HOSTS }}
         run: |
+          set -euo pipefail
+          test -n "$DEPLOY_KEY"
+          test -n "$DEPLOY_KNOWN_HOSTS"
           install -d -m 700 ~/.ssh
           printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
-      - name: Upload and deploy verified commit
+      - name: Upload and deploy verified commit to Hoster.kz
+        if: steps.current.outputs.deploy == 'true'
         env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          GH_TOKEN: ${{ github.token }}
+          DEPLOY_HOST: ${{ secrets.HOSTER_DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.HOSTER_DEPLOY_USER }}
         run: |
           set -euo pipefail
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_USER"
           target="$DEPLOY_USER@$DEPLOY_HOST"
-          python3 deploy/fetch-telegram-keys.py > /tmp/telegram-jwks.json
-          ssh -o BatchMode=yes "$target" 'install -d -m 755 /opt/bunker/telegram-keys'
-          scp -o BatchMode=yes /tmp/telegram-jwks.json "$target:/opt/bunker/telegram-keys/deploy.json"
-          ssh -o BatchMode=yes "$target" 'chmod 644 /opt/bunker/telegram-keys/deploy.json && mv /opt/bunker/telegram-keys/deploy.json /opt/bunker/telegram-keys/jwks.json'
-          git archive --format=tar.gz HEAD deploy > /tmp/release.tar.gz
-          ssh -o BatchMode=yes "$target" "mkdir -p /opt/bunker/releases/$GITHUB_SHA"
-          scp -o BatchMode=yes /tmp/release.tar.gz "$target:/opt/bunker/releases/$GITHUB_SHA/source.tar.gz"
-          # Short-lived Actions token is removed from the server after pulling the private image.
-          printf '%s' "$GH_TOKEN" | ssh -o BatchMode=yes "$target" "set -eu; export DOCKER_CONFIG=/run/bunker-registry-$GITHUB_RUN_ID; umask 077; mkdir -p \"\$DOCKER_CONFIG\"; trap 'rm -rf \"\$DOCKER_CONFIG\"' EXIT; docker login ghcr.io -u '$GITHUB_ACTOR' --password-stdin >/dev/null; docker pull '$IMAGE_NAME:$GITHUB_SHA'; docker tag '$IMAGE_NAME:$GITHUB_SHA' 'bunker-admin:$GITHUB_SHA'"
-          ssh -o BatchMode=yes "$target" "cd /opt/bunker/releases/$GITHUB_SHA && tar -xzf source.tar.gz && rm source.tar.gz && bash deploy/release.sh $GITHUB_SHA"
+          release_dir="/opt/bunker-production/releases/$GITHUB_SHA"
+          ssh_options=(-o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes
+            -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=6)
+          git archive --format=tar.gz "$GITHUB_SHA" > "$RUNNER_TEMP/source.tar.gz"
+          (cd "$RUNNER_TEMP" && sha256sum source.tar.gz > SHA256SUMS)
+          ssh "${ssh_options[@]}" "$target" "umask 077; mkdir -p '$release_dir/source'"
+          scp "${ssh_options[@]}" "$RUNNER_TEMP/source.tar.gz" "$RUNNER_TEMP/SHA256SUMS" "$target:$release_dir/"
+          ssh "${ssh_options[@]}" "$target" "set -e; cd '$release_dir'; sha256sum -c SHA256SUMS; tar -xzf source.tar.gz -C source; bash source/deploy/hoster-release.sh '$GITHUB_SHA'"
+          curl --fail --silent --show-error --retry 3 --connect-timeout 10 --max-time 20 \
+            https://bunker-vdk.ru/api/health
+          echo "Deployed commit \`$GITHUB_SHA\` to https://bunker-vdk.ru" >> "$GITHUB_STEP_SUMMARY"
       - if: always()
-        run: rm -f ~/.ssh/id_ed25519
+        run: rm -f ~/.ssh/id_ed25519 ~/.ssh/known_hosts

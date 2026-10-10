@@ -2,6 +2,7 @@ name: Production diagnostics
 on:
   workflow_dispatch:
   push:
+    branches: [master]
     paths:
       - deploy/diagnose.sh
       - .github/workflows/production-diagnostics.yml
@@ -9,6 +10,7 @@ permissions:
   contents: read
 jobs:
   diagnose:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     environment: production
@@ -23,15 +25,16 @@ jobs:
           done
       - name: Read server resource and connection health
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.HOSTER_DEPLOY_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.HOSTER_DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_HOST: ${{ secrets.HOSTER_DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.HOSTER_DEPLOY_USER }}
         run: |
           install -d -m 700 ~/.ssh
           printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/id_ed25519
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
-          ssh -o BatchMode=yes -o ConnectTimeout=15 "$DEPLOY_USER@$DEPLOY_HOST" 'bash -s' < deploy/diagnose.sh
+          ssh -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o ConnectTimeout=15 "$DEPLOY_USER@$DEPLOY_HOST" 'bash -s' < deploy/diagnose.sh
       - if: always()
         run: rm -f ~/.ssh/id_ed25519
