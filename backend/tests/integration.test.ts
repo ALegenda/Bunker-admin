@@ -321,6 +321,24 @@ await test('PostgreSQL, S3, API and PDF integration', async (t) => {
       },
     );
     await t.test(
+      'new print template does not reuse a ready PDF from the previous layout',
+      async () => {
+        const state = await readWorkspace();
+        const previousId = randomUUID();
+        await pool.query(
+          "INSERT INTO pdf_jobs(id,status,workspace_revision,snapshot,template_version) VALUES($1,'ready',$2,$3,'rules-html-v3')",
+          [previousId, state.revision, JSON.stringify(state)],
+        );
+        const current = await app.inject({
+          url: '/api/pdf/current',
+          headers: localHeaders,
+        });
+        assert.equal(current.statusCode, 200);
+        assert.equal(current.json().job, null);
+        assert.notEqual((await createJob(state.revision)).id, previousId);
+      },
+    );
+    await t.test(
       'scheduled worker stores the immutable PDF and exits after draining the queue',
       async () => {
         const state = await readWorkspace();
