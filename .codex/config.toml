@@ -1,0 +1,4 @@
+[mcp_servers.bunker]
+url = "https://bunker-vdk.ru/mcp"
+startup_timeout_sec = 45
+tool_timeout_sec = 60

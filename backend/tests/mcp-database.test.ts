@@ -19,6 +19,7 @@ await test('MCP database: safe projections, attribution, stale bases, roles and 
   const { upsertCards, readWorkspace } = await import('../services/workspace.js');
   const { submitProposal, reviewProposal } = await import('../services/proposals.js');
   const { createDatabaseProvider } = await import('../mcp/database-provider.js');
+  const { createPublicDatabaseProvider } = await import('../mcp/public-provider.js');
   const original = cardSchema.parse({
     id: 'medic',
     name: 'Лекарь',
@@ -42,6 +43,14 @@ await test('MCP database: safe projections, attribution, stale bases, roles and 
       );
     });
     const readonly = createDatabaseProvider();
+    const publicProvider = createPublicDatabaseProvider();
+    assert.equal(publicProvider.allowDraft, false);
+    assert.equal(publicProvider.history, undefined);
+    assert.equal(publicProvider.submitProposal, undefined);
+    assert.equal(publicProvider.proposals, undefined);
+    assert.equal(publicProvider.close, undefined);
+    assert.ok(!JSON.stringify(await publicProvider.load('published')).includes('PRIVATE'));
+    await assert.rejects(publicProvider.load('draft'), /опубликованная/);
     assert.equal(readonly.submitProposal, undefined);
     const editor = createDatabaseProvider({ authorId: author });
     assert.ok(!JSON.stringify(await editor.load('draft')).includes('PRIVATE'));
@@ -59,6 +68,10 @@ await test('MCP database: safe projections, attribution, stale bases, roles and 
     assert.match(row.reason, /^\[MCP\]/);
     assert.equal((await readWorkspace()).cards[0].description, original.description);
     assert.equal((await editor.load('published')).cards[0].description, original.description);
+    assert.equal(
+      (await publicProvider.load('published')).cards[0].description,
+      original.description,
+    );
     assert.ok(!JSON.stringify(await editor.proposals!()).includes('author_id'));
     await transaction((c) => refreshCatalog(c, [{ ...original, description: 'Новая публикация' }]));
     await assert.rejects(editor.submitProposal!(input), /изменилась/);

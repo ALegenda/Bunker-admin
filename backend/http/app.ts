@@ -2,6 +2,7 @@ import { security } from './security.js';
 import { authRoutes } from './routes/auth.js';
 import { playerRoutes } from './routes/players.js';
 import { communityRoutes } from './routes/community.js';
+import { mcpRoutes } from './routes/mcp.js';
 import { publicAsset } from '../services/catalog.js';
 import { saveCard, resetCard, saveReleaseMeta, cardHistory } from '../services/cards.js';
 import Fastify from 'fastify';
@@ -33,6 +34,7 @@ export async function createApp() {
     connectionTimeout: 15000,
   });
   await security(app);
+  await mcpRoutes(app);
   await authRoutes(app);
   await communityRoutes(app);
   await playerRoutes(app);

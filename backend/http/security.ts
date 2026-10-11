@@ -59,13 +59,18 @@ export async function security(app: FastifyInstance) {
     if (path.startsWith('/api/') || path.startsWith('/auth/'))
       reply.header('Cache-Control', 'no-store');
     const host = req.headers.host || '';
+    if (
+      config.AUTH_MODE === 'local'
+        ? !/^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(host)
+        : host !== new URL(config.PUBLIC_ORIGIN).host
+    )
+      throw new AppError(403, 'Недопустимый адрес сервера');
+    // /mcp only exposes published read-only tools, independent of browser sessions and CSRF.
+    // Its own route hook validates Origin; Host and the global rate limit still apply.
+    if (path === '/mcp') return;
     if (config.AUTH_MODE === 'local') {
-      if (!/^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(host))
-        throw new AppError(403, 'Недопустимый адрес сервера');
       req.actor = localActor(req.cookies.bunker_local);
     } else {
-      if (host !== new URL(config.PUBLIC_ORIGIN).host)
-        throw new AppError(403, 'Недопустимый адрес сервера');
       if (req.method === 'OPTIONS' && fromPages && corsPath) {
         const method = req.headers['access-control-request-method'] || '';
         const headers = String(req.headers['access-control-request-headers'] || '')
