@@ -12,15 +12,15 @@ export async function refreshCatalog(c: pg.PoolClient, cards: Card[]) {
     [JSON.stringify(cards.map(publicCard))],
   );
 }
-export async function catalog() {
-  const cards = (await pool.query('SELECT data FROM public_cards ORDER BY position')).rows.map(
+export async function catalog(client: Pick<pg.PoolClient, 'query'> = pool) {
+  const cards = (await client.query('SELECT data FROM public_cards ORDER BY position')).rows.map(
     (r) => r.data,
   );
   const releases = (
-    await pool.query('SELECT id,title,created_at FROM releases ORDER BY created_at DESC')
+    await client.query('SELECT id,title,created_at FROM releases ORDER BY created_at DESC')
   ).rows;
   const source = (
-    await pool.query(
+    await client.query(
       'SELECT report,applied_at FROM source_migrations ORDER BY applied_at DESC LIMIT 1',
     )
   ).rows[0];

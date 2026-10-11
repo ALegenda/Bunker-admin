@@ -59,7 +59,11 @@ if (command === 'curl') {
 } else if (args[0] === 'inspect') {
   process.stdout.write(JSON.stringify([state.containers[args[1]]]));
 } else if (args[0] === 'compose') {
-  if (args[1] === 'run') {
+  if (args[1] === 'exec' && args.at(-1) === 'scripts/check-mcp.mjs') {
+    state.events.push('mcp-check');
+    if (state.failMcp) fail();
+    save();
+  } else if (args[1] === 'run') {
     state.events.push('seed');
     if (state.failSeed) fail();
     save();
@@ -126,7 +130,28 @@ test('Hoster release activates the verified image and safely rechecks an identic
       assert.equal(first.containers[service].State.Running, true);
     }
     assert.match((await f.execute()).stdout, /Already deployed/);
-    assert.deepEqual((await f.state()).events, first.events);
+    assert.deepEqual((await f.state()).events, [...first.events, 'mcp-check']);
+  } finally {
+    await f.cleanup();
+  }
+});
+
+test('Hoster release rolls back both services if MCP cannot read production content', async () => {
+  const f = await fixture();
+  try {
+    await f.update({ failMcp: true });
+    await assert.rejects(f.execute(), (error: any) => {
+      assert.match(error.stderr, /Previous application image restored/);
+      return true;
+    });
+    assert.ok((await f.state()).events.includes('mcp-check'));
+    assert.equal(await readFile(path.join(f.root, 'compose.yaml'), 'utf8'), f.compose);
+    assert.equal(
+      JSON.parse(await readFile(path.join(f.root, 'active.json'), 'utf8')).release,
+      previous,
+    );
+    for (const service of ['api', 'worker'])
+      assert.equal((await f.state()).containers[service].Config.Image, image(previous));
   } finally {
     await f.cleanup();
   }

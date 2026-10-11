@@ -108,6 +108,11 @@ Backup-скрипт пока использует исходный образ п
 пропуски с причинами и полная копия до изменений сохраняются в БД.
 Старые выпуски и готовые PDF остаются прежними; новый PDF использует новое оформление.
 
+MCP входит в образ приложения и запускается по SSH через stdio. Скрипт выкладки
+выполняет `docker compose exec -T api node scripts/check-mcp.mjs` перед фиксацией
+`active.json`; ошибка проверки протокола или доступа к данным откатывает образы.
+[Подключение production MCP](mcp.md#production-на-hosterkz).
+
 ## Telegram
 
 `AUTH_MODE=telegram`, `PUBLIC_ORIGIN=https://bunker-vdk.ru`, существующий

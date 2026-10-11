@@ -17,6 +17,7 @@ COPY --from=build /app/web-dist ./web-dist
 COPY backend/db/migrations ./backend/db/migrations
 COPY public ./public
 COPY docs/cards.json ./docs/cards.json
+COPY scripts/mcp.mjs scripts/check-mcp.mjs ./scripts/
 COPY resources ./resources
 COPY deploy/render/start.sh ./deploy/render/start.sh
 ENV CHROME_PATH=/usr/bin/chromium

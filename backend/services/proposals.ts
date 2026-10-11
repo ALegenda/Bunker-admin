@@ -7,6 +7,7 @@ import { isDeepStrictEqual as equal } from 'node:util';
 import { transaction, pool } from '../db/index.js';
 import { cardSchema, AppError, type Card } from '../domain/schema.js';
 import { publicCard } from './catalog.js';
+import type { PublicCard } from '../../shared/contracts.js';
 import { rowCard } from './workspace.js';
 import { writeCard } from './cards.js';
 import { audit } from './audit.js';
@@ -23,7 +24,7 @@ export const proposalSchema = z
     reason: z.string().trim().min(1).max(3000),
   })
   .strict();
-export async function submitProposal(input: unknown, author: string) {
+export async function submitProposal(input: unknown, author: string, expectedBase?: PublicCard) {
   const data = proposalSchema.parse(input);
   return transaction(async (c) => {
     const user = (await c.query('SELECT role,disabled FROM users WHERE id=$1 FOR UPDATE', [author]))
@@ -38,9 +39,20 @@ export async function submitProposal(input: unknown, author: string) {
     ).rows[0].n;
     if (n >= 30) throw new AppError(429, 'Дождитесь рассмотрения предыдущих предложений');
     const base = data.cardId
-      ? (await c.query('SELECT data FROM public_cards WHERE id=$1', [data.cardId])).rows[0]?.data
+      ? (await c.query('SELECT data FROM public_cards WHERE id=$1 FOR SHARE', [data.cardId]))
+          .rows[0]?.data
       : null;
     if (data.cardId && !base) throw new AppError(404, 'Карточка не найдена');
+    if (
+      expectedBase &&
+      (!base ||
+        !equal(proposalValues(base), proposalValues(expectedBase)) ||
+        base.image !== expectedBase.image)
+    )
+      throw new AppError(
+        409,
+        'Опубликованная карточка изменилась. Прочитайте её заново перед отправкой.',
+      );
     const parsed = cardSchema.parse({
       ...base,
       id: base?.id || randomUUID(),

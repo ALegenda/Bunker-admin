@@ -30,6 +30,10 @@ for service in ('api', 'worker'):
 PY
 }
 
+verify_mcp() {
+  docker compose exec -T api node scripts/check-mcp.mjs
+}
+
 # A repeated Actions run must verify the active release rather than reject it.
 if [[ -f "$root/active.json" ]] && python3 - "$root/active.json" "$release" <<'PY'
 import json, sys
@@ -38,6 +42,7 @@ with open(sys.argv[1]) as handle:
 PY
 then
   verify_app_containers
+  verify_mcp
   curl -fsS --max-time 10 --resolve bunker-vdk.ru:443:127.0.0.1 \
     https://bunker-vdk.ru/api/health > "$release_dir/health.json"
   python3 - "$release_dir/health.json" <<'PY'
@@ -107,6 +112,7 @@ for attempt in {1..45}; do
 done
 [[ "$healthy" == 1 ]] || { echo 'HTTPS healthcheck failed' >&2; false; }
 verify_app_containers
+verify_mcp
 python3 - "$root/active.json" "$release" "$image" "$source_dir" "$release_dir/health.json" <<'PY'
 import datetime, json, os, sys
 path, release, image, source, health_path = sys.argv[1:]
