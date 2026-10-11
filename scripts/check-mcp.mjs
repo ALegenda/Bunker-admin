@@ -50,8 +50,9 @@ try {
   try {
     await publicClient.connect(
       new StreamableHTTPClientTransport(
-        new URL(`http://127.0.0.1:${process.env.PORT || '4173'}/mcp`),
-        { requestInit: { headers: { Host: new URL(process.env.PUBLIC_ORIGIN).host } } },
+        // Use the canonical HTTPS URL. Node's fetch can discard a custom Host header,
+        // so a loopback URL with a forged Host fails the API's hostname validation.
+        new URL('/mcp', process.env.PUBLIC_ORIGIN),
       ),
     );
     const publicTools = (await publicClient.listTools()).tools;

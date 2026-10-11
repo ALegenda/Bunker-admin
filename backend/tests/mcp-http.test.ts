@@ -144,6 +144,26 @@ await test('public HTTP MCP works anonymously and cannot expose editor capabilit
       assert.throws(() => parseCommand(['call', 'read_card', '[]']));
     });
     await t.test(
+      'official HTTP client works with the canonical production host without header overrides',
+      async () => {
+        config.AUTH_MODE = 'telegram';
+        config.NODE_ENV = 'production';
+        config.PUBLIC_ORIGIN = url.origin;
+        const productionClient = new Client({ name: 'production-host-test', version: '1.0.0' });
+        try {
+          await productionClient.connect(new StreamableHTTPClientTransport(url));
+          assert.equal((await productionClient.listTools()).tools.length, 5);
+          const read = await productionClient.callTool({
+            name: 'read_card',
+            arguments: { cardId: 'medic' },
+          });
+          assert.equal((read.structuredContent as any).card.source, 'published');
+        } finally {
+          await productionClient.close();
+        }
+      },
+    );
+    await t.test(
       'production requests need no session or CSRF, but Host, Origin and API security remain enforced',
       async () => {
         config.AUTH_MODE = 'telegram';
