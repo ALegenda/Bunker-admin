@@ -14,6 +14,9 @@ export default defineConfig(({ isSsrBuild }) => ({
               app: fileURLToPath(new URL('./frontend/index.html', import.meta.url)),
               landing: fileURLToPath(new URL('./frontend/landing.html', import.meta.url)),
               qr: fileURLToPath(new URL('./frontend/qr.html', import.meta.url)),
+              cardAudit: fileURLToPath(
+                new URL('./frontend/reviews/2026-10-11-card-audit.html', import.meta.url),
+              ),
             },
           },
         }),
